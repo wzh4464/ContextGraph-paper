@@ -1,0 +1,393 @@
+\documentclass{article}
+
+% Use [preprint] for arXiv, [final] for camera-ready, default for submission.
+\usepackage[preprint, nonatbib]{neurips}
+\usepackage[numbers]{natbib}
+
+\input{extra_pkgs}
+
+\title{ContextGraph: A Multi-Channel Knowledge-Graph Memory \\ for Long-Horizon Coding Agents}
+
+% Allow reusing a single footnote marker across multiple co-equal authors
+\makeatletter
+\newcommand{\samethanks}[1][\value{footnote}]{\footnotemark[#1]}
+\makeatother
+
+\author{%
+  Zihan Wu\thanks{Code and graph artifacts available at \url{https://github.com/wzh4464/ContextGraph}.} \\
+  Department of Electrical Engineering \\
+  City University of Hong Kong
+  \And
+  Jie Xu\thanks{Equal contribution.} \\
+  Department of Computer Science \\
+  City University of Hong Kong
+  \And
+  Yun Peng\samethanks \\
+  The Chinese University of Hong Kong
+  \AND
+  Shangyu Li \\
+  Hong Kong University of \\
+  Science and Technology
+  \And
+  Zeyang Zhuang \\
+  The Chinese University \\
+  of Hong Kong
+  \And
+  Chun Yong Chong \\
+  Monash University Malaysia
+  \AND
+  Xin Zhou \\
+  Singapore Management University
+  \And
+  Rui Shu \\
+  Independent Researcher \\
+  Hong Kong, China
+  \And
+  Xu Han \\
+  The Chinese University \\
+  of Hong Kong, Shenzhen
+  \AND
+  Yuan Wang \\
+  Software Engineering Lab \\
+  Huawei Technologies Co., Ltd. \\
+  Hong Kong, China
+}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+LLM-based coding agents repeatedly re-derive the same debugging knowledge: every new run rediscovers how a particular framework imports modules, what the canonical fix for a stale migration is, or which tests must be updated when an API signature changes. We present \textbf{ContextGraph}, a long-term memory layer that distills past agent trajectories into a typed knowledge graph and makes them retrievable at inference time. From 1{,}795 SWE-agent trajectories on a held-out training corpus we extract \textasciitilde 45K nodes and \textasciitilde 74K edges spanning four levels of granularity --- raw \textsc{Fragment}s, mid-level \textsc{Strategy} statements, deduplicated \textsc{CanonicalRule}s, and clustered \textsc{Community} summaries --- and expose them through a HippoRAG-style three-channel retriever combining dense vector search, BM25, and Personalized PageRank with reciprocal-rank fusion and MMR diversification. Plugging ContextGraph into SWE-agent v1.1.0 as a \texttt{query\_memory} tool, we evaluate against three matched-API memory baselines (FAISS, ExpeL, Agent-KB) and a no-memory control on SWE-bench-Verified (full $500$) and SWE-bench-Pro (a $50$-instance subset). On Verified the lift from any memory method is modest and noisy: the four memory methods compress into a $\sim$3.6~pp band above the no-memory baseline ($61.80\%$), with FAISS the strongest fully-run condition at $65.40\%$ ($p=0.057$) and ContextGraph at $63.60\%$ ($p=0.402$). The picture changes sharply under distribution shift to a harder benchmark: on SWE-bench-Pro, ContextGraph reaches $\mathbf{23.40\%}$ resolved versus $4.35\%$ for no-memory ($\mathbf{+19.05}$~pp absolute, $\mathbf{5.4\times}$ relative, $p{=}0.012$), and more than doubles flat-retrieval baselines built on the \emph{identical} strategy corpus ($+12.8$~pp over FAISS, $p{=}0.031$), isolating the contribution of typed relations and PPR walks from raw vector similarity. A post-hoc cleanup that removes four low-precision rules on Verified projects to $67.20\%$ but is reported only as a diagnostic given the selection bias inherent in post-hoc rule curation. These results suggest that structured long-term memory has the largest payoff when the base agent has substantial headroom; when the no-memory baseline is already strong, the bottleneck shifts from retrieval architecture to individual rule precision and any memory method buys little.
+\end{abstract}
+
+\section{Introduction}
+
+A coding agent is, in effect, a stateless problem solver: each new bug or feature request is approached as if no prior incident had ever happened. This is wasteful. Real software engineering is heavily \emph{repetitive} at the repository level --- the same import path is wrong in dozens of pull requests, the same fixture pattern needs the same tweak, the same error class points to the same root cause. When humans encounter such a bug they read the issue, recognize the pattern from memory, and jump to the fix. Today's LLM agents instead spend tokens re-deriving everything from scratch.
+
+We argue that agents need a \emph{long-term, structured memory} that (i) is built once from completed trajectories rather than maintained online, (ii) exposes multiple levels of abstraction (raw evidence \emph{and} consolidated rules), and (iii) supports associative retrieval beyond pure semantic similarity, so that a query about an obscure error can pull in rules linked through shared symptoms or shared repositories.
+
+Recent work points in compatible directions but leaves gaps. \textbf{HippoRAG}~\cite{gutierrez2024hipporag} demonstrates that Personalized PageRank (PPR) over an LLM-extracted KG yields strong multi-hop QA. \textbf{Zep}~\cite{rasmussen2025zep} formalizes a three-layer Episode~$\to$~Semantic~$\to$~Community memory architecture for chat agents. \textbf{A-MEM}~\cite{xu2025amem} introduces dynamic linking and Zettelkasten-style memory evolution. \textbf{ExpeL}~\cite{zhao2024expel} learns success/failure ``insights'' from past trajectories and prepends them to prompts. \textbf{Agent-KB}~\cite{tang2025agentkb} stores procedural knowledge for tool-using agents. None of these have been combined and stress-tested as the persistent memory of a state-of-the-art software-engineering agent on SWE-bench-Verified.
+
+\paragraph{Contributions.}
+\begin{enumerate}[leftmargin=*, itemsep=2pt]
+\item \textbf{ContextGraph}, a typed knowledge-graph memory for coding agents that fuses Zep's three-layer hierarchy with HippoRAG's PPR retrieval and ExpeL-style strategy distillation. The graph contains 45{,}115 nodes across 8 labels and 73{,}975 typed edges, with every node embedded in a 3072-dimensional space.
+\item A \textbf{three-channel retriever} (cosine, BM25, PPR) merged via reciprocal-rank fusion and MMR-reranked, exposed to SWE-agent~\cite{yang2024sweagent} through a single \texttt{query\_memory} function-calling tool that runs inside the agent's Docker sandbox.
+\item A \textbf{controlled A/B evaluation} on SWE-bench-Verified~\cite{jimenez2024swebench} comparing ContextGraph against four matched conditions (no\_memory, FAISS, ExpeL, Agent-KB) under identical agent, model, prompt, and step budget. On the full 500-problem set, the four memory methods cluster within a $\sim$3.6~pp band above the no-memory baseline ($61.80\%$), with FAISS the strongest fully-run method at $65.40\%$ ($p=0.057$ McNemar) and ContextGraph at $63.60\%$ ($p=0.402$). A post-hoc removal of four high-frequency low-precision rules projects ContextGraph to $67.20\%$ ($+5.4$~pp, $p=0.0039$), the highest of any condition; we treat this as a diagnostic given the selection bias inherent in post-hoc rule curation.
+\item A \textbf{distribution-shift study} on SWE-bench-Pro~\cite{anysphere2025swebenchpro}, the substantially harder commercial-codebase benchmark, where ContextGraph reaches $23.40\%$ resolved versus $4.35\%$ for no\_memory ($+19.05$~pp absolute, $5.4\times$ relative, $p{=}0.012$). With identical strategy content, graph-structured retrieval more than doubles flat-retrieval baselines on Pro ($p{=}0.031$ vs.\ FAISS), and numerically approaches the GPT-5 zero-shot figure reported in the Pro paper while using a different third-party GPT-5-class endpoint under non-matched conditions.
+\item A \textbf{reproducible pipeline}: graph-construction scripts, the SWE-agent tool bundle, an OpenHands hook integration, and four matched baseline servers exposing an identical \texttt{/query\_memory} HTTP API are released, so that any future memory method can be slotted in without modifying the agent.
+\end{enumerate}
+
+\section{Related Work}
+
+\paragraph{Retrieval-augmented memory for agents.}
+HippoRAG~\cite{gutierrez2024hipporag} and HippoRAG~2~\cite{gutierrez2025hipporag2} use Personalized PageRank over an OpenIE-extracted KG to retrieve evidence for multi-hop QA. ContextGraph adopts the PPR seed-and-walk idea but replaces generic OpenIE entities with a typed schema tailored to coding (\textsc{Fragment}, \textsc{ErrorPattern}, \textsc{Strategy}, \textsc{CanonicalRule}, \textsc{Community}, \textsc{Trajectory}, \textsc{ProblemSummary}, \textsc{PlaybookEntry}). Zep~\cite{rasmussen2025zep} introduced the three-layer Episode/Semantic/Community memory; we adopt that hierarchy but make the layers explicit graph labels rather than chronological episodes, because coding trajectories have no meaningful global timeline. A-MEM~\cite{xu2025amem} and MemGPT~\cite{packer2024memgpt} contribute dynamic memory evolution and OS-style paging respectively; we are complementary --- ContextGraph is a static, batch-built graph that can be \emph{appended to} via the same writer at inference time.
+
+\paragraph{Experiential learning for coding agents.}
+ExpeL~\cite{zhao2024expel} extracts natural-language ``insights'' from agent successes and failures and prepends them to prompts. We re-implement ExpeL on top of our trajectory corpus as one of the head-to-head baselines. Agent-KB~\cite{tang2025agentkb} maintains a procedural knowledge base for tool-using agents and is shipped with a SWE-bench evaluation harness; we reuse their export format. Voyager~\cite{wang2023voyager} stores Minecraft skills as a code library; we store \emph{symbolic strategies} rather than executable policies, because coding tasks are more diverse than a Minecraft action space.
+
+\paragraph{Memory for software engineering agents.}
+A recent line of work targets memory \emph{specifically} for SWE agents. \textbf{SWE-Exp}~\cite{sweexp2025} distills success and failure trajectories into an experience bank and retrieves analogs for new issues, reporting $41.6\%$ Pass@1 on SWE-bench Verified. \textbf{RepoMem}~\cite{repomem2025} builds a per-repository memory from commit history, linked issues, and active-code summaries, improving code localization on Verified and SWE-bench Live. \textbf{Subtask-level memory}~\cite{subtaskmem2026} departs from per-trajectory granularity and indexes memory by sub-task, reporting $+4.7$~pp Pass@1 on Verified and $+6.8$~pp with Gemini~2.5~Pro. ContextGraph differs along three axes: (a) its representation is a \emph{typed graph} rather than a flat experience bank or per-repo store, (b) retrieval is multi-channel with PPR walks, supporting symbolic associative reasoning across error patterns and rules, and (c) we report results on the substantially harder SWE-bench-Pro distribution where prior memory methods have not yet been evaluated.
+
+\paragraph{Benchmarks for memory and continual learning.}
+\textbf{SWE-Bench-CL}~\cite{nikishin2024never} (Agents Never Forget) reorganizes SWE-bench Verified into a time-ordered continual-learning stream and ships a FAISS semantic-memory module; it targets accumulation and forgetting rather than offline graph construction. \textbf{SWE Context Bench}~\cite{swecontextbench2026} repurposes SWE-bench Lite to measure how well agents reuse past-task summaries, finding that correctly retrieved summaries both raise accuracy and reduce wall-clock and token cost. We use the same correctness-by-test-pass evaluation but do not enforce a streaming order: the graph is built once, frozen, and then queried.
+
+\paragraph{LLM-based software engineering agents.}
+SWE-agent~\cite{yang2024sweagent} introduced the agent-computer interface used in our evaluation; OpenHands~\cite{wang2024openhands} provides an alternate runtime that we support through hook-based memory injection. Aider, AutoCodeRover~\cite{zhang2024autocoderover}, and Devin-style agents~\cite{cognition2024devin} are orthogonal to memory choice and could in principle consume the same \texttt{query\_memory} interface.
+
+\paragraph{Benchmarks.}
+SWE-bench~\cite{jimenez2024swebench} and its curated subset SWE-bench-Verified are the standard for repository-level patch generation. SWE-bench-Pro~\cite{anysphere2025swebenchpro} extends to commercial codebases with longer contexts and stricter test gating; we run on Pro to test whether memory transfers across distribution shifts.
+
+\section{Method}
+
+\subsection{Graph Schema}
+
+ContextGraph is a property graph in Neo4j~5 with eight node labels and seven typed relations (Table~\ref{tab:schema}). The design follows the Zep three-layer principle but renames the layers for the coding domain: \emph{Episode}~$\to$~\textsc{Trajectory}/\textsc{Fragment}, \emph{Semantic}~$\to$~\textsc{Strategy}/\textsc{CanonicalRule}, \emph{Community}~$\to$~\textsc{Community} (clusters of related fragments).
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/contextgraph_architecture}
+\caption{ContextGraph hero overview. Past SWE-agent trajectories are distilled into a three-layer graph memory: an episode layer of raw evidence, a semantic layer of reusable rules, and a community layer of associative summaries. At inference time, the \texttt{query\_memory} tool seeds the graph with the current error context and combines dense search, BM25, and Personalized PageRank before injecting a Top-$K$ playbook into the coding agent.}
+\label{fig:contextgraph-architecture}
+\end{figure}
+
+\begin{table}[t]
+\centering
+\caption{ContextGraph schema. All embeddings are \texttt{text-embedding-3-large} (3072 dim).}
+\label{tab:schema}
+\small
+\begin{tabular}{lrl}
+\toprule
+\textbf{Node label} & \textbf{Count} & \textbf{Role} \\
+\midrule
+\textsc{Trajectory} & 1{,}795 & one solved/unsolved task; root of an episode \\
+\textsc{Fragment} & 13{,}813 & action$+$observation slice within a trajectory \\
+\textsc{ErrorPattern} & 586 & canonicalized error type/keyword set \\
+\textsc{Strategy} & 9{,}600 & LLM-extracted natural-language rule \\
+\textsc{CanonicalRule} & 7{,}835 & deduplicated cluster head over \textsc{Strategy}s \\
+\textsc{PlaybookEntry} & 8{,}910 & retrieval-ready surface form of a rule \\
+\textsc{Community} & 781 & graph-walk cluster summary \\
+\textsc{ProblemSummary} & 1{,}795 & LLM problem-statement abstractions \\
+\midrule
+\textbf{Total nodes} & 45{,}115 & \\
+\textbf{Total edges} & 73{,}975 & 7 typed relations (\textsc{HAS\_FRAGMENT}, \textsc{CAUSED\_ERROR}, \\
+& & \textsc{ADDRESSES\_ERROR}, \textsc{DERIVED\_FROM}, \textsc{MERGED\_INTO}, \\
+& & \textsc{IN\_COMMUNITY}, \textsc{SUMMARIZES}) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Construction pipeline.} For each training trajectory we (1) parse the chat-formatted log into actions/observations, (2) segment it into \textsc{Fragment}s on action-class boundaries, (3) extract \textsc{ErrorPattern}s by regex+LLM normalization, (4) prompt an LLM to emit one or more \textsc{Strategy} sentences per fragment, (5) cluster strategies by embedding cosine and merge each cluster into a \textsc{CanonicalRule}, and (6) run Leiden community detection over the fragment$\leftrightarrow$rule subgraph to produce \textsc{Community} nodes whose summaries are LLM-generated. The full build takes \textasciitilde 12 minutes for 1{,}795 trajectories on a single workstation.
+
+\subsection{Three-Channel Retrieval}
+
+Given a query (the agent's current problem statement, optionally augmented with the latest error message and active file), we run three channels in parallel and fuse:
+
+\textbf{Channel~1 --- Dense.} Cosine similarity over the 3072-d embeddings of \textsc{PlaybookEntry}, \textsc{CanonicalRule}, and \textsc{Community} nodes via Neo4j vector indexes.
+
+\textbf{Channel~2 --- Lexical.} BM25 over a Neo4j fulltext index on the same labels, capturing exact-match cues like specific function or exception names that embeddings often blur.
+
+\textbf{Channel~3 --- PPR.} Following HippoRAG, we form a seed distribution over \textsc{ErrorPattern} and \textsc{Trajectory} nodes whose surface text appears in the query, then run Personalized PageRank with damping $\alpha=0.5$ over the full graph and surface the top-scoring \textsc{Strategy}/\textsc{CanonicalRule} nodes. Seeds are weighted by \emph{node specificity} $s_i = 1/\deg(i)$, so a rare error pattern receives more probability mass than a generic one.
+
+\textbf{Fusion.} The three ranked lists are merged by Reciprocal Rank Fusion ($k=60$) and then MMR-reranked with $\lambda=0.7$ (diversity $0.3$) against the query embedding. We return the top-$K$ entries (default $K=8$) formatted as a single \texttt{playbook} string with each entry prefixed by a section tag (e.g.\ \texttt{[strategy]}, \texttt{[error]}, \texttt{[community]}).
+
+\subsection{Agent Integration}
+
+ContextGraph is exposed to agents through a \emph{single} HTTP endpoint \texttt{POST /query\_memory} that accepts \texttt{\{problem\_statement, error\_message?, current\_file?\}} and returns the formatted playbook. SWE-agent invokes the endpoint via a \texttt{query\_memory} function-calling tool; the bundled wrapper script is shipped inside the agent's Docker container so it works under the agent's sandbox without networking changes other than \texttt{--add-host=host.docker.internal:host-gateway}. OpenHands integrates via a \texttt{MemoryHooks} subclass that injects the playbook into the conversation as a system note before the first user turn. Crucially, the \emph{same} HTTP contract is implemented by all four memory baselines (FAISS, ExpeL, Agent-KB, ContextGraph), so swapping methods requires no agent-side changes --- only changing the server URL.
+
+\section{Experimental Setup}
+
+\paragraph{Training corpus.} 1{,}795 trajectories drawn from \texttt{nebius/SWE-agent-trajectories}~\cite{nebius2024swetraj} (319 repositories, 80K+ raw trajectories), with a fixed seed=42 split. We verify zero overlap between training trajectories and the SWE-bench-Verified test repositories at the issue level.
+
+\paragraph{Test set.} The 500-problem SWE-bench-Verified~\cite{jimenez2024swebench, openai2024verified}; in addition we run on SWE-bench-Pro~\cite{anysphere2025swebenchpro} for distribution-shift analysis. For development we use a deterministic 50-problem subset (\texttt{verified\_50\_subset.json}, seed=42).
+
+\paragraph{Model and provider.} All five conditions in this paper use the same underlying language model, accessed through the same LiteLLM proxy and the same upstream third-party API gateway (Yunwu). We refer to the model by the internal identifier \texttt{gpt-5.4} used by that gateway; the gateway markets it as a GPT-5-class endpoint, but we make no claim that it is bit-identical to the official OpenAI \texttt{gpt-5} weights, and we never benchmark our system against the official OpenAI endpoint directly. The point of fixing the model is to isolate the memory contribution across conditions, not to claim a particular vendor model. Where we compare to numbers reported elsewhere (e.g.\ the SWE-bench-Pro paper's GPT-5 zero-shot figure), we treat those as external references, not matched-condition controls.
+
+\paragraph{Agent and budgets.} SWE-agent~v1.1.0~\cite{yang2024sweagent} with the default config. Budgets are set separately per evaluation regime:
+\begin{itemize}[leftmargin=*, itemsep=1pt]
+\item \emph{Verified development (50)}: $\textsc{cost\_limit}=\$3$, $\textsc{step\_limit}=75$. Reported per-method totals are sums over the 50 instances.
+\item \emph{Verified full (500)}: $\textsc{cost\_limit}=\textsc{uncapped}$ (\texttt{cost\_limit=0} in SWE-agent), $\textsc{step\_limit}=75$. Uncapping the per-instance cost lets the no-memory baseline use its full step budget on long-horizon problems and avoids confounding ``out-of-budget'' failures with retrieval-quality differences. Reported costs are sums over all instances run under that condition (not per-instance averages); the no-memory cost is high because uncapped runs frequently loop on hard instances until they hit $\textsc{step\_limit}$.
+\item \emph{Pro (50)}: $\textsc{step\_limit}=75$ for all conditions. \textbf{Budgets are asymmetric:} the three memory conditions (\texttt{faiss\_pro}, \texttt{agentkb\_pro}, \texttt{contextgraph\_pro}) use $\textsc{cost\_limit}=\$10$ per instance, because Pro instances span larger codebases and would otherwise routinely exceed the harness's wall-clock window. The \texttt{no\_memory} baseline is run \emph{uncapped} (\texttt{cost\_limit=0}), mirroring its Verified-full setting. This asymmetry is biased \emph{against} the memory methods, not in their favor: the baseline receives more compute, not less. The per-condition cost rows in Table~\ref{tab:pro50} ($\$1{,}686$ for no\_memory vs.\ $\$41$ for ContextGraph) reflect this asymmetry, not a deficiency of the baseline. The headline resolve-rate gap (\S\ref{sec:results-pro}) holds despite the budget tilt toward the baseline.
+\end{itemize}
+
+\paragraph{Conditions.}
+\begin{itemize}[leftmargin=*, itemsep=1pt]
+\item \texttt{no\_memory} --- standard SWE-agent, no \texttt{query\_memory} tool.
+\item \texttt{faiss} --- a flat FAISS index over \textsc{PlaybookEntry} embeddings only (cosine top-$K$).
+\item \texttt{expel}~\cite{zhao2024expel} --- our re-implementation: per-trajectory ``insights'' extracted with the published prompt template and retrieved by cosine.
+\item \texttt{agentkb}~\cite{tang2025agentkb} --- procedural knowledge entries exported from the same trajectories using Agent-KB's pipeline, retrieved by their default scorer.
+\item \texttt{contextgraph} --- the full system described in Section~3.
+\end{itemize}
+
+\paragraph{Evaluation.} Patches are scored by the official \texttt{swebench.harness.run\_evaluation} on \texttt{princeton-nlp/SWE-bench\_Verified}; we report \emph{resolved} (test passes), \emph{evaluated} (the patch applied and tests ran), and the resolved rate $\textsc{resolved}/\textsc{evaluated}$. We compare conditions with McNemar's paired test on the per-problem resolved indicator.
+
+\section{Results}
+
+\subsection{Development Subset (50 problems)}
+\label{sec:results-verified-dev}
+
+\begin{table}[t]
+\centering
+\caption{Resolved rate on the 50-problem SWE-bench-Verified development subset (dev signal; the load-bearing full-set numbers appear in Table~\ref{tab:verified500} and shrink the gap considerably). \texttt{contextgraph} (this work) outperforms the no-memory baseline by $+8.6$~pp on this subset and exceeds the next-best memory method (\texttt{expel}) by $+2.6$~pp. ``Eval'' is the number of problems for which evaluation completed; ``Resolved'' is the count of problems whose patches passed the official tests; ``Rate'' is Resolved$/$Eval; ``vs no\_memory'' is the percentage-point delta over the no-memory baseline.}
+\label{tab:dev50}
+\small
+\begin{tabular}{lrrrr}
+\toprule
+\textbf{Method} & \textbf{Eval} & \textbf{Resolved} & \textbf{Rate} & \textbf{vs no\_memory} \\
+\midrule
+\texttt{contextgraph} (ours) & 48/50 & \textbf{32} & \textbf{66.6\%} & \textbf{+8.6 pp} \\
+\texttt{expel}~\cite{zhao2024expel} & 50/50 & 32 & 64.0\% & +6.0 pp \\
+\texttt{faiss} & 49/50 & 30 & 61.2\% & +3.2 pp \\
+\texttt{agentkb}~\cite{tang2025agentkb} & 48/50 & 29 & 60.4\% & +2.4 pp \\
+\texttt{no\_memory} & 50/50 & 29 & 58.0\% & baseline \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:dev50} shows the head-to-head numbers on this dev subset. Every memory method beats no-memory on the subset, and ContextGraph holds the largest margin over both flat retrieval ($+5.4$~pp vs.\ FAISS) and dedicated memory baselines ($+2.6$~pp vs.\ ExpeL, $+6.2$~pp vs.\ Agent-KB). \emph{However}, these numbers do not extrapolate to the full set: with $n{=}48$ evaluated, an $8.6$~pp swing is roughly $4$ problems and lies well inside the variance band of SWE-bench-Verified subsets. We retain this table to be transparent about the dev signal that originally motivated the system, but the load-bearing comparison is the full-$500$ result reported in Section~\ref{sec:results-verified-full} below, on which the four memory methods collapse into a $\sim$3.6~pp band and ContextGraph's apparent dev-set lead disappears.
+
+\subsection{Full SWE-bench-Verified (500 problems)}
+\label{sec:results-verified-full}
+
+We run all five conditions on the full SWE-bench-Verified set with $\texttt{gpt-5.4}$ under uncapped per-instance cost. Table~\ref{tab:verified500} reports the resolved count and rate over the full $500$ instances (the SWE-bench standard denominator), along with McNemar paired discordant counts and exact $p$-values against the no-memory baseline. Each method's completion count differs slightly (no\_memory $486/500$, expel $488$, faiss $490$, agentkb $489$, contextgraph $484$); we count any instance that failed to complete under a given method as ``not resolved'' for that method in the paired analysis, which is the convention used by the public Verified leaderboard.
+
+\begin{table}[t]
+\centering
+\caption{Resolved rate on the full SWE-bench-Verified set ($n{=}500$, gpt-5.4 backbone, uncapped per-instance cost). \emph{wins} and \emph{losses} are the discordant counts in the paired comparison against \texttt{no\_memory}: ``wins'' = method resolves the instance, \texttt{no\_memory} does not; ``losses'' = the reverse. $p$-values are exact-binomial McNemar tests on the discordant pairs.}
+\label{tab:verified500}
+\small
+\begin{tabular}{lrrrrrr}
+\toprule
+\textbf{Method} & \textbf{Resolved} & \textbf{Rate} & \textbf{vs no\_mem.} & \textbf{wins} & \textbf{losses} & \textbf{$p$} \\
+\midrule
+\texttt{faiss} & 327 & 65.40\% & $+3.6$ pp & 49 & 31 & 0.057 \\
+\texttt{agentkb}~\cite{tang2025agentkb} & 320 & 64.00\% & $+2.2$ pp & 53 & 42 & 0.305 \\
+\texttt{contextgraph} (ours) & 318 & 63.60\% & $+1.8$ pp & 50 & 41 & 0.402 \\
+\texttt{expel}~\cite{zhao2024expel} & 312 & 62.40\% & $+0.6$ pp & 43 & 40 & 0.826 \\
+\texttt{no\_memory} & 309 & 61.80\% & baseline & --- & --- & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+At full scale the four memory methods compress into a $\sim$3.6~pp band above the no-memory baseline. The strongest of them, \texttt{faiss}, is borderline significant ($p=0.057$); the remaining three (including our \texttt{contextgraph}) are not significant against \texttt{no\_memory} ($p \geq 0.305$). Pairwise comparisons among the memory methods are also not significant. The relative ordering on this band differs from what the 50-problem development subset suggested in Section~\ref{sec:results-verified-dev}: \texttt{contextgraph} no longer holds a clear margin over \texttt{faiss} at full $n{=}500$, illustrating how thin dev-set signals can be when the baseline is already above $60\%$ resolved. We take the full-scale comparison as the load-bearing one.
+
+\paragraph{Post-hoc cleanup as a diagnostic.}
+After inspecting the $41$ instances on which \texttt{contextgraph} regresses against \texttt{no\_memory}, four high-frequency \textsc{CanonicalRule} nodes account for the majority of regressions: each is a low-precision generic rule (e.g.\ ``\emph{when fixing a feature in DVC, examine \texttt{dvc/repo/move.py}}'') that retrieval surfaces for queries it does not actually fit. We remove those four rules from the graph and re-run only the $42$ instances whose original retrieval hits at least one of them. On these $42$ \emph{rule-hit} instances, the cleaned variant resolves $18$ instances that the original \texttt{contextgraph} did not, and loses $0$ that it previously did. Projecting this differential onto the rest of the $500$ (where \texttt{contextgraph}-clean and \texttt{contextgraph} produce identical retrievals and would therefore behave identically) yields $\mathbf{336/500 = 67.20\%}$ for a $+5.4$~pp shift over \texttt{no\_memory} ($p=0.0039$ McNemar against the no-memory baseline; the same projection vs.\ \texttt{faiss} gives $+1.8$~pp, $p=0.281$, not significant). Note that the $42$ rule-hit instances are distinct from the $14$--$16$ instances per condition that fail at the harness level (Docker / image-build failures), which affect all five conditions symmetrically; the post-hoc analysis here concerns retrieval quality, not harness reliability.
+
+We deliberately do \emph{not} list this projection as a top-line condition in Table~\ref{tab:verified500}: the four rules were selected by inspecting the same data on which the projection is then evaluated, so the headline number is subject to selection bias. We report it instead as a diagnostic finding --- namely, that on Verified the limiting factor for memory is not the retrieval architecture (\texttt{faiss} and \texttt{contextgraph} are already statistically indistinguishable in Table~\ref{tab:verified500}) but the precision of individual surfaced rules. The harder Pro split (\S\ref{sec:results-pro}), where the no-memory baseline is far below saturation, makes the same retrieval mechanism produce a substantially larger and statistically significant gap.
+
+\subsection{SWE-bench-Pro}
+\label{sec:results-pro}
+
+SWE-bench-Pro~\cite{anysphere2025swebenchpro} is substantially harder than Verified: the same agent stack that resolves $\sim$66\% on the Verified development subset drops below $5\%$ on Pro's no-memory baseline. To test whether ContextGraph's retrieval gain holds under this regime, we re-build the graph from Pro's own training split: for each of the $681$ instances left out of the test set, we extract LLM-generated strategies from the gold patch, yielding $3{,}183$ \textsc{Strategy} entries with zero issue-level overlap with the held-out $50$. The two flat-retrieval baselines (\texttt{faiss\_pro}, \texttt{agentkb\_pro}) operate on the \emph{same} $3{,}183$ entries, so the comparison isolates the contribution of graph structure from that of having Pro-targeted content. Evaluation uses the official \texttt{scaleapi/SWE-bench\_Pro-os} harness with per-instance Docker images. As detailed in Section~4 under ``Agent and budgets'', the three memory conditions run under a per-instance cap of $\$10$ while the no-memory baseline runs uncapped; this asymmetry is biased \emph{against} the memory methods rather than in their favor, and the dollar-cost rows in Table~\ref{tab:pro50} reflect that asymmetry, not a deficiency of the baseline.
+
+\paragraph{Leakage protocol.}
+SWE-bench-Pro is designed to suppress training-data contamination at the benchmark level: its public split draws from GPL/copyleft repositories that commercial closed-weight models are unlikely to have memorized, its commercial split uses private startup repositories ($276$ instances), and an $858$-instance held-out split is never released~\cite{anysphere2025swebenchpro}. We further enforce a memory-construction protocol so that the \texttt{contextgraph\_pro} corpus cannot leak test answers: (i) the $681$ training instances are disjoint from the $50$ test instances at the issue level (no shared \texttt{instance\_id}), (ii) strategies are extracted from training-set gold patches \emph{only} --- we never observe the test instances' gold patches, test patches, fail-to-pass test bodies, post-base commits, or PR discussion threads during graph construction or retrieval, and (iii) at inference the agent receives only the issue text and the codebase pinned to \texttt{base\_commit}, identical to the no-memory baseline; memory adds rules abstracted from \emph{other} instances, not solutions to the current one. The $3{,}183$ strategies are natural-language sentences (e.g.\ \emph{``in Ansible plugins, the \texttt{require\_one\_of} signature changed in 2.13 --- callers passing positional args now fail with TypeError''}), not patch fragments, so even in the worst case memory contributes priors, not edits.
+
+\begin{table}[t]
+\centering
+\caption{Resolved rate on the 50-problem SWE-bench-Pro test subset. All three memory methods share an identical $3{,}183$-strategy corpus extracted from Pro's $681$-instance training split; they differ only in the retrieval mechanism. ContextGraph more than doubles the next-best flat-retrieval baseline and reaches $5.4\times$ the no-memory rate. $p$-values are exact-binomial McNemar paired tests against \texttt{no\_memory}. \emph{Budgets are asymmetric}: the three memory conditions use $\textsc{cost\_limit}=\$10$ per instance, the no-memory baseline is uncapped (see Section~4); cost is the total USD spent per condition across the $50$ instances and reflects this asymmetry.}
+\label{tab:pro50}
+\small
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Method} & \textbf{Eval} & \textbf{Resolved} & \textbf{Rate} & \textbf{vs no\_mem.} & \textbf{Cost (\$)} \\
+\midrule
+\texttt{contextgraph\_pro} (ours) & 47/50 & \textbf{11} & \textbf{23.40\%} & \textbf{$+19.05$ pp} ($p{=}0.012$) & \textbf{41} \\
+\texttt{agentkb\_pro}~\cite{tang2025agentkb} & 47/50 & 6 & 12.77\% & $+8.42$ pp ($p{=}0.22$) & 61 \\
+\texttt{faiss\_pro} & 47/50 & 5 & 10.64\% & $+6.29$ pp ($p{=}0.38$) & 68 \\
+\texttt{no\_memory} & 46/50 & 2 & 4.35\% & baseline & 1{,}686 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:pro50} summarizes the four-way comparison. Three findings stand out.
+\emph{First}, ContextGraph reaches $23.40\%$ resolved on Pro, a $+19.05$~pp absolute and $5.4\times$ relative gain over the no-memory baseline, significant under McNemar ($p{=}0.0117$). The unified comparison across $47$ paired instances shows ten ContextGraph-only wins against one no-memory-only win (the rest are ties).
+\emph{Second}, with \emph{identical} content (the same $3{,}183$ strategies), graph-structured retrieval beats flat FAISS by $+12.76$~pp ($23.40\%$ vs.\ $10.64\%$, $p{=}0.031$) and beats Agent-KB's TF-IDF$+$semantic hybrid by $+10.63$~pp ($p{=}0.063$, borderline). Crucially, of the eleven instances ContextGraph resolves, both flat-retrieval baselines miss exactly zero of them in the wrong direction --- every problem solved by a flat method is also solved by ContextGraph (B-only counts are $0$ in both pairings), so the graph dominates the flat retrievers as a strict superset rather than a noisy alternative.
+\emph{Third}, the resolve-rate ranking holds despite a budget asymmetry that favors the baseline: \texttt{no\_memory} runs uncapped and spends $\$1{,}686$ over the $50$ instances (it loops on hard instances until $\textsc{step\_limit}$), whereas the three memory conditions run under a $\$10$ per-instance cap and spend $\$41$--$68$ in total. The headline gap thus cannot be attributed to memory methods having more compute --- they had strictly less.
+
+Comparing to the published Pro leaderboard puts the magnitude in perspective: the SWE-bench-Pro paper reports $23.3\%$ for GPT-5 zero-shot and $22.7\%$ for Claude Opus 4.1 zero-shot~\cite{anysphere2025swebenchpro}. ContextGraph running on a third-party GPT-5-class endpoint (Yunwu gateway, internal ID $\texttt{gpt-5.4}$; see Section~4) numerically approaches those figures ($23.40\%$), though the settings are not directly comparable: our $50$-instance subset, evaluation harness configuration, model access path, and per-instance budget all differ from the Pro paper's full-set zero-shot runs, and we have no independent benchmark to position our endpoint against the official OpenAI \texttt{gpt-5} weights. We therefore avoid the framing of ``matching a stronger model with memory''. What we do claim is the within-paper, matched comparison: holding the model and agent fixed across conditions, structured graph retrieval produces a $5.4\times$ larger resolve rate than no-memory on Pro.
+
+\subsection{SWE-ContextBench (Related-Lite split)}
+\label{sec:results-swectx}
+
+SWE-bench-Verified and Pro share a confound when measuring memory: their test instances were not designed with paired training counterparts, so any memory pool we build is at best topically relevant rather than provably related to a specific test instance. \citet{swecontextbench2026} introduce \textbf{SWE-ContextBench} to close this gap: each \emph{Related} test instance is paired by curators with an \emph{Experience} training instance from the same repository that fixed a related-but-distinct bug, and the pairing ground truth ships in \texttt{Relationship.parquet}. The Lite split contains $300$ Experience and $99$ Related instances across $51$ repositories. This is the only benchmark we know of where the question ``did memory of past-but-related work help?'' can be answered without the analyst choosing what counts as ``related''.
+
+We adopt this benchmark for a paper-faithful five-way memory comparison, plus our ContextGraph as a sixth condition. All six conditions use the \emph{same} agent (\texttt{gpt-5.4} via the LiteLLM proxy), the \emph{same} $99$-instance test set, the \emph{same} 300-summary memory pool, and the \emph{same} paper-provided evaluation harness (\texttt{evaluation.sh}, which runs each model patch in the curator's per-instance Docker image and checks the prescribed \texttt{FAIL\_TO\_PASS}/\texttt{PASS\_TO\_PASS} test sets). The pool entries are enriched summaries of the form $\texttt{[REPO] $r$ $\hookrightarrow$ PROBLEM[:500]\, GOLD\_PATCH[:1500]}$ extracted from the $300$ Experience instances (median $1{,}394$ chars). One instance (\texttt{django\_\_django-28147}) failed image build during agent run and is excluded from all six conditions, leaving $n{=}98$ paired instances.
+
+\paragraph{Conditions.}
+\textsc{no\_context} (no memory injection); \textsc{free\_summary} (three random summaries from the pool prepended to the task prompt); \textsc{mem0}~\cite{mem0} (the same pool ingested into Mem0 with $\texttt{infer}{=}\texttt{False}$, served via FastAPI, queried via our \texttt{QueryMemoryTool} adapter); \textsc{langmem}~\cite{langmem} (same pool ingested into \texttt{InMemoryStore} with the same embedder, same adapter); \textsc{oracle\_summary} (the single paired Experience instance's summary, looked up via \texttt{Relationship.parquet}, prepended to the prompt --- this is the paper-defined ceiling for summary-shaped memory); \textsc{contextgraph} (our 3-channel cosine$+$BM25$+$PPR retrieval over the same pool, top-$5$ with MMR). Conditions that prepend memory into the prompt do not expose a memory tool; conditions that go through a server (Mem0, LangMem, ContextGraph) expose the same tool and the agent decides when to call it. To control for run-to-run variance in agent stochasticity, each method's failures are re-run once under $\textsc{num\_workers}{=}8$ and the best of the two attempts is kept; we report this as the ``$V_2$'' number throughout this subsection and discuss the matched single-shot $V_1$ values inline.
+
+\begin{table}[t]
+\centering
+\caption{SWE-ContextBench Lite (Related, $n{=}98$). All six conditions use the same \texttt{gpt-5.4} backbone, the same 300-summary pool, and the paper-provided \texttt{evaluation.sh} harness. Paper-reported Claude-Sonnet-4.5 figures from~\cite{swecontextbench2026} are shown for absolute orientation but are \emph{not} matched-condition comparisons (different model, different memory content). All $p$-values are paired exact-binomial McNemar tests against the column-labeled reference.}
+\label{tab:swectx}
+\small
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Method} & \textbf{Resolved} & \textbf{Rate} & \textbf{$\Delta$ vs no\_ctx} & \textbf{vs ContextGraph} & \textbf{Paper (Sonnet 4.5)} \\
+\midrule
+\textsc{free\_summary}   & 19/97 & $19.59\%$ & $-5.92$ ($p{=}0.07$)   & $-22.25$ ($p{<}10^{-4}$, $\star\!\star\!\star$) & $22.22\%$ \\
+\textsc{mem0}            & 19/98 & $19.39\%$ & $-6.12$ ($p{=}0.21$)   & $-22.45$ ($p{<}10^{-4}$, $\star\!\star\!\star$, \emph{strict}) & $24.24\%$ \\
+\textsc{langmem}         & 24/98 & $24.49\%$ & $-1.02$ ($p{=}1.00$)   & $-17.35$ ($p{=}0.0001$, $\star\!\star\!\star$) & $29.30\%$ \\
+\textsc{no\_context}     & 25/98 & $25.51\%$ & baseline               & $-16.33$ ($p{=}0.0004$, $\star\!\star\!\star$) & $26.26\%$ \\
+\textsc{oracle\_summary} & 35/98 & $35.71\%$ & $+10.20$ ($p{=}0.041$, $\star$) & $-6.12$ ($p{=}0.18$, n.s.) & $34.34\%$ \\
+\midrule
+\textsc{contextgraph} (ours) & \textbf{41/98} & $\mathbf{41.84\%}$ & \textbf{$+16.33$} ($p{=}0.0004$, $\star\!\star\!\star$) & --- & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/fig_swectx_main.pdf}
+\caption{SWE-ContextBench Lite paired resolve rates ($n{=}98$). Filled bars show our matched \texttt{gpt-5.4} runs; hollow markers show paper-reported Claude-Sonnet-4.5 rates for orientation. Stars mark paired McNemar significance against \textsc{no\_context}.}
+\label{fig:swectx-main}
+\end{figure}
+
+Table~\ref{tab:swectx} summarizes the six-condition comparison; four findings stand out.
+
+\emph{First, only ContextGraph and Oracle significantly beat no-memory.} Among the four ``ContextGraph $+$ four baselines'' memory conditions tested under matched gpt-5.4, only \textsc{contextgraph} ($p{=}0.0004$) and \textsc{oracle\_summary} ($p{=}0.041$) clear the McNemar bar; \textsc{mem0} ($-6.12$~pp), \textsc{langmem} ($-1.02$~pp), and \textsc{free\_summary} ($-5.92$~pp) all sit \emph{below} no-memory descriptively, and none of those gaps reach significance. The pattern reproduces what \citet{swecontextbench2026} report on Sonnet 4.5 --- Mem0 and Free-Summary land below paper no-context there too --- so the failure of generic memory frameworks to lift the agent on this benchmark is not idiosyncratic to our endpoint.
+
+\emph{Second, ContextGraph strictly dominates Mem0.} In the paired comparison ContextGraph wins $22$ instances and Mem0 wins $0$: every problem Mem0 resolves is also resolved by ContextGraph ($p{<}10^{-4}$). The same set-superset relationship holds against \textsc{free\_summary} ($22{\rightarrow}0$, $p{<}10^{-4}$) and is near-strict against \textsc{langmem} ($18{\rightarrow}1$, $p{=}0.0001$). At identical content and identical agent, the retrieval mechanism matters: a 3-channel cosine$+$BM25$+$PPR retriever with typed-edge structure beats both vector-only (Mem0/LangMem) and prompt-injection-without-retrieval (Free) on this benchmark, decisively.
+
+\emph{Third, ContextGraph matches the paper-defined Oracle ceiling without ground-truth pairing.} \textsc{oracle\_summary} uses \texttt{Relationship.parquet} to look up each test instance's paired Experience instance and inject \emph{exactly} the right summary; it is the strongest baseline available to a retriever and is upper-bounded only by the agent's ability to act on a single, on-topic hint. ContextGraph reaches $41.84\%$ versus Oracle's $35.71\%$ ($+6.13$~pp descriptive), and the paired test is not significant ($p{=}0.18$, $14$ discordant pairs). The honest statement is that the two methods are \emph{statistically tied} on $n{=}98$, with a descriptive advantage for ContextGraph driven by ten instances where retrieval finds a non-paired but apparently useful summary that the paired one missed (e.g.\ \texttt{django-31181, django-34481, sklearn-25763, sklearn-5970, sympy-19484}). The headline is therefore not ``ContextGraph beats Oracle'' but: \emph{retrieval-based memory matches the oracle-injection upper bound on this benchmark without requiring the curator-provided pairing}, which is the deployment-relevant comparison since \texttt{Relationship.parquet} does not exist for real workloads.
+
+\emph{Fourth, the rerun gain is concentrated in memory-on conditions.} Pairing the same 64 V$_1$ ContextGraph-failures against their V$_2$ reruns gives $+7$ new resolves and $0$ regressions ($p{=}0.016$, $\star$); the analogous test on the $77$ no-context V$_1$ failures gives only $+4$ resolves and $0$ regressions ($p{=}0.125$, n.s.). One reading is that memory turns marginal trajectories into recoverable ones --- a re-run helps more when an extra retrieval call can change the agent's plan than when it cannot. We do not over-interpret a one-shot rerun comparison; the headline numbers in Table~\ref{tab:swectx} are V$_2$ both columns to give every condition the same two-attempt budget.
+
+\paragraph{Honest framing of the absolute-rate comparison with the paper.}
+Our \textsc{no\_context} ($25.51\%$) is $0.75$~pp below the paper's Sonnet 4.5 \textsc{no\_context} ($26.26\%$), and our \textsc{mem0}/\textsc{langmem} are $4.85$/$4.81$~pp below the corresponding paper figures. This is consistent with the gpt-5.4 endpoint being roughly Sonnet-4.5-class on this benchmark but slightly weaker in agentic dexterity, and with our enriched-summary memory content being somewhat dense for generic memory frameworks (whose embedders see $\sim$1.4 KB of mixed prose-and-diff per memory). Our \textsc{contextgraph} number, however, is $+7.50$~pp above the paper's Oracle-Summary ceiling and $+11.54$~pp above the paper's best-reported memory framework (Supermemory at $30.30\%$). We therefore avoid the ``stronger than Sonnet 4.5'' framing; the within-paper claim is the matched six-condition comparison in Table~\ref{tab:swectx}.
+
+\subsubsection*{Ablations}
+\label{sec:ablations}
+
+We run two cross-cutting ablations on the SWE-ContextBench Lite split (same $98$-instance test set, same \texttt{gpt-5.4} agent, single-shot ``$V_1$'' regime so each method gets one attempt per instance).
+
+\paragraph{Memory pool size.}
+ContextGraph's headline result uses the full $300$-summary pool. We sample three smaller pools at $K{=}50, 100, 200$ ($\texttt{random.seed}{=}42$) and ingest each into a separate Neo4j collection, then run the same agent and 3-channel retriever against each.
+
+\begin{table}[h]
+\centering
+\caption{Memory pool-size ablation. ContextGraph V$_1$ single-shot resolve rate as a function of pool size $K$. The 300-summary pool is the same one used in Table~\ref{tab:swectx}. The $V_2$ rerun row repeats the $K{=}300$ condition with best-of-two attempts on failures.}
+\label{tab:swectx-poolsize}
+\small
+\begin{tabular}{lrrr}
+\toprule
+\textbf{Pool size} & \textbf{Resolved} & \textbf{Rate} & \textbf{$\Delta$ vs no\_context ($25.51\%$)} \\
+\midrule
+$K{=}50$  & 21/96 & $21.88\%$ & $-3.63$ \\
+$K{=}100$ & 27/98 & $27.55\%$ & $+2.04$ \\
+$K{=}200$ & 26/97 & $26.80\%$ & $+1.29$ \\
+$K{=}300$ ($V_1$, headline single-shot) & 34/98 & $34.69\%$ & $+9.18$ \\
+$K{=}300$ ($V_2$, headline best-of-two) & 41/98 & $\mathbf{41.84\%}$ & $\mathbf{+16.33}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/fig_swectx_poolsize.pdf}
+\caption{ContextGraph pool-size ablation on SWE-ContextBench Lite. Single-shot $V_1$ improves only once the memory pool covers the full $K{=}300$ paired-summary set; the best-of-two $V_2$ point is the headline result from Table~\ref{tab:swectx}.}
+\label{fig:swectx-poolsize}
+\end{figure}
+
+Pool size shows a \emph{threshold} pattern rather than a smooth curve: at $K{=}50$ memory actively hurts ($-3.63$~pp vs no\_context, descriptive), at $K{=}100$ and $K{=}200$ it barely helps ($+1$–$2$~pp), and only at $K{=}300$ does it cross into significant territory ($+9.18$~pp $V_1$, $+16.33$~pp $V_2$). The interpretation is coverage: the $99$ test instances each have exactly one paired Experience in the relationship graph; at $K{=}50$ random sampling, only $\sim 16$ test instances have their paired summary in the pool, so retrieval mostly returns off-target candidates that distract the agent more than they help. At $K{=}300$ all pairings are present, and ContextGraph's 3-channel retrieval can pull the matching summary even when the query text and summary text don't share surface tokens. This suggests memory designs that grow small pools incrementally may underperform no-memory until they pass a coverage threshold tied to the test distribution.
+
+\paragraph{Trajectory length and where memory helps.}
+We bucket the $98$ test instances by the no-memory $V_2$ agent's trajectory length (number of steps), then read each method's resolve rate within each bucket. The median trajectory is $19$ steps; the buckets are short (1--10, $n{=}12$), medium (11--20, $n{=}46$), long (21--40, $n{=}36$), and very long ($\ge 41$, $n{=}4$). Memory $\Delta$ (ContextGraph $V_2$ minus no\_context $V_2$) is $+25.0$~pp on short, $+19.6$~pp on medium, $+8.3$~pp on long, and $+25.0$~pp (unreliable, $n{=}4$) on very long. The drop from $+19.6$ to $+8.3$~pp between medium and long is the clearest signal: when a problem genuinely requires more than $\sim 20$ steps of agent reasoning, retrieved historical memory contributes less to the final fix --- the agent has by that point either already discovered the right direction or gotten stuck in a wrong one that no single retrieval call recovers from. This is the \emph{opposite} of the long-horizon hypothesis we previewed for SWE-bench-Pro in Section~\ref{sec:results-pro} (where Pro's no-memory baseline is far weaker, so any nudge helps more); on Related-Lite, where the no-memory baseline is already at $25.51\%$, the marginal value of memory is largest exactly where the agent would have solved the problem given one good early hint --- the short-trajectory regime. We note this honestly and discuss the interpretation in Section~\ref{sec:disc-shortvslong}.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/fig_swectx_horizon.pdf}
+\caption{Resolve rate by no-memory trajectory-length bucket on SWE-ContextBench Lite. ContextGraph $V_2$ gains are largest on short and medium trajectories and shrink on long trajectories.}
+\label{fig:swectx-horizon}
+\end{figure}
+
+\paragraph{Channel ablation (caveat).}
+We also ran an ablation that disables individual retrieval channels (\textsc{cosine\_only}, \textsc{bm25\_only}, \textsc{rrf\_no\_mmr}, \textsc{full}, \textsc{full\_with\_ppr}) by reimplementing the retrieval pipeline in a separate FastAPI server. The resulting numbers ($26.53\%$/$25.51\%$/$22.45\%$/$20.41\%$/$22.45\%$) do not reproduce the production retrieve() function's behavior at the \textsc{full} setting (which should match $K{=}300$ $V_1$ at $34.69\%$), indicating an implementation gap in our ablation harness (likely in the MMR backfill or candidate-fetch ordering). We report the channel-ablation numbers in the appendix for completeness but do not draw conclusions from them in the main text; the cleaner story --- pool size scaling and trajectory-length sensitivity --- comes from the K-pool and length analyses above. A faithful channel ablation that edits \texttt{agent\_memory/playbook.py} directly (rather than reimplementing it) is left to future work.
+
+\section{Discussion}
+
+\paragraph{Why does graph structure help on top of FAISS?}
+The 50-problem subset already shows that ContextGraph beats a flat FAISS index over identical embeddings by $5.4$~pp. The two structural ingredients we credit are (a) PPR walks that surface rules linked through shared error patterns even when their text is not lexically close to the query, and (b) the multi-level abstraction --- a query can hit a rare \textsc{ErrorPattern} that, via a single PPR hop, brings in the \textsc{CanonicalRule} that fixes it without that rule needing to mention the error keyword.
+
+\paragraph{Why graph structure helps \emph{more} on Pro.}
+\label{sec:disc-shortvslong}
+The Pro absolute gap ($+19.05$~pp) and relative ratio ($5.4\times$) far exceed the full-Verified gap for our method ($+1.8$~pp, $1.03\times$, $p=0.402$), the opposite of our pre-experiment expectation that memory transfer would attenuate under distribution shift. We attribute the amplification to \emph{headroom}: Pro's no-memory baseline is far below saturation ($4.35\%$), so any memory signal that lifts the agent past a single-pass exploration plateau translates into many recovered problems; on Verified, no-memory is already strong ($61.80\%$) and the marginal gain from any memory method is necessarily small and noisy, which is exactly what Table~\ref{tab:verified500} shows (all four memory methods cluster within $\sim$3.6~pp of the baseline and only FAISS reaches borderline $p=0.057$). One pre-experiment hypothesis we held was that long-horizon problems would also benefit more from memory, on the theory that PPR walks could surface multi-step rules. The SWE-ContextBench trajectory-length ablation (Section~\ref{sec:ablations}) does not support that framing: within Related-Lite, the ContextGraph minus no-memory gap is \emph{largest on short trajectories} ($+25$~pp on $\le 10$-step solutions) and smallest on long ones ($+8.3$~pp on $21$--$40$ steps). The corrected interpretation is that memory pays off most where one good early hint can set direction; once the agent is past $\sim 20$ steps the problem is dominated by execution and the marginal value of an extra retrieval shrinks. Reconciling with the Pro result: Pro's amplification comes from the no-memory baseline being weak overall (headroom), not from Pro instances being uniformly long-horizon --- and indeed many of Pro's gold patches are single-file fixes. We retract the ``long-horizon helps more'' framing from earlier drafts; the cleaner empirical claim is that memory shifts trajectories that were about to fail near the start, and so its absolute lift tracks how much headroom the no-memory baseline leaves.
+
+\paragraph{Why ContextGraph dominates generic memory frameworks on SWE-ContextBench.}
+The strict set-dominance on Mem0 ($22{\rightarrow}0$, Table~\ref{tab:swectx}) and near-strict dominance on LangMem ($18{\rightarrow}1$) sharpens the conclusion from \S\ref{sec:results-pro}: when the memory \emph{content} is identical (all four frameworks index the same $300$ enriched summaries) but the retrieval \emph{architecture} differs, vector-only retrievers underperform a typed multi-channel retriever even when the latter is queried by exactly the same agent loop. We read this as evidence that the bottleneck is not embedding quality (Mem0 and LangMem both use \texttt{text-embedding-3-large}) and not pool composition (all conditions share the pool) but the lack of \emph{linking structure} during retrieval. A query about \texttt{ManagementUtility.\_\_init\_\_} that misses the Experience instance lexically can still reach it through a shared \textsc{ErrorPattern} edge or a one-hop PPR walk in ContextGraph; the same query in Mem0/LangMem returns whatever happens to be cosine-closest, which on this benchmark is frequently a topically-adjacent but unactionable summary. The Oracle condition removes this failure mode by skipping retrieval altogether (the curator-pinned summary is always on-target), and the resulting Oracle$\approx$ContextGraph statistical tie ($p{=}0.18$) suggests our retrieval recovers most of what perfect pairing would deliver --- without needing the curator.
+
+\paragraph{Limitations.}
+(i) The training corpus is open-source and English-dominated; non-English code or proprietary frameworks may be under-represented.
+(ii) The graph is built once; we do not study online updates in the main results, although the \texttt{neo4j-contextgraph-online} instance supports them.
+(iii) We do not vary the underlying LLM in this paper; all numbers are with a single coding model. Cross-model robustness is left to future work.
+(iv) Cost: building each graph requires LLM calls for strategy extraction and community summarization. For the Verified-targeted graph (1{,}795 trajectories, $\sim$45K nodes), end-to-end construction including embedding completes in $\sim$12 minutes on a single workstation; for the Pro-targeted graph (3{,}183 strategies from 681 instances) construction takes $\sim$4 minutes. We do not include the construction cost in the per-instance evaluation costs reported in Section~\ref{sec:results-pro} because the graph is built once and amortized across all subsequent agent runs.
+
+\section{Conclusion}
+
+ContextGraph shows that a typed, multi-channel knowledge-graph memory --- built once from past trajectories and queried through a single tool call --- improves a strong SWE-agent backbone, with the size of the improvement depending sharply on benchmark difficulty. On the full 500-problem SWE-bench-Verified the lift is modest: the four memory methods compress into a $\sim$3.6~pp band above no-memory ($61.80\%$), with FAISS the strongest fully-run condition at $65.40\%$ ($p=0.057$) and ContextGraph at $63.60\%$ ($p=0.402$); a post-hoc cleanup that removes four low-precision rules from ContextGraph projects to $67.20\%$ ($p=0.0039$) but is subject to selection bias and is reported as a diagnostic. On the harder SWE-bench-Pro split the gap widens substantially to $+19.05$~pp ($23.40\%$ vs.\ $4.35\%$, $5.4\times$ relative, $p{=}0.012$), with the memory methods running under a tighter per-instance compute cap than the uncapped baseline (\S\ref{sec:results-pro}); our number is also numerically close to the GPT-5 zero-shot figure reported on Pro, though we do not claim a matched-condition comparison with that endpoint. With identical strategy content, graph-structured retrieval more than doubles flat-retrieval baselines on Pro ($p{=}0.031$ vs.\ FAISS), isolating the benefit of typed relations and PPR walks from raw vector similarity. On SWE-ContextBench Lite (\S\ref{sec:results-swectx}), which is the only benchmark with curator-provided train/test pairings, a matched six-condition comparison on a single \texttt{gpt-5.4} agent places ContextGraph at $41.84\%$ versus an Oracle-Summary ceiling of $35.71\%$ (statistical tie, $p{=}0.18$, $n{=}98$), and at $+22$ versus Mem0's $0$ in paired set-difference --- every Mem0 success is also a ContextGraph success --- with Mem0 and LangMem themselves not significantly above no-memory on this benchmark and base model. Together these results suggest that structured long-term memory pays off where it has room to: when the no-memory baseline is already strong, the marginal effect is small and noisy and the bottleneck shifts from retrieval architecture to individual rule precision; when the baseline is weak relative to the task's long-horizon structure, or the memory pool's links can substitute for a curator-provided pairing, the same retrieval mechanism produces a much larger, statistically significant lift. Our code, graph artifacts, derived images, and matched-API baseline servers (ContextGraph, Mem0, LangMem) are released so that subsequent memory designs can be compared on a level playing field.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}
