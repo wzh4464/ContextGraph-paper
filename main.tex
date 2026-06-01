@@ -317,6 +317,30 @@ Table~\ref{tab:swectx} summarizes the six-condition comparison; four findings st
 \paragraph{Honest framing of the absolute-rate comparison with the paper.}
 Our \textsc{no\_context} ($25.51\%$) is $0.75$~pp below the paper's Sonnet 4.5 \textsc{no\_context} ($26.26\%$), and our \textsc{mem0}/\textsc{langmem} are $4.85$/$4.81$~pp below the corresponding paper figures. This is consistent with the gpt-5.4 endpoint being roughly Sonnet-4.5-class on this benchmark but slightly weaker in agentic dexterity, and with our enriched-summary memory content being somewhat dense for generic memory frameworks (whose embedders see $\sim$1.4 KB of mixed prose-and-diff per memory). Our \textsc{contextgraph} number, however, is $+7.50$~pp above the paper's Oracle-Summary ceiling and $+11.54$~pp above the paper's best-reported memory framework (Supermemory at $30.30\%$). We therefore avoid the ``stronger than Sonnet 4.5'' framing; the within-paper claim is the matched six-condition comparison in Table~\ref{tab:swectx}.
 
+\paragraph{Cross-model generalization.}
+A natural worry is that the six-condition ranking is an artifact of the \texttt{gpt-5.4} backbone. We therefore re-run the \emph{entire} protocol --- same $98$-instance Related-Lite split, same memory pool, same servers and \texttt{query\_memory} tool --- on two additional, architecturally distinct backbones routed through the same LiteLLM proxy: \texttt{deepseek-v4-pro} and \texttt{kimi-k2.6}. To keep the comparison apples-to-apples across models we use the single-shot $V_1$ regime (one attempt per instance) for all three; accordingly the \texttt{gpt-5.4} column in Table~\ref{tab:swectx-crossmodel} reports its $V_1$ numbers ($34.69\%$ ContextGraph), \emph{not} the best-of-two $V_2$ headline of Table~\ref{tab:swectx}. Table~\ref{tab:swectx-crossmodel} shows the result holds across all three: \textsc{contextgraph} is the strongest \emph{retrieval} method on every backbone --- the top condition outright on \texttt{deepseek-v4-pro} ($35.05\%$) and \texttt{kimi-k2.6} ($28.87\%$), and the top retrieval method on \texttt{gpt-5.4} ($34.69\%$), second only to the ground-truth \textsc{oracle\_summary} ceiling. The lift over \textsc{no\_context} is $+13.3$~pp on \texttt{gpt-5.4} (McNemar $p{=}0.0072$), $+10.1$~pp on \texttt{kimi-k2.6} ($p{=}0.0225$), and $+4.4$~pp on \texttt{deepseek-v4-pro} ($p{=}0.23$, n.s.) --- the latter not significant because \texttt{deepseek-v4-pro}'s no-memory baseline is already the strongest of the three ($30.61\%$), leaving the least headroom, exactly the saturation pattern we see between Verified and Pro. Two qualitative findings reproduce on every backbone: (i) \textsc{contextgraph} strictly dominates \textsc{mem0} in the paired count (ContextGraph-only wins $18/10/7$ versus Mem0-only wins $3/2/4$ on gpt/deepseek/kimi), and (ii) on the two non-\texttt{gpt} backbones \textsc{contextgraph} \emph{exceeds} the Oracle ceiling outright ($35.05\%$ vs.\ $27.84\%$ on deepseek; $28.87\%$ vs.\ $25.00\%$ on kimi), strengthening the gpt-5.4 finding that graph retrieval matches or beats curator-paired oracle injection. We attempted a fourth and fifth backbone (\texttt{MiniMax-M2.7}, \texttt{claude-sonnet-4}) but could not obtain clean runs: the MiniMax endpoint rejected the agent's accumulated multi-turn requests with schema-validation errors on $\sim$80\% of instances, and the Sonnet-4 route was unavailable on our gateway; we omit both rather than report partial data.
+
+\begin{table}[h]
+\centering
+\caption{Cross-model generalization on SWE-ContextBench Lite ($n{=}98$, single-shot $V_1$ for all three backbones). Each cell is resolved/completed and the resolved rate. \textbf{Bold} marks the top condition per model. The \texttt{gpt-5.4} column is the $V_1$ regime ($34.69\%$ ContextGraph), matching the cross-model protocol rather than the $V_2$ headline of Table~\ref{tab:swectx}. \textsc{contextgraph} is the strongest retrieval method on all three backbones and beats the Oracle ceiling on deepseek and kimi.}
+\label{tab:swectx-crossmodel}
+\small
+\begin{tabular}{lccc}
+\toprule
+\textbf{Condition} & \texttt{gpt-5.4} & \texttt{deepseek-v4-pro} & \texttt{kimi-k2.6} \\
+\midrule
+\textsc{no\_context}     & $21/98$ ($21.4\%$) & $30/98$ ($30.6\%$) & $18/96$ ($18.8\%$) \\
+\textsc{free\_summary}   & $19/97$ ($19.6\%$) & $26/96$ ($27.1\%$) & $25/98$ ($25.5\%$) \\
+\textsc{mem0}            & $19/98$ ($19.4\%$) & $26/97$ ($26.8\%$) & $25/98$ ($25.5\%$) \\
+\textsc{langmem}         & $24/98$ ($24.5\%$) & $33/97$ ($34.0\%$) & $24/98$ ($24.5\%$) \\
+\textsc{oracle\_summary} & $\mathbf{35/98}$ $\mathbf{(35.7\%)}$ & $27/97$ ($27.8\%$) & $24/96$ ($25.0\%$) \\
+\textsc{contextgraph} (ours) & $34/98$ ($34.7\%$) & $\mathbf{34/97}$ $\mathbf{(35.0\%)}$ & $\mathbf{28/97}$ $\mathbf{(28.9\%)}$ \\
+\midrule
+$\Delta$ vs \textsc{no\_context} & $+13.3$ ($p{=}.007$) & $+4.4$ ($p{=}.23$) & $+10.1$ ($p{=}.023$) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \subsubsection*{Ablations}
 \label{sec:ablations}
 
