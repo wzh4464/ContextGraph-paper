@@ -73,7 +73,16 @@ response contained an optional null array argument that crashed the SWE-agent
 parser after 47 protocol-valid API calls. Its official receipt records an empty
 patch; the strict audit continues to reject its generic error stop. Fourteen slots
 were attempted, thirteen pass the full audit, and 436 remain unstarted. A separate
-parser candidate passes recorded-call regression checks and is undergoing new
-training-only validation; it is not deployed to the formal test runtime.
+parser candidate passes recorded-call regression checks and completed its separate
+training-only infrastructure gate at 15:56 UTC. All three protocol/delivery audits
+passed; Control and Flat were officially resolved, Graph submitted an empty patch.
+The real runs recorded zero optional-null omissions, so branch coverage comes
+from the recorded-call regression. The candidate is not deployed to the formal
+test runtime. Both nonempty training verifications passed the required 8 FAIL_TO_PASS
+and 133 PASS_TO_PASS tests, while each raw suite still reported 1 failed/142 passed.
+These are training observations, not a formal memory-effect estimate.
+Combined original formal and new training solver accounting is $226.428930;
+with $20 monitoring reserved, another $105 whole block exceeds the unchanged $300
+allowance. No new formal attempts are admitted.
 The full 150-task denominator remains fixed per arm and no formal effect estimate
 is reported. See the bound amendment checkpoint and deployment records.

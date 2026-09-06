@@ -1,6 +1,6 @@
 {
   "as_of": "2026-09-06",
-  "status": "Research draft; original Verified execution and its operational-stop continuation closed incomplete on an optional-null parser crash. Fourteen original test slots attempted and thirteen audited; no formal effect estimate. A separately frozen parser correction is now under real training-only validation within the existing aggregate allowance; the formal runtime and original outcomes are unchanged.",
+  "status": "Research draft; the original Verified execution and its operational-stop continuation closed incomplete on an optional-null parser crash. Fourteen original test slots attempted and thirteen audited; no formal effect estimate. The separately frozen parser correction completed all three real training-only infrastructure gates, with two nonempty official verifications and zero real optional-null omissions. The formal runtime and original outcomes are unchanged; the existing aggregate allowance cannot reserve another complete formal block.",
   "artifacts": [
     {
       "path_from_contextgraph_root": "docs/reports/gfx-skill-audit-20260906/receipt-audit.json",
@@ -733,6 +733,38 @@
     {
       "path_from_contextgraph_root": "docs/reports/verified-training-transfer-case-20260906/flat-outcome-update.json",
       "sha256": "61a7207a89253585dadf6537d83cc9aa2b54a5662cc64a1d9ba906a3f967ef9f"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-nullable-training-20260906/README.md",
+      "sha256": "e6997ab09ebf8d6a099fa8f09b7a56af8c7f231bf6ba134510e171c2880feb5a"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-nullable-training-20260906/audit_completion.py",
+      "sha256": "a31fa6eeecc601c790fa1b5525f5abd9561f6a86f970648349093de725c709be"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-nullable-training-20260906/completion-audit.json",
+      "sha256": "5cd99c4d549a137738163205f80e3ca54b2e41bbcc42d13036e5e6154f969d8f"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-nullable-training-20260906/spend-envelope-completed.json",
+      "sha256": "7d4624ef0014c4fac3e5db7d96f86b6b545df36d35803b9494054dc8e334f7d8"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-nullable-training-20260906/remote-review-recovery-20260906T1552Z.json",
+      "sha256": "2e870bbaaebf600e0129f59846713cb8c93da45b39e9f19700bdf208141ca520"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-nullable-training-20260906/remote-review-recovery-addendum.json",
+      "sha256": "c35ce05edaa2656c76cacbc4de0529aaf763c420202b09d2017d7c20cd368457"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-nullable-training-20260906/review-terminal-label-fix.json",
+      "sha256": "9a3b5620b002e8df1e044c0bdaea0f93d31524a7f7c040d8b392920f07b703df"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-nullable-training-20260906/review_before_terminal_label_fix.py",
+      "sha256": "1b4bee7f5706e520911dcb93b087f8d3809502341d5d7538c33f777cdea9f3db"
     }
   ],
   "claims": {
