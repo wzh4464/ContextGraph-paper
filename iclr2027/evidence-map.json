@@ -765,20 +765,64 @@
     {
       "path_from_contextgraph_root": "docs/reports/verified-nullable-training-20260906/review_before_terminal_label_fix.py",
       "sha256": "1b4bee7f5706e520911dcb93b087f8d3809502341d5d7538c33f777cdea9f3db"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/audit_gfx_response_retention_v2.py",
+      "sha256": "02a947c88fcf062cf04363a3eef92a46157a23ac8d73adfe5cd188251aaa5caf"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-response-retention-comparison-20260906/README.md",
+      "sha256": "005fe4584ee0101a91ba323571b94ae0022564408c9166fcdff53083be6e47fc"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-response-retention-comparison-20260906/api-and-monitor-status.json",
+      "sha256": "f57993ee7f3694219f0d33fd90b002a89228f7827836943991db293009de0512"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-response-retention-comparison-20260906/deployment-receipt.json",
+      "sha256": "4df6e453c1e71584e756c39c333cf63a7a162a7c46c9f9f22df69093262747dc"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-response-retention-comparison-20260906/execution-result.json",
+      "sha256": "839f1682a99d2586a9331c5eba19d09456aaa44fbfde36bf778cb45d0133a37d"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-response-retention-comparison-20260906/execution.stderr",
+      "sha256": "31cd88e41ff1bafb75048d099907fb626f2425ff1b694d24e5681834316e87b2"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-response-retention-comparison-20260906/inspection-plan.json",
+      "sha256": "9c72709dc374fa987a4886a56bcfa456255a0181919f3a3fdd414e909d61b804"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-response-retention-comparison-20260906/retention-audit.json",
+      "sha256": "1ac7a2fa0588eaf0284689e544b7a97d9d8cff81430f022c1b1c3c9f27456fa9"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-response-retention-comparison-20260906/validate_completion.py",
+      "sha256": "55fcb91e74da2417d2ffa5cb86a15dadb3c3d5bc1fb9d725c3b0adaf06a53687"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-response-retention-comparison-20260906/validation-summary.json",
+      "sha256": "b48389aa7a6ed32280e4ad184daf50806dfa888d066ab4d31148be2350e2576a"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-response-retention-comparison-20260906/paper-validation.json",
+      "sha256": "58c20d6a58f16e309eb16f4bbbc00325e72398aae1a82df49ed13d7102009f2f"
     }
   ],
   "claims": {
     "related_lite_outcomes": [
-      "paired99.json",
-      "dedup88.json",
-      "receipt-audit.json"
+      "docs/reports/gfx-skill-audit-20260906/paired99.json",
+      "docs/reports/gfx-skill-audit-20260906/dedup88.json",
+      "docs/reports/gfx-skill-audit-20260906/receipt-audit.json"
     ],
     "related_lite_delivery": [
-      "memory-served-census.json",
-      "memory-served-census-v2.json"
+      "docs/reports/gfx-skill-audit-20260906/memory-served-census.json",
+      "docs/reports/gfx-skill-audit-20260906/memory-served-census-v2.json"
     ],
     "related_lite_registered_thresholds": [
-      "preregs-and-prior-gates.json"
+      "docs/reports/gfx-skill-audit-20260906/preregs-and-prior-gates.json"
     ],
     "verified_split": [
       "configs/verified_train_test_v1/split.json"
@@ -914,6 +958,13 @@
       "paper/iclr2027/delivery-reproduction-v1/reproduce.py",
       "paper/iclr2027/delivery-reproduction-v1/source-bindings.json",
       "paper/iclr2027/delivery-reproduction-v1/verdicts.json"
+    ],
+    "original_memory_response_retention": [
+      "scripts/analysis/audit_gfx_response_retention_v2.py",
+      "docs/reports/gfx-response-retention-comparison-20260906/inspection-plan.json",
+      "docs/reports/gfx-response-retention-comparison-20260906/retention-audit.json",
+      "docs/reports/gfx-response-retention-comparison-20260906/validation-summary.json",
+      "docs/reports/gfx-response-retention-comparison-20260906/validate_completion.py"
     ]
   },
   "not_reused": [

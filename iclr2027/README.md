@@ -12,6 +12,15 @@ unchanged, and the original provenance limitation remains disclosed. The new
 Verified 350/150 experiment remains work in progress, with no
 invented test score.
 
+A subsequent deterministic audit of all 198 original Flat/Card trajectories
+finds a median of five recorded action prefixes retaining any original served
+memory response in each arm, with no original response retained at the last
+recorded action prefix. It uses the saved processor configurations and pinned
+SWE-agent source, with 1,426 direct boundary checks and a 66-record regression.
+This establishes transient original response retention, not complete forgetting
+or a causal explanation for repair outcomes. Its plan, full audit, and validation
+are bound in the evidence map; existing scores and runtime are unchanged.
+
 The official [ICLR 2027 author guide](https://iclr.cc/Conferences/2027/AuthorGuidelines)
 sets abstract and full-paper deadlines at September 18 and September 25, 2026,
 23:59 AoE, respectively (Beijing: September 19 and September 26, 19:59).
