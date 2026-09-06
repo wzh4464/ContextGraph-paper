@@ -116,6 +116,12 @@ Its sources include pool-derived evidence and environment recipes checked in ben
 This is an intervention on repository environment knowledge, not an isolated test of graph traversal.
 The actual retrieved patch sets can vary with agent-generated queries, so identical serving logic does not imply byte-identical patch inputs across runs.
 
+\paragraph{Saved solver settings.}
+All 594 first trajectories declare SWE-agent 1.1.0 at one Git commit and SWE-ReX 1.4.0.
+Selected settings agree across the six conditions: model alias \texttt{openai/deepseek-v4-pro}, temperature 0, top-$p$ 1, configured input/output limits of 100,000/8,192 tokens, 500-call/\$30 per-task limits, and LastNObservations with $n=5$.
+No fallback is configured.
+The version recorder reads Git HEAD without checking a dirty tree; these declarations do not attest historical solver file contents, the complete interpreter/dependency state, or every wire request.
+
 \paragraph{Receipt audit.}
 All 99 receipts in each condition pass task-identity, literal-boolean verdict, trajectory/prediction hash, and report/summary consistency checks.
 For nonempty patches, the initial audit also checks the frozen harness evidence inventory, its file hashes, recorded offline Docker attestations, and runtime identity before and after verification.

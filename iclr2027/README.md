@@ -55,6 +55,15 @@ This package recomputes statistics; the full raw verifier/delivery evidence and
 experimental environment still need a complete anonymous release and human review.
 `evidence-map.json` binds current claims and export validation to repository artifacts.
 
+A separate metadata census reads all 594 original solver trajectories and checks
+their original hashes before and after collection. Saved SWE-agent/SWE-ReX version
+declarations and selected model/history settings agree across the six conditions.
+The Git recorder reads HEAD without checking dirty state, and SWE-ReX's Git hash
+is unavailable in every record. These declarations are distinct from the stronger
+before/after verifier-environment binding and do not reconstruct each historical
+solver interpreter, imported module or wire request. The full non-secret projection
+and source check are in `docs/reports/gfx-solver-metadata-20260907/` in the parent repo.
+
 The literature update also cites Saha's cue-anchored delivery/compaction study and
 Adam's ontology-grounded project-memory evaluation. Delivery and provenance audits
 have prior work; this draft's retention result concerns the fixed processor's

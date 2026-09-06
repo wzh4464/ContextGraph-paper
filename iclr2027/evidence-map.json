@@ -1193,6 +1193,58 @@
     {
       "path_from_contextgraph_root": "docs/literature/2026-09-07/validation.json",
       "sha256": "78c7c5385bb9503f252e6f6a9dd943cf5297fdb51e3ba2023bb14729ad4cee67"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-solver-metadata-20260907/README.md",
+      "sha256": "dd22ae024ae39e0ed9977f18615e102a2274bbb9bff7bf76a0812da032712f70"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-solver-metadata-20260907/collection-plan-v2.json",
+      "sha256": "96523c6087b46cdf3931b75d2d39c82e022d775d86672349ec8ad50538c2bfbf"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-solver-metadata-20260907/collection-plan.json",
+      "sha256": "8dc61e70a8aa6c94ba67760f59aa27094ad4326f536f974ae650f63d2604ff16"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-solver-metadata-20260907/collection-v2.json",
+      "sha256": "9c278751229e52bf8f8e0729cab5e1ce2fdec637378128bac212959a54056177"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-solver-metadata-20260907/initial-execution.json",
+      "sha256": "0d6818eee2c04ff733084dfc696e075c4a0c4a69b7d1a0ff59bb274efe46a282"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-solver-metadata-20260907/metadata.json.gz",
+      "sha256": "aeda462e89f18ae95a59a23de5d45bd1bae75f3b8975538195aecf5679cddc68"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-solver-metadata-20260907/paper-validation.json",
+      "sha256": "5e71552d349e287155c0f4ed68eeec84141e3e5592edc416101625c6aac545e8"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-solver-metadata-20260907/recorder-source-check.json",
+      "sha256": "8b6afa025b30037c925731dc040b43cd2406db95935005114e4ab935be909206"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-solver-metadata-20260907/summary.json",
+      "sha256": "5e6476a55b6561320d7f3f46fe64b22911adfd32505536c73a14e6244ca6bfc4"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-solver-metadata-20260907/validation.json",
+      "sha256": "0ac488b911a8edbf590234ee54048e172d92b76a7ae477370d62e5a7ccdb4dff"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/collect_gfx_solver_metadata_v1.py",
+      "sha256": "56a8080c085388120f4e585596c79f5e675f9dcb8350397abbde3f4946f76256"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/collect_gfx_solver_metadata_v2.py",
+      "sha256": "fc0d634b835335b4105c7b7f9102fc64dcb6a6688461d92a317d9319b6476ef5"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/summarize_gfx_solver_metadata_v1.py",
+      "sha256": "9358386ccce014258c3735b838dc63fc509b6ac78da05cb6f53ab82d13afd582"
     }
   ],
   "claims": {
@@ -1457,6 +1509,21 @@
       "docs/literature/2026-09-07/manifest.json",
       "docs/literature/2026-09-07/README.md",
       "docs/literature/2026-09-07/validation.json"
+    ],
+    "saved_solver_versions_and_configuration_census": [
+      "docs/reports/gfx-solver-metadata-20260907/README.md",
+      "docs/reports/gfx-solver-metadata-20260907/collection-plan-v2.json",
+      "docs/reports/gfx-solver-metadata-20260907/collection-plan.json",
+      "docs/reports/gfx-solver-metadata-20260907/collection-v2.json",
+      "docs/reports/gfx-solver-metadata-20260907/initial-execution.json",
+      "docs/reports/gfx-solver-metadata-20260907/metadata.json.gz",
+      "docs/reports/gfx-solver-metadata-20260907/paper-validation.json",
+      "docs/reports/gfx-solver-metadata-20260907/recorder-source-check.json",
+      "docs/reports/gfx-solver-metadata-20260907/summary.json",
+      "docs/reports/gfx-solver-metadata-20260907/validation.json",
+      "scripts/analysis/collect_gfx_solver_metadata_v1.py",
+      "scripts/analysis/collect_gfx_solver_metadata_v2.py",
+      "scripts/analysis/summarize_gfx_solver_metadata_v1.py"
     ]
   },
   "not_reused": [
