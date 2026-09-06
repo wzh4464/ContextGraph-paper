@@ -196,6 +196,9 @@ Only training issues and their official gold patches are used to derive rules.
 Each extracted record carries source identity and evidence references, with mechanical coverage and evidence-line checks.
 The complete bank contains 459 rules from 350 sources and 61 mechanism tags.
 Passing these checks does not prove that every generalized rule is semantically valid; semantic overgeneralization remains a limitation.
+A deterministic training-only sample of 30 rules received a source-reading AI audit: 20 were judged supported and 10 partly supported, with core edits grounded but errors in explanation or scope.
+Examples include widening an exact Boolean predicate to truthiness and reversing the explanation of which join comparison includes a filtered condition.
+These advisory judgments are neither blinded human annotations nor a correctness estimate for the full bank; the frozen bank and evaluation packets remain unchanged.
 Embeddings are computed locally with a pinned 384-dimensional MiniLM model, without additional embedding API calls.
 The solver weights remain fixed.
 

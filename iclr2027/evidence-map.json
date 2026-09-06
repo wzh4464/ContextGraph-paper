@@ -81,6 +81,18 @@
     {
       "path_from_contextgraph_root": "docs/reports/gfx-expanded-audit-20260906/paired-comparisons.json",
       "sha256": "a651742f6fa0c4e526ec70093c80c8a534115794dadfe2c305fb2dd2d5ecec0c"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-training-faithfulness-20260906/plan.json",
+      "sha256": "9cf97c129376aaef9260def0cdc0f12231e30f7e067f55d206d9590a667dd186"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-training-faithfulness-20260906/audit.json",
+      "sha256": "2f27da69da625bf2bb9e8abe74ba8201d838ab67e0eef550fe3b21eadc3373e9"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-training-faithfulness-20260906/semantic-probe-results.json",
+      "sha256": "144f7c11d29f1403e7a78d390d63e524d8c0b1d67d86b09b61f5c527489e109c"
     }
   ],
   "claims": {
@@ -121,6 +133,11 @@
       "docs/reports/gfx-expanded-audit-20260906/flat23687-recheck-audit.json",
       "docs/reports/gfx-expanded-audit-20260906/rechecked-prediction-audit.json",
       "docs/reports/gfx-expanded-audit-20260906/paired-comparisons.json"
+    ],
+    "verified_training_faithfulness_advisory": [
+      "docs/reports/verified-training-faithfulness-20260906/plan.json",
+      "docs/reports/verified-training-faithfulness-20260906/audit.json",
+      "docs/reports/verified-training-faithfulness-20260906/semantic-probe-results.json"
     ]
   },
   "not_reused": [
