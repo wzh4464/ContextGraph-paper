@@ -1,5 +1,10 @@
 # ContextGraph — arXiv Paper Source
 
+The current ICLR 2027 working draft is [iclr2027/main.tex](iclr2027/main.tex), with
+its status and build instructions in [iclr2027/README.md](iclr2027/README.md).
+The files described below are the historical preprint and include claims requiring
+fresh receipt and source audits; they are not the current ICLR submission draft.
+
 LaTeX source for the ContextGraph arXiv preprint, scaffolded with the
 `vibelab-academic-plans/ml-paper-writing` NeurIPS 2025 template.
 

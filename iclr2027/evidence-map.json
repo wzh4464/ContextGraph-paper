@@ -1,0 +1,73 @@
+{
+  "as_of": "2026-09-06",
+  "status": "Research draft; formal Verified test results not available",
+  "artifacts": [
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-skill-audit-20260906/receipt-audit.json",
+      "sha256": "30ee8af0ef020f3cb4dfd1b3e57862ddf8442f194fe048941e3ba4939227ea62"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-skill-audit-20260906/paired99.json",
+      "sha256": "98e9fc98060d2740e226f3c5afe625a2accb996749095e53ddddecbc02cf8492"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-skill-audit-20260906/dedup88.json",
+      "sha256": "271315b944c51c09e171b6533bcf10ce23509276da3271b6f5a79053dcd8cb2d"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-skill-audit-20260906/memory-served-census.json",
+      "sha256": "62e6e314cb521c363f60a3ac80ce2f60c18e573c5de0ebd7f87f32339a436ad3"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-skill-audit-20260906/preregs-and-prior-gates.json",
+      "sha256": "7878787af95b1b9b9f14256fb666426e2fff02ca8ef788204f37fdae5a4938d1"
+    },
+    {
+      "path_from_contextgraph_root": "configs/verified_train_test_v1/split.json",
+      "sha256": "955c994b50fc6181c57b1db10ae5a1c0f040714033b9be318c26a1fe95b37fa2"
+    },
+    {
+      "path_from_contextgraph_root": "data/verified_train_test_v1/bank-full-350-v1/manifest.json",
+      "sha256": "3f658fe93765486b340470eaa9c970dc49c6517931c73d3d8602f39298e5379b"
+    },
+    {
+      "path_from_contextgraph_root": "data/verified_train_test_v1/test150-memory-packets-v1/manifest.json",
+      "sha256": "ba0de92139c0114d856c6a58b794c27afca1b1d2f3fec06fe37d32af05912996"
+    },
+    {
+      "path_from_contextgraph_root": "docs/literature/2026-09-05/manifest.json",
+      "sha256": "9362334145bd1ebe8092598c7f5f42350d3422a4ae204e2487c152b05f962bc5"
+    }
+  ],
+  "claims": {
+    "related_lite_outcomes": [
+      "paired99.json",
+      "dedup88.json",
+      "receipt-audit.json"
+    ],
+    "related_lite_delivery": [
+      "memory-served-census.json"
+    ],
+    "related_lite_registered_thresholds": [
+      "preregs-and-prior-gates.json"
+    ],
+    "verified_split": [
+      "configs/verified_train_test_v1/split.json"
+    ],
+    "verified_bank": [
+      "data/verified_train_test_v1/bank-full-350-v1/manifest.json"
+    ],
+    "verified_packet_contrast": [
+      "data/verified_train_test_v1/test150-memory-packets-v1/manifest.json"
+    ],
+    "recent_references": [
+      "docs/literature/2026-09-05/manifest.json"
+    ]
+  },
+  "not_reused": [
+    "Historical post-hoc 67.2% projection",
+    "Historical 14/99 control for current gfx arms",
+    "Unaudited legacy cost savings",
+    "General implementation-capability ceiling"
+  ]
+}

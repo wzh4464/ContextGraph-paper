@@ -1,0 +1,248 @@
+\documentclass{article}
+\usepackage{iclr2027_conference,times}
+\usepackage{amsmath,amssymb,booktabs,graphicx,hyperref,url}
+\title{ContextGraph: Measuring Transfer from Experience to Verified Code Repairs}
+\author{Anonymous authors}
+\newcommand{\cg}{ContextGraph}
+\newcommand{\pp}{\,\mathrm{pp}}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Long-term memory can change what a coding agent reads without improving the patch it submits.
+We study this gap using \cg{}, a system that turns prior repair evidence into rules and retrieves them through dense, lexical, and graph channels.
+Our evaluation separates memory provenance, actual delivery, agent execution, and official repair verification.
+An audit of two completed SWE Context Bench Related-Lite conditions finds that a repository procedure card and flat patch retrieval each resolve 18 of the same 99 tasks, with six wins unique to each condition.
+The paired difference is 0 percentage points (95\% bootstrap interval $[-7.07,7.07]$); actual memory is delivered on all tasks, while the correct procedure card reaches 98 of 99 targets.
+These observations establish a scoped null result for that intervention, rather than a general limit on agent memory.
+We also prepare a separate SWE-bench Verified experiment that builds memory from 350 training tasks and compares no memory, flat rule retrieval, and graph rule retrieval on a fixed 150-task test set.
+This draft reports the completed audit and the new experiment's design; it does not yet report a test-set gain from the latter.
+\end{abstract}
+
+\paragraph{Draft status, 6 September 2026.}
+This is a research draft, not a completed submission. Related-Lite results below have been checked against frozen verifier receipts.
+The separate Verified 350/150 campaign is being prepared, and its outcome table remains unpopulated.
+Historical results from other repository experiments are not pooled into either denominator.
+
+\section{Introduction}
+Coding agents must locate relevant code, construct an explanation of a failure, edit a repository, and verify a repair.
+Prior experience could help at each stage, but a retrieval hit is not itself a successful repair.
+A memory system may return a correct example for the wrong software version, fail to deliver its output to the agent, or consume enough interaction budget to displace useful testing.
+Conversely, a low repair rate does not establish that the retrieved knowledge was unusable: the surrounding tool or evaluation protocol may have failed.
+
+We investigate this distinction in \cg{}, a long-term memory layer for coding agents.
+Its broader architecture combines typed experience nodes with lexical, embedding, and Personalized PageRank retrieval.
+The present study uses two distinct settings.
+The first is a retrospective audit of a completed repository-card intervention on SWE Context Bench Related-Lite \citep{swecontext2026}.
+The second is a new, deliberately narrower intervention on SWE-bench Verified \citep{swebench2024}: fixed rules derived from training issues and their official patches, with graph retrieval isolated from the rest of the retrieval stack.
+The latter is supervised memory construction with a frozen solver, not reinforcement learning or evidence of self-improvement from the solver's own successful attempts.
+
+Our current contributions are an evidence-linked evaluation procedure, an audited result for the repository-card intervention, and a controlled experiment specification for graph-based transfer.
+We do not claim that the audit alone establishes a new state of the art or that a null result identifies the agent's intrinsic capability ceiling.
+The scientific question is which forms of prior repair evidence improve verified outcomes after their delivery, cost, and source eligibility have been established.
+
+\section{Related work}
+\paragraph{Experience and graph retrieval.}
+ExpeL extracts reusable natural-language insights from agent experience without requiring updates to proprietary model weights \citep{expel2024}.
+HippoRAG combines knowledge graphs and Personalized PageRank for associative retrieval \citep{hipporag2024}.
+These works motivate \cg{}'s representation and retrieval choices; they do not establish that the same mechanisms improve a coding agent's repair success under a fixed interaction budget.
+SWE-agent demonstrates the importance of the agent--computer interface for software engineering \citep{sweagent2024}, making interface fidelity part of our experimental specification.
+
+\paragraph{Skills, working memory, and transfer.}
+CODESKILL trains a skill-management mechanism while retaining a fixed coding policy; its reported Verified setup uses 350 training tasks and 150 evaluation tasks \citep{codeskill2026}.
+Our split size follows the same general design, but we do not claim to reproduce its task IDs, optimization procedure, or results.
+SWE-MeM studies adaptive working-memory management for long-horizon coding \citep{swemem2026}, whereas our new experiment supplies a fixed cross-task packet before solving.
+Agent Memory Distillation studies hierarchical teacher memory for smaller agents \citep{distill2026}; our experiment uses neither a small-model distillation objective nor teacher-weight training.
+Memory Transfer Learning distinguishes memory representations and reports that abstract knowledge can transfer more effectively than concrete traces in its evaluated settings \citep{transfer2026}.
+This motivates a rule-based transfer hypothesis, without guaranteeing its outcome in our repositories.
+
+\paragraph{Process measurements are intermediate outcomes.}
+The Working Set studies coherence in repository-scale agent tasks \citep{workingset2026}.
+Measure Before You Manage separates working-memory management and its evaluation \citep{measure2026}; its small policy-evaluation populations and incomplete official repair verification limit direct comparison with a fully graded SWE campaign.
+ClawTrace relates skill distillation to trajectory costs \citep{clawtrace2026}.
+We use these works to motivate measurements of delivery, repeated errors, and consumption cost, while keeping official repair verdicts as the outcome of interest.
+We do not turn their setting-specific findings into universal claims about which memories help or harm.
+
+\section{Evaluation model}
+For task $i$ and condition $a$, let $M_{ia}$ denote the supplied memory, $D_{ia}$ actual delivery, $T_{ia}$ the trajectory, and $Y_{ia}$ the official verifier's binary result.
+These objects are linked rather than inferred from one another:
+\[
+  \text{eligible sources}\longrightarrow M_{ia}\longrightarrow D_{ia}
+  \longrightarrow T_{ia}\longrightarrow \text{submitted patch}\longrightarrow Y_{ia}.
+\]
+Each link has a separate check. Source IDs must satisfy the frozen split; delivered content must appear in the actual model input or matching tool response; submitted patches and trajectories must match their recorded hashes; and a positive result must agree with both the task report and the harness summary.
+An infrastructure failure is a missing valid outcome, not an inferred negative result. An explicitly empty submission is a failure under the matching frozen verifier policy.
+
+\paragraph{Fixed universes.}
+An analysis uses its preregistered task list, never the intersection of whichever receipts happen to exist.
+If a campaign is incomplete, we report completion and missingness against that universe; we do not present a complete paired effect estimate.
+An infrastructure-only verifier repair is recorded separately and bound to the unchanged prediction.
+A valid failed attempt is not replaced by a later successful solver run.
+
+\paragraph{Delivery gates.}
+Before interpreting a memory condition, at least 95\% of targets must receive the expected memory and there must be no phase-based refusal.
+For the Related-Lite card condition, the expected card must match the target repository.
+Connection errors and an unbound string in a log do not count as delivery.
+Passing this gate establishes exposure, not relevance, correctness, or causal mediation through the memory.
+
+\paragraph{Cost and protocol.}
+Solver call counts, submitted completion status, and repair verdicts are different measurements.
+We record actual provider input/output tokens and charges where available.
+In local SWE-agent 1.1.0 diagnostics, retokenizing only assistant text omitted tool-call output from the reported output-token total, and local estimated costs differed from provider receipts.
+We therefore do not interpret unaudited legacy cost totals as measured savings.
+The local runtime also preserves the provider's returned reasoning fields across tool turns and checks the options actually sent on the wire.
+These are protocol controls; the present observations do not establish a causal repair-rate effect of any individual protocol change.
+
+\section{Completed Related-Lite audit}
+\label{sec:relatedlite}
+\paragraph{Setting.}
+The completed conditions use the same frozen 99-task Related-Lite manifest and the same frozen SWE Context Bench verifier.
+The flat condition retrieves reference patches from the existing source pool.
+The card condition adds a repository-specific procedure card: test commands, environment repair conditions, reproduction routines, and workflow information.
+Its sources include pool-derived evidence and environment recipes checked in benchmark containers.
+This is an intervention on repository environment knowledge, not an isolated test of graph traversal.
+The actual retrieved patch sets can vary with agent-generated queries, so identical serving logic does not imply byte-identical patch inputs across runs.
+
+\paragraph{Receipt audit.}
+All 99 receipts in each condition pass task-identity, literal-boolean verdict, trajectory/prediction hash, and report/summary consistency checks.
+For nonempty patches, the audit also checks the frozen harness evidence inventory, its file hashes, offline Docker attestations, and runtime identity before and after verification.
+The harness commit is recorded in the accompanying evidence index.
+One task has a later verifier receipt, but its original receipt is already a valid failure; the analysis retains that original result.
+
+\begin{table}[t]
+\centering
+\caption{Audited Related-Lite outcomes. The second row is an existing near-duplicate sensitivity set, not a replacement primary denominator. The confidence intervals reported in the text use paired-task percentile bootstrap (200,000 draws; seed 42).}
+\label{tab:audit}
+\begin{tabular}{lrrrr}
+\toprule
+Universe & Flat & Card & Card minus Flat & Exact $p$ \\
+\midrule
+Fixed 99 tasks & 18/99 & 18/99 & $0.00\pp$ & 1.000 \\
+Sensitivity 88 tasks & 18/88 & 15/88 & $-3.41\pp$ & 0.508 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Outcomes.}
+On the fixed universe, both conditions resolve 18/99 tasks (Table~\ref{tab:audit}).
+Twelve successes are shared, six belong only to Flat, and six only to Card.
+The two-sided exact McNemar test gives $p=1$, and the paired 95\% bootstrap interval for Card minus Flat is $[-7.07,7.07]$ percentage points.
+The interval is compatible with effects in both directions; lack of significance is not evidence of equivalence.
+These tasks have been used in multiple prior interventions, so this is an exploratory audit rather than a newly untouched confirmatory evaluation.
+
+\paragraph{Source-overlap sensitivity.}
+A pre-existing 11-task near-duplicate exclusion list yields an 88-task sensitivity set.
+Flat resolves 18/88 and Card 15/88; the discordant counts are six versus three, with $p=0.508$ and interval $[-10.23,3.41]$ percentage points.
+Three Card-only successes on the full set are flagged by the prior patch-overlap scan with Jaccard similarity 1.
+The sensitivity analysis applies the complete existing 11-task list, rather than removing only those three successful examples.
+The original scan focuses on resolved tasks; it does not certify all possible contamination channels over the entire task universe.
+
+\paragraph{Actual exposure and mechanism checks.}
+The tool-response census finds patch memory on 99/99 targets in each condition, no missing trajectories, and no phase refusals.
+The correct frozen repository card appears exactly in 98/99 Card trajectories.
+The exception is a scikit-learn task that receives a Matplotlib card; we retain its result in the fixed universe.
+The registered 95\% exposure threshold is met, while this single routing failure remains part of the intervention's observed behavior.
+All 198 debug logs are present, with no matches to the enumerated rate-limit error patterns; this narrow log check does not rule out every provider-side failure.
+
+The hard \texttt{exit\_cost} label occurs on 32 Flat tasks and 41 Card tasks, so Card does not meet its registered $<32$ threshold.
+Both conditions have median 501 API calls under the legacy post-response call-limit behavior.
+The label can reflect the call cap, and must not be read as 41 dollar-budget overruns.
+The remaining registered process measures, including the first successful test execution, still require a separate trajectory audit.
+We therefore report failed improvement and a failed termination-count criterion without claiming that we have established the reason for the result.
+
+\paragraph{Control comparison.}
+A contemporaneous no-memory run is still being graded.
+We do not compare these completed conditions to a historical 14/99 control to claim a current net gain.
+Its outcomes will be added only after its complete frozen receipt chain is checked.
+
+\section{Verified 350/150 experiment}
+\label{sec:verified}
+\paragraph{Split and eligibility.}
+This campaign is separate from Related-Lite.
+We pin the official 500-task Verified dataset and deterministically allocate 350 training and 150 test tasks using repository-stratified largest-remainder allocation and a fixed hashed ordering (seed 42).
+The two ID sets are disjoint.
+The split is within repositories and is not chronological; it does not establish that test tasks are absent from the base model's training history or earlier project experiments.
+One issue-text near-duplicate pair is documented before formal solving; excluding its test member defines a fixed 149-task sensitivity analysis.
+The primary universe remains all 150 tasks.
+
+\paragraph{Memory construction.}
+Only training issues and their official gold patches are used to derive rules.
+Each extracted record carries source identity and evidence references, with mechanical coverage and evidence-line checks.
+The complete bank contains 459 rules from 350 sources and 61 mechanism tags.
+Passing these checks does not prove that every generalized rule is semantically valid; semantic overgeneralization remains a limitation.
+Embeddings are computed locally with a pinned 384-dimensional MiniLM model, without additional embedding API calls.
+The solver weights remain fixed.
+
+\paragraph{Three conditions.}
+Control receives no reference memory.
+Flat and Graph share the same rule corpus, dense search, lexical search, rank fusion, diversity reranking, top-three limit, and text budget.
+Graph additionally enables the Personalized PageRank channel over the fixed rule/source/mechanism structure.
+All memory packets are constructed from public test descriptions before formal solver calls, then frozen; there are no test-time memory writes.
+Each packet is inserted once into the initial task input.
+This narrows the estimand to the effect of enabling the graph channel in this implementation, not the effect of every component in the broader \cg{} system.
+
+The frozen packet contrast confirms a real intervention: the ordered rule IDs differ on 94/150 tasks, and the top-three sets differ on 87/150.
+All 150 tasks remain in the primary comparison, including those receiving identical packets.
+Restricting the reported result to tasks whose retrieval changes would answer a different question and is not the primary analysis.
+
+\paragraph{Execution controls.}
+All three conditions use SWE-agent 1.1.0 and the exact DeepSeek V4 Pro endpoint, with no alternate-model fallback.
+The planned per-attempt limits are 500 completed calls and a \$30 provider-cost threshold, with equal generation settings and preserved reasoning history.
+Price filters and a conservative per-attempt reservation account for the post-response cost check.
+Task blocks contain all three conditions; their six possible orders occur 25 times each across the 150 tasks.
+The first block uses one worker to measure resources, after which up to four may run if the host and campaign budget permit.
+No task is admitted without a reservation for its complete three-condition block.
+
+Solver containers receive only public task fields, the frozen memory packet, and a sealed base-commit checkout.
+The Git seal preserves the base tree and its ancestors while removing future or unreachable commit objects.
+The solver's Docker network has no external egress.
+Credentials remain on the host, and evaluation labels are consumed only by the host-side verifier.
+Each submission is immediately evaluated with the pinned official SWE-bench 4.1.0 harness and its task-specific original image.
+Verifier containers have the same two-CPU/eight-GiB cap across all conditions; grading logic is unchanged.
+Runtime, configuration, tool bundle, image, and source hashes are checked before and after execution.
+Ten-minute reviews inspect trajectories and execution progress without editing the frozen treatment.
+
+\paragraph{Analysis plan.}
+The primary contrast is Graph minus Flat, and the secondary contrast is Flat minus Control.
+We use two-sided exact McNemar tests with Holm correction over these two registered comparisons, and paired-task bootstrap confidence intervals with 200,000 replicates and seed 42.
+We report outcomes against the full 150-task universe, plus the predeclared 149-task sensitivity set.
+Provider-reported tokens and charges are reported separately from construction and retrieval costs.
+Other repository or task slices are exploratory.
+Budget or infrastructure interruption preserves all artifacts and leaves the campaign incomplete; it does not shrink the primary denominator.
+
+\paragraph{Current evidence.}
+The 350-source bank and 450 memory packets are complete.
+Training-only real-agent runs exercise memory delivery, the provider protocol, and the official verifier before formal deployment.
+Their task is excluded from the smoke memory bank and their outcomes are not test-set observations.
+Image preparation and the remaining execution gates are in progress.
+No formal Verified success rate is reported in this draft.
+
+\section{Discussion and limitations}
+The completed audit rules out a particular ambiguity: the card intervention's lack of measured gain cannot be explained by widespread absence of any memory response, because actual delivery is observed.
+It does not rule out incorrect relevance judgments, stale environment knowledge, variable retrieval queries, different provider behavior, or insufficient repair skill.
+Exposure is a prerequisite for evaluating an intervention, not a proof of its proposed mechanism.
+
+The new Verified design reduces several confounds by sharing the rule corpus, packet size limits, model settings, and task order policy while varying one retrieval channel.
+It still has important limits: a single model endpoint, one stochastic attempt per condition, a within-repository random split, official training-patch supervision, and potential historical task exposure.
+The new protocol also changes multiple execution details relative to historical experiments.
+Consequently, a future difference from an old score would not isolate the effect of memory.
+
+A stronger causal account would require an independent environment-by-memory intervention, repeated attempts or additional model backbones, and process measures that are validated against real test execution.
+Such work should use training/development evidence for method selection and freeze evaluation eligibility before inspecting outcomes.
+The aspiration to improve memory should not make success the inclusion criterion for evidence.
+
+\section*{Reproducibility statement}
+The associated repository contains frozen task lists, packet and runtime hashes, per-task official receipts, the completed Related-Lite audit, and scripts for deterministic paired analysis.
+The evidence map accompanying this draft links each current numerical claim to its source artifact.
+Credentials and host-only evaluation labels are excluded from agent inputs.
+The final anonymous release package and human author review remain to be completed.
+
+\section*{AI use statement}
+Generative AI tools were used to assist literature discovery and interpretation, formulate and refine hypotheses, design experiments, implement and test code, extract training-memory rules, audit trajectories, analyze results, and draft this manuscript.
+DeepSeek V4 Pro is also the experimental solver and the source-rule extraction model in the new Verified campaign.
+Automated progress reviews are advisory; official harness receipts determine repair outcomes.
+This draft has not yet completed human author review of all AI-assisted claims and artifacts. The final disclosure must reflect the review actually performed before submission.
+
+\bibliography{references}
+\bibliographystyle{iclr2027_conference}
+\end{document}
