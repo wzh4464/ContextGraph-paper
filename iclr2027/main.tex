@@ -251,8 +251,9 @@ Restricting the reported result to tasks whose retrieval changes would answer a 
 
 \paragraph{Execution controls.}
 All three conditions use SWE-agent 1.1.0 and the exact DeepSeek V4 Pro endpoint, with no alternate-model fallback.
-The planned per-attempt limits are 500 completed calls and a \$30 provider-cost threshold, with equal generation settings and preserved reasoning history.
-Price filters and a conservative per-attempt reservation account for the post-response cost check.
+The frozen per-attempt limits are 500 completed calls and a \$30 conservative budget-meter threshold, with equal generation settings and preserved reasoning history.
+A \$35 per-attempt reservation accounts for the post-response check; the OpenLux route has no provider-enforced price filter.
+The campaign's \$300 admission allowance includes \$20 for monitoring and may leave the campaign incomplete.
 Task blocks contain all three conditions; their six possible orders occur 25 times each across the 150 tasks.
 The first block uses one worker to measure resources, after which up to four may run if the host and campaign budget permit.
 No task is admitted without a reservation for its complete three-condition block.
@@ -280,7 +281,9 @@ Training-only real-agent runs exercise memory delivery, the provider protocol, a
 Their task is excluded from the smoke memory bank and their outcomes are not test-set observations.
 All 150 images and 450 task/condition inputs are frozen; the original provider passed all three training-only gates before an account-credit error paused launch.
 A subsequently authorized OpenLux route uses the same DeepSeek V4 Pro snapshot alias as the archived experiments, preserving the split, packets, images, and task order in a separate runtime version.
-Its non-benchmark tool/reasoning probes passed; training-only validation is in progress and formal solving has made no calls.
+Its tool/reasoning probes and all three training protocol/delivery checks passed.
+On the excluded training task, Control's original prediction was officially resolved; Flat's empty patch and Graph's reproduction-only patch were unresolved.
+The formal campaign began on September 6 at 11:21 UTC; its first task's Control solver is active, with no formal verifier outcomes at this snapshot.
 OpenLux sometimes omits cost and reports non-additive token counts, so raw counters and conservative budget estimates are stored separately without a billing claim.
 Ten-minute evidence collection continues, with incomplete semantic reviews explicitly retained.
 No formal Verified success rate is reported in this draft.

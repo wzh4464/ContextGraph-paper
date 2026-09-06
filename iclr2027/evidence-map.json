@@ -1,6 +1,6 @@
 {
   "as_of": "2026-09-06",
-  "status": "Research draft; complete six-arm Related-Lite first-prediction evidence including contemporaneous Control audited; independent Verified OpenLux training validation remains active with no formal test outcomes at the recorded snapshot.",
+  "status": "Research draft; completed six-arm Related-Lite audit; independent Verified OpenLux formal 150-task campaign started at 2026-09-06 11:21 UTC, with no formal verifier outcomes at this snapshot.",
   "artifacts": [
     {
       "path_from_contextgraph_root": "docs/reports/gfx-skill-audit-20260906/receipt-audit.json",
@@ -229,6 +229,38 @@
     {
       "path_from_contextgraph_root": "docs/reports/openlux-continuation-20260906/semantic-review-1052.json",
       "sha256": "ac6c7cf69de73703d5a1261f04865fc835bf4467413e156ebecaa7c981b331b8"
+    },
+    {
+      "path_from_contextgraph_root": "configs/verified_train_test_v1/verified350-test150-openlux-v3/prereg.json",
+      "sha256": "ee6c425bbef40a2b438a82d26d37df6132b0c13e2fc13054d7d3986a3968e369"
+    },
+    {
+      "path_from_contextgraph_root": "configs/verified_train_test_v1/openlux-analysis-v1.json",
+      "sha256": "aca32877a8f03d7f9759683d9bba4c5b84844792c635f1c2cff8ed99224ad0c8"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-openlux-formal-freeze-20260906/campaign-start.json",
+      "sha256": "b334e5a1b8b1c7751e923157a1e4f1a46120e0d6a5f15147afd007001f474db4"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-openlux-formal-freeze-20260906/freeze-receipt.json",
+      "sha256": "9345d708d73f0af445b4f93614bc4faecfd49930d6de933ef756b49856b90e08"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-openlux-formal-freeze-20260906/identity-audit.json",
+      "sha256": "432641e3fc0840922afbdcea0646c8992e0b151552aff14d3daefdf0d8960e4f"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-openlux-formal-freeze-20260906/training-gate-receipts.json",
+      "sha256": "a54f35d5ac249af098a3b74d666ef416dc5768571b093826a8b209689bebcc5f"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-openlux-formal-freeze-20260906/manual-review-1123.json",
+      "sha256": "19f8dcec263708431d41e902d8c47fe0503298e30172814ec3ec10d016c1cde7"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/openlux-continuation-20260906/accounting-investigation.json",
+      "sha256": "3d8f0e38b60b112fbdc4fc8507df0b75929b3747f3eb363433b270856336d2e5"
     }
   ],
   "claims": {
