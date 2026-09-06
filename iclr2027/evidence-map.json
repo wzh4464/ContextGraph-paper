@@ -1,6 +1,6 @@
 {
   "as_of": "2026-09-06",
-  "status": "Research draft; first-prediction evidence reconciled by agreeing independent verifier recheck; historical log limitation retained; formal Verified test results unavailable",
+  "status": "Research draft; first-prediction evidence and exploratory test-process census audited; formal Verified inputs fully frozen with zero solver calls, awaiting account credit",
   "artifacts": [
     {
       "path_from_contextgraph_root": "docs/reports/gfx-skill-audit-20260906/receipt-audit.json",
@@ -93,6 +93,38 @@
     {
       "path_from_contextgraph_root": "docs/reports/verified-training-faithfulness-20260906/semantic-probe-results.json",
       "sha256": "144f7c11d29f1403e7a78d390d63e524d8c0b1d67d86b09b61f5c527489e109c"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-test-execution-audit-20260906/plan.json",
+      "sha256": "e290d14723902fdb63192287377e0e8c1dab913b8a34237413f65ca9c5219b89"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-test-execution-audit-20260906/census.json",
+      "sha256": "1c51de084a0eeeacbf579a6dd746f698810c9a34505b8e0915af1e346c5125d6"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-test-execution-audit-20260906/legacy-diagnostic-plan.json",
+      "sha256": "c11cbe41b7b6a7bad72a477ffc1fe8417022968a3468c6a3796a4fde6dffa745"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-test-execution-audit-20260906/legacy-diagnostic.json",
+      "sha256": "74d9febac4c6f204e41a06683d785ef17a4381cb17e486979156b8af21c4fb0f"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-test-execution-audit-20260906/summary.json",
+      "sha256": "1707aad6e7a9a626f7863452abbdbb434f75dfb1e0ec861d0e3264f01a3bce01"
+    },
+    {
+      "path_from_contextgraph_root": "configs/verified_train_test_v1/verified350-test150-v1/prereg.json",
+      "sha256": "7d215873a9c43cea634515573c302e4ac2accc8f708853a267b280159b3500fc"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-formal-freeze-20260906/freeze-receipt.json",
+      "sha256": "6040316e9b297861b47c9ea4e6613f663b3dd711dad477867122cbf21623d68c"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-formal-freeze-20260906/availability-probe-402.json",
+      "sha256": "e60f3431a9455218d882d1c72a73129bfdb312378947a871c346951d402a54a0"
     }
   ],
   "claims": {
@@ -138,6 +170,18 @@
       "docs/reports/verified-training-faithfulness-20260906/plan.json",
       "docs/reports/verified-training-faithfulness-20260906/audit.json",
       "docs/reports/verified-training-faithfulness-20260906/semantic-probe-results.json"
+    ],
+    "related_lite_test_process_audit": [
+      "docs/reports/gfx-test-execution-audit-20260906/plan.json",
+      "docs/reports/gfx-test-execution-audit-20260906/census.json",
+      "docs/reports/gfx-test-execution-audit-20260906/legacy-diagnostic-plan.json",
+      "docs/reports/gfx-test-execution-audit-20260906/legacy-diagnostic.json",
+      "docs/reports/gfx-test-execution-audit-20260906/summary.json"
+    ],
+    "verified_complete_freeze_and_credit_pause": [
+      "configs/verified_train_test_v1/verified350-test150-v1/prereg.json",
+      "docs/reports/verified-formal-freeze-20260906/freeze-receipt.json",
+      "docs/reports/verified-formal-freeze-20260906/availability-probe-402.json"
     ]
   },
   "not_reused": [

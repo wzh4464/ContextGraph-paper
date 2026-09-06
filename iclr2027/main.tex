@@ -162,8 +162,13 @@ All 198 debug logs are present, with no matches to the enumerated rate-limit err
 The hard \texttt{exit\_cost} label occurs on 32 Flat tasks and 41 Card tasks, so Card does not meet its registered $<32$ threshold.
 Both conditions have median 501 API calls under the legacy post-response call-limit behavior.
 The label can reflect the call cap, and must not be read as 41 dollar-budget overruns.
-The remaining registered process measures, including the first successful test execution, still require a separate trajectory audit.
-We therefore report failed improvement and a failed termination-count criterion without claiming that we have established the reason for the result.
+An audit of all 198 first trajectories reproduces the archived test-output proxy: 81 Flat tasks and 73 Card tasks match, with conditional median first-match indices of 128 and 98 assistant messages.
+The proxy accepts failed tests, zero-test runs, and standalone \texttt{OK} prints; it is not a first-passing-test measure.
+Card meets the numerical timing threshold under this proxy but fails its coverage threshold.
+A conservative direct-runner and positive-execution-summary census recognizes 78/99 Flat tasks and 67/99 Card tasks, with conditional median indices of 116.5 and 97 recorded trajectory entries.
+Among the 60 tasks recognized in both conditions, Card is earlier on 38 and later on 22.
+This census omits some real tests in unsupported command forms; its step counter also differs from the archived counter.
+Conditional timing and incomplete recognition do not establish an overall speedup, test relevance, or a cause of the unchanged repair score.
 
 \paragraph{Other archived interventions.}
 The extended audit also covers a graph-channel variant, an added-rule variant, and an added-file-list variant.
@@ -243,7 +248,9 @@ Budget or infrastructure interruption preserves all artifacts and leaves the cam
 The 350-source bank and 450 memory packets are complete.
 Training-only real-agent runs exercise memory delivery, the provider protocol, and the official verifier before formal deployment.
 Their task is excluded from the smoke memory bank and their outcomes are not test-set observations.
-Image preparation and the remaining execution gates are in progress.
+All 150 images and 450 task/condition inputs are frozen, and all three training-only delivery, protocol, and official-verifier gates have passed.
+Formal solving has made no calls: an account-credit error paused launch after preparation.
+Ten-minute evidence collection continues, while provider-based semantic reviews await restored credit.
 No formal Verified success rate is reported in this draft.
 
 \section{Discussion and limitations}
