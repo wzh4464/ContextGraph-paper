@@ -63,6 +63,10 @@ ClawTrace relates skill distillation to trajectory costs \citep{clawtrace2026}.
 We use these works to motivate measurements of delivery, repeated errors, and consumption cost, while keeping official repair verdicts as the outcome of interest.
 We do not turn their setting-specific findings into universal claims about which memories help or harm.
 
+Recent scaffold optimization also uses persistent beliefs: BCO calibrates a document against observed outcomes \citep{bco2026}.
+Its two memory-QA rows select the best held-out result among three candidates, a disclosed selection step that limits interpreting them as untouched test estimates.
+CANOPY instead trains the policy through outcome-only reinforcement learning \citep{canopy2026}; it is a distinct intervention from our frozen-model memory injection.
+
 \section{Evaluation model}
 For task $i$ and condition $a$, let $M_{ia}$ denote the supplied memory, $D_{ia}$ actual delivery, $T_{ia}$ the trajectory, and $Y_{ia}$ the official verifier's binary result.
 These objects are linked rather than inferred from one another:

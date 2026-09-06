@@ -37,6 +37,14 @@
     {
       "path_from_contextgraph_root": "docs/literature/2026-09-05/manifest.json",
       "sha256": "9362334145bd1ebe8092598c7f5f42350d3422a4ae204e2487c152b05f962bc5"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-skill-audit-20260906/memory-served-census-v2.json",
+      "sha256": "5a39382d18572dd96d88ce4f1ad0297abc708f85bfe0b4631c93b5a5ac294837"
+    },
+    {
+      "path_from_contextgraph_root": "docs/literature/2026-09-06/manifest.json",
+      "sha256": "59382eca441b3a955e98171be95737c223572d5df4bd25aca32ebd1010c83d25"
     }
   ],
   "claims": {
@@ -46,7 +54,8 @@
       "receipt-audit.json"
     ],
     "related_lite_delivery": [
-      "memory-served-census.json"
+      "memory-served-census.json",
+      "memory-served-census-v2.json"
     ],
     "related_lite_registered_thresholds": [
       "preregs-and-prior-gates.json"
@@ -61,7 +70,8 @@
       "data/verified_train_test_v1/test150-memory-packets-v1/manifest.json"
     ],
     "recent_references": [
-      "docs/literature/2026-09-05/manifest.json"
+      "docs/literature/2026-09-05/manifest.json",
+      "docs/literature/2026-09-06/manifest.json"
     ]
   },
   "not_reused": [
