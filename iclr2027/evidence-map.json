@@ -653,6 +653,62 @@
     {
       "path_from_contextgraph_root": "tests/test_nullable_training_guards.py",
       "sha256": "24e792b972986dede8a62182668022474f876f4a1a724d6693d06cc818ecc373"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-nullable-training-20260906/spend-envelope-inflight.json",
+      "sha256": "38feee31c1a03aa4c0bdd9f15319afab4f0cfd177548172bc918fd01a3716754"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-training-transfer-case-20260906/case.json",
+      "sha256": "7fc13f70f9af1f7114314e8bac85a1bfcb7ecb132600d3e5671dfba72e8b0377"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-training-transfer-case-20260906/flat.packet.json",
+      "sha256": "0b7262e8484ac4d697d569dace0011955532dd2d8aa037601b12f0a3bccb179e"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-training-transfer-case-20260906/graph.packet.json",
+      "sha256": "af8bc02f33ff2850fbc9786e539bc0b7f86fa044a731a794f04409b3a2f6966f"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-training-transfer-case-20260906/original-graph-delivery-audit.json",
+      "sha256": "9bf28901969e371435ed876d43552349614a79c79b14a8a4f22e9b6527114cd4"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-training-transfer-case-20260906/original-graph-parser-installed.json",
+      "sha256": "28e9fe8120458ff0366e7c25668ca5c2e357cce99f5efcfbe877960043234924"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-training-transfer-case-20260906/original-graph-protocol-audit.json",
+      "sha256": "35ba3a29457ddc7d793164987345d0272b43fd3e06cd5e119adcf235b82dabea"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-training-transfer-case-20260906/original-graph-terminal.json",
+      "sha256": "e53bde5fe07f182f1e64804577dd52976bcbaa0decb59cb4d3133aafbaa1d56f"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-training-transfer-case-20260906/original-graph-verification-started.json",
+      "sha256": "1065b5400a87776be4dc91f7d2d6979065c02f3ebbc08b548c9be5e3cd6095a3"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-training-transfer-case-20260906/recorded-history-excerpts.json",
+      "sha256": "945823c7e1d89a2f4f55fca46cade04e684c9635a538d16db9de2b0350985bd4"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-training-transfer-case-20260906/training-source-and-target.json",
+      "sha256": "75fa269e34a33c6c16fe267dc93165df64d0e915dd2690af027252c1206fdf86"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-training-transfer-case-20260906/validation.json",
+      "sha256": "db26b7108b6609637e7905b6e9d8568a3f8ab9c5f89d9d3c1ab1d8041112fef9"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/audit_verified_spend_envelope_v1.py",
+      "sha256": "ed2716a8eec2f03645e3e1b84052d9cab0efdc6ec28b36a3e2539d24235284f8"
+    },
+    {
+      "path_from_contextgraph_root": "tests/test_verified_spend_envelope.py",
+      "sha256": "1ad06e82fe03f861cfdbb0bda1b51add2447868d1a27d3f512ca4324a1b74413"
     }
   ],
   "claims": {
