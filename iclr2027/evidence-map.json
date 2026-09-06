@@ -417,6 +417,62 @@
     {
       "path_from_contextgraph_root": "docs/reports/verified-operational-continuation-20260906/review-amendment-plan-recovery.json",
       "sha256": "7212802014d1774d5a728ef35ed4532b328092395526defc27eae9b0251edf3e"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/iclr-statistical-reproduction-20260906.json",
+      "sha256": "6c45dfadf1bcbe277f5ea329a3ee449d8af5abab423401b39fa315fa4c26b431"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/iclr-statistical-reproduction-validation-20260906.json",
+      "sha256": "e3fddc61d368e82ca6acff1bf2109fbf56b23ddd74804e7be70186971fe3ae27"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/export_iclr_statistical_bundle.py",
+      "sha256": "04b5a569cba8a35dbd7378970d082b272fa00381074605822e864d9177d56f76"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/reproduce_audited_statistics.py",
+      "sha256": "5febb050db054f59f538057a00636fd7dedbc8801a1487f83788c644934ba2c4"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/statistical-reproduction-v1.zip",
+      "sha256": "1c1c5bdadf8a00d2bdb9189e5487be90f47027e6d14f8dd986b2fd8ae5c7b869"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/statistical-reproduction-v1/README.md",
+      "sha256": "59ff56aff21e8073ccbad076d907cb6993c320be533189296e7c6b5d20e1e26c"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/statistical-reproduction-v1/expected-statistics.json",
+      "sha256": "380916ed270b2b324c0a3f1b3f89658a330dbc7023b72853fc79c572be9bddd1"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/statistical-reproduction-v1/manifest.json",
+      "sha256": "0dc7f35433387437c2085a1beab0e064f831277742eb884f28e6b84724329b2c"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/statistical-reproduction-v1/paired_statistics.py",
+      "sha256": "bb17f4e4dada0a3f18236ab1adde0032d2139e9b47c9b0f66d0b94ad7560769d"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/statistical-reproduction-v1/reproduce.py",
+      "sha256": "5febb050db054f59f538057a00636fd7dedbc8801a1487f83788c644934ba2c4"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/statistical-reproduction-v1/requirements.txt",
+      "sha256": "479c30179f7e62d697ca3c8af0d8943454ebc276052024d61824e0453c54bf16"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/statistical-reproduction-v1/source-bindings.json",
+      "sha256": "e3d769033fa8e81820075e40a47c3b050cc4db1ef5f42a860c1cb1867839d972"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/statistical-reproduction-v1/verdicts.json",
+      "sha256": "cc4f164b869aa7a7cff361f400420b50ee942bf3a69b44fcf8862d932818c985"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-operational-continuation-20260906/first-new-attempt-audit.json",
+      "sha256": "44e2086082aeaafe7978321603c48706861f23015adda349dbfcbef628aca65b"
     }
   ],
   "claims": {
@@ -527,7 +583,23 @@
       "docs/reports/verified-operational-continuation-20260906/v1-aborted.json",
       "docs/reports/verified-operational-continuation-20260906/rex_probe.py",
       "docs/reports/verified-operational-continuation-20260906/rex_probe_v2.py",
-      "docs/reports/verified-operational-continuation-20260906/review-amendment-plan-recovery.json"
+      "docs/reports/verified-operational-continuation-20260906/review-amendment-plan-recovery.json",
+      "docs/reports/verified-operational-continuation-20260906/first-new-attempt-audit.json"
+    ],
+    "anonymous_statistical_reproduction": [
+      "docs/reports/iclr-statistical-reproduction-20260906.json",
+      "docs/reports/iclr-statistical-reproduction-validation-20260906.json",
+      "scripts/analysis/export_iclr_statistical_bundle.py",
+      "scripts/analysis/reproduce_audited_statistics.py",
+      "paper/iclr2027/statistical-reproduction-v1.zip",
+      "paper/iclr2027/statistical-reproduction-v1/README.md",
+      "paper/iclr2027/statistical-reproduction-v1/expected-statistics.json",
+      "paper/iclr2027/statistical-reproduction-v1/manifest.json",
+      "paper/iclr2027/statistical-reproduction-v1/paired_statistics.py",
+      "paper/iclr2027/statistical-reproduction-v1/reproduce.py",
+      "paper/iclr2027/statistical-reproduction-v1/requirements.txt",
+      "paper/iclr2027/statistical-reproduction-v1/source-bindings.json",
+      "paper/iclr2027/statistical-reproduction-v1/verdicts.json"
     ]
   },
   "not_reused": [

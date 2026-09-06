@@ -1,0 +1,548 @@
+{
+  "versus_flat": {
+    "benchmark": "SWEContextBench Related-Lite",
+    "manifest_sha256": "7bfa59a076575dd1d9a82f36b4875e8c7fef1a3d634f33e55311ceec99d51a87",
+    "frames": {
+      "primary99": {
+        "excluded_ids": [],
+        "comparisons": [
+          {
+            "benchmark": "SWEContextBench Related-Lite",
+            "manifest_sha256": "7bfa59a076575dd1d9a82f36b4875e8c7fef1a3d634f33e55311ceec99d51a87",
+            "left": "gfx-flat",
+            "right": "gfx-skill",
+            "n": 99,
+            "pair_counts": {
+              "both": 12,
+              "left_only": 6,
+              "right_only": 6,
+              "neither": 75
+            },
+            "resolved": {
+              "gfx-flat": 18,
+              "gfx-skill": 18
+            },
+            "right_minus_left": 0.0,
+            "mcnemar_exact_two_sided_p": 1.0,
+            "paired_bootstrap_percentile_95ci": [
+              -0.0707070707070707,
+              0.0707070707070707
+            ],
+            "bootstrap_replicates": 200000,
+            "bootstrap_seed": 42,
+            "interpretation_scope": "Exploratory frozen-manifest verdict comparison. Delivery, source leakage and adaptive campaign selection require separate audits.",
+            "holm_four_vs_flat_p": 1.0
+          },
+          {
+            "benchmark": "SWEContextBench Related-Lite",
+            "manifest_sha256": "7bfa59a076575dd1d9a82f36b4875e8c7fef1a3d634f33e55311ceec99d51a87",
+            "left": "gfx-flat",
+            "right": "gfx-graph",
+            "n": 99,
+            "pair_counts": {
+              "both": 12,
+              "left_only": 6,
+              "right_only": 0,
+              "neither": 81
+            },
+            "resolved": {
+              "gfx-flat": 18,
+              "gfx-graph": 12
+            },
+            "right_minus_left": -0.06060606060606061,
+            "mcnemar_exact_two_sided_p": 0.03125,
+            "paired_bootstrap_percentile_95ci": [
+              -0.1111111111111111,
+              -0.020202020202020204
+            ],
+            "bootstrap_replicates": 200000,
+            "bootstrap_seed": 42,
+            "interpretation_scope": "Exploratory frozen-manifest verdict comparison. Delivery, source leakage and adaptive campaign selection require separate audits.",
+            "holm_four_vs_flat_p": 0.09375
+          },
+          {
+            "benchmark": "SWEContextBench Related-Lite",
+            "manifest_sha256": "7bfa59a076575dd1d9a82f36b4875e8c7fef1a3d634f33e55311ceec99d51a87",
+            "left": "gfx-flat",
+            "right": "gfx-rules",
+            "n": 99,
+            "pair_counts": {
+              "both": 10,
+              "left_only": 8,
+              "right_only": 3,
+              "neither": 78
+            },
+            "resolved": {
+              "gfx-flat": 18,
+              "gfx-rules": 13
+            },
+            "right_minus_left": -0.050505050505050504,
+            "mcnemar_exact_two_sided_p": 0.2265625,
+            "paired_bootstrap_percentile_95ci": [
+              -0.12121212121212122,
+              0.010101010101010102
+            ],
+            "bootstrap_replicates": 200000,
+            "bootstrap_seed": 42,
+            "interpretation_scope": "Exploratory frozen-manifest verdict comparison. Delivery, source leakage and adaptive campaign selection require separate audits.",
+            "holm_four_vs_flat_p": 0.453125
+          },
+          {
+            "benchmark": "SWEContextBench Related-Lite",
+            "manifest_sha256": "7bfa59a076575dd1d9a82f36b4875e8c7fef1a3d634f33e55311ceec99d51a87",
+            "left": "gfx-flat",
+            "right": "gfx-loc",
+            "n": 99,
+            "pair_counts": {
+              "both": 8,
+              "left_only": 10,
+              "right_only": 1,
+              "neither": 80
+            },
+            "resolved": {
+              "gfx-flat": 18,
+              "gfx-loc": 9
+            },
+            "right_minus_left": -0.09090909090909091,
+            "mcnemar_exact_two_sided_p": 0.01171875,
+            "paired_bootstrap_percentile_95ci": [
+              -0.16161616161616163,
+              -0.030303030303030304
+            ],
+            "bootstrap_replicates": 200000,
+            "bootstrap_seed": 42,
+            "interpretation_scope": "Exploratory frozen-manifest verdict comparison. Delivery, source leakage and adaptive campaign selection require separate audits.",
+            "holm_four_vs_flat_p": 0.046875
+          }
+        ]
+      },
+      "historical_near_duplicate_sensitivity88": {
+        "excluded_ids": [
+          "django__django-1891",
+          "django__django-33871",
+          "matplotlib__matplotlib-23098",
+          "pydata__xarray-4529",
+          "sympy__sympy-13039",
+          "sympy__sympy-16689",
+          "sympy__sympy-18715",
+          "sympy__sympy-19558",
+          "sympy__sympy-23852",
+          "sympy__sympy-8772",
+          "sympy__sympy-9123"
+        ],
+        "comparisons": [
+          {
+            "benchmark": "SWEContextBench Related-Lite",
+            "manifest_sha256": "7bfa59a076575dd1d9a82f36b4875e8c7fef1a3d634f33e55311ceec99d51a87",
+            "left": "gfx-flat",
+            "right": "gfx-skill",
+            "n": 88,
+            "pair_counts": {
+              "both": 12,
+              "left_only": 6,
+              "right_only": 3,
+              "neither": 67
+            },
+            "resolved": {
+              "gfx-flat": 18,
+              "gfx-skill": 15
+            },
+            "right_minus_left": -0.03409090909090909,
+            "mcnemar_exact_two_sided_p": 0.5078125,
+            "paired_bootstrap_percentile_95ci": [
+              -0.10227272727272728,
+              0.03409090909090909
+            ],
+            "bootstrap_replicates": 200000,
+            "bootstrap_seed": 42,
+            "interpretation_scope": "Exploratory frozen-manifest verdict comparison. Delivery, source leakage and adaptive campaign selection require separate audits.",
+            "holm_four_vs_flat_p": 0.5078125
+          },
+          {
+            "benchmark": "SWEContextBench Related-Lite",
+            "manifest_sha256": "7bfa59a076575dd1d9a82f36b4875e8c7fef1a3d634f33e55311ceec99d51a87",
+            "left": "gfx-flat",
+            "right": "gfx-graph",
+            "n": 88,
+            "pair_counts": {
+              "both": 12,
+              "left_only": 6,
+              "right_only": 0,
+              "neither": 70
+            },
+            "resolved": {
+              "gfx-flat": 18,
+              "gfx-graph": 12
+            },
+            "right_minus_left": -0.06818181818181818,
+            "mcnemar_exact_two_sided_p": 0.03125,
+            "paired_bootstrap_percentile_95ci": [
+              -0.125,
+              -0.022727272727272728
+            ],
+            "bootstrap_replicates": 200000,
+            "bootstrap_seed": 42,
+            "interpretation_scope": "Exploratory frozen-manifest verdict comparison. Delivery, source leakage and adaptive campaign selection require separate audits.",
+            "holm_four_vs_flat_p": 0.09375
+          },
+          {
+            "benchmark": "SWEContextBench Related-Lite",
+            "manifest_sha256": "7bfa59a076575dd1d9a82f36b4875e8c7fef1a3d634f33e55311ceec99d51a87",
+            "left": "gfx-flat",
+            "right": "gfx-rules",
+            "n": 88,
+            "pair_counts": {
+              "both": 10,
+              "left_only": 8,
+              "right_only": 2,
+              "neither": 68
+            },
+            "resolved": {
+              "gfx-flat": 18,
+              "gfx-rules": 12
+            },
+            "right_minus_left": -0.06818181818181818,
+            "mcnemar_exact_two_sided_p": 0.109375,
+            "paired_bootstrap_percentile_95ci": [
+              -0.13636363636363635,
+              0.0
+            ],
+            "bootstrap_replicates": 200000,
+            "bootstrap_seed": 42,
+            "interpretation_scope": "Exploratory frozen-manifest verdict comparison. Delivery, source leakage and adaptive campaign selection require separate audits.",
+            "holm_four_vs_flat_p": 0.21875
+          },
+          {
+            "benchmark": "SWEContextBench Related-Lite",
+            "manifest_sha256": "7bfa59a076575dd1d9a82f36b4875e8c7fef1a3d634f33e55311ceec99d51a87",
+            "left": "gfx-flat",
+            "right": "gfx-loc",
+            "n": 88,
+            "pair_counts": {
+              "both": 8,
+              "left_only": 10,
+              "right_only": 0,
+              "neither": 70
+            },
+            "resolved": {
+              "gfx-flat": 18,
+              "gfx-loc": 8
+            },
+            "right_minus_left": -0.11363636363636363,
+            "mcnemar_exact_two_sided_p": 0.001953125,
+            "paired_bootstrap_percentile_95ci": [
+              -0.18181818181818182,
+              -0.056818181818181816
+            ],
+            "bootstrap_replicates": 200000,
+            "bootstrap_seed": 42,
+            "interpretation_scope": "Exploratory frozen-manifest verdict comparison. Delivery, source leakage and adaptive campaign selection require separate audits.",
+            "holm_four_vs_flat_p": 0.0078125
+          }
+        ]
+      }
+    }
+  },
+  "versus_control": {
+    "benchmark": "SWEContextBench Related-Lite",
+    "manifest_sha256": "7bfa59a076575dd1d9a82f36b4875e8c7fef1a3d634f33e55311ceec99d51a87",
+    "frames": {
+      "primary99": {
+        "excluded_ids": [],
+        "comparisons": [
+          {
+            "benchmark": "SWEContextBench Related-Lite",
+            "manifest_sha256": "7bfa59a076575dd1d9a82f36b4875e8c7fef1a3d634f33e55311ceec99d51a87",
+            "left": "gfx-control",
+            "right": "gfx-flat",
+            "n": 99,
+            "pair_counts": {
+              "both": 11,
+              "left_only": 6,
+              "right_only": 7,
+              "neither": 75
+            },
+            "resolved": {
+              "gfx-control": 17,
+              "gfx-flat": 18
+            },
+            "right_minus_left": 0.010101010101010102,
+            "mcnemar_exact_two_sided_p": 1.0,
+            "paired_bootstrap_percentile_95ci": [
+              -0.06060606060606061,
+              0.08080808080808081
+            ],
+            "bootstrap_replicates": 200000,
+            "bootstrap_seed": 42,
+            "interpretation_scope": "Exploratory frozen-manifest verdict comparison. Delivery, source leakage and adaptive campaign selection require separate audits.",
+            "holm_five_vs_control_p": 1.0,
+            "holm_two_registered_vs_control_p": 1.0
+          },
+          {
+            "benchmark": "SWEContextBench Related-Lite",
+            "manifest_sha256": "7bfa59a076575dd1d9a82f36b4875e8c7fef1a3d634f33e55311ceec99d51a87",
+            "left": "gfx-control",
+            "right": "gfx-skill",
+            "n": 99,
+            "pair_counts": {
+              "both": 12,
+              "left_only": 5,
+              "right_only": 6,
+              "neither": 76
+            },
+            "resolved": {
+              "gfx-control": 17,
+              "gfx-skill": 18
+            },
+            "right_minus_left": 0.010101010101010102,
+            "mcnemar_exact_two_sided_p": 1.0,
+            "paired_bootstrap_percentile_95ci": [
+              -0.050505050505050504,
+              0.08080808080808081
+            ],
+            "bootstrap_replicates": 200000,
+            "bootstrap_seed": 42,
+            "interpretation_scope": "Exploratory frozen-manifest verdict comparison. Delivery, source leakage and adaptive campaign selection require separate audits.",
+            "holm_five_vs_control_p": 1.0,
+            "holm_two_registered_vs_control_p": 1.0
+          },
+          {
+            "benchmark": "SWEContextBench Related-Lite",
+            "manifest_sha256": "7bfa59a076575dd1d9a82f36b4875e8c7fef1a3d634f33e55311ceec99d51a87",
+            "left": "gfx-control",
+            "right": "gfx-graph",
+            "n": 99,
+            "pair_counts": {
+              "both": 9,
+              "left_only": 8,
+              "right_only": 3,
+              "neither": 79
+            },
+            "resolved": {
+              "gfx-control": 17,
+              "gfx-graph": 12
+            },
+            "right_minus_left": -0.050505050505050504,
+            "mcnemar_exact_two_sided_p": 0.2265625,
+            "paired_bootstrap_percentile_95ci": [
+              -0.12121212121212122,
+              0.010101010101010102
+            ],
+            "bootstrap_replicates": 200000,
+            "bootstrap_seed": 42,
+            "interpretation_scope": "Exploratory frozen-manifest verdict comparison. Delivery, source leakage and adaptive campaign selection require separate audits.",
+            "holm_five_vs_control_p": 0.90625
+          },
+          {
+            "benchmark": "SWEContextBench Related-Lite",
+            "manifest_sha256": "7bfa59a076575dd1d9a82f36b4875e8c7fef1a3d634f33e55311ceec99d51a87",
+            "left": "gfx-control",
+            "right": "gfx-rules",
+            "n": 99,
+            "pair_counts": {
+              "both": 8,
+              "left_only": 9,
+              "right_only": 5,
+              "neither": 77
+            },
+            "resolved": {
+              "gfx-control": 17,
+              "gfx-rules": 13
+            },
+            "right_minus_left": -0.04040404040404041,
+            "mcnemar_exact_two_sided_p": 0.4239501953125,
+            "paired_bootstrap_percentile_95ci": [
+              -0.1111111111111111,
+              0.030303030303030304
+            ],
+            "bootstrap_replicates": 200000,
+            "bootstrap_seed": 42,
+            "interpretation_scope": "Exploratory frozen-manifest verdict comparison. Delivery, source leakage and adaptive campaign selection require separate audits.",
+            "holm_five_vs_control_p": 1.0
+          },
+          {
+            "benchmark": "SWEContextBench Related-Lite",
+            "manifest_sha256": "7bfa59a076575dd1d9a82f36b4875e8c7fef1a3d634f33e55311ceec99d51a87",
+            "left": "gfx-control",
+            "right": "gfx-loc",
+            "n": 99,
+            "pair_counts": {
+              "both": 6,
+              "left_only": 11,
+              "right_only": 3,
+              "neither": 79
+            },
+            "resolved": {
+              "gfx-control": 17,
+              "gfx-loc": 9
+            },
+            "right_minus_left": -0.08080808080808081,
+            "mcnemar_exact_two_sided_p": 0.057373046875,
+            "paired_bootstrap_percentile_95ci": [
+              -0.15151515151515152,
+              -0.010101010101010102
+            ],
+            "bootstrap_replicates": 200000,
+            "bootstrap_seed": 42,
+            "interpretation_scope": "Exploratory frozen-manifest verdict comparison. Delivery, source leakage and adaptive campaign selection require separate audits.",
+            "holm_five_vs_control_p": 0.286865234375
+          }
+        ]
+      },
+      "historical_near_duplicate_sensitivity88": {
+        "excluded_ids": [
+          "django__django-1891",
+          "django__django-33871",
+          "matplotlib__matplotlib-23098",
+          "pydata__xarray-4529",
+          "sympy__sympy-13039",
+          "sympy__sympy-16689",
+          "sympy__sympy-18715",
+          "sympy__sympy-19558",
+          "sympy__sympy-23852",
+          "sympy__sympy-8772",
+          "sympy__sympy-9123"
+        ],
+        "comparisons": [
+          {
+            "benchmark": "SWEContextBench Related-Lite",
+            "manifest_sha256": "7bfa59a076575dd1d9a82f36b4875e8c7fef1a3d634f33e55311ceec99d51a87",
+            "left": "gfx-control",
+            "right": "gfx-flat",
+            "n": 88,
+            "pair_counts": {
+              "both": 11,
+              "left_only": 5,
+              "right_only": 7,
+              "neither": 65
+            },
+            "resolved": {
+              "gfx-control": 16,
+              "gfx-flat": 18
+            },
+            "right_minus_left": 0.022727272727272728,
+            "mcnemar_exact_two_sided_p": 0.7744140625,
+            "paired_bootstrap_percentile_95ci": [
+              -0.056818181818181816,
+              0.10227272727272728
+            ],
+            "bootstrap_replicates": 200000,
+            "bootstrap_seed": 42,
+            "interpretation_scope": "Exploratory frozen-manifest verdict comparison. Delivery, source leakage and adaptive campaign selection require separate audits.",
+            "holm_five_vs_control_p": 1.0,
+            "holm_two_registered_vs_control_p": 1.0
+          },
+          {
+            "benchmark": "SWEContextBench Related-Lite",
+            "manifest_sha256": "7bfa59a076575dd1d9a82f36b4875e8c7fef1a3d634f33e55311ceec99d51a87",
+            "left": "gfx-control",
+            "right": "gfx-skill",
+            "n": 88,
+            "pair_counts": {
+              "both": 11,
+              "left_only": 5,
+              "right_only": 4,
+              "neither": 68
+            },
+            "resolved": {
+              "gfx-control": 16,
+              "gfx-skill": 15
+            },
+            "right_minus_left": -0.011363636363636364,
+            "mcnemar_exact_two_sided_p": 1.0,
+            "paired_bootstrap_percentile_95ci": [
+              -0.07954545454545454,
+              0.056818181818181816
+            ],
+            "bootstrap_replicates": 200000,
+            "bootstrap_seed": 42,
+            "interpretation_scope": "Exploratory frozen-manifest verdict comparison. Delivery, source leakage and adaptive campaign selection require separate audits.",
+            "holm_five_vs_control_p": 1.0,
+            "holm_two_registered_vs_control_p": 1.0
+          },
+          {
+            "benchmark": "SWEContextBench Related-Lite",
+            "manifest_sha256": "7bfa59a076575dd1d9a82f36b4875e8c7fef1a3d634f33e55311ceec99d51a87",
+            "left": "gfx-control",
+            "right": "gfx-graph",
+            "n": 88,
+            "pair_counts": {
+              "both": 9,
+              "left_only": 7,
+              "right_only": 3,
+              "neither": 69
+            },
+            "resolved": {
+              "gfx-control": 16,
+              "gfx-graph": 12
+            },
+            "right_minus_left": -0.045454545454545456,
+            "mcnemar_exact_two_sided_p": 0.34375,
+            "paired_bootstrap_percentile_95ci": [
+              -0.11363636363636363,
+              0.022727272727272728
+            ],
+            "bootstrap_replicates": 200000,
+            "bootstrap_seed": 42,
+            "interpretation_scope": "Exploratory frozen-manifest verdict comparison. Delivery, source leakage and adaptive campaign selection require separate audits.",
+            "holm_five_vs_control_p": 1.0
+          },
+          {
+            "benchmark": "SWEContextBench Related-Lite",
+            "manifest_sha256": "7bfa59a076575dd1d9a82f36b4875e8c7fef1a3d634f33e55311ceec99d51a87",
+            "left": "gfx-control",
+            "right": "gfx-rules",
+            "n": 88,
+            "pair_counts": {
+              "both": 8,
+              "left_only": 8,
+              "right_only": 4,
+              "neither": 68
+            },
+            "resolved": {
+              "gfx-control": 16,
+              "gfx-rules": 12
+            },
+            "right_minus_left": -0.045454545454545456,
+            "mcnemar_exact_two_sided_p": 0.3876953125,
+            "paired_bootstrap_percentile_95ci": [
+              -0.125,
+              0.03409090909090909
+            ],
+            "bootstrap_replicates": 200000,
+            "bootstrap_seed": 42,
+            "interpretation_scope": "Exploratory frozen-manifest verdict comparison. Delivery, source leakage and adaptive campaign selection require separate audits.",
+            "holm_five_vs_control_p": 1.0
+          },
+          {
+            "benchmark": "SWEContextBench Related-Lite",
+            "manifest_sha256": "7bfa59a076575dd1d9a82f36b4875e8c7fef1a3d634f33e55311ceec99d51a87",
+            "left": "gfx-control",
+            "right": "gfx-loc",
+            "n": 88,
+            "pair_counts": {
+              "both": 5,
+              "left_only": 11,
+              "right_only": 3,
+              "neither": 69
+            },
+            "resolved": {
+              "gfx-control": 16,
+              "gfx-loc": 8
+            },
+            "right_minus_left": -0.09090909090909091,
+            "mcnemar_exact_two_sided_p": 0.057373046875,
+            "paired_bootstrap_percentile_95ci": [
+              -0.17045454545454544,
+              -0.011363636363636364
+            ],
+            "bootstrap_replicates": 200000,
+            "bootstrap_seed": 42,
+            "interpretation_scope": "Exploratory frozen-manifest verdict comparison. Delivery, source leakage and adaptive campaign selection require separate audits.",
+            "holm_five_vs_control_p": 0.286865234375
+          }
+        ]
+      }
+    }
+  }
+}

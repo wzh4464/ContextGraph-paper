@@ -1,0 +1,10 @@
+{
+  "rechecked-prediction-audit.json": "f2790e8720d3511ab42b24e29764f3e7623d30ca6f04a870963768048d68e3c8",
+  "receipt-audit.json": "1ac3d6a6e25f214fe38306010e9655139a7f4361543c4a6ef9bf4e201dcf566d",
+  "control-exposure.json": "27ad6de06a010779cfcec274fb1500fc7d5bef9c362358bbf265ff9237e1f905",
+  "variant-delivery-census.json": "2fae9b75db8efb2f0e13a6200652a2e3ada02619dab1b61d898aafc1a12c82ea",
+  "memory-served-census-v2.json": "5a39382d18572dd96d88ce4f1ad0297abc708f85bfe0b4631c93b5a5ac294837",
+  "comparisons-versus-control": "aac8dbfed64e8838ba406d97d0de1f81f3f50ff9b5aacbb7262a8f1140ab0fb5",
+  "comparisons-versus-flat": "a651742f6fa0c4e526ec70093c80c8a534115794dadfe2c305fb2dd2d5ecec0c",
+  "original-statistical-core": "bb17f4e4dada0a3f18236ab1adde0032d2139e9b47c9b0f66d0b94ad7560769d"
+}

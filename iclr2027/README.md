@@ -28,9 +28,16 @@ cd paper/iclr2027
 ~/.local/bin/tectonic main.tex --keep-logs
 ```
 
-Tectonic 0.17.0 was installed from its official release. The draft is anonymous,
-but the accompanying repository evidence still needs an anonymous release package
-before external submission. `evidence-map.json` binds current claims to repository artifacts.
+Tectonic 0.17.0 was installed from its official release. The manuscript is anonymous.
+`statistical-reproduction-v1.zip` is a local anonymous statistical supplement draft:
+594 first-prediction verdicts reproduce all 18 Related-Lite comparisons, with both
+fixed denominators and the stated Holm families. Extract it and follow its README;
+the script needs only the pinned NumPy dependency and makes no service calls.
+An independent rebuild produced the identical archive. Missing-record,
+changed-verdict and file-integrity checks were exercised in temporary copies.
+This package recomputes statistics; the full raw verifier/delivery evidence and
+experimental environment still need a complete anonymous release and human review.
+`evidence-map.json` binds current claims and export validation to repository artifacts.
 
 The archived paired-effect figure uses the already audited 99-task and 88-task
 comparisons, with unadjusted paired bootstrap intervals. Its PDF, SVG and PNG are
@@ -46,14 +53,12 @@ The current manuscript uses `figures/archived_effects_with_control.pdf`, which
 adds the completed contemporaneous Control audit; its adjacent JSON binds the
 six-arm comparisons. Neither figure includes the unfinished Verified campaign.
 
-The September 6, 12:12 UTC Verified snapshot has three audited original results
-on the first task (Control, Flat and Graph resolved). Two later task blocks are
-active and 147 are unstarted. These partial receipts validate the analysis
-integration and do not form a success rate or treatment effect. The full
-150-task denominator remains fixed per arm.
-
-At 12:16 UTC a subsequent Flat attempt ends after consecutive command timeouts;
-its original empty patch is officially unresolved. Protocol and memory delivery
-checks pass, but the frozen outer status policy pauses new-block admission while
-another active block continues. The failure is retained and no solver rerun is
-substituted. See the bound command-timeout incident record.
+The original Verified scheduler and registered analysis closed incomplete on
+September 6 at 12:52 UTC. Django11740's three original predictions were resolved;
+Xarray6992's three were unresolved. Django16256 Flat's original empty prediction
+was also officially unresolved after command timeouts, while its outer status
+classification interrupted admission. The original records and analysis remain
+unchanged. A separately disclosed operational-stop amendment then started only
+previously unstarted attempts with the same frozen inputs and budget limits.
+The full 150-task denominator remains fixed per arm and no formal effect estimate
+is reported. See the bound amendment checkpoint and deployment records.
