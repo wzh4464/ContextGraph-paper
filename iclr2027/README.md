@@ -20,6 +20,13 @@ SWE-agent source, with 1,426 direct boundary checks and a 66-record regression.
 This establishes transient original response retention, not complete forgetting
 or a causal explanation for repair outcomes. Its plan, full audit, and validation
 are bound in the evidence map; existing scores and runtime are unchanged.
+`retention-reproduction-v1.zip` provides a standalone structural reproduction of
+all 198 records and 1,426 boundary checks, using the original processing methods
+and source-bound history metadata. Two builds are byte-identical, a fresh archive
+passes isolated replay, and five missing/changed-evidence checks are rejected.
+No original message text is included; content-based delivery remains covered by
+the separate delivery package. Extract the archive and run
+`uv run --no-project python reproduce.py` from its directory.
 
 The official [ICLR 2027 author guide](https://iclr.cc/Conferences/2027/AuthorGuidelines)
 sets abstract and full-paper deadlines at September 18 and September 25, 2026,

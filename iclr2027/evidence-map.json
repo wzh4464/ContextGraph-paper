@@ -809,6 +809,114 @@
     {
       "path_from_contextgraph_root": "docs/reports/gfx-response-retention-comparison-20260906/paper-validation.json",
       "sha256": "58c20d6a58f16e309eb16f4bbbc00325e72398aae1a82df49ed13d7102009f2f"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-retention-reproduction-20260906/README.md",
+      "sha256": "6ac9aaba4bac0061aa360982615fea5caf3f94eb6bea0fcd66e62ffe397f1319"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-retention-reproduction-20260906/SWE-agent-LICENSE",
+      "sha256": "7610ed3916f6674e34b78417894abd57ff538b3cfdda3085e3643d82acbaf31f"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-retention-reproduction-20260906/bundle-receipt.json",
+      "sha256": "804c285f9572c66de986e7d9b969b05393445ffa19ce9ebb1f3798b19f9f3bed"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-retention-reproduction-20260906/deployment.json",
+      "sha256": "8ef0e5c43d703fc219d427822aebcbc72b1b5ea487396172b0e52d86ea1ed9ad"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-retention-reproduction-20260906/export-plan.json",
+      "sha256": "9e89bd4a7cbf479be570d35635c1416a62771b4b042c1f8f83916583fc6cde00"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-retention-reproduction-20260906/first-reproduction.json",
+      "sha256": "fbd462896abf96b13731e270afd8f81ccc55bcec16acafefe76d3384eb5a247d"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-retention-reproduction-20260906/original_history_processors.py",
+      "sha256": "66f9e2ab2c0e316bbf7d0377cae8fab1a83250f4f9f3a631b8592aceb4022f18"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-retention-reproduction-20260906/public-pattern-review.json",
+      "sha256": "5e960aeded35d28d571970c3b0383b7912072887d381ab2a30de09e4a1d596e0"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-retention-reproduction-20260906/revised-reproduction.json",
+      "sha256": "ba89bdd40fc425dbfc8d205f79577d4c65bd7697b63accb86b830a79f3f2a773"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-retention-reproduction-20260906/transfer.json",
+      "sha256": "6170cf6b56928c51e4abb4704697bb9d3b5e472f8545df328bcb6831f6e24286"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-retention-reproduction-20260906/validation.json",
+      "sha256": "b8a0eb725b2abd34acd100903e7a87eb59ef3b9c0dc1ef9ff7089bc4e73cd29f"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/export_gfx_retention_projection_v1.py",
+      "sha256": "dcd81d6127fe218359d5410d2248efa203110e0d97f8e3d8cb830ef3f109cdd5"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/reproduce_gfx_retention_projection_v1.py",
+      "sha256": "b9f74eef45e862b9351076af17784281d9af76255e1054439115e293be0d6cd9"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/build_gfx_retention_bundle_v1.py",
+      "sha256": "391096d2b76cd29b79121e16366fd1b0e1c176a17a4a251b8fcddd7184dbfbcc"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/retention-reproduction-v1/README.md",
+      "sha256": "453203268026c4fe3192a3aea43d0e9db0d7ec0c99d9bfa06dcf00f1744c382e"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/retention-reproduction-v1/SWE-agent-LICENSE",
+      "sha256": "7610ed3916f6674e34b78417894abd57ff538b3cfdda3085e3643d82acbaf31f"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/retention-reproduction-v1/expected-retention.json",
+      "sha256": "18850f58b007a787e5e935465980d9d3b7a5de14bc926bbbd8aad2f3569f4934"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/retention-reproduction-v1/manifest.json",
+      "sha256": "109609a5077d65c1daf8060849c83e4a321a2c1c9620ad25320bc37a07a58992"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/retention-reproduction-v1/original-attempts.json",
+      "sha256": "08491cc8be3df3334469c3f05f2e5ba1e5832b7bf3681d6fdf3b641f2591e9ac"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/retention-reproduction-v1/original_history_processors.py",
+      "sha256": "66f9e2ab2c0e316bbf7d0377cae8fab1a83250f4f9f3a631b8592aceb4022f18"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/retention-reproduction-v1/projection-schema-review.json",
+      "sha256": "526fdc150d27581e40afff1e912e7d6c0cff54ce34150136c65cacd47f0b4356"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/retention-reproduction-v1/projection.json.gz",
+      "sha256": "444368d6cec03bf44ee45feb9160be950239d2664a106f8a3f3b248caeaed1c6"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/retention-reproduction-v1/reproduce.py",
+      "sha256": "b9f74eef45e862b9351076af17784281d9af76255e1054439115e293be0d6cd9"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/retention-reproduction-v1/retention_core.py",
+      "sha256": "5d5df02703931c34580a16c2a35e1bfe052f419e93b3369f7a18373eea70d6f0"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/retention-reproduction-v1/source-bindings.json",
+      "sha256": "2e555d82db4a6a00089cee8dce27a8e1ca77882ae8ca148d418ed43655658c80"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/retention-reproduction-v1.zip",
+      "sha256": "deb9830d494118ffa3c2d06699e82e0c78457e9e5b790cd8a348411338ce98a3"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-retention-reproduction-20260906/paper-integration.json",
+      "sha256": "57df61c9b0ddd6be1959167d642fc3ffedc47ce246b9c643a60639a5706bef1d"
     }
   ],
   "claims": {
@@ -965,6 +1073,35 @@
       "docs/reports/gfx-response-retention-comparison-20260906/retention-audit.json",
       "docs/reports/gfx-response-retention-comparison-20260906/validation-summary.json",
       "docs/reports/gfx-response-retention-comparison-20260906/validate_completion.py"
+    ],
+    "anonymous_retention_reproduction": [
+      "docs/reports/gfx-retention-reproduction-20260906/README.md",
+      "docs/reports/gfx-retention-reproduction-20260906/SWE-agent-LICENSE",
+      "docs/reports/gfx-retention-reproduction-20260906/bundle-receipt.json",
+      "docs/reports/gfx-retention-reproduction-20260906/deployment.json",
+      "docs/reports/gfx-retention-reproduction-20260906/export-plan.json",
+      "docs/reports/gfx-retention-reproduction-20260906/first-reproduction.json",
+      "docs/reports/gfx-retention-reproduction-20260906/original_history_processors.py",
+      "docs/reports/gfx-retention-reproduction-20260906/public-pattern-review.json",
+      "docs/reports/gfx-retention-reproduction-20260906/revised-reproduction.json",
+      "docs/reports/gfx-retention-reproduction-20260906/transfer.json",
+      "docs/reports/gfx-retention-reproduction-20260906/validation.json",
+      "scripts/analysis/export_gfx_retention_projection_v1.py",
+      "scripts/analysis/reproduce_gfx_retention_projection_v1.py",
+      "scripts/analysis/build_gfx_retention_bundle_v1.py",
+      "paper/iclr2027/retention-reproduction-v1/README.md",
+      "paper/iclr2027/retention-reproduction-v1/SWE-agent-LICENSE",
+      "paper/iclr2027/retention-reproduction-v1/expected-retention.json",
+      "paper/iclr2027/retention-reproduction-v1/manifest.json",
+      "paper/iclr2027/retention-reproduction-v1/original-attempts.json",
+      "paper/iclr2027/retention-reproduction-v1/original_history_processors.py",
+      "paper/iclr2027/retention-reproduction-v1/projection-schema-review.json",
+      "paper/iclr2027/retention-reproduction-v1/projection.json.gz",
+      "paper/iclr2027/retention-reproduction-v1/reproduce.py",
+      "paper/iclr2027/retention-reproduction-v1/retention_core.py",
+      "paper/iclr2027/retention-reproduction-v1/source-bindings.json",
+      "paper/iclr2027/retention-reproduction-v1.zip",
+      "docs/reports/gfx-retention-reproduction-20260906/paper-integration.json"
     ]
   },
   "not_reused": [
