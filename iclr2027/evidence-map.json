@@ -1041,6 +1041,114 @@
     {
       "path_from_contextgraph_root": "scripts/analysis/build_gfx_verification_bundle_v1.py",
       "sha256": "9b4c3139e22ad9e45eae149470134bc583669df46b413ac2c509fd9dca2256c4"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-verdict-semantics-20260906/README.md",
+      "sha256": "b0a27d4ebdd62e8f6759685f9577e55e9f1359c1b65b595901e24e539f4917f2"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-verdict-semantics-20260906/audit-plan.json",
+      "sha256": "e787ba79572daee08d877ab38687a1c43e9e06618a89655cd9bea8edddd8b8bb"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-verdict-semantics-20260906/audit.json",
+      "sha256": "ace252d001b45a5b55c247c39017223cccfdd1c071c2c982e488f5d7ed11c91b"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-verdict-semantics-20260906/bundle-build.json",
+      "sha256": "eae8a1abdce4ed92ba410e1c4ca7dbd8fc9f63ab6c3ff899960a48dc54ac48f6"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-verdict-semantics-20260906/bundle-validation.json",
+      "sha256": "14390bbaa8d1a7bdacb2a2023d54e707c1f1eed395b3e1490216a50314a585f1"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-verdict-semantics-20260906/classification-counts.json",
+      "sha256": "13d3b5be663295a65e374c33c8f5dd80963071edcd6de525ee0e5c23de33e3b6"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-verdict-semantics-20260906/collection-plan.json",
+      "sha256": "215017421b63451abd85de36a58c187739bcc664e950d771e914be44d39cefd7"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-verdict-semantics-20260906/collection.json",
+      "sha256": "7edaa3609ba3655984028aa3b6b43c53fb8fa95665f78ef761cf1906a53ff7f8"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-verdict-semantics-20260906/original_run_evaluation.py",
+      "sha256": "c7ccb88ac6fd385ee86ccbc9231021c9ec8391a37a4b3e53da4d53eb6f4d9a08"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-verdict-semantics-20260906/paper-validation.json",
+      "sha256": "43b8e20d81976ad7f39abfc436a37b258636d550959b079a0e88c3175241a2f5"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-verdict-semantics-20260906/source-receipt.json",
+      "sha256": "3bc22f255050f6de08d3e8c7bd35d21386ec7c9b5e688b5293457b6b4b82d3ef"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-verdict-semantics-20260906/validation.json",
+      "sha256": "805d0e5a238a68cccc259bbdef64ecc51174193aa3fc7ec4b7deec16ba68140f"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/verdict-semantics-reproduction-v1/README.md",
+      "sha256": "e89e982dce89fd772ef703f434a0f92b35772b0a7874fdb7f30918303626c74f"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/verdict-semantics-reproduction-v1/audit_core.py",
+      "sha256": "ad63c313123018b6a905372b95eac37cb156bfe748f06b3666447e76ede1c80f"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/verdict-semantics-reproduction-v1/expected-audit.json",
+      "sha256": "49a034e6e2970ba46a6c5d2046466b20103d2761c5f603e4689afe08aa606540"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/verdict-semantics-reproduction-v1/manifest.json",
+      "sha256": "4f589f505f78ab59f2f89ac603052dd0f7adb53502831cfb8edee2d56605dadf"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/verdict-semantics-reproduction-v1/original_run_evaluation.py",
+      "sha256": "c7ccb88ac6fd385ee86ccbc9231021c9ec8391a37a4b3e53da4d53eb6f4d9a08"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/verdict-semantics-reproduction-v1/projection.json.gz",
+      "sha256": "808a5b3f4a7c89468774677e203185d0814d4f43b42134f9ead52f588cd0b6c3"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/verdict-semantics-reproduction-v1/reproduce.py",
+      "sha256": "b7b53defdd089b9ff575f9dc098464a1b4a506b35c617653feec167ae081e267"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/verdict-semantics-reproduction-v1/source-bindings.json",
+      "sha256": "2735807bfd6daf29ad31b47978dc54afaa4bd98ef11ea9a63fbbfe86ebda29de"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/verdict-semantics-reproduction-v1/verdicts.json",
+      "sha256": "cc4f164b869aa7a7cff361f400420b50ee942bf3a69b44fcf8862d932818c985"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/verdict-semantics-reproduction-v1/verification-identities.json",
+      "sha256": "6fd1ef21402399f93ac2424a1c8f8f16cace78f81179dc2f94f820d791e39aa8"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/verdict-semantics-reproduction-v1.zip",
+      "sha256": "3423a64e20424fb77e6050a86f1bdb2b283f9d647af2ca89e604be8b68ab9058"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/audit_gfx_verdict_semantics_v1.py",
+      "sha256": "ad63c313123018b6a905372b95eac37cb156bfe748f06b3666447e76ede1c80f"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/build_gfx_verdict_bundle_v1.py",
+      "sha256": "87c27c48c685c454010465d55bcb8cb750f890eb7dd5c5380b673c5a19709345"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/collect_gfx_test_status_logs_v1.py",
+      "sha256": "543899b1e7c02a58f5c8f1ec2f3f94a6f87e093dbe097c1ffca0e55ca6c167d1"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/reproduce_gfx_verdict_semantics_v1.py",
+      "sha256": "b7b53defdd089b9ff575f9dc098464a1b4a506b35c617653feec167ae081e267"
     }
   ],
   "claims": {
@@ -1261,6 +1369,35 @@
       "scripts/analysis/export_gfx_verification_projection_v1.py",
       "scripts/analysis/reproduce_gfx_verification_projection_v1.py",
       "scripts/analysis/build_gfx_verification_bundle_v1.py"
+    ],
+    "frozen_related_lite_verdict_semantics": [
+      "docs/reports/gfx-verdict-semantics-20260906/README.md",
+      "docs/reports/gfx-verdict-semantics-20260906/audit-plan.json",
+      "docs/reports/gfx-verdict-semantics-20260906/audit.json",
+      "docs/reports/gfx-verdict-semantics-20260906/bundle-build.json",
+      "docs/reports/gfx-verdict-semantics-20260906/bundle-validation.json",
+      "docs/reports/gfx-verdict-semantics-20260906/classification-counts.json",
+      "docs/reports/gfx-verdict-semantics-20260906/collection-plan.json",
+      "docs/reports/gfx-verdict-semantics-20260906/collection.json",
+      "docs/reports/gfx-verdict-semantics-20260906/original_run_evaluation.py",
+      "docs/reports/gfx-verdict-semantics-20260906/paper-validation.json",
+      "docs/reports/gfx-verdict-semantics-20260906/source-receipt.json",
+      "docs/reports/gfx-verdict-semantics-20260906/validation.json",
+      "paper/iclr2027/verdict-semantics-reproduction-v1/README.md",
+      "paper/iclr2027/verdict-semantics-reproduction-v1/audit_core.py",
+      "paper/iclr2027/verdict-semantics-reproduction-v1/expected-audit.json",
+      "paper/iclr2027/verdict-semantics-reproduction-v1/manifest.json",
+      "paper/iclr2027/verdict-semantics-reproduction-v1/original_run_evaluation.py",
+      "paper/iclr2027/verdict-semantics-reproduction-v1/projection.json.gz",
+      "paper/iclr2027/verdict-semantics-reproduction-v1/reproduce.py",
+      "paper/iclr2027/verdict-semantics-reproduction-v1/source-bindings.json",
+      "paper/iclr2027/verdict-semantics-reproduction-v1/verdicts.json",
+      "paper/iclr2027/verdict-semantics-reproduction-v1/verification-identities.json",
+      "paper/iclr2027/verdict-semantics-reproduction-v1.zip",
+      "scripts/analysis/audit_gfx_verdict_semantics_v1.py",
+      "scripts/analysis/build_gfx_verdict_bundle_v1.py",
+      "scripts/analysis/collect_gfx_test_status_logs_v1.py",
+      "scripts/analysis/reproduce_gfx_verdict_semantics_v1.py"
     ]
   },
   "not_reused": [

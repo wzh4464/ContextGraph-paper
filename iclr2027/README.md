@@ -77,6 +77,19 @@ hashes, while prediction/report/verified-patch bytes are exact. This package doe
 not re-execute tests or reconstruct the full runtime and Docker evidence chain.
 It remains a local review draft, with no new predictions or changed outcomes.
 
+`verdict-semantics-reproduction-v1.zip` replays the frozen harness comparison for
+all 287 complete recorded before/after comparisons. All reports match; 15 setup failures
+and 292 empty predictions remain separately identified within the same 594
+original attempts. In this frozen Related-Lite implementation, `resolved` requires
+FAIL_TO_PASS success but does not veto PASS_TO_PASS failures. Four resolved
+predictions have recorded PASSED-to-FAILED regressions: Flat and Graph on
+Django-34570, Rules and Control on Django-33461. PASS_TO_PASS success also includes
+some unchanged skipped, failed or missing statuses. The manuscript now states
+these criterion semantics; original official scores are unchanged. The package
+contains original status-log/report bytes, pinned test lists and the frozen source,
+but does not reparse complete raw test stdout or execute tests. These rules do not
+redefine the separate SWE-bench Verified campaign.
+
 The archived paired-effect figure uses the already audited 99-task and 88-task
 comparisons, with unadjusted paired bootstrap intervals. Its PDF, SVG and PNG are
 in `figures/`; the adjacent JSON records exact plotted values, input/output hashes

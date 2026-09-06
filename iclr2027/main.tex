@@ -13,7 +13,7 @@
 Long-term memory can change what a coding agent reads without improving the patch it submits.
 We study this gap using \cg{}, a system that turns prior repair evidence into rules and retrieves them through dense, lexical, and graph channels.
 Our evaluation separates memory provenance, actual delivery, agent execution, and official repair verification.
-Existing official reports for two completed SWE Context Bench Related-Lite conditions record 18 repairs each on the same 99 tasks, with six wins unique to each condition.
+Existing official reports for two completed SWE Context Bench Related-Lite conditions record 18 resolved predictions each on the same 99 tasks, with six wins unique to each condition.
 The recorded paired difference is 0 percentage points (95\% bootstrap interval $[-7.07,7.07]$).
 A completed contemporaneous Control resolves 17/99; Flat and Card each gain only one observed repair over Control, with exact paired $p=1$ for both comparisons.
 An extended audit identified one appended historical Docker log; an independent frozen-verifier recheck of the identical prediction reproduces the original failure, with no outcome changed.
@@ -79,7 +79,7 @@ These objects are linked rather than inferred from one another:
   \longrightarrow T_{ia}\longrightarrow \text{submitted patch}\longrightarrow Y_{ia}.
 \]
 Each link has a separate check. Source IDs must satisfy the frozen split; delivered content must appear in the actual model input or matching tool response; submitted patches and trajectories must match their recorded hashes; and a positive result must agree with both the task report and the harness summary.
-An infrastructure failure is a missing valid outcome, not an inferred negative result. An explicitly empty submission is a failure under the matching frozen verifier policy.
+An unbound or protocol-invalid attempt lacks an admissible outcome. Explicit empty-submission and verifier-setup-failure labels follow the matching frozen policy and are distinguished from tested failures.
 
 \paragraph{Fixed universes.}
 An analysis uses its preregistered task list, never the intersection of whichever receipts happen to exist.
@@ -124,6 +124,13 @@ A separate diagnostic verification of the identical prediction reproduces the or
 It neither reruns the solver nor replaces the original outcome.
 We attach this independent evidence to that first prediction and retain the original provenance exception: the recheck does not reconstruct the historical execution.
 All reported first-prediction outcomes remain unchanged.
+
+\paragraph{Verdict semantics.}
+This frozen Related-Lite harness requires all fail-to-pass tests to pass for \texttt{resolved}, irrespective of pass-to-pass failures.
+Replaying all 287 complete recorded before/after comparisons exactly reproduces the reports; 15 setup failures and 292 empty predictions remain separate.
+Four officially resolved predictions contain a recorded pass-to-pass transition from PASSED to FAILED.
+Pass-to-pass success also admits some unchanged skipped, failed, or missing statuses.
+Thus neither label guarantees all regression tests passed. The logs contain parsed status maps, not complete raw test stdout; official scores remain unchanged, and these semantics are not transferred to Verified.
 
 \begin{table}[t]
 \centering
@@ -339,7 +346,7 @@ The aspiration to improve memory should not make success the inclusion criterion
 
 \section*{Reproducibility statement}
 Frozen task lists, source and runtime hashes, per-task official receipts, and the evidence map support the reported claims.
-Four local anonymous supplements reproduce 18 Related-Lite paired comparisons, 594 exposure checks, 198 retention records with 1,426 processor-boundary checks, and all 594 original prediction/report joins.
+Five local anonymous supplements reproduce 18 Related-Lite paired comparisons, 594 exposure checks, 198 retention records with 1,426 processor-boundary checks, all 594 original prediction/report joins, and 287 frozen status comparisons.
 Delivery uses actual responses and cards; retention uses source-bound structural histories.
 The verification package contains 302 nonempty predictions with original official reports and 292 empty-prediction exemptions, retaining the historical log exception.
 These packages do not rerun tests or the complete runtime/Docker audits.
