@@ -24,7 +24,7 @@ This draft reports the audits, the retained provenance limitation, and the new e
 
 \paragraph{Draft status, 6 September 2026.}
 This is a research draft, not a completed submission. Related-Lite first predictions have checked frozen-verifier evidence, including one independent recheck for the historical log exception described below.
-The separate Verified 350/150 campaign is being prepared, and its outcome table remains unpopulated.
+The separate Verified 350/150 inputs are frozen; formal solving awaits restored account credit, and its outcome table remains unpopulated.
 Historical results from other repository experiments are not pooled into either denominator.
 
 \section{Introduction}
@@ -186,6 +186,14 @@ Together with runtime failures and the retained Flat provenance limitation, this
 In a retrospective family of four comparisons against Flat, Holm-adjusted exact McNemar $p$ values are 1.000 (Card), 0.094 (Graph), 0.453 (Rules), and 0.047 (file list).
 The file-list difference is $-9.09\pp$ with a paired bootstrap interval $[-16.16,-3.03]$ percentage points; this interval is not adjusted for multiple comparisons.
 The observed difference does not isolate which aspect of the intervention or execution caused it.
+Figure~\ref{fig:archived-effects} shows the paired estimates for both fixed task universes.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.95\textwidth]{figures/archived_paired_effects.pdf}
+\caption{Archived Related-Lite first-prediction repair differences relative to Flat, on the full 99 tasks and the pre-existing 88-task source-overlap sensitivity set. Bars are unadjusted 95\% paired bootstrap intervals. These retrospective comparisons include operational failures and retain the historical receipt limitation; they do not isolate causal memory effects.}
+\label{fig:archived-effects}
+\end{figure}
 
 \paragraph{Control comparison.}
 A contemporaneous no-memory run is still being graded.

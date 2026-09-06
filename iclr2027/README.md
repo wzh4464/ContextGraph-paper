@@ -31,3 +31,14 @@ cd paper/iclr2027
 Tectonic 0.17.0 was installed from its official release. The draft is anonymous,
 but the accompanying repository evidence still needs an anonymous release package
 before external submission. `evidence-map.json` binds current claims to repository artifacts.
+
+The archived paired-effect figure uses the already audited 99-task and 88-task
+comparisons, with unadjusted paired bootstrap intervals. Its PDF, SVG and PNG are
+in `figures/`; the adjacent JSON records exact plotted values, input/output hashes
+and the plotting version. From the ContextGraph root, regenerate with:
+
+```bash
+uv run --no-project --with matplotlib==3.11.1 python scripts/analysis/plot_archived_paired_effects.py --source docs/reports/gfx-expanded-audit-20260906/paired-comparisons.json --out-dir paper/iclr2027/figures
+```
+
+The plot does not include the unfinished Control campaign or local Verified results.

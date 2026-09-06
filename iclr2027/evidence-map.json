@@ -145,6 +145,10 @@
     {
       "path_from_contextgraph_root": "docs/reports/gfx-command-marker-audit-20260906/model-source-excerpts.json",
       "sha256": "e4f305204ddafee20f9662a81e6d0684c6b563c40f605fec451f484a69d623f3"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/figures/archived_paired_effects.json",
+      "sha256": "eec92fa5cbf411f44ee8e273d04b89db16d03be945c93c48a7772fdc9c97e0e4"
     }
   ],
   "claims": {
@@ -209,6 +213,10 @@
       "docs/reports/gfx-command-marker-audit-20260906/summary.json",
       "docs/reports/gfx-command-marker-audit-20260906/reasoning-history-sample.json",
       "docs/reports/gfx-command-marker-audit-20260906/model-source-excerpts.json"
+    ],
+    "archived_effect_figure": [
+      "paper/iclr2027/figures/archived_paired_effects.json",
+      "docs/reports/gfx-expanded-audit-20260906/paired-comparisons.json"
     ]
   },
   "not_reused": [
