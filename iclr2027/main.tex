@@ -18,12 +18,13 @@ The recorded paired difference is 0 percentage points (95\% bootstrap interval $
 A completed contemporaneous Control resolves 17/99; Flat and Card each gain only one observed repair over Control, with exact paired $p=1$ for both comparisons.
 An extended audit identified one appended historical Docker log; an independent frozen-verifier recheck of the identical prediction reproduces the original failure, with no outcome changed.
 Actual memory is delivered on all tasks, while the correct procedure card reaches 98 of 99 targets.
+An adaptive card revision resolves 16/99 with correct cards delivered on 97/99, without a significant paired gain.
 These observations do not establish a general limit on agent memory.
 We also prepare a separate SWE-bench Verified experiment that builds memory from 350 training tasks and compares no memory, flat rule retrieval, and graph rule retrieval on a fixed 150-task test set.
 This draft reports the audits, the retained provenance limitation, and the new experiment's design; it does not yet report a test-set gain from the latter.
 \end{abstract}
 
-\paragraph{Draft status, 6 September 2026.}
+\paragraph{Draft status, 7 September 2026.}
 This is a research draft, not a completed submission. Related-Lite first predictions have checked frozen-verifier evidence, including one independent recheck for the historical log exception described below.
 The separate Verified 350/150 inputs are frozen; execution stopped on an agent-framework error, and no formal effect estimate is available.
 Historical results from other repository experiments are not pooled into either denominator.
@@ -111,7 +112,7 @@ These are protocol controls; the present observations do not establish a causal 
 \paragraph{Setting.}
 The completed conditions use the same frozen 99-task Related-Lite manifest and the same frozen SWE Context Bench verifier.
 The flat condition retrieves reference patches from the existing source pool.
-The card condition adds a repository-specific procedure card: test commands, environment repair conditions, reproduction routines, and workflow information.
+The original card condition (Card-v1, denoted Card) adds a repository-specific procedure card: test commands, environment repair conditions, reproduction routines, and workflow information.
 Its sources include pool-derived evidence and environment recipes checked in benchmark containers.
 This is an intervention on repository environment knowledge, not an isolated test of graph traversal.
 The actual retrieved patch sets can vary with agent-generated queries, so identical serving logic does not imply byte-identical patch inputs across runs.
@@ -138,7 +139,7 @@ All reported first-prediction outcomes remain unchanged.
 
 \paragraph{Verdict semantics.}
 This frozen Related-Lite harness requires all fail-to-pass tests to pass for \texttt{resolved}, irrespective of pass-to-pass failures.
-Replaying all 287 complete recorded before/after comparisons exactly reproduces the reports; 15 setup failures and 292 empty predictions remain separate.
+Across the six original conditions, replaying all 287 complete recorded before/after comparisons exactly reproduces the reports; 15 setup failures and 292 empty predictions remain separate.
 Four officially resolved predictions contain a recorded pass-to-pass transition from PASSED to FAILED.
 Pass-to-pass success also admits some unchanged skipped, failed, or missing statuses.
 Thus neither label guarantees all regression tests passed. The logs contain parsed status maps, not complete raw test stdout; official scores remain unchanged, and these semantics are not transferred to Verified.
@@ -253,6 +254,17 @@ A deterministic source check finds that unittest can report a positive test coun
 A uniform 297-trajectory sensitivity excludes observations with enumerated loader-placeholder markers: recognized coverage is then 61/99 Control, 78/99 Flat, and 66/99 Card, with conditional medians 146, 116.5, and 97.5.
 This preserves the original statistics and all repair outcomes; the revised summaries still do not certify test-body execution or overall speedup.
 
+\paragraph{Separate adaptive Card-v2 revision.}
+A subsequently completed revision changes the environment-check and conditional-repair instructions using the same historical tasks.
+All 99 original prediction chains pass the frozen receipt audit; Card-v2 resolves 16/99, versus 18/99 for both Flat and Card-v1.
+Its differences are $-2.02\pp$, with paired 95\% intervals $[-8.08,3.03]$ against Flat and $[-9.09,5.05]$ against Card-v1.
+Exact $p$ values are 0.727 and 0.774; both become 1.000 after Holm correction within these two comparisons.
+The same 88-task sensitivity gives 16/88 for Card-v2, 18/88 for Flat, and 15/88 for Card-v1.
+Exact repository cards reach 97/99 targets with no phase refusals; the two unserved attempts remain included.
+The 39 hard \texttt{exit\_cost} labels fail the registered maximum of 32, without establishing 39 dollar-budget overruns.
+The completion analysis was attached after the arm started and partial outcomes were visible.
+This adaptive result does not establish a repair gain or a causal effect of the revised instructions; its statistics are supplied separately from the original six-condition bundle.
+
 \section{Verified 350/150 experiment}
 \label{sec:verified}
 \paragraph{Split and eligibility.}
@@ -337,7 +349,7 @@ A separately frozen parser correction passes all three training protocol/deliver
 All three runs record zero optional-null omissions; the recorded-call regression supplies coverage of the original defect.
 The formal test runtime and its original outcomes remain unchanged.
 OpenLux sometimes omits cost and reports non-additive token counts, so raw counters and conservative budget estimates are stored separately without a billing claim.
-Ten-minute evidence collection continues, with incomplete semantic reviews explicitly retained.
+Ten-minute evidence was collected until active runs and verification ended, with incomplete semantic reviews explicitly retained.
 No formal Verified success rate is reported in this draft.
 
 \section{Discussion and limitations}

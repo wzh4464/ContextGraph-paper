@@ -55,6 +55,18 @@ This package recomputes statistics; the full raw verifier/delivery evidence and
 experimental environment still need a complete anonymous release and human review.
 `evidence-map.json` binds current claims and export validation to repository artifacts.
 
+The separately completed adaptive Card-v2 revision resolves 16/99; Flat and
+Card-v1 each resolve 18/99. Its 99 original evidence chains pass the completion
+audit, with exact cards on 97/99 and no phase refusals. The 39 hard `exit_cost`
+labels exceed the registered maximum of 32. Both fixed exact paired comparisons
+have Holm-adjusted p=1; the same 88-task sensitivity is reported separately.
+`card2-statistical-reproduction-v1.zip` supplies the corresponding 297 verdicts
+and reproduces all four comparisons, preserving the original six-condition
+bundle. Follow its README for the independently validated NumPy 2.5.0 replay;
+the older bundle pins 2.5.2. This revision was informed by historical target
+observations, and its completion analysis was attached after execution began.
+The results remain exploratory and do not identify a causal memory benefit.
+
 A separate metadata census reads all 594 original solver trajectories and checks
 their original hashes before and after collection. Saved SWE-agent/SWE-ReX version
 declarations and selected model/history settings agree across the six conditions.

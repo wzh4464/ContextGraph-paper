@@ -1,6 +1,6 @@
 {
-  "as_of": "2026-09-06",
-  "status": "Research draft; the original Verified execution and its operational-stop continuation closed incomplete on an optional-null parser crash. Fourteen original test slots attempted and thirteen audited; no formal effect estimate. The separately frozen parser correction completed all three real training-only infrastructure gates, with two nonempty official verifications and zero real optional-null omissions. The formal runtime and original outcomes are unchanged; the existing aggregate allowance cannot reserve another complete formal block.",
+  "as_of": "2026-09-07",
+  "status": "The separate adaptive Card-v2 arm completed all 99 original receipt audits and fixed comparisons: 16/99 resolved, exact card delivery 97/99, no significant paired gain over Flat or Card-v1. Its 39 hard exit_cost labels exceed the registered maximum of 32. The original six-condition archives remain unchanged. Research draft; the original Verified execution and its operational-stop continuation closed incomplete on an optional-null parser crash. Fourteen original test slots attempted and thirteen audited; no formal effect estimate. The separately frozen parser correction completed all three real training-only infrastructure gates, with two nonempty official verifications and zero real optional-null omissions. The formal runtime and original outcomes are unchanged; the existing aggregate allowance cannot reserve another complete formal block.",
   "artifacts": [
     {
       "path_from_contextgraph_root": "docs/reports/gfx-skill-audit-20260906/receipt-audit.json",
@@ -1245,6 +1245,118 @@
     {
       "path_from_contextgraph_root": "scripts/analysis/summarize_gfx_solver_metadata_v1.py",
       "sha256": "9358386ccce014258c3735b838dc63fc509b6ac78da05cb6f53ab82d13afd582"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-skill2-completion-audit-20260906/collector-plan.json",
+      "sha256": "92568883ce09aceed06a732f6b60aab65d9e65f184ac2d40fa67860f7055956e"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-skill2-completion-audit-20260906/completion-audit.json",
+      "sha256": "02b82f99d21398a9e4419588b050ace9c15a70cac3b81a384a9cb6ce51efa04f"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-skill2-completion-audit-20260906/execution-plan.json",
+      "sha256": "d4444407575752204009b77299ac2e65861979a9144c66ff4b44345c9f128d47"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-skill2-completion-audit-20260906/paired-comparisons.json",
+      "sha256": "9b8564d07f4ce6836099c8ac566964e5935f53df401a22dbe96822dfee4d4778"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-skill2-completion-audit-20260906/worker-plan.json",
+      "sha256": "faa694e1748cd25aafaa7817e125465475ef73c4a36b2638de5a5b0b45cc5b2e"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-skill2-results-20260907/README.md",
+      "sha256": "5ecbb24648ddbc511ac9c5a3d2d970eddb867b592a0683b5e73406fed869bda9"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-skill2-results-20260907/bundle-validation.json",
+      "sha256": "99a58dffdc3faa3fe26b1e504c2cf5b14f521917ce92e86a815261bf07623620"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-skill2-results-20260907/completion-validation.json",
+      "sha256": "8c70b8a58f72962f2b65c8432f6da1f1f6dad4129c9b6fb77fcec979da61ec9f"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-skill2-results-20260907/ops-closeout.json",
+      "sha256": "593916dcb4a3d8b84698b4d6c2e1b86d958a7907795462e107eea314c95cc066"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-skill2-results-20260907/paper-validation.json",
+      "sha256": "e609277c382f8a6f82afdd966533da1a4e6796c2ce96b0a3129046f6c63f22b5"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-skill2-results-20260907/statistical-export.json",
+      "sha256": "1669387895bffc619dbe0d7b1c85bfaebd25ed5e3698c15239ef03440d09c15a"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/local-env-sync-incident-20260907/README.md",
+      "sha256": "cd2727a24d63d644a9142a764120734c98b327090ebd619d646c33a86b2c392f"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/local-env-sync-incident-20260907/validation.json",
+      "sha256": "63a7c7e7ee0138cfdda5650c7dfd24ac2e6579441c04b130abf2cba2d8ea4b19"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/local-env-sync-incident-20260907/version-correction.json",
+      "sha256": "4d3498786a7fb112d93ee957d1755e02ff7babc4e02911479bf4752a30f6f6f8"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/card2-statistical-reproduction-v1/README.md",
+      "sha256": "b3d79db71ce2c35a808fef0a3658f42b2b12cd384444287dce417d4745f15420"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/card2-statistical-reproduction-v1/expected-statistics.json",
+      "sha256": "d6e4be4b117869dcae2c6025bac32fd616d263043e11ce310e2ba427a8ae2001"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/card2-statistical-reproduction-v1/manifest.json",
+      "sha256": "c325f6595baec6f3b2618a7a7f6026eead56564c77fdb3600662367f4b66eeb1"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/card2-statistical-reproduction-v1/paired_statistics.py",
+      "sha256": "bb17f4e4dada0a3f18236ab1adde0032d2139e9b47c9b0f66d0b94ad7560769d"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/card2-statistical-reproduction-v1/reproduce.py",
+      "sha256": "74934795540b908f904c33d9171bc61273530d44f0b504367337f0e2d831e062"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/card2-statistical-reproduction-v1/requirements.txt",
+      "sha256": "86c824cc96bdb01802408e4b8452d6fb6b0dda928b7d732c4ab9372d2c55c026"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/card2-statistical-reproduction-v1/source-bindings.json",
+      "sha256": "6763bc4af16c510e5712fb8298a7aa90a87a340e5a749880ca5e16e6fd381ca4"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/card2-statistical-reproduction-v1/verdicts.json",
+      "sha256": "c6688bddb78f91f2fd659f2511391dd68d717935960f233825bc40f6287e5acc"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/card2-statistical-reproduction-v1.zip",
+      "sha256": "bec44f4cb91777d2f9c29cfcab2db90ad50b5c8b5a440345a278f2fc4ff4d9a5"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/audit_gfx_skill2_completion.py",
+      "sha256": "d24e04d8d4198e65b9ec985ad9d305197642e90d26565e3a774b476914987142"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/collect_completed_gfx_skill2.py",
+      "sha256": "903762ea40fee89d698a035a720a75dfbf0eddd57f32a38e709da980db1c1e58"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/export_card2_statistical_bundle_v1.py",
+      "sha256": "36047e9d927ac97704837e6be441904a98f922ddde46f1598deb5a573e4f63ad"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/reproduce_card2_statistics_v1.py",
+      "sha256": "74934795540b908f904c33d9171bc61273530d44f0b504367337f0e2d831e062"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/summarize_gfx_skill2_audit.py",
+      "sha256": "d2b2912f19a8c9dd2c32f1d1ab730c9ef6ac45c9003c562c036a82dde2e159e0"
     }
   ],
   "claims": {
@@ -1524,6 +1636,37 @@
       "scripts/analysis/collect_gfx_solver_metadata_v1.py",
       "scripts/analysis/collect_gfx_solver_metadata_v2.py",
       "scripts/analysis/summarize_gfx_solver_metadata_v1.py"
+    ],
+    "separate_adaptive_card2_completed_results": [
+      "docs/reports/gfx-skill2-results-20260907/bundle-validation.json",
+      "docs/reports/gfx-skill2-results-20260907/paper-validation.json",
+      "docs/reports/gfx-skill2-results-20260907/completion-validation.json",
+      "docs/reports/gfx-skill2-results-20260907/statistical-export.json",
+      "docs/reports/gfx-skill2-results-20260907/ops-closeout.json",
+      "docs/reports/gfx-skill2-results-20260907/README.md",
+      "docs/reports/gfx-skill2-completion-audit-20260906/completion-audit.json",
+      "docs/reports/gfx-skill2-completion-audit-20260906/paired-comparisons.json",
+      "docs/reports/gfx-skill2-completion-audit-20260906/collector-plan.json",
+      "docs/reports/gfx-skill2-completion-audit-20260906/execution-plan.json",
+      "docs/reports/gfx-skill2-completion-audit-20260906/worker-plan.json"
+    ],
+    "separate_adaptive_card2_statistical_reproduction": [
+      "paper/iclr2027/card2-statistical-reproduction-v1/expected-statistics.json",
+      "paper/iclr2027/card2-statistical-reproduction-v1/source-bindings.json",
+      "paper/iclr2027/card2-statistical-reproduction-v1/verdicts.json",
+      "paper/iclr2027/card2-statistical-reproduction-v1/manifest.json",
+      "paper/iclr2027/card2-statistical-reproduction-v1/paired_statistics.py",
+      "paper/iclr2027/card2-statistical-reproduction-v1/requirements.txt",
+      "paper/iclr2027/card2-statistical-reproduction-v1/reproduce.py",
+      "paper/iclr2027/card2-statistical-reproduction-v1/README.md",
+      "paper/iclr2027/card2-statistical-reproduction-v1.zip",
+      "scripts/analysis/export_card2_statistical_bundle_v1.py",
+      "scripts/analysis/reproduce_card2_statistics_v1.py"
+    ],
+    "local_analysis_environment_version_correction": [
+      "docs/reports/local-env-sync-incident-20260907/README.md",
+      "docs/reports/local-env-sync-incident-20260907/validation.json",
+      "docs/reports/local-env-sync-incident-20260907/version-correction.json"
     ]
   },
   "not_reused": [

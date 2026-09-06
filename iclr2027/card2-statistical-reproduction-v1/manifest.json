@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "numpy_version": "2.5.0",
+  "python_version": "3.12",
+  "records": 297,
+  "files_sha256": {
+    "README.md": "b3d79db71ce2c35a808fef0a3658f42b2b12cd384444287dce417d4745f15420",
+    "expected-statistics.json": "d6e4be4b117869dcae2c6025bac32fd616d263043e11ce310e2ba427a8ae2001",
+    "paired_statistics.py": "bb17f4e4dada0a3f18236ab1adde0032d2139e9b47c9b0f66d0b94ad7560769d",
+    "reproduce.py": "74934795540b908f904c33d9171bc61273530d44f0b504367337f0e2d831e062",
+    "requirements.txt": "86c824cc96bdb01802408e4b8452d6fb6b0dda928b7d732c4ab9372d2c55c026",
+    "source-bindings.json": "6763bc4af16c510e5712fb8298a7aa90a87a340e5a749880ca5e16e6fd381ca4",
+    "verdicts.json": "c6688bddb78f91f2fd659f2511391dd68d717935960f233825bc40f6287e5acc"
+  }
+}
