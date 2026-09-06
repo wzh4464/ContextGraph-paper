@@ -1,6 +1,6 @@
 {
   "as_of": "2026-09-07",
-  "status": "The separate adaptive Card-v2 arm completed all 99 original receipt audits and fixed comparisons: 16/99 resolved, exact card delivery 97/99, no significant paired gain over Flat or Card-v1. Its 39 hard exit_cost labels exceed the registered maximum of 32. The original six-condition archives remain unchanged. Research draft; the original Verified execution and its operational-stop continuation closed incomplete on an optional-null parser crash. Fourteen original test slots attempted and thirteen audited; no formal effect estimate. The separately frozen parser correction completed all three real training-only infrastructure gates, with two nonempty official verifications and zero real optional-null omissions. The formal runtime and original outcomes are unchanged; the existing aggregate allowance cannot reserve another complete formal block. Frozen verifier source portability and immutable public-registry manifest checks are staged; config/layer downloads remain unvalidated. A separate portable entry executed two known-outcome original predictions on jie with byte-identical reports, unchanged source images and 36 network-none container inspections. This reused existing images and is not a clean-machine or anonymous runtime release.",
+  "status": "The separate adaptive Card-v2 arm completed all 99 original receipt audits and fixed comparisons: 16/99 resolved, exact card delivery 97/99, no significant paired gain over Flat or Card-v1. Its 39 hard exit_cost labels exceed the registered maximum of 32. The original six-condition archives remain unchanged. Research draft; the original Verified execution and its operational-stop continuation closed incomplete on an optional-null parser crash. Fourteen original test slots attempted and thirteen audited; no formal effect estimate. The separately frozen parser correction completed all three real training-only infrastructure gates, with two nonempty official verifications and zero real optional-null omissions. The formal runtime and original outcomes are unchanged; the existing aggregate allowance cannot reserve another complete formal block. Frozen verifier source portability and immutable public-registry manifest checks are staged; config/layer downloads remain unvalidated. A separate portable entry executed two known-outcome original predictions on jie with byte-identical reports, unchanged source images and 36 network-none container inspections. This reused existing images and is not a clean-machine or anonymous runtime release. A separate source-scoped training candidate revises ten prior partly-supported rules while preserving all 350 sources and 459 rules; it has not been deployed or evaluated for repair efficacy.",
   "artifacts": [
     {
       "path_from_contextgraph_root": "docs/reports/gfx-skill-audit-20260906/receipt-audit.json",
@@ -1513,6 +1513,50 @@
     {
       "path_from_contextgraph_root": "tests/test_portable_gfx_verifier_v1.py",
       "sha256": "e55fbeee70e7b3d4db026814be1ee8f1a7894a6f687b026660e9ee9168721782"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-rule-revision-20260907/README.md",
+      "sha256": "6be27acdf5ebbb6120edc9ad32e8162b1210636f0dc45d1cd40023c40e04cb4b"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-rule-revision-20260907/candidate-files.json",
+      "sha256": "576a4ea11414d50b1ab689108c118bf2e5c6de1a6d3a79d5fca4ef9bab0c845d"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-rule-revision-20260907/revised-rules.json",
+      "sha256": "3220b696874ece27069ac5dcff93be0231eece6370bd3d8a08756e7b41fea452"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-rule-revision-20260907/revision-log.json",
+      "sha256": "b1ce2be7004fc7eac10132b5895550204f7dda1702ffffdbdcb80f569ac76f20"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-rule-revision-20260907/source-checks.json",
+      "sha256": "37f124bcdffa92e655ddd21700c72a320bef85ea99c834c62e4aa20d5cd30914"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-rule-revision-20260907/validation.json",
+      "sha256": "e4ce68764ff88a76c21d6ce589cb560bd7b301790be8dea6d537fa6535d9abc0"
+    },
+    {
+      "path_from_contextgraph_root": "configs/verified_train_test_v1/training_rule_revision_v2/plan.json",
+      "sha256": "9441c331cb66464e968acd84ad44696cebdd3bf28d3b3137115694892c88dc1f"
+    },
+    {
+      "path_from_contextgraph_root": "configs/verified_train_test_v1/training_rule_revision_v2/revisions.json",
+      "sha256": "e0e8a0f38ede65c9935b890cf496eec7e01192e9febfa4474c6e95a0963def65"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/build_verified_rule_revision_v2.py",
+      "sha256": "2204742c23d3e3d93a44cfc94761ae616b618ec7d2874188f208b7daf2143034"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/check_verified_rule_revision_sources_v2.py",
+      "sha256": "91cdfa399dc7b2c1e66dd48385bbd9e06ed2bd84a3e6543a5ba539fb30f78931"
+    },
+    {
+      "path_from_contextgraph_root": "tests/test_verified_rule_revision_v2.py",
+      "sha256": "a447c321cac3195921f96b5b54286f510903490f17b56eb917fb58db8f6c8b5f"
     }
   ],
   "claims": {
@@ -1866,6 +1910,19 @@
       "scripts/analysis/portable_gfx_run_v1.py",
       "scripts/analysis/collect_portable_gfx_diagnostic_v1.py",
       "tests/test_portable_gfx_verifier_v1.py"
+    ],
+    "training_only_source_scoped_bank_candidate_v2": [
+      "docs/reports/verified-rule-revision-20260907/README.md",
+      "docs/reports/verified-rule-revision-20260907/candidate-files.json",
+      "docs/reports/verified-rule-revision-20260907/revised-rules.json",
+      "docs/reports/verified-rule-revision-20260907/revision-log.json",
+      "docs/reports/verified-rule-revision-20260907/source-checks.json",
+      "docs/reports/verified-rule-revision-20260907/validation.json",
+      "configs/verified_train_test_v1/training_rule_revision_v2/plan.json",
+      "configs/verified_train_test_v1/training_rule_revision_v2/revisions.json",
+      "scripts/analysis/build_verified_rule_revision_v2.py",
+      "scripts/analysis/check_verified_rule_revision_sources_v2.py",
+      "tests/test_verified_rule_revision_v2.py"
     ]
   },
   "not_reused": [
