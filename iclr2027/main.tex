@@ -172,7 +172,7 @@ The proxy accepts failed tests, zero-test runs, and standalone \texttt{OK} print
 Card meets the numerical timing threshold under this proxy but fails its coverage threshold.
 A conservative direct-runner and positive-execution-summary census recognizes 78/99 Flat tasks and 67/99 Card tasks, with conditional median indices of 116.5 and 97 recorded trajectory entries.
 Among the 60 tasks recognized in both conditions, Card is earlier on 38 and later on 22.
-This census omits some real tests in unsupported command forms; its step counter also differs from the archived counter.
+This census omits some real tests in unsupported command forms; its step counter also differs from the archived counter, and counted unittest loader placeholders require the sensitivity check below.
 Conditional timing and incomplete recognition do not establish an overall speedup, test relevance, or a cause of the unchanged repair score.
 
 \paragraph{Protocol diagnostic.}
@@ -210,6 +210,11 @@ The file-list percentile interval excludes zero but does not override its exact 
 The complete historical sensitivity list leaves Control at 16/88, Flat at 18/88, and Card at 15/88.
 Control has 48 hard \texttt{exit\_cost} labels, versus 32 for Flat and 41 for Card; these labels can denote the call cap.
 We retain runtime failures and empty submissions, never substitute later solver runs, and do not reuse the historical 14/99 Control.
+
+The same original test-summary recognizer covers 61/99 Control tasks, with conditional median first-match index 134.
+A deterministic source check finds that unittest can report a positive test count for an artificial \texttt{\_FailedTest} when the named test cannot be loaded.
+A uniform 297-trajectory sensitivity excludes observations with enumerated loader-placeholder markers: recognized coverage is then 61/99 Control, 78/99 Flat, and 66/99 Card, with conditional medians 146, 116.5, and 97.5.
+This preserves the original statistics and all repair outcomes; the revised summaries still do not certify test-body execution or overall speedup.
 
 \section{Verified 350/150 experiment}
 \label{sec:verified}

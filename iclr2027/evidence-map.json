@@ -189,6 +189,46 @@
     {
       "path_from_contextgraph_root": "paper/iclr2027/figures/archived_effects_with_control.json",
       "sha256": "431283872d5018f98659fafd4fa24b085b99198768e7c6178f5ce5d7c42633ef"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-control-test-execution-20260906/plan.json",
+      "sha256": "562b2a03d1157c5537512cd87333992664655631a43c8c4294cbd6126cf3a9b1"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-control-test-execution-20260906/census.json",
+      "sha256": "52bac7fc251df9141e6005509104c215542f151c6be9f50255fe61b242a8c42f"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-control-test-execution-20260906/summary.json",
+      "sha256": "9ff2537be5f950553ed0b3050b1ba09db489571f1326100238c9d5a0b044038a"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-control-test-execution-20260906/source-spot-check.json",
+      "sha256": "bb5b9a1c9a6a7fc556ae01512baf8eae893be59151e7e7384c541e631aa62d59"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-test-loader-sensitivity-20260906/plan.json",
+      "sha256": "fe93be8c41c233b5583056f0a05f3f25826ae670837c09ddf2c5b3cf71e9e833"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-test-loader-sensitivity-20260906/census.json",
+      "sha256": "a7c3cc8eaf95df33d8023195d9d313e4b7fccd803828afc942b0b93799cbbbd5"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-test-loader-sensitivity-20260906/comparison.json",
+      "sha256": "d4ff1f3ce3adfb2d58150fbfeb284a669c0c060e04441a0f3eb2960f9e15b92a"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/verify_gfx_loader_sensitivity.py",
+      "sha256": "5d18272c91393fd9a59db003b010b30d73a0140345dff77442d5c54bf8e107a1"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/openlux-continuation-20260906/active-training-snapshot-1056.json",
+      "sha256": "5d90a69af007b1e3d875925364536485b515a9524050b2a2191b0ce92dd08e9f"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/openlux-continuation-20260906/semantic-review-1052.json",
+      "sha256": "ac6c7cf69de73703d5a1261f04865fc835bf4467413e156ebecaa7c981b331b8"
     }
   ],
   "claims": {
@@ -271,6 +311,15 @@
       "docs/reports/gfx-control-audit-20260906/paired-comparisons.json",
       "docs/reports/gfx-control-audit-20260906/completed-evidence-review.json",
       "paper/iclr2027/figures/archived_effects_with_control.json"
+    ],
+    "control_test_process_and_loader_sensitivity": [
+      "docs/reports/gfx-control-test-execution-20260906/plan.json",
+      "docs/reports/gfx-control-test-execution-20260906/census.json",
+      "docs/reports/gfx-control-test-execution-20260906/summary.json",
+      "docs/reports/gfx-control-test-execution-20260906/source-spot-check.json",
+      "docs/reports/gfx-test-loader-sensitivity-20260906/plan.json",
+      "docs/reports/gfx-test-loader-sensitivity-20260906/census.json",
+      "docs/reports/gfx-test-loader-sensitivity-20260906/comparison.json"
     ]
   },
   "not_reused": [
