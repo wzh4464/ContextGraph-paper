@@ -68,5 +68,11 @@ was also officially unresolved after command timeouts, while its outer status
 classification interrupted admission. The original records and analysis remain
 unchanged. A separately disclosed operational-stop amendment then started only
 previously unstarted attempts with the same frozen inputs and budget limits.
+That continuation closed at 14:05 UTC after four complete blocks: a Sphinx Control
+response contained an optional null array argument that crashed the SWE-agent
+parser after 47 protocol-valid API calls. Its official receipt records an empty
+patch; the strict audit continues to reject its generic error stop. Fourteen slots
+were attempted, thirteen pass the full audit, and 436 remain unstarted. A separate
+parser candidate passes recorded-call regression checks but is not deployed.
 The full 150-task denominator remains fixed per arm and no formal effect estimate
 is reported. See the bound amendment checkpoint and deployment records.

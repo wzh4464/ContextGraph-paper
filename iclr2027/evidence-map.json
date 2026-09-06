@@ -1,6 +1,6 @@
 {
   "as_of": "2026-09-06",
-  "status": "Research draft; the original Verified scheduler and registered analysis closed incomplete. A separately recorded post-start operational-stop amendment retains all seven original attempts and continues only unstarted slots under unchanged solver inputs and budget limits. No formal memory-effect estimate.",
+  "status": "Research draft; both the original Verified scheduler and its post-start operational-stop continuation closed incomplete. The continuation ended on an optional-null tool-argument parser crash after four complete blocks. Fourteen original slots were attempted and thirteen pass the full audit; no formal memory-effect estimate. The parser candidate is not deployed.",
   "artifacts": [
     {
       "path_from_contextgraph_root": "docs/reports/gfx-skill-audit-20260906/receipt-audit.json",
@@ -553,6 +553,62 @@
     {
       "path_from_contextgraph_root": "docs/reports/verified-operational-continuation-20260906/first-completed-amended-block.json",
       "sha256": "33e05576ca81f001372c82bb99a94d4d75c1727d7c8ddb39e78e271ae10c1418"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-nullable-argument-20260906/captured-tool-call.json",
+      "sha256": "a7b0e4fbd04bf8111bdee205b9320e5d58eb645e5b694bbfcae497052af63d3d"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-nullable-argument-20260906/openlux-latest-review.json",
+      "sha256": "ed779384fec1ab45713cfa72dfeae26b8f84d742c180a591c2acc921b0da7ac8"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-nullable-argument-20260906/openrouter-availability.json",
+      "sha256": "cf67992f15503239cacbbe49e93ae8df04614b978d402236cb16283032009e39"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-nullable-argument-20260906/original-amendment-audit.json",
+      "sha256": "cd193511dcc14627939e41a58b46d933e515d988e9ac4609010bd0c47768f847"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-nullable-argument-20260906/original-amendment-terminal.json",
+      "sha256": "d4736442f9b8c6771c378e7df5912220b8b22b7d417466016d57694f5af15e54"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-nullable-argument-20260906/original-control-delivery.json",
+      "sha256": "8db2280e79351ca3289df8fd34959ed02e5a26b367cff64b7a073eeff7016d59"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-nullable-argument-20260906/original-control-official-summary.json",
+      "sha256": "1d3b3146b6453bfeafc1e9ed8a4ccd719432564e9b13846c22cfcea75dee8da2"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-nullable-argument-20260906/original-control-protocol.json",
+      "sha256": "e61f4c9f0a8555c99e72f363fd11dde45779a74c6360cf47f3e96c67e667d757"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-nullable-argument-20260906/original-control-terminal.json",
+      "sha256": "f7857ef1a0d606c0632cff848f219ecb8730d9197ac71c4fd1af481466738e32"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-nullable-argument-20260906/original-control-verification-started.json",
+      "sha256": "a36ad7f7b46c0a24dd668fdc1fb1000aca6e4378742368b6bbd24babc638ebd3"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-nullable-argument-20260906/original-copies.json",
+      "sha256": "90a9ce7aeedde48e63e8d1ba542cd1c3f70cfec528b7875c89db9cd15382bb76"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-nullable-argument-20260906/parser-regression.json",
+      "sha256": "a24dd67c8962a843b1e3fe889d309a85a928e764231d8eb7e2b7db87e4103a7b"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/sweagent_nullable_arguments_v1.py",
+      "sha256": "07c8d455e5ab79a2d923d09ab8197277ef99cd4dc7b78fa58271eb2d5c59f10a"
+    },
+    {
+      "path_from_contextgraph_root": "tests/test_sweagent_nullable_arguments.py",
+      "sha256": "a872ce66c9e9901a444bf9cfe3220e839f6d8ca42bec1698b99dacf7691fd4c9"
     }
   ],
   "claims": {
