@@ -1,6 +1,6 @@
 {
   "as_of": "2026-09-06",
-  "status": "Research draft; first Verified task block fully audited, with a later original empty-patch failure after command timeouts pausing new-block admission. Remaining active work and the separate adaptive Card-v2 completion audit continue. No formal memory-effect estimate.",
+  "status": "Research draft; the original Verified scheduler and registered analysis closed incomplete. A separately recorded post-start operational-stop amendment retains all seven original attempts and continues only unstarted slots under unchanged solver inputs and budget limits. No formal memory-effect estimate.",
   "artifacts": [
     {
       "path_from_contextgraph_root": "docs/reports/gfx-skill-audit-20260906/receipt-audit.json",
@@ -345,6 +345,78 @@
     {
       "path_from_contextgraph_root": "docs/reports/verified-openlux-formal-freeze-20260906/django16256-command-timeout-incident.json",
       "sha256": "63bbc7660c437a93a7311c03286f9ca8307244f16ac3445b312f25724e832184"
+    },
+    {
+      "path_from_contextgraph_root": "configs/verified_train_test_v1/operational-continuation-v1.json",
+      "sha256": "50e6c043465bc65d8d9748b26c9933904fd20ab8bb89de4afcb8a83a09c32a40"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/audit_verified_operational_attempt.py",
+      "sha256": "07a6b1e39e51f37699b492eb1b8f7209df5604e7b00fb848c0f05ca4429db5d6"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/continue_verified_operational_stops.py",
+      "sha256": "7fc5f6baa41f504f2db67cf1ec6d0369a0cc50a552c4d189484debd1068c743b"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-operational-continuation-20260906/deployment-receipt.json",
+      "sha256": "84f38668d4ddf955ef1dbd2a6f991b058be3763bcd362177377833f8d8b721ba"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-operational-continuation-20260906/execution-started.json",
+      "sha256": "f27234bfbb410cbd4377c3217686a101f3d6dfd7304b9133e06567ba3ba74f13"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-operational-continuation-20260906/integration-check.json",
+      "sha256": "62a7f8f038c64609dc57a582f1bb386195086a5a6cdcb15f127eb29fcb7e930c"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-operational-continuation-20260906/noninteractive.json",
+      "sha256": "8f635106892ccc440ddc38d9f71d4e2c240b84a4c09b2654e2517743a18fd46f"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-operational-continuation-20260906/original-analysis-terminal.json",
+      "sha256": "0666a8faa6cc84f9086f02ce640433aaecdbe396012948f08dc03cf0fd0e7e32"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-operational-continuation-20260906/original-campaign-terminal.json",
+      "sha256": "7d06dd49fc3c68f400d9d6c9cb812489f5de87b99cce515fc72a6870438f7199"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-operational-continuation-20260906/original-checkpoint.json",
+      "sha256": "f64e1320ac7f3072626d552bf93b1a0737bd69ebaa64927abc2cec057640baed"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-operational-continuation-20260906/original-registered-audit.json",
+      "sha256": "7844b1f8b48afc3f746f10c0b701087a945ff8bac4e326a9192762667f9f66cd"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-operational-continuation-20260906/review-amendment-plan-incident.json",
+      "sha256": "2e0b5e03f7db73380c5fc34b99dcbcf5948ecae755e398793f6617c33d57cb93"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-operational-continuation-20260906/training-pty.json",
+      "sha256": "124b5014789b682a7b159a8a9d03b41b162f8743e2ee7b4b101de95895be1a19"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-operational-continuation-20260906/training-rex-v2.json",
+      "sha256": "48f3b80cdc43a002cdb9bae35309d4322782fb832404c657359072efcc84cc7b"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-operational-continuation-20260906/v1-aborted.json",
+      "sha256": "10cf96d109e830ebd002f4aa46a72da5458d203bd09ddf32163870c674a9531c"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-operational-continuation-20260906/rex_probe.py",
+      "sha256": "3e3b5ddd3e380687502a1e57175b34df53472d03d84a155601a8ca60c107f76a"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-operational-continuation-20260906/rex_probe_v2.py",
+      "sha256": "7e061c5f8d49e4c4f26aaca4df8e421a82b1e08b86d2f65ab99b64ef32b40f3f"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-operational-continuation-20260906/review-amendment-plan-recovery.json",
+      "sha256": "7212802014d1774d5a728ef35ed4532b328092395526defc27eae9b0251edf3e"
     }
   ],
   "claims": {
@@ -436,6 +508,26 @@
       "docs/reports/gfx-test-loader-sensitivity-20260906/plan.json",
       "docs/reports/gfx-test-loader-sensitivity-20260906/census.json",
       "docs/reports/gfx-test-loader-sensitivity-20260906/comparison.json"
+    ],
+    "verified_operational_stop_amendment": [
+      "configs/verified_train_test_v1/operational-continuation-v1.json",
+      "scripts/analysis/audit_verified_operational_attempt.py",
+      "scripts/analysis/continue_verified_operational_stops.py",
+      "docs/reports/verified-operational-continuation-20260906/deployment-receipt.json",
+      "docs/reports/verified-operational-continuation-20260906/execution-started.json",
+      "docs/reports/verified-operational-continuation-20260906/integration-check.json",
+      "docs/reports/verified-operational-continuation-20260906/noninteractive.json",
+      "docs/reports/verified-operational-continuation-20260906/original-analysis-terminal.json",
+      "docs/reports/verified-operational-continuation-20260906/original-campaign-terminal.json",
+      "docs/reports/verified-operational-continuation-20260906/original-checkpoint.json",
+      "docs/reports/verified-operational-continuation-20260906/original-registered-audit.json",
+      "docs/reports/verified-operational-continuation-20260906/review-amendment-plan-incident.json",
+      "docs/reports/verified-operational-continuation-20260906/training-pty.json",
+      "docs/reports/verified-operational-continuation-20260906/training-rex-v2.json",
+      "docs/reports/verified-operational-continuation-20260906/v1-aborted.json",
+      "docs/reports/verified-operational-continuation-20260906/rex_probe.py",
+      "docs/reports/verified-operational-continuation-20260906/rex_probe_v2.py",
+      "docs/reports/verified-operational-continuation-20260906/review-amendment-plan-recovery.json"
     ]
   },
   "not_reused": [
