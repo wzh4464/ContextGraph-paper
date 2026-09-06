@@ -1,6 +1,6 @@
 {
   "as_of": "2026-09-06",
-  "status": "Research draft; completed six-arm Related-Lite audit and 297-trajectory gold-path call census. Verified OpenLux formal 150-task campaign began at 11:21 UTC on 2026-09-06; the 11:57 audit validates first-task Control and Flat resolved receipts, with Graph ungraded and no formal effect estimate.",
+  "status": "Research draft; first Verified task block fully audited, with a later original empty-patch failure after command timeouts pausing new-block admission. Remaining active work and the separate adaptive Card-v2 completion audit continue. No formal memory-effect estimate.",
   "artifacts": [
     {
       "path_from_contextgraph_root": "docs/reports/gfx-skill-audit-20260906/receipt-audit.json",
@@ -325,6 +325,26 @@
     {
       "path_from_contextgraph_root": "docs/reports/verified-openlux-formal-freeze-20260906/two-formal-results.json",
       "sha256": "0a686973dc8d3f562b6a2d313b5cdb23373f5445b8f0fefda5ea1c44a64be28a"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-openlux-formal-freeze-20260906/first-complete-block-audit.json",
+      "sha256": "ab739cb42639508f708a9f9bad2e7d19de60f70f05e54c44d3cf0b9bf6f2182f"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-openlux-formal-freeze-20260906/first-complete-block-results.json",
+      "sha256": "a6e0c1375e8e2334c48ae02b48f598ad99ed11ca99351ebb395749f03d88e15e"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-openlux-formal-freeze-20260906/review-concurrent-write-recovery.json",
+      "sha256": "8354d39aaaca9d78c1f7e32b9b6f53a7fc920ce58c731c2f2113ba416af9d470"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-openlux-formal-freeze-20260906/review-concurrent-write-recovery-complete.json",
+      "sha256": "850826db1c57f6d0736b0dd594a2d80c0086a85c632d5b6713257a5b90588dbe"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-openlux-formal-freeze-20260906/django16256-command-timeout-incident.json",
+      "sha256": "63bbc7660c437a93a7311c03286f9ca8307244f16ac3445b312f25724e832184"
     }
   ],
   "claims": {

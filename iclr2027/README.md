@@ -46,7 +46,14 @@ The current manuscript uses `figures/archived_effects_with_control.pdf`, which
 adds the completed contemporaneous Control audit; its adjacent JSON binds the
 six-arm comparisons. Neither figure includes the unfinished Verified campaign.
 
-The September 6, 11:57 UTC Verified snapshot has two audited original results on
-the first task (Control and Flat resolved), while Graph remains ungraded. These
-partial receipts validate the analysis integration and do not form a success
-rate or treatment effect. The full 150-task denominator remains fixed per arm.
+The September 6, 12:12 UTC Verified snapshot has three audited original results
+on the first task (Control, Flat and Graph resolved). Two later task blocks are
+active and 147 are unstarted. These partial receipts validate the analysis
+integration and do not form a success rate or treatment effect. The full
+150-task denominator remains fixed per arm.
+
+At 12:16 UTC a subsequent Flat attempt ends after consecutive command timeouts;
+its original empty patch is officially unresolved. Protocol and memory delivery
+checks pass, but the frozen outer status policy pauses new-block admission while
+another active block continues. The failure is retained and no solver rerun is
+substituted. See the bound command-timeout incident record.
