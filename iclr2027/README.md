@@ -181,3 +181,5 @@ with $20 monitoring reserved, another $105 whole block exceeds the unchanged $30
 allowance. No new formal attempts are admitted.
 The full 150-task denominator remains fixed per arm and no formal effect estimate
 is reported. See the bound amendment checkpoint and deployment records.
+
+Two separate portable-entry Docker diagnostics completed on September 7 (Beijing), using the frozen evaluator and original Flat predictions for Astropy-15082 and Django-11776. Both full reports were byte-identical to their original p1 reports, retaining one resolved and one unresolved result. All 36 container inspections were network-none; original input images and package bytes were unchanged. These known-outcome checks reused images on jie and are not a new benchmark score or a clean-machine release test. The source package and full execution archive remain private local drafts pending source licensing and publication review. See `../../docs/reports/gfx-portable-verifier-20260907/README.md` and its collection receipt.

@@ -1,6 +1,6 @@
 {
   "as_of": "2026-09-07",
-  "status": "The separate adaptive Card-v2 arm completed all 99 original receipt audits and fixed comparisons: 16/99 resolved, exact card delivery 97/99, no significant paired gain over Flat or Card-v1. Its 39 hard exit_cost labels exceed the registered maximum of 32. The original six-condition archives remain unchanged. Research draft; the original Verified execution and its operational-stop continuation closed incomplete on an optional-null parser crash. Fourteen original test slots attempted and thirteen audited; no formal effect estimate. The separately frozen parser correction completed all three real training-only infrastructure gates, with two nonempty official verifications and zero real optional-null omissions. The formal runtime and original outcomes are unchanged; the existing aggregate allowance cannot reserve another complete formal block. Frozen verifier source portability and immutable public-registry manifest checks are staged; config/layer payloads and portable execution are not yet validated.",
+  "status": "The separate adaptive Card-v2 arm completed all 99 original receipt audits and fixed comparisons: 16/99 resolved, exact card delivery 97/99, no significant paired gain over Flat or Card-v1. Its 39 hard exit_cost labels exceed the registered maximum of 32. The original six-condition archives remain unchanged. Research draft; the original Verified execution and its operational-stop continuation closed incomplete on an optional-null parser crash. Fourteen original test slots attempted and thirteen audited; no formal effect estimate. The separately frozen parser correction completed all three real training-only infrastructure gates, with two nonempty official verifications and zero real optional-null omissions. The formal runtime and original outcomes are unchanged; the existing aggregate allowance cannot reserve another complete formal block. Frozen verifier source portability and immutable public-registry manifest checks are staged; config/layer downloads remain unvalidated. A separate portable entry executed two known-outcome original predictions on jie with byte-identical reports, unchanged source images and 36 network-none container inspections. This reused existing images and is not a clean-machine or anonymous runtime release.",
   "artifacts": [
     {
       "path_from_contextgraph_root": "docs/reports/gfx-skill-audit-20260906/receipt-audit.json",
@@ -1445,6 +1445,74 @@
     {
       "path_from_contextgraph_root": "scripts/analysis/build_gfx_image_manifest_bundle_v1.py",
       "sha256": "c9de5ad7731b1af6cc7b562f8622087e02fc630e1ffa7fe2c7e0ff5422b6e30b"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-portable-verifier-20260907/README.md",
+      "sha256": "9f21bc0457fa461351032b765a5fa1baf8e1ec5406a25f5ff86e2ee13a5d364e"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-portable-verifier-20260907/adapter-validation.json",
+      "sha256": "373b3ef84d65e26b74544dca1e50c543cdf46257f39ff586473076c2a8494773"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-portable-verifier-20260907/astropy__astropy-15082.diagnostic-result.json",
+      "sha256": "207e3673d2d37760c056de18d7570ef3c2e6c67a778d7e22a63ba67ee351d074"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-portable-verifier-20260907/astropy__astropy-15082.report.json",
+      "sha256": "821f374db12e50ff257075becb5e11af1bc7e7ddfd3638be27989ee92d63c786"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-portable-verifier-20260907/build.json",
+      "sha256": "a38e55da6ed3fb35e6b1b2b7510245c8542c51f970664dc6edfa7dfb328eb664"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-portable-verifier-20260907/collection.json",
+      "sha256": "3e22f1bd203c5737f2616250c06c8b98eb47445e6616518eb5b7edeebe78e533"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-portable-verifier-20260907/django__django-11776.diagnostic-result.json",
+      "sha256": "d9066d823048bf29a2174ff601896ceb02e1b63065314d05c1ef54401cfcc255"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-portable-verifier-20260907/django__django-11776.report.json",
+      "sha256": "3b8a32187651a591d414bc9c8a1c2cc54d61ebd6fd4fc7442756107045039c58"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-portable-verifier-20260907/local-entry-validation.json",
+      "sha256": "a9aa1b7da49e5c09dc6ad083572412e6c2b72d0e43101249440d26cef625013c"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-portable-verifier-20260907/source-validation.json",
+      "sha256": "697eda73f7de6ff4264e17eca573300c60cac0dcf6cba87262c96117d0cf34cb"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-portable-verifier-20260907/terminal.json",
+      "sha256": "8a5c64606c8f095afacb2c1206bf871679063334435b3559baa18d1eedf85d3a"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/build_portable_gfx_verifier_v1.py",
+      "sha256": "869254818274e6181055d8476681fe8789cc4b92ce1225c3e9bc94b07625ad8a"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/portable_gfx_entry_v1.py",
+      "sha256": "c83c110e4e98283ffc6d6dd1a53f76ccd1cdc9f4f79f901bef55facf69563b0e"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/portable_gfx_docker_v1.py",
+      "sha256": "ca704036c39bce1aa3665ad1819029681da2d62b5694fe4b64d66e16964d7b58"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/portable_gfx_run_v1.py",
+      "sha256": "165535ba59136520743dcc0a61a01cf60c389aed1ba18f5396861a263839ac77"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/collect_portable_gfx_diagnostic_v1.py",
+      "sha256": "4578dd0a2c15807964447d119290538cdde47e0d431b53926c944c38de184c41"
+    },
+    {
+      "path_from_contextgraph_root": "tests/test_portable_gfx_verifier_v1.py",
+      "sha256": "e55fbeee70e7b3d4db026814be1ee8f1a7894a6f687b026660e9ee9168721782"
     }
   ],
   "claims": {
@@ -1779,6 +1847,25 @@
       "scripts/analysis/check_gfx_registry_manifests_v1.py",
       "scripts/analysis/verify_gfx_registry_manifest_bytes_v1.py",
       "scripts/analysis/build_gfx_image_manifest_bundle_v1.py"
+    ],
+    "separate_portable_entry_docker_diagnostics": [
+      "docs/reports/gfx-portable-verifier-20260907/README.md",
+      "docs/reports/gfx-portable-verifier-20260907/adapter-validation.json",
+      "docs/reports/gfx-portable-verifier-20260907/astropy__astropy-15082.diagnostic-result.json",
+      "docs/reports/gfx-portable-verifier-20260907/astropy__astropy-15082.report.json",
+      "docs/reports/gfx-portable-verifier-20260907/build.json",
+      "docs/reports/gfx-portable-verifier-20260907/collection.json",
+      "docs/reports/gfx-portable-verifier-20260907/django__django-11776.diagnostic-result.json",
+      "docs/reports/gfx-portable-verifier-20260907/django__django-11776.report.json",
+      "docs/reports/gfx-portable-verifier-20260907/local-entry-validation.json",
+      "docs/reports/gfx-portable-verifier-20260907/source-validation.json",
+      "docs/reports/gfx-portable-verifier-20260907/terminal.json",
+      "scripts/analysis/build_portable_gfx_verifier_v1.py",
+      "scripts/analysis/portable_gfx_entry_v1.py",
+      "scripts/analysis/portable_gfx_docker_v1.py",
+      "scripts/analysis/portable_gfx_run_v1.py",
+      "scripts/analysis/collect_portable_gfx_diagnostic_v1.py",
+      "tests/test_portable_gfx_verifier_v1.py"
     ]
   },
   "not_reused": [
