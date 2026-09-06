@@ -953,6 +953,94 @@
     {
       "path_from_contextgraph_root": "docs/reports/verified-packet-retention-20260906/paper-validation.json",
       "sha256": "5f1eca5503cda5aa3fb4f86ebd91852b4725f9e000174247982d63121c55471b"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-verification-reproduction-20260906/README.md",
+      "sha256": "5459fca16e6d0b67c0581655137c1f9fd8c6297206ab3182af500f2080402e9f"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-verification-reproduction-20260906/build.json",
+      "sha256": "2d9daba2d699e6a75690543504c327a31512bde229ead41fd3c58e5131d735ea"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-verification-reproduction-20260906/export-plan.json",
+      "sha256": "886ea6b813fea1b16db6248cc6fc10171d24a743a82b82859bc2c3b43eca677e"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-verification-reproduction-20260906/export.json",
+      "sha256": "329b19d455438661615b2b74f04ee086962bc886fc018f7f7f670e8667ae98a9"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-verification-reproduction-20260906/initial-execution.json",
+      "sha256": "a252160d7e2c807a5820dbc9c8fd22d3945f261d02b9863e6f9eebd37b83b964"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-verification-reproduction-20260906/initial-export-plan.json",
+      "sha256": "e3feea7533814b95a32edd1387599169a7b59b600b3a1acb4bad39bb7e0e64b0"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-verification-reproduction-20260906/initial-exporter.py",
+      "sha256": "e3b3ba96bb6cc7459ae473b63d0e7b767f27c5dbd6b02d86136d9f11c3a4fbf2"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-verification-reproduction-20260906/initial-pattern-scan.json",
+      "sha256": "b6f7352ef00b0b4b5f730d3957d295be110197722768db473f9e235801a501d6"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-verification-reproduction-20260906/paper-validation.json",
+      "sha256": "7f3a78c9dc4bfb85d64492641d3217ae62b5c59b283f5867ff13bf7b61286952"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-verification-reproduction-20260906/validation.json",
+      "sha256": "527ac9fbff0711e0af504646eaacb21830b8eaee24a7e4b781c01c1023c3043c"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/verification-reproduction-v1/README.md",
+      "sha256": "e3805de9360b292fd586be12abd5ffe1ce3b3e8ce4d8feb3dfdaa479a7d693cf"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/verification-reproduction-v1/expected-verification.json",
+      "sha256": "43e685deaa1d97119a0e92c53ca1b55e73057d458f533c36c6d3aed52855d481"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/verification-reproduction-v1/manifest.json",
+      "sha256": "b1ccae00a6fcd06245e08e43b6191580a5c495e551857ed1fa9f79330b84f2cd"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/verification-reproduction-v1/projection.json.gz",
+      "sha256": "15c5b870cd3085d8c29d68d700b4af4fadff4e6780fe0a2b0e073566f000d992"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/verification-reproduction-v1/reproduce.py",
+      "sha256": "9197758cdc6a777084d5a2974e214a0492cf01ce9bcc71b787cddb6d5d72572d"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/verification-reproduction-v1/source-bindings.json",
+      "sha256": "a3e118bd7edd3c0d3c5d5decebf063987897a98d85a7cd909e54f5aa2ca23f74"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/verification-reproduction-v1/verdicts.json",
+      "sha256": "cc4f164b869aa7a7cff361f400420b50ee942bf3a69b44fcf8862d932818c985"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/verification-reproduction-v1/verification_core.py",
+      "sha256": "a71e345abff654538a1174dece6e2dc9cc2d0f0ac7fc855436e9f79f11609b06"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/verification-reproduction-v1.zip",
+      "sha256": "a085a86b5c26aee36dc4c646668c40cc69a7d9fc846f2cc9cde1d048f367fee4"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/export_gfx_verification_projection_v1.py",
+      "sha256": "6eefb31acedfa62302e253eef346f4fa49442a692dcd5cce1ff60e8cfccbd8a4"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/reproduce_gfx_verification_projection_v1.py",
+      "sha256": "9197758cdc6a777084d5a2974e214a0492cf01ce9bcc71b787cddb6d5d72572d"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/build_gfx_verification_bundle_v1.py",
+      "sha256": "9b4c3139e22ad9e45eae149470134bc583669df46b413ac2c509fd9dca2256c4"
     }
   ],
   "claims": {
@@ -1149,6 +1237,30 @@
       "docs/reports/verified-packet-retention-20260906/retention-audit.json",
       "docs/reports/verified-packet-retention-20260906/validation-summary.json",
       "docs/reports/verified-packet-retention-20260906/paper-validation.json"
+    ],
+    "anonymous_verification_reproduction": [
+      "docs/reports/gfx-verification-reproduction-20260906/README.md",
+      "docs/reports/gfx-verification-reproduction-20260906/build.json",
+      "docs/reports/gfx-verification-reproduction-20260906/export-plan.json",
+      "docs/reports/gfx-verification-reproduction-20260906/export.json",
+      "docs/reports/gfx-verification-reproduction-20260906/initial-execution.json",
+      "docs/reports/gfx-verification-reproduction-20260906/initial-export-plan.json",
+      "docs/reports/gfx-verification-reproduction-20260906/initial-exporter.py",
+      "docs/reports/gfx-verification-reproduction-20260906/initial-pattern-scan.json",
+      "docs/reports/gfx-verification-reproduction-20260906/paper-validation.json",
+      "docs/reports/gfx-verification-reproduction-20260906/validation.json",
+      "paper/iclr2027/verification-reproduction-v1/README.md",
+      "paper/iclr2027/verification-reproduction-v1/expected-verification.json",
+      "paper/iclr2027/verification-reproduction-v1/manifest.json",
+      "paper/iclr2027/verification-reproduction-v1/projection.json.gz",
+      "paper/iclr2027/verification-reproduction-v1/reproduce.py",
+      "paper/iclr2027/verification-reproduction-v1/source-bindings.json",
+      "paper/iclr2027/verification-reproduction-v1/verdicts.json",
+      "paper/iclr2027/verification-reproduction-v1/verification_core.py",
+      "paper/iclr2027/verification-reproduction-v1.zip",
+      "scripts/analysis/export_gfx_verification_projection_v1.py",
+      "scripts/analysis/reproduce_gfx_verification_projection_v1.py",
+      "scripts/analysis/build_gfx_verification_bundle_v1.py"
     ]
   },
   "not_reused": [

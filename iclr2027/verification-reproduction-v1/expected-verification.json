@@ -1,0 +1,55 @@
+{
+  "records": 594,
+  "nonempty_official_reports": 302,
+  "empty_predictions": 292,
+  "original_artifact_blobs": 856,
+  "arms": {
+    "gfx-control": {
+      "records": 99,
+      "resolved": 17,
+      "nonempty_official_reports": 47,
+      "empty_predictions": 52
+    },
+    "gfx-flat": {
+      "records": 99,
+      "resolved": 18,
+      "nonempty_official_reports": 66,
+      "empty_predictions": 33
+    },
+    "gfx-graph": {
+      "records": 99,
+      "resolved": 12,
+      "nonempty_official_reports": 59,
+      "empty_predictions": 40
+    },
+    "gfx-loc": {
+      "records": 99,
+      "resolved": 9,
+      "nonempty_official_reports": 33,
+      "empty_predictions": 66
+    },
+    "gfx-rules": {
+      "records": 99,
+      "resolved": 13,
+      "nonempty_official_reports": 40,
+      "empty_predictions": 59
+    },
+    "gfx-skill": {
+      "records": 99,
+      "resolved": 18,
+      "nonempty_official_reports": 57,
+      "empty_predictions": 42
+    }
+  },
+  "historical_exceptions": [
+    {
+      "arm": "gfx-flat",
+      "instance_id": "matplotlib__matplotlib-23687",
+      "historical_audit_errors": [
+        "raw_docker_audit_hash_mismatch"
+      ],
+      "verification_evidence_origin": "independent frozen-verifier recheck of identical p1 prediction; agreeing verdict",
+      "recheck_receipt_sha256": "bd2b47673b7735102cebcd2194b5c943ff63f265158fd66fab1fc727f90b9abf"
+    }
+  ]
+}

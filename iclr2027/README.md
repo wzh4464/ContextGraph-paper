@@ -63,6 +63,20 @@ explains the retained public benchmark traceback paths and the limits of the
 recorded-channel and identity scans. Raw verifier execution and debug-log
 rate-limit checks are outside this package. Both packages are local review drafts.
 
+`verification-reproduction-v1.zip` adds all 594 original prediction files, with
+original official report/result and verified-patch bytes for 302 nonempty
+predictions. The other 292 retain their empty-submission short-circuit records;
+the package does not claim test execution for them. It replays the original report
+matcher, checks patch/trajectory joins to the existing audits, and preserves Flat's
+historical Docker-log exception. Two builds are identical; a freshly extracted
+archive passes isolated replay and exports six exact 99-prediction JSONL files.
+Six missing/changed-evidence checks are rejected. Run `uv run --no-project python
+reproduce.py --predictions-dir predictions` inside the extracted directory.
+Receipts and evidence manifests are explicitly projected fields with original
+hashes, while prediction/report/verified-patch bytes are exact. This package does
+not re-execute tests or reconstruct the full runtime and Docker evidence chain.
+It remains a local review draft, with no new predictions or changed outcomes.
+
 The archived paired-effect figure uses the already audited 99-task and 88-task
 comparisons, with unadjusted paired bootstrap intervals. Its PDF, SVG and PNG are
 in `figures/`; the adjacent JSON records exact plotted values, input/output hashes
