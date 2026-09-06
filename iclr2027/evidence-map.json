@@ -1149,6 +1149,38 @@
     {
       "path_from_contextgraph_root": "scripts/analysis/reproduce_gfx_verdict_semantics_v1.py",
       "sha256": "b7b53defdd089b9ff575f9dc098464a1b4a506b35c617653feec167ae081e267"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-retention-figure-20260906/README.md",
+      "sha256": "a2617cd5de70bce637403cd768ffe45d4e9c929407b2da150f65cd1c9df1adc7"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-retention-figure-20260906/paper-validation.json",
+      "sha256": "44141f31546fe414c6df04388458c0d85eff0b66086e54b850104c4fccfd4ee1"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-retention-figure-20260906/validation.json",
+      "sha256": "af35184683557e973ae6fdaf82318c86b67b522437797207e9848af25f7a461e"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/plot_gfx_response_retention_v1.py",
+      "sha256": "b8b98396f31ae347ae804d9eed0197f9838e7097053b692100868ecc7e306103"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/figures/original_response_retention.pdf",
+      "sha256": "2cb225503ed28a652f2a3b8df4cde639b5013f730339c67d465b68dcb5775d01"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/figures/original_response_retention.svg",
+      "sha256": "20aaf87b3bbb7e903078ce60eb50dbc1e75578d3f086b0259bcbfde116e813b0"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/figures/original_response_retention.png",
+      "sha256": "a0bf787b89bd2a2c1381af4b16be7d3c6bf125e2475b9cdb214d3021a4064fb8"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/figures/original_response_retention.json",
+      "sha256": "112a030c7f2ad12e528e5664d282a8e59984afa9a0c8a2ee61c2fe64dd373865"
     }
   ],
   "claims": {
@@ -1398,6 +1430,16 @@
       "scripts/analysis/build_gfx_verdict_bundle_v1.py",
       "scripts/analysis/collect_gfx_test_status_logs_v1.py",
       "scripts/analysis/reproduce_gfx_verdict_semantics_v1.py"
+    ],
+    "original_response_retention_figure": [
+      "docs/reports/gfx-retention-figure-20260906/README.md",
+      "docs/reports/gfx-retention-figure-20260906/paper-validation.json",
+      "docs/reports/gfx-retention-figure-20260906/validation.json",
+      "scripts/analysis/plot_gfx_response_retention_v1.py",
+      "paper/iclr2027/figures/original_response_retention.pdf",
+      "paper/iclr2027/figures/original_response_retention.svg",
+      "paper/iclr2027/figures/original_response_retention.png",
+      "paper/iclr2027/figures/original_response_retention.json"
     ]
   },
   "not_reused": [

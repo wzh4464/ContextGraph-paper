@@ -176,6 +176,14 @@ Using the pinned history processor and each saved configuration (\texttt{last\_n
 Neither arm retains an original response at its last recorded action prefix.
 All 1,426 direct processor boundary checks agree with the reconstruction.
 This measures original response-content retention, excluding paraphrases or copies elsewhere; it does not reconstruct every wire request or establish forgetting or a causal effect.
+Figure~\ref{fig:retention} shows every recorded sequence. First retention ranges from prefixes 3--125 for Flat and 3--359 for Card, so five retained prefixes does not mean the first five actions.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.98\textwidth]{figures/original_response_retention.pdf}
+\caption{Original memory-response retention across all 198 first trajectories. Rows use the same fixed task-ID order in both panels. Blue marks a recorded input prefix retaining any original response; gray distinguishes before-first-retention and later absence. White is outside the recorded sequence. No outcomes determine row order or inclusion; absence here does not establish forgetting.}
+\label{fig:retention}
+\end{figure}
 
 The hard \texttt{exit\_cost} label occurs on 32 Flat tasks and 41 Card tasks, so Card does not meet its registered $<32$ threshold.
 Both conditions have a median saved model-call counter of 501 under the legacy post-response call-limit behavior.

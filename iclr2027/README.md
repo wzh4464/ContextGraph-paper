@@ -77,6 +77,18 @@ hashes, while prediction/report/verified-patch bytes are exact. This package doe
 not re-execute tests or reconstruct the full runtime and Docker evidence chain.
 It remains a local review draft, with no new predictions or changed outcomes.
 
+`figures/original_response_retention.pdf` (also SVG/PNG) plots all 198 audited
+Flat/Card-v1 sequences in the same fixed task-ID order. Its four colors distinguish
+before first retention, original-response retention, later absence and no recorded
+action. First retention can be late: prefixes 3--125 for Flat and 3--359 for Card.
+The five-prefix median is a retention count, not the first five actions. The
+adjacent JSON records every plotted cell, source/output hashes, task order and
+versions. Generate an independent copy in a new directory with:
+
+```bash
+uv run --no-project --with matplotlib==3.11.1 --with numpy==2.5.2 python scripts/analysis/plot_gfx_response_retention_v1.py --retention paper/iclr2027/retention-reproduction-v1/expected-retention.json --identities paper/iclr2027/retention-reproduction-v1/original-attempts.json --out-dir /tmp/contextgraph-retention-figure
+```
+
 `verdict-semantics-reproduction-v1.zip` replays the frozen harness comparison for
 all 287 complete recorded before/after comparisons. All reports match; 15 setup failures
 and 292 empty predictions remain separately identified within the same 594
