@@ -313,6 +313,7 @@ Flat and Graph both retrieve two rules from Requests1724, whose Python 2 Unicode
 The excluded training task Requests2317 instead reports a Python 3 bytes-method failure at that line; its official training patch replaces the call with \texttt{to\_native\_string(method)}.
 The retrieved rules already state the Python 2 condition.
 In the new Graph training run, the agent observes the correct conversion output but ultimately submits an empty patch at its budget limit.
+Flat, which receives both source rules as well, is officially resolved on the same training task.
 This documents version dependence and a gap between observing a relevant operation and submitting a repair; it does not establish that memory caused the failure or that an applicability filter improves outcomes.
 A narrow, case-motivated scan of all 350 training patches recovers this pair only; this is neither an independently sampled case nor an estimate of prevalence.
 

@@ -725,6 +725,14 @@
     {
       "path_from_contextgraph_root": "scripts/analysis/mine_training_assignment_replacements_v1.py",
       "sha256": "831fbe0d152ec01a00e67052e4535304dead513e8dc33b631417862e03751620"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-nullable-training-20260906/first-nonempty-training-verification.json",
+      "sha256": "fbf0f99140b96a1463b2ac647c2f2d94472661041b6a3e0c6032a7b4e27e6c5c"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-training-transfer-case-20260906/flat-outcome-update.json",
+      "sha256": "61a7207a89253585dadf6537d83cc9aa2b54a5662cc64a1d9ba906a3f967ef9f"
     }
   ],
   "claims": {
