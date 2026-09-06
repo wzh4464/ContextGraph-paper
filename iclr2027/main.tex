@@ -15,6 +15,7 @@ We study this gap using \cg{}, a system that turns prior repair evidence into ru
 Our evaluation separates memory provenance, actual delivery, agent execution, and official repair verification.
 Existing official reports for two completed SWE Context Bench Related-Lite conditions record 18 repairs each on the same 99 tasks, with six wins unique to each condition.
 The recorded paired difference is 0 percentage points (95\% bootstrap interval $[-7.07,7.07]$).
+A completed contemporaneous Control resolves 17/99; Flat and Card each gain only one observed repair over Control, with exact paired $p=1$ for both comparisons.
 An extended audit identified one appended historical Docker log; an independent frozen-verifier recheck of the identical prediction reproduces the original failure, with no outcome changed.
 Actual memory is delivered on all tasks, while the correct procedure card reaches 98 of 99 targets.
 These observations do not establish a general limit on agent memory.
@@ -126,14 +127,18 @@ All reported first-prediction outcomes remain unchanged.
 
 \begin{table}[t]
 \centering
-\caption{Related-Lite first-prediction outcomes, with the independently rechecked historical log exception disclosed in the text. The second row is an existing near-duplicate sensitivity set, not a replacement primary denominator. Intervals use paired-task percentile bootstrap (200,000 draws; seed 42).}
+\caption{Audited Related-Lite first-prediction outcomes. The historical 88-task source-overlap sensitivity set does not replace the full 99-task denominator. Differences and exact two-sided McNemar tests are versus the contemporaneous Control on all 99 tasks. The historical Flat log exception remains disclosed in the text.}
 \label{tab:audit}
 \begin{tabular}{lrrrr}
 \toprule
-Universe & Flat & Card & Card minus Flat & Exact $p$ \\
+Condition & Fixed 99 & Sensitivity 88 & Difference & Exact $p$ \\
 \midrule
-Fixed 99 tasks & 18/99 & 18/99 & $0.00\pp$ & 1.000 \\
-Sensitivity 88 tasks & 18/88 & 15/88 & $-3.41\pp$ & 0.508 \\
+Control & 17/99 & 16/88 & Reference & --- \\
+Flat & 18/99 & 18/88 & $+1.01\pp$ & 1.000 \\
+Card & 18/99 & 15/88 & $+1.01\pp$ & 1.000 \\
+Graph & 12/99 & 12/88 & $-5.05\pp$ & 0.227 \\
+Rules & 13/99 & 12/88 & $-4.04\pp$ & 0.424 \\
+File list & 9/99 & 8/88 & $-8.08\pp$ & 0.057 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -190,15 +195,21 @@ Figure~\ref{fig:archived-effects} shows the paired estimates for both fixed task
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.95\textwidth]{figures/archived_paired_effects.pdf}
-\caption{Archived Related-Lite first-prediction repair differences relative to Flat, on the full 99 tasks and the pre-existing 88-task source-overlap sensitivity set. Bars are unadjusted 95\% paired bootstrap intervals. These retrospective comparisons include operational failures and retain the historical receipt limitation; they do not isolate causal memory effects.}
+\includegraphics[width=0.98\textwidth]{figures/archived_effects_with_control.pdf}
+\caption{Archived Related-Lite first-prediction differences relative to Flat (left) and the contemporaneous Control (right). Bars are unadjusted 95\% paired percentile-bootstrap intervals (200,000 draws; seed 42), not inversions of the exact McNemar tests. These retrospective comparisons include operational failures and retain the historical receipt limitation; they do not isolate causal memory effects.}
 \label{fig:archived-effects}
 \end{figure}
 
 \paragraph{Control comparison.}
-A contemporaneous no-memory run is still being graded.
-We do not compare these completed conditions to a historical 14/99 control to claim a current net gain.
-Its outcomes will be added only after its complete frozen receipt chain is checked.
+The contemporaneous Control now has 99 checked first-prediction receipts and resolves 17/99.
+Its exact corresponding trajectories show no enumerated memory markers in initial prompts and no explicit memory calls; this is a direct-exposure check, not a general contamination certificate.
+Flat and Card each exceed Control by one observed repair ($+1.01\pp$), with respective paired bootstrap intervals $[-6.06,8.08]$ and $[-5.05,8.08]$ percentage points and exact $p=1$ for both.
+Neither comparison shows a stable gain, and neither establishes equivalence.
+In the retrospective five-comparison Holm family against Control, adjusted $p$ values are 1.000 (Flat), 1.000 (Card), 0.906 (Graph), 1.000 (Rules), and 0.287 (file list).
+The file-list percentile interval excludes zero but does not override its exact test ($p=0.057$) or that correction.
+The complete historical sensitivity list leaves Control at 16/88, Flat at 18/88, and Card at 15/88.
+Control has 48 hard \texttt{exit\_cost} labels, versus 32 for Flat and 41 for Card; these labels can denote the call cap.
+We retain runtime failures and empty submissions, never substitute later solver runs, and do not reuse the historical 14/99 Control.
 
 \section{Verified 350/150 experiment}
 \label{sec:verified}

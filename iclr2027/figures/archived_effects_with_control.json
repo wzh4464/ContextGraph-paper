@@ -1,0 +1,214 @@
+{
+  "source_sha256": {
+    "docs/reports/gfx-expanded-audit-20260906/paired-comparisons.json": "a651742f6fa0c4e526ec70093c80c8a534115794dadfe2c305fb2dd2d5ecec0c",
+    "docs/reports/gfx-control-audit-20260906/paired-comparisons.json": "aac8dbfed64e8838ba406d97d0de1f81f3f50ff9b5aacbb7262a8f1140ab0fb5"
+  },
+  "script_sha256": "94ba8eb18b46d799828ca4dffe5a24218960ebf47cc89cd1b817edd0519be248",
+  "matplotlib_version": "3.11.1",
+  "points": [
+    {
+      "frame": "primary99",
+      "left": "gfx-flat",
+      "right": "gfx-skill",
+      "n": 99,
+      "effect_pp": 0.0,
+      "unadjusted_95ci_pp": [
+        -7.07070707070707,
+        7.07070707070707
+      ]
+    },
+    {
+      "frame": "primary99",
+      "left": "gfx-flat",
+      "right": "gfx-graph",
+      "n": 99,
+      "effect_pp": -6.0606060606060606,
+      "unadjusted_95ci_pp": [
+        -11.11111111111111,
+        -2.0202020202020203
+      ]
+    },
+    {
+      "frame": "primary99",
+      "left": "gfx-flat",
+      "right": "gfx-rules",
+      "n": 99,
+      "effect_pp": -5.05050505050505,
+      "unadjusted_95ci_pp": [
+        -12.121212121212121,
+        1.0101010101010102
+      ]
+    },
+    {
+      "frame": "primary99",
+      "left": "gfx-flat",
+      "right": "gfx-loc",
+      "n": 99,
+      "effect_pp": -9.090909090909092,
+      "unadjusted_95ci_pp": [
+        -16.161616161616163,
+        -3.0303030303030303
+      ]
+    },
+    {
+      "frame": "historical_near_duplicate_sensitivity88",
+      "left": "gfx-flat",
+      "right": "gfx-skill",
+      "n": 88,
+      "effect_pp": -3.4090909090909087,
+      "unadjusted_95ci_pp": [
+        -10.227272727272728,
+        3.4090909090909087
+      ]
+    },
+    {
+      "frame": "historical_near_duplicate_sensitivity88",
+      "left": "gfx-flat",
+      "right": "gfx-graph",
+      "n": 88,
+      "effect_pp": -6.8181818181818175,
+      "unadjusted_95ci_pp": [
+        -12.5,
+        -2.272727272727273
+      ]
+    },
+    {
+      "frame": "historical_near_duplicate_sensitivity88",
+      "left": "gfx-flat",
+      "right": "gfx-rules",
+      "n": 88,
+      "effect_pp": -6.8181818181818175,
+      "unadjusted_95ci_pp": [
+        -13.636363636363635,
+        0.0
+      ]
+    },
+    {
+      "frame": "historical_near_duplicate_sensitivity88",
+      "left": "gfx-flat",
+      "right": "gfx-loc",
+      "n": 88,
+      "effect_pp": -11.363636363636363,
+      "unadjusted_95ci_pp": [
+        -18.181818181818183,
+        -5.681818181818182
+      ]
+    },
+    {
+      "frame": "primary99",
+      "left": "gfx-control",
+      "right": "gfx-flat",
+      "n": 99,
+      "effect_pp": 1.0101010101010102,
+      "unadjusted_95ci_pp": [
+        -6.0606060606060606,
+        8.080808080808081
+      ]
+    },
+    {
+      "frame": "primary99",
+      "left": "gfx-control",
+      "right": "gfx-skill",
+      "n": 99,
+      "effect_pp": 1.0101010101010102,
+      "unadjusted_95ci_pp": [
+        -5.05050505050505,
+        8.080808080808081
+      ]
+    },
+    {
+      "frame": "primary99",
+      "left": "gfx-control",
+      "right": "gfx-graph",
+      "n": 99,
+      "effect_pp": -5.05050505050505,
+      "unadjusted_95ci_pp": [
+        -12.121212121212121,
+        1.0101010101010102
+      ]
+    },
+    {
+      "frame": "primary99",
+      "left": "gfx-control",
+      "right": "gfx-rules",
+      "n": 99,
+      "effect_pp": -4.040404040404041,
+      "unadjusted_95ci_pp": [
+        -11.11111111111111,
+        3.0303030303030303
+      ]
+    },
+    {
+      "frame": "primary99",
+      "left": "gfx-control",
+      "right": "gfx-loc",
+      "n": 99,
+      "effect_pp": -8.080808080808081,
+      "unadjusted_95ci_pp": [
+        -15.151515151515152,
+        -1.0101010101010102
+      ]
+    },
+    {
+      "frame": "historical_near_duplicate_sensitivity88",
+      "left": "gfx-control",
+      "right": "gfx-flat",
+      "n": 88,
+      "effect_pp": 2.272727272727273,
+      "unadjusted_95ci_pp": [
+        -5.681818181818182,
+        10.227272727272728
+      ]
+    },
+    {
+      "frame": "historical_near_duplicate_sensitivity88",
+      "left": "gfx-control",
+      "right": "gfx-skill",
+      "n": 88,
+      "effect_pp": -1.1363636363636365,
+      "unadjusted_95ci_pp": [
+        -7.954545454545454,
+        5.681818181818182
+      ]
+    },
+    {
+      "frame": "historical_near_duplicate_sensitivity88",
+      "left": "gfx-control",
+      "right": "gfx-graph",
+      "n": 88,
+      "effect_pp": -4.545454545454546,
+      "unadjusted_95ci_pp": [
+        -11.363636363636363,
+        2.272727272727273
+      ]
+    },
+    {
+      "frame": "historical_near_duplicate_sensitivity88",
+      "left": "gfx-control",
+      "right": "gfx-rules",
+      "n": 88,
+      "effect_pp": -4.545454545454546,
+      "unadjusted_95ci_pp": [
+        -12.5,
+        3.4090909090909087
+      ]
+    },
+    {
+      "frame": "historical_near_duplicate_sensitivity88",
+      "left": "gfx-control",
+      "right": "gfx-loc",
+      "n": 88,
+      "effect_pp": -9.090909090909092,
+      "unadjusted_95ci_pp": [
+        -17.045454545454543,
+        -1.1363636363636365
+      ]
+    }
+  ],
+  "files_sha256": {
+    "archived_effects_with_control.pdf": "a06bbfccb2ef4c65c3ed3374302e2fc00b7ff34495f88016e26db945df19727e",
+    "archived_effects_with_control.png": "9cd7cc2ca7ebbddac29f85eaca618accfe8eed78fc29ba4c2d32793a2805b1ec",
+    "archived_effects_with_control.svg": "432b3b34bdac444055abf21523d601295cfcb46930b3cbc54ddcef597cc78332"
+  },
+  "scope": "Audited exploratory p1 operational comparisons; no solver reruns, no pooled Verified results. Unadjusted percentile intervals are not inversions of exact McNemar tests and do not replace specified multiplicity corrections."
+}

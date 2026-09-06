@@ -1,6 +1,6 @@
 {
   "as_of": "2026-09-06",
-  "status": "Research draft; archived Related-Lite evidence audited; Verified formal inputs frozen and new OpenLux training-only validation active, zero formal calls at recorded snapshot",
+  "status": "Research draft; complete six-arm Related-Lite first-prediction evidence including contemporaneous Control audited; independent Verified OpenLux training validation remains active with no formal test outcomes at the recorded snapshot.",
   "artifacts": [
     {
       "path_from_contextgraph_root": "docs/reports/gfx-skill-audit-20260906/receipt-audit.json",
@@ -169,6 +169,26 @@
     {
       "path_from_contextgraph_root": "configs/verified_train_test_v1/training-memory-smoke-openlux-v2/prereg.json",
       "sha256": "f620bb614278f09727e6a1e9874bbe7378da1b7b194ea92b3d47aff68ba146e3"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-control-audit-20260906/receipt-audit.json",
+      "sha256": "1ac3d6a6e25f214fe38306010e9655139a7f4361543c4a6ef9bf4e201dcf566d"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-control-audit-20260906/control-exposure.json",
+      "sha256": "27ad6de06a010779cfcec274fb1500fc7d5bef9c362358bbf265ff9237e1f905"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-control-audit-20260906/paired-comparisons.json",
+      "sha256": "aac8dbfed64e8838ba406d97d0de1f81f3f50ff9b5aacbb7262a8f1140ab0fb5"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-control-audit-20260906/completed-evidence-review.json",
+      "sha256": "892a7f53d9e0f43e51b9c98b3a2e8a9a9979c064c89ea224b1d1c039d2a0e2a1"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/figures/archived_effects_with_control.json",
+      "sha256": "431283872d5018f98659fafd4fa24b085b99198768e7c6178f5ce5d7c42633ef"
     }
   ],
   "claims": {
@@ -244,6 +264,13 @@
       "configs/verified_train_test_v1/openlux-preflight-v2/protocol-result.json",
       "configs/verified_train_test_v1/openlux-continuation-v3.json",
       "configs/verified_train_test_v1/training-memory-smoke-openlux-v2/prereg.json"
+    ],
+    "contemporaneous_control_comparisons": [
+      "docs/reports/gfx-control-audit-20260906/receipt-audit.json",
+      "docs/reports/gfx-control-audit-20260906/control-exposure.json",
+      "docs/reports/gfx-control-audit-20260906/paired-comparisons.json",
+      "docs/reports/gfx-control-audit-20260906/completed-evidence-review.json",
+      "paper/iclr2027/figures/archived_effects_with_control.json"
     ]
   },
   "not_reused": [
