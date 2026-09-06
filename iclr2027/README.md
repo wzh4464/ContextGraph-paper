@@ -6,8 +6,10 @@ revalidated and are not copied into this draft.
 
 Existing Related-Lite Flat/Card reports record 18/99 each. An extended audit found
 one appended Flat Docker log whose full-file hash no longer matches its receipt;
-paired estimates are explicitly provisional while an unchanged-prediction verifier
-recheck runs. The new Verified 350/150 experiment remains work in progress, with no
+an independent frozen-verifier recheck of the unchanged prediction reproduces the
+original failure and passes its evidence checks. The first-prediction outcomes are
+unchanged, and the original provenance limitation remains disclosed. The new
+Verified 350/150 experiment remains work in progress, with no
 invented test score.
 
 The official [ICLR 2027 author guide](https://iclr.cc/Conferences/2027/AuthorGuidelines)

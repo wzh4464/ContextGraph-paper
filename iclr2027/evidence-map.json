@@ -1,6 +1,6 @@
 {
   "as_of": "2026-09-06",
-  "status": "Research draft; one outstanding Related-Lite raw-log provenance exception; formal Verified test results not available",
+  "status": "Research draft; first-prediction evidence reconciled by agreeing independent verifier recheck; historical log limitation retained; formal Verified test results unavailable",
   "artifacts": [
     {
       "path_from_contextgraph_root": "docs/reports/gfx-skill-audit-20260906/receipt-audit.json",
@@ -69,6 +69,18 @@
     {
       "path_from_contextgraph_root": "docs/reports/gfx-expanded-audit-20260906/paired-analysis-gate.json",
       "sha256": "d0ffea8fcbbcd879c7e21822d902327bd66336e3c722d76f065addd76e0c0a6e"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-expanded-audit-20260906/flat23687-recheck-audit.json",
+      "sha256": "ea194e5687d0b692b8e26fbcac901e8706433c7028037d41c4865b400788c6ee"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-expanded-audit-20260906/rechecked-prediction-audit.json",
+      "sha256": "f2790e8720d3511ab42b24e29764f3e7623d30ca6f04a870963768048d68e3c8"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-expanded-audit-20260906/paired-comparisons.json",
+      "sha256": "a651742f6fa0c4e526ec70093c80c8a534115794dadfe2c305fb2dd2d5ecec0c"
     }
   ],
   "claims": {
@@ -104,6 +116,11 @@
       "docs/reports/gfx-expanded-audit-20260906/flat23687-docker-log-investigation.json",
       "docs/reports/gfx-expanded-audit-20260906/flat23687-recheck-plan.json",
       "docs/reports/gfx-expanded-audit-20260906/paired-analysis-gate.json"
+    ],
+    "expanded_related_lite_rechecked_outcomes": [
+      "docs/reports/gfx-expanded-audit-20260906/flat23687-recheck-audit.json",
+      "docs/reports/gfx-expanded-audit-20260906/rechecked-prediction-audit.json",
+      "docs/reports/gfx-expanded-audit-20260906/paired-comparisons.json"
     ]
   },
   "not_reused": [
