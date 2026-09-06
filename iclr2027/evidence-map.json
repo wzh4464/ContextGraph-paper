@@ -1,6 +1,6 @@
 {
   "as_of": "2026-09-06",
-  "status": "Research draft; both the original Verified scheduler and its post-start operational-stop continuation closed incomplete. The continuation ended on an optional-null tool-argument parser crash after four complete blocks. Fourteen original slots were attempted and thirteen pass the full audit; no formal memory-effect estimate. The parser candidate is not deployed.",
+  "status": "Research draft; original Verified execution and its operational-stop continuation closed incomplete on an optional-null parser crash. Fourteen original test slots attempted and thirteen audited; no formal effect estimate. A separately frozen parser correction is now under real training-only validation within the existing aggregate allowance; the formal runtime and original outcomes are unchanged.",
   "artifacts": [
     {
       "path_from_contextgraph_root": "docs/reports/gfx-skill-audit-20260906/receipt-audit.json",
@@ -609,6 +609,50 @@
     {
       "path_from_contextgraph_root": "tests/test_sweagent_nullable_arguments.py",
       "sha256": "a872ce66c9e9901a444bf9cfe3220e839f6d8ca42bec1698b99dacf7691fd4c9"
+    },
+    {
+      "path_from_contextgraph_root": "configs/verified_train_test_v1/training-nullable-v1/prereg.json",
+      "sha256": "a71738689f825cd291bce6ea8d7ea6275e21bde88ba3bca925db25b328246eaf"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-nullable-training-20260906/deployment.json",
+      "sha256": "f0230533f75d444d07fa9c60c47eba1e9bad7a2d2d889e1ab46ac5e700dfc5a3"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-nullable-training-20260906/first-live-observation.json",
+      "sha256": "f3cfb83860104b7953a27974c7f6a3fd3eeae7c17a8d5e4aaf35111ba8e03564"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-nullable-training-20260906/monitoring-fix-source.json",
+      "sha256": "470aba03a33a7c9f970641063a187bb20f1b8bc304daa87ded14d10cf1857831"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-nullable-training-20260906/preflight-initial-error.json",
+      "sha256": "7fe25dfe9c5395421142a26f4982e18f6257aaeec85187a0989d263bbf2cb746"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-nullable-training-20260906/preflight.json",
+      "sha256": "6fd9b0db35ba81b7eba108ca17f25ef51da03d14cbe2014e5f4cbd699f08d1f6"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/local_sweagent_nullable_entrypoint_v1.py",
+      "sha256": "7a948c701a1e1535c36cf9a5e932fe57df5cf5ea3737570a6809fc9741b9677d"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/nullable_training_guards_v1.py",
+      "sha256": "41469f8f651fcc74c2120591704889be509c8665acb3f2c71bf67d056ae46261"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/run_nullable_training_plan_v1.py",
+      "sha256": "aece015c723b59c39439b69c8ab8f926ac68e6cb516fabeabd59101e0c4070ee"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/run_nullable_training_task_v1.py",
+      "sha256": "516737e8c2b47e785d33bb958366a60abcdd867b44db51386306a0b4f78c89d6"
+    },
+    {
+      "path_from_contextgraph_root": "tests/test_nullable_training_guards.py",
+      "sha256": "24e792b972986dede8a62182668022474f876f4a1a724d6693d06cc818ecc373"
     }
   ],
   "claims": {

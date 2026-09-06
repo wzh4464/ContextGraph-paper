@@ -73,6 +73,7 @@ response contained an optional null array argument that crashed the SWE-agent
 parser after 47 protocol-valid API calls. Its official receipt records an empty
 patch; the strict audit continues to reject its generic error stop. Fourteen slots
 were attempted, thirteen pass the full audit, and 436 remain unstarted. A separate
-parser candidate passes recorded-call regression checks but is not deployed.
+parser candidate passes recorded-call regression checks and is undergoing new
+training-only validation; it is not deployed to the formal test runtime.
 The full 150-task denominator remains fixed per arm and no formal effect estimate
 is reported. See the bound amendment checkpoint and deployment records.
