@@ -4,8 +4,11 @@
 remains the historical NeurIPS-style preprint; its effect claims have not all been
 revalidated and are not copied into this draft.
 
-The completed result is the Related-Lite Flat/Card audit: 18/99 each. The new
-Verified 350/150 experiment is described as work in progress, with no invented test score.
+Existing Related-Lite Flat/Card reports record 18/99 each. An extended audit found
+one appended Flat Docker log whose full-file hash no longer matches its receipt;
+paired estimates are explicitly provisional while an unchanged-prediction verifier
+recheck runs. The new Verified 350/150 experiment remains work in progress, with no
+invented test score.
 
 The official [ICLR 2027 author guide](https://iclr.cc/Conferences/2027/AuthorGuidelines)
 sets abstract and full-paper deadlines at September 18 and September 25, 2026,

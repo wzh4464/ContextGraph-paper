@@ -1,4 +1,5 @@
 \documentclass{article}
+\usepackage[T1]{fontenc}
 \usepackage{iclr2027_conference,times}
 \usepackage{amsmath,amssymb,booktabs,graphicx,hyperref,url}
 \title{ContextGraph: Measuring Transfer from Experience to Verified Code Repairs}
@@ -12,15 +13,16 @@
 Long-term memory can change what a coding agent reads without improving the patch it submits.
 We study this gap using \cg{}, a system that turns prior repair evidence into rules and retrieves them through dense, lexical, and graph channels.
 Our evaluation separates memory provenance, actual delivery, agent execution, and official repair verification.
-An audit of two completed SWE Context Bench Related-Lite conditions finds that a repository procedure card and flat patch retrieval each resolve 18 of the same 99 tasks, with six wins unique to each condition.
-The paired difference is 0 percentage points (95\% bootstrap interval $[-7.07,7.07]$); actual memory is delivered on all tasks, while the correct procedure card reaches 98 of 99 targets.
-These observations establish a scoped null result for that intervention, rather than a general limit on agent memory.
+Existing official reports for two completed SWE Context Bench Related-Lite conditions record 18 repairs each on the same 99 tasks, with six wins unique to each condition.
+The recorded paired difference is 0 percentage points (95\% bootstrap interval $[-7.07,7.07]$); these statistics remain provisional because an extended audit identified one appended Docker log whose full-file hash no longer matches its original Flat receipt.
+Actual memory is delivered on all tasks, while the correct procedure card reaches 98 of 99 targets.
+These observations do not establish a general limit on agent memory.
 We also prepare a separate SWE-bench Verified experiment that builds memory from 350 training tasks and compares no memory, flat rule retrieval, and graph rule retrieval on a fixed 150-task test set.
-This draft reports the completed audit and the new experiment's design; it does not yet report a test-set gain from the latter.
+This draft reports the audits, the outstanding provenance exception, and the new experiment's design; it does not yet report a test-set gain from the latter.
 \end{abstract}
 
 \paragraph{Draft status, 6 September 2026.}
-This is a research draft, not a completed submission. Related-Lite results below have been checked against frozen verifier receipts.
+This is a research draft, not a completed submission. Related-Lite reports have been checked against frozen verifier receipts; an extended Docker-log audit now identifies one outstanding provenance exception described below.
 The separate Verified 350/150 campaign is being prepared, and its outcome table remains unpopulated.
 Historical results from other repository experiments are not pooled into either denominator.
 
@@ -109,13 +111,19 @@ The actual retrieved patch sets can vary with agent-generated queries, so identi
 
 \paragraph{Receipt audit.}
 All 99 receipts in each condition pass task-identity, literal-boolean verdict, trajectory/prediction hash, and report/summary consistency checks.
-For nonempty patches, the audit also checks the frozen harness evidence inventory, its file hashes, offline Docker attestations, and runtime identity before and after verification.
+For nonempty patches, the initial audit also checks the frozen harness evidence inventory, its file hashes, recorded offline Docker attestations, and runtime identity before and after verification.
 The harness commit is recorded in the accompanying evidence index.
 One task has a later verifier receipt, but its original receipt is already a valid failure; the analysis retains that original result.
 
+An extended check of raw Docker logs flags Flat's matplotlib-23687: its original 15 log records reproduce the receipt's exact hash, but 21 later execution records have been appended.
+The original official report is unchanged and records failure (3/4 fail-to-pass and 791/791 pass-to-pass tests).
+The relationship of the appended execution records to that receipt is not fully established.
+A separate diagnostic verification of the unchanged prediction is underway; it neither reruns the solver nor replaces the original outcome.
+Until this provenance exception is reconciled, the earlier paired estimates remain provisional and the new five-condition comparison is withheld.
+
 \begin{table}[t]
 \centering
-\caption{Audited Related-Lite outcomes. The second row is an existing near-duplicate sensitivity set, not a replacement primary denominator. The confidence intervals reported in the text use paired-task percentile bootstrap (200,000 draws; seed 42).}
+\caption{Recorded Related-Lite outcomes, provisional pending the raw Docker-log exception in the text. The second row is an existing near-duplicate sensitivity set, not a replacement primary denominator. Intervals use paired-task percentile bootstrap (200,000 draws; seed 42).}
 \label{tab:audit}
 \begin{tabular}{lrrrr}
 \toprule
@@ -153,6 +161,14 @@ Both conditions have median 501 API calls under the legacy post-response call-li
 The label can reflect the call cap, and must not be read as 41 dollar-budget overruns.
 The remaining registered process measures, including the first successful test execution, still require a separate trajectory audit.
 We therefore report failed improvement and a failed termination-count criterion without claiming that we have established the reason for the result.
+
+\paragraph{Other archived interventions.}
+The extended audit also covers a graph-channel variant, an added-rule variant, and an added-file-list variant.
+All 99 prediction/verifier chains in each of these three conditions pass its checks, with 12, 13, and 9 recorded first-attempt repairs, respectively; eleven later solver reruns in the rule condition are not substituted.
+Their actual patch-memory exposure is 99/99, 95/99, and 96/99, with no phase refusals; the latter two meet their registered requirements for rule and file-list presence.
+Eleven SymPy tasks in the file-list condition receive paths with Matplotlib, Sphinx, or Astropy prefixes, illustrating that delivered candidates need not be useful repository locations.
+The rule retriever and file-list design used offline metrics on these same 99 targets during method selection.
+Together with runtime failures and the outstanding Flat provenance exception, this prevents treating the archived counts as a clean confirmatory comparison of memory mechanisms.
 
 \paragraph{Control comparison.}
 A contemporaneous no-memory run is still being graded.

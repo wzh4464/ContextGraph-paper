@@ -1,6 +1,6 @@
 {
   "as_of": "2026-09-06",
-  "status": "Research draft; formal Verified test results not available",
+  "status": "Research draft; one outstanding Related-Lite raw-log provenance exception; formal Verified test results not available",
   "artifacts": [
     {
       "path_from_contextgraph_root": "docs/reports/gfx-skill-audit-20260906/receipt-audit.json",
@@ -45,6 +45,30 @@
     {
       "path_from_contextgraph_root": "docs/literature/2026-09-06/manifest.json",
       "sha256": "59382eca441b3a955e98171be95737c223572d5df4bd25aca32ebd1010c83d25"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-expanded-audit-20260906/receipt-audit.json",
+      "sha256": "f33f22978c86fb6bcd22e9a9b0eab3f39af42c166640a2949fd098e70c314060"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-expanded-audit-20260906/variant-delivery-census.json",
+      "sha256": "2fae9b75db8efb2f0e13a6200652a2e3ada02619dab1b61d898aafc1a12c82ea"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-expanded-audit-20260906/delivery-summary.json",
+      "sha256": "90edf06875d928cca40358fa9f0558858f9eaa35da5d918e5835fadc86067e6d"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-expanded-audit-20260906/flat23687-docker-log-investigation.json",
+      "sha256": "33a2c8fabeca28df6f51f40e559c885e0fa3e00eb844b176fe54c0c45d9ed9c9"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-expanded-audit-20260906/flat23687-recheck-plan.json",
+      "sha256": "c33d496265c78733751e02544bdc97c05ee0857a87ddc5e892dfb9b0de3284fa"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-expanded-audit-20260906/paired-analysis-gate.json",
+      "sha256": "d0ffea8fcbbcd879c7e21822d902327bd66336e3c722d76f065addd76e0c0a6e"
     }
   ],
   "claims": {
@@ -72,6 +96,14 @@
     "recent_references": [
       "docs/literature/2026-09-05/manifest.json",
       "docs/literature/2026-09-06/manifest.json"
+    ],
+    "expanded_related_lite_provenance": [
+      "docs/reports/gfx-expanded-audit-20260906/receipt-audit.json",
+      "docs/reports/gfx-expanded-audit-20260906/variant-delivery-census.json",
+      "docs/reports/gfx-expanded-audit-20260906/delivery-summary.json",
+      "docs/reports/gfx-expanded-audit-20260906/flat23687-docker-log-investigation.json",
+      "docs/reports/gfx-expanded-audit-20260906/flat23687-recheck-plan.json",
+      "docs/reports/gfx-expanded-audit-20260906/paired-analysis-gate.json"
     ]
   },
   "not_reused": [
