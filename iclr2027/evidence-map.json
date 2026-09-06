@@ -917,6 +917,42 @@
     {
       "path_from_contextgraph_root": "docs/reports/gfx-retention-reproduction-20260906/paper-integration.json",
       "sha256": "57df61c9b0ddd6be1959167d642fc3ffedc47ce246b9c643a60639a5706bef1d"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/audit_verified_packet_retention_v1.py",
+      "sha256": "6cd949e8cf743f3bdc62d14ac7f47cd9bbf4c572a5ecad44220fde1be785c132"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-packet-retention-20260906/README.md",
+      "sha256": "f33f319cbdfdad423ab4ae8bcc248b69760a5c685b32e5ca3d2f7d7bda6cfc05"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-packet-retention-20260906/execution-result.json",
+      "sha256": "9ed65da556636db45c429ff8a0f385b85b9828aba80b3aa492801f2da0623ac9"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-packet-retention-20260906/initial-empty-output.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-packet-retention-20260906/initial-execution-result.json",
+      "sha256": "c699f1c0c933c80d44ca940ed874ec0c33a2e6376d18eefd01e886b9946cfae7"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-packet-retention-20260906/inspection-plan.json",
+      "sha256": "249ac15b7375dfbed09e84def2560319f04c1d7b76d733bf3ec318952ee17f51"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-packet-retention-20260906/retention-audit.json",
+      "sha256": "79d46632f7eee71c40dd9ab2cef4a4bd213741194ef71f3e88b10a554bfff966"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-packet-retention-20260906/validation-summary.json",
+      "sha256": "62eb0a55dfee771e1dee486b134ae670196263d213a4f924847a16ee7c5c1729"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-packet-retention-20260906/paper-validation.json",
+      "sha256": "5f1eca5503cda5aa3fb4f86ebd91852b4725f9e000174247982d63121c55471b"
     }
   ],
   "claims": {
@@ -1102,6 +1138,17 @@
       "paper/iclr2027/retention-reproduction-v1/source-bindings.json",
       "paper/iclr2027/retention-reproduction-v1.zip",
       "docs/reports/gfx-retention-reproduction-20260906/paper-integration.json"
+    ],
+    "verified_initial_packet_retention": [
+      "scripts/analysis/audit_verified_packet_retention_v1.py",
+      "docs/reports/verified-packet-retention-20260906/README.md",
+      "docs/reports/verified-packet-retention-20260906/execution-result.json",
+      "docs/reports/verified-packet-retention-20260906/initial-empty-output.json",
+      "docs/reports/verified-packet-retention-20260906/initial-execution-result.json",
+      "docs/reports/verified-packet-retention-20260906/inspection-plan.json",
+      "docs/reports/verified-packet-retention-20260906/retention-audit.json",
+      "docs/reports/verified-packet-retention-20260906/validation-summary.json",
+      "docs/reports/verified-packet-retention-20260906/paper-validation.json"
     ]
   },
   "not_reused": [

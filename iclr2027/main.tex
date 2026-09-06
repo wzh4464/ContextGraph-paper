@@ -254,6 +254,9 @@ Flat and Graph share the same rule corpus, dense search, lexical search, rank fu
 Graph additionally enables the Personalized PageRank channel over the fixed rule/source/mechanism structure.
 All memory packets are constructed from public test descriptions before formal solver calls, then frozen; there are no test-time memory writes.
 Each packet is inserted once into the initial task input.
+The saved local configurations apply no history processors.
+A reconstruction of all 14 attempted formal slots and three separate training attempts preserves the initial task message at every recorded action prefix; all nine formal and both training memory attempts retain their full packets.
+This checks input retention, not repair efficacy or every wire request.
 This narrows the estimand to the effect of enabling the graph channel in this implementation, not the effect of every component in the broader \cg{} system.
 
 The frozen packet contrast confirms a real intervention: the ordered rule IDs differ on 94/150 tasks, and the top-three sets differ on 87/150.
