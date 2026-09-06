@@ -41,4 +41,12 @@ and the plotting version. From the ContextGraph root, regenerate with:
 uv run --no-project --with matplotlib==3.11.1 python scripts/analysis/plot_archived_paired_effects.py --source docs/reports/gfx-expanded-audit-20260906/paired-comparisons.json --out-dir paper/iclr2027/figures
 ```
 
-The plot does not include the unfinished Control campaign or local Verified results.
+The original Flat-reference plot excludes Control and local Verified results.
+The current manuscript uses `figures/archived_effects_with_control.pdf`, which
+adds the completed contemporaneous Control audit; its adjacent JSON binds the
+six-arm comparisons. Neither figure includes the unfinished Verified campaign.
+
+The September 6, 11:57 UTC Verified snapshot has two audited original results on
+the first task (Control and Flat resolved), while Graph remains ungraded. These
+partial receipts validate the analysis integration and do not form a success
+rate or treatment effect. The full 150-task denominator remains fixed per arm.

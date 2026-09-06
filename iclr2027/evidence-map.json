@@ -1,6 +1,6 @@
 {
   "as_of": "2026-09-06",
-  "status": "Research draft; completed six-arm Related-Lite audit; independent Verified OpenLux formal 150-task campaign started at 2026-09-06 11:21 UTC, with no formal verifier outcomes at this snapshot.",
+  "status": "Research draft; completed six-arm Related-Lite audit and 297-trajectory gold-path call census. Verified OpenLux formal 150-task campaign began at 11:21 UTC on 2026-09-06; the 11:57 audit validates first-task Control and Flat resolved receipts, with Graph ungraded and no formal effect estimate.",
   "artifacts": [
     {
       "path_from_contextgraph_root": "docs/reports/gfx-skill-audit-20260906/receipt-audit.json",
@@ -261,6 +261,70 @@
     {
       "path_from_contextgraph_root": "docs/reports/openlux-continuation-20260906/accounting-investigation.json",
       "sha256": "3d8f0e38b60b112fbdc4fc8507df0b75929b3747f3eb363433b270856336d2e5"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-gold-path-census-20260906/plan.json",
+      "sha256": "ebd54df50a2a5662bc8f87c6e125d9c48e677451087dc6cce094a61a2abd8e6a"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-gold-path-census-20260906/execution-plan.json",
+      "sha256": "520026a3063eb12cba9c3098a504d12f2ee81eb8e5b34f4a6c491d5715713491"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-gold-path-census-20260906/v1-failure.json",
+      "sha256": "cec0a52f7e56ef26b52be41433a91ba56573ef943e76bd3c4bef80a3df17e517"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-gold-path-census-20260906/plan-v2.json",
+      "sha256": "b2fb656752538378af2c1d703a64027b1f84940cc29fc21b666ca5726e8a8fae"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-gold-path-census-20260906/execution-plan-v2.json",
+      "sha256": "3dfb667ab47d56196f795e02acc18054cd5b4ceea22a7da22317d24c0cab948f"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-gold-path-census-20260906/census-v2.json",
+      "sha256": "28bdbc5f5ca364a025f567bff879f97be223394b30f181b60d22799b4b63d596"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-gold-path-census-20260906/terminal-v2.json",
+      "sha256": "01844dbf41f051d583b67e21169d1f1c62c3d4b818f8290cbc9a60440a124b28"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-gold-path-census-20260906/discrepancy-observations.json",
+      "sha256": "4b8eb4fc112609a50aadfed588fe54c697ba08e5bc0862038eb93b5b2f5bcef4"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-gold-path-census-20260906/summary.json",
+      "sha256": "05c4190458cdfd06ab5a6282bce252057239c666db8ce5656f2bef5b98c4cfb6"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/gfx_gold_path_call_census.py",
+      "sha256": "9d84b45c13f08a42c2078ce3a9925919efdc79d0b378205ed5ef6e0d52a2c5aa"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/gfx_gold_path_call_census_v2.py",
+      "sha256": "fabead884553244a156462781185482d9f84acaaa427820c3e6d71649582ae58"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/verify_gfx_gold_path_census.py",
+      "sha256": "d14ba010c6a4628fb0b7c44efa8e30ee69764816f05a2083496289de5bedbdb6"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-openlux-formal-freeze-20260906/first-formal-receipt-audit.json",
+      "sha256": "ffe94062b4976b4b6b6ef98696a4488df94e1145c7ffbe55956d05a0726b808c"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-openlux-formal-freeze-20260906/first-formal-result.json",
+      "sha256": "2c717943f7bea36eb1a4968eaab61ad105f36057efaf5239a25d403597ea2e15"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-openlux-formal-freeze-20260906/two-formal-receipts-audit.json",
+      "sha256": "f7dda34a964b6b0c7590e1ae979b3b50d719ea9cd3020abd41ab731505c20224"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-openlux-formal-freeze-20260906/two-formal-results.json",
+      "sha256": "0a686973dc8d3f562b6a2d313b5cdb23373f5445b8f0fefda5ea1c44a64be28a"
     }
   ],
   "claims": {
