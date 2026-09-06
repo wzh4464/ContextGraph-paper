@@ -1,0 +1,16 @@
+{
+  "audits_sha256": {
+    "memory-served-census-v2.json": "5a39382d18572dd96d88ce4f1ad0297abc708f85bfe0b4631c93b5a5ac294837",
+    "variant-delivery-census.json": "2fae9b75db8efb2f0e13a6200652a2e3ada02619dab1b61d898aafc1a12c82ea",
+    "control-exposure.json": "27ad6de06a010779cfcec274fb1500fc7d5bef9c362358bbf265ff9237e1f905",
+    "verdicts.json": "cc4f164b869aa7a7cff361f400420b50ee942bf3a69b44fcf8862d932818c985"
+  },
+  "original_classifier_sha256": {
+    "gfx_memory_served_census.py": "875811084746da93009065283b44449246c797e7826b5db78270ada644e609df",
+    "audit_gfx_control_exposure.py": "6f6fb840ea3262185481ce327af47502eb0dd7f0a7d399dc9251d0341db0b159"
+  },
+  "projection_exporter_sha256": "dfca709e20e494ccfb6ae776323295b7ad379510b4023c96dc78a29430b03803",
+  "projection_sha256": "0625f9decbf14fe314fe7e08f40c9edb6620f3feead37270fc478a333987ea8f",
+  "public_task_statements_sha256": "275a21c5227800c9dcff68176efa3708704b63555344c4e5f4d81605d3ba59dc",
+  "frozen_card_file_sha256": "980c34495a62975e7567ad8aa4a44bda2fd8dff99c4362addf8cf4b0ab759ef2"
+}

@@ -39,6 +39,14 @@ This package recomputes statistics; the full raw verifier/delivery evidence and
 experimental environment still need a complete anonymous release and human review.
 `evidence-map.json` binds current claims and export validation to repository artifacts.
 
+`delivery-reproduction-v1.zip` separately reproduces all 594 original memory and
+Control exposure records from source-bound projected histories, using the original
+classifier functions and preserving response text, frozen cards and trajectory
+joins. The standalone script uses only the Python standard library. Its README
+explains the retained public benchmark traceback paths and the limits of the
+recorded-channel and identity scans. Raw verifier execution and debug-log
+rate-limit checks are outside this package. Both packages are local review drafts.
+
 The archived paired-effect figure uses the already audited 99-task and 88-task
 comparisons, with unadjusted paired bootstrap intervals. Its PDF, SVG and PNG are
 in `figures/`; the adjacent JSON records exact plotted values, input/output hashes

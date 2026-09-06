@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "files_sha256": {
+    "README.md": "31d2687a0112568cc741f75291975b4dd612ebb059ec0e6faa91b245ac71738f",
+    "delivery_core.py": "51297e1b96ee18162cffdd9539253d078cef913720cd4c21d212a1b12d7d30bb",
+    "expected-delivery.json": "aabaf5c5ef972d08fd59ef126084d22223b75c136bc569bd5b76b8af43976528",
+    "project_histories.py": "dfca709e20e494ccfb6ae776323295b7ad379510b4023c96dc78a29430b03803",
+    "projection.json.gz": "4b0a60f2c9bd100f5867392b782ae8961135312d05cb0a4fb44efa188c3bd25a",
+    "public-path-review.json": "34f840b972ea9801a14bb52d4e4b75b5d1d6c88f9d92d1cf1cd2aac554af9f9b",
+    "public-task-statements.json": "275a21c5227800c9dcff68176efa3708704b63555344c4e5f4d81605d3ba59dc",
+    "reproduce.py": "802dca2c32d0bb5e74bd446276327d5ed5bd200821ef8b2c09593eb6dba4daca",
+    "source-bindings.json": "0cecff3e2adc0a555b5e7ca5d1d95b3f0140590cb4eb4e251fb7a63afb03e312",
+    "verdicts.json": "cc4f164b869aa7a7cff361f400420b50ee942bf3a69b44fcf8862d932818c985"
+  }
+}

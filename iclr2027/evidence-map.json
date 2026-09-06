@@ -473,6 +473,86 @@
     {
       "path_from_contextgraph_root": "docs/reports/verified-operational-continuation-20260906/first-new-attempt-audit.json",
       "sha256": "44e2086082aeaafe7978321603c48706861f23015adda349dbfcbef628aca65b"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-delivery-reproduction-20260906/bundle-receipt.json",
+      "sha256": "41886454246795e46460b4263d04dcebb41c239ec1a828811bd18a24e67b771d"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-delivery-reproduction-20260906/deployment.json",
+      "sha256": "bf66cba00bcca1f49a3fe49fa363c5c63a8c8cb74124ac9c2ab904a252f83212"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-delivery-reproduction-20260906/transfer-complete.json",
+      "sha256": "a58f7bdd6ee97a6b3e4b77aeccbf2941c1fa5f8f07dc5fb812e46d0fd698a61c"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-delivery-reproduction-20260906/validation.json",
+      "sha256": "0684dbaf1b2d583169cdeca7dd1390d595e6264e8e5aa5de511dd23fac4bb886"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/export_gfx_delivery_projection.py",
+      "sha256": "dfca709e20e494ccfb6ae776323295b7ad379510b4023c96dc78a29430b03803"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/build_gfx_delivery_bundle.py",
+      "sha256": "678176c57a60e3bc40fe311f3f76881a7945e9be368af01d9ce44adfe767b8d6"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/reproduce_gfx_delivery_projection.py",
+      "sha256": "802dca2c32d0bb5e74bd446276327d5ed5bd200821ef8b2c09593eb6dba4daca"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/delivery-reproduction-v1.zip",
+      "sha256": "01113b3e55cd12e0d92dea8c9f11733a6039eeb1dd8abea5f753fed8890a2f38"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/delivery-reproduction-v1/README.md",
+      "sha256": "31d2687a0112568cc741f75291975b4dd612ebb059ec0e6faa91b245ac71738f"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/delivery-reproduction-v1/delivery_core.py",
+      "sha256": "51297e1b96ee18162cffdd9539253d078cef913720cd4c21d212a1b12d7d30bb"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/delivery-reproduction-v1/expected-delivery.json",
+      "sha256": "aabaf5c5ef972d08fd59ef126084d22223b75c136bc569bd5b76b8af43976528"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/delivery-reproduction-v1/manifest.json",
+      "sha256": "8783acd67f00e48f1b33e48806cdc3b41c49f34c5fdefe841802dc1aea69acc3"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/delivery-reproduction-v1/project_histories.py",
+      "sha256": "dfca709e20e494ccfb6ae776323295b7ad379510b4023c96dc78a29430b03803"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/delivery-reproduction-v1/projection.json.gz",
+      "sha256": "4b0a60f2c9bd100f5867392b782ae8961135312d05cb0a4fb44efa188c3bd25a"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/delivery-reproduction-v1/public-path-review.json",
+      "sha256": "34f840b972ea9801a14bb52d4e4b75b5d1d6c88f9d92d1cf1cd2aac554af9f9b"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/delivery-reproduction-v1/public-task-statements.json",
+      "sha256": "275a21c5227800c9dcff68176efa3708704b63555344c4e5f4d81605d3ba59dc"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/delivery-reproduction-v1/reproduce.py",
+      "sha256": "802dca2c32d0bb5e74bd446276327d5ed5bd200821ef8b2c09593eb6dba4daca"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/delivery-reproduction-v1/source-bindings.json",
+      "sha256": "0cecff3e2adc0a555b5e7ca5d1d95b3f0140590cb4eb4e251fb7a63afb03e312"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/delivery-reproduction-v1/verdicts.json",
+      "sha256": "cc4f164b869aa7a7cff361f400420b50ee942bf3a69b44fcf8862d932818c985"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-operational-continuation-20260906/first-completed-amended-block.json",
+      "sha256": "33e05576ca81f001372c82bb99a94d4d75c1727d7c8ddb39e78e271ae10c1418"
     }
   ],
   "claims": {
@@ -584,7 +664,8 @@
       "docs/reports/verified-operational-continuation-20260906/rex_probe.py",
       "docs/reports/verified-operational-continuation-20260906/rex_probe_v2.py",
       "docs/reports/verified-operational-continuation-20260906/review-amendment-plan-recovery.json",
-      "docs/reports/verified-operational-continuation-20260906/first-new-attempt-audit.json"
+      "docs/reports/verified-operational-continuation-20260906/first-new-attempt-audit.json",
+      "docs/reports/verified-operational-continuation-20260906/first-completed-amended-block.json"
     ],
     "anonymous_statistical_reproduction": [
       "docs/reports/iclr-statistical-reproduction-20260906.json",
@@ -600,6 +681,27 @@
       "paper/iclr2027/statistical-reproduction-v1/requirements.txt",
       "paper/iclr2027/statistical-reproduction-v1/source-bindings.json",
       "paper/iclr2027/statistical-reproduction-v1/verdicts.json"
+    ],
+    "anonymous_delivery_reproduction": [
+      "docs/reports/gfx-delivery-reproduction-20260906/bundle-receipt.json",
+      "docs/reports/gfx-delivery-reproduction-20260906/deployment.json",
+      "docs/reports/gfx-delivery-reproduction-20260906/transfer-complete.json",
+      "docs/reports/gfx-delivery-reproduction-20260906/validation.json",
+      "scripts/analysis/export_gfx_delivery_projection.py",
+      "scripts/analysis/build_gfx_delivery_bundle.py",
+      "scripts/analysis/reproduce_gfx_delivery_projection.py",
+      "paper/iclr2027/delivery-reproduction-v1.zip",
+      "paper/iclr2027/delivery-reproduction-v1/README.md",
+      "paper/iclr2027/delivery-reproduction-v1/delivery_core.py",
+      "paper/iclr2027/delivery-reproduction-v1/expected-delivery.json",
+      "paper/iclr2027/delivery-reproduction-v1/manifest.json",
+      "paper/iclr2027/delivery-reproduction-v1/project_histories.py",
+      "paper/iclr2027/delivery-reproduction-v1/projection.json.gz",
+      "paper/iclr2027/delivery-reproduction-v1/public-path-review.json",
+      "paper/iclr2027/delivery-reproduction-v1/public-task-statements.json",
+      "paper/iclr2027/delivery-reproduction-v1/reproduce.py",
+      "paper/iclr2027/delivery-reproduction-v1/source-bindings.json",
+      "paper/iclr2027/delivery-reproduction-v1/verdicts.json"
     ]
   },
   "not_reused": [

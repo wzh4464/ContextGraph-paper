@@ -1,0 +1,50 @@
+{
+  "manifest_sha256": "7bfa59a076575dd1d9a82f36b4875e8c7fef1a3d634f33e55311ceec99d51a87",
+  "matched_public_statement_paths": {
+    "astropy__astropy-4973": {
+      "count": 4,
+      "statement_sha256": "4dc120ab78e9b072fdbf703476408d5dd0169cfce36886e7d9db4dacdc17fde7"
+    },
+    "django__django-29838": {
+      "count": 1,
+      "statement_sha256": "50e488b4b2e6c16b551b038946d38901b242dc9901c01f1706a5066521d39fb1"
+    },
+    "django__django-34176": {
+      "count": 3,
+      "statement_sha256": "e4a81a67d8dedb2d8232215e9853a0519e7615ee4fc79d0ccae5b62603e49230"
+    },
+    "django__django-34525": {
+      "count": 1,
+      "statement_sha256": "153792b9ce865b56c8134dc90f81c3dffbef236f35613d7264f15a36b2094ce5"
+    },
+    "matplotlib__matplotlib-22686": {
+      "count": 2,
+      "statement_sha256": "60c46390eeb09af9bdd52dfc1fe70f81de99fafb5eec07a4d94bc153858b46eb"
+    },
+    "matplotlib__matplotlib-27361": {
+      "count": 16,
+      "statement_sha256": "5834365562d723eb4fbe61b8535caaf3caf2902a2a4ea16a847bb4d685f64a84"
+    },
+    "psf__requests-3481": {
+      "count": 5,
+      "statement_sha256": "c2cb08fde7d3c86061cc97329cede15e28df280dc1920d09c00c37f0de975969"
+    },
+    "pytest-dev__pytest-10341": {
+      "count": 1,
+      "statement_sha256": "e6ff9aad92a6c5b18737b50eb65eaf7990cb3b53aaf21a3ed421622907b77cc3"
+    },
+    "scikit-learn__scikit-learn-25365": {
+      "count": 5,
+      "statement_sha256": "70e68805bbfdaa68b6f2527bf2d238147222d90170e5cb88da4b0b3308f210db"
+    },
+    "sphinx-doc__sphinx-8127": {
+      "count": 14,
+      "statement_sha256": "53c0bf538dd29b93dfcb8a51ba237de763b13cecb6f440552f66483f4324277b"
+    },
+    "sympy__sympy-12950": {
+      "count": 1,
+      "statement_sha256": "70376e52e0033b2aeda780630b1bd53bf31b2ad18caebbffd7803f613203a8ad"
+    }
+  },
+  "scope": "Generic home-path matches occur only in exact frozen public issue text; export text is unchanged. Current experiment author/host identifiers and token patterns are still rejected."
+}
