@@ -125,6 +125,26 @@
     {
       "path_from_contextgraph_root": "docs/reports/verified-formal-freeze-20260906/availability-probe-402.json",
       "sha256": "e60f3431a9455218d882d1c72a73129bfdb312378947a871c346951d402a54a0"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-command-marker-audit-20260906/plan.json",
+      "sha256": "50873f6bfb9692d3e5d922e5a0faabbf1cadd164aea1232ce1e3a909bfd4bbf1"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-command-marker-audit-20260906/census.json",
+      "sha256": "2ccaad2ea0f1cd8fd2432631370f8604e646850ab167eb9a85a67a4f3a50ec29"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-command-marker-audit-20260906/summary.json",
+      "sha256": "06d3f59dac6d22b06fc9d1c84a096a03479ad0d8aaa3a484d0641c13e932481b"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-command-marker-audit-20260906/reasoning-history-sample.json",
+      "sha256": "cec9d6daa28c6aad017d8dc666093d34730bf86adab35326d06fc6d936d4601b"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-command-marker-audit-20260906/model-source-excerpts.json",
+      "sha256": "e4f305204ddafee20f9662a81e6d0684c6b563c40f605fec451f484a69d623f3"
     }
   ],
   "claims": {
@@ -182,6 +202,13 @@
       "configs/verified_train_test_v1/verified350-test150-v1/prereg.json",
       "docs/reports/verified-formal-freeze-20260906/freeze-receipt.json",
       "docs/reports/verified-formal-freeze-20260906/availability-probe-402.json"
+    ],
+    "related_lite_protocol_diagnostic": [
+      "docs/reports/gfx-command-marker-audit-20260906/plan.json",
+      "docs/reports/gfx-command-marker-audit-20260906/census.json",
+      "docs/reports/gfx-command-marker-audit-20260906/summary.json",
+      "docs/reports/gfx-command-marker-audit-20260906/reasoning-history-sample.json",
+      "docs/reports/gfx-command-marker-audit-20260906/model-source-excerpts.json"
     ]
   },
   "not_reused": [
