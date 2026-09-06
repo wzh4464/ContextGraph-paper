@@ -1,6 +1,6 @@
 {
   "as_of": "2026-09-06",
-  "status": "Research draft; first-prediction evidence and exploratory test-process census audited; formal Verified inputs fully frozen with zero solver calls, awaiting account credit",
+  "status": "Research draft; archived Related-Lite evidence audited; Verified formal inputs frozen and new OpenLux training-only validation active, zero formal calls at recorded snapshot",
   "artifacts": [
     {
       "path_from_contextgraph_root": "docs/reports/gfx-skill-audit-20260906/receipt-audit.json",
@@ -149,6 +149,26 @@
     {
       "path_from_contextgraph_root": "paper/iclr2027/figures/archived_paired_effects.json",
       "sha256": "eec92fa5cbf411f44ee8e273d04b89db16d03be945c93c48a7772fdc9c97e0e4"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/openlux-continuation-20260906/v1-infrastructure-diagnosis.json",
+      "sha256": "502c9d8c4f40eaada34e43d8ed2d624a5d1bcd686beee2333f6d6d6064e9251f"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/openlux-continuation-20260906/active-training-snapshot-1011.json",
+      "sha256": "fe4a594c831aa83abe761d7121e18c3a0c69fb4133cb0a82e7f42937f749d4aa"
+    },
+    {
+      "path_from_contextgraph_root": "configs/verified_train_test_v1/openlux-preflight-v2/protocol-result.json",
+      "sha256": "7fe5e678fd3b4d2af1edad1722f8dc434af63e828096bbbf67a635bc2d728f3e"
+    },
+    {
+      "path_from_contextgraph_root": "configs/verified_train_test_v1/openlux-continuation-v3.json",
+      "sha256": "6a5732da2439515a5c6e48314ef8e652a1c397ec3abcaa2021d41ab583e20767"
+    },
+    {
+      "path_from_contextgraph_root": "configs/verified_train_test_v1/training-memory-smoke-openlux-v2/prereg.json",
+      "sha256": "f620bb614278f09727e6a1e9874bbe7378da1b7b194ea92b3d47aff68ba146e3"
     }
   ],
   "claims": {
@@ -217,6 +237,13 @@
     "archived_effect_figure": [
       "paper/iclr2027/figures/archived_paired_effects.json",
       "docs/reports/gfx-expanded-audit-20260906/paired-comparisons.json"
+    ],
+    "verified_authorized_openlux_continuation": [
+      "docs/reports/openlux-continuation-20260906/v1-infrastructure-diagnosis.json",
+      "docs/reports/openlux-continuation-20260906/active-training-snapshot-1011.json",
+      "configs/verified_train_test_v1/openlux-preflight-v2/protocol-result.json",
+      "configs/verified_train_test_v1/openlux-continuation-v3.json",
+      "configs/verified_train_test_v1/training-memory-smoke-openlux-v2/prereg.json"
     ]
   },
   "not_reused": [
