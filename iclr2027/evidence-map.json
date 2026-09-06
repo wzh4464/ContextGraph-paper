@@ -709,6 +709,22 @@
     {
       "path_from_contextgraph_root": "tests/test_verified_spend_envelope.py",
       "sha256": "1ad06e82fe03f861cfdbb0bda1b51add2447868d1a27d3f512ca4324a1b74413"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-training-assignment-replacements-20260906/candidates.json",
+      "sha256": "8ce766bcf3f274057520136b8207c42470fbe709c0762aa80d7651d2235fed1c"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-training-assignment-replacements-20260906/inspection-plan.json",
+      "sha256": "6b7d12015594246968a40f4076c0fcb390f921591fb021bdf436f2ad160e4792"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-training-assignment-replacements-20260906/validation.json",
+      "sha256": "817f219e90ba66ef61fee54cd2f4b48eace420989c0547c864afa3da7b2486a0"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/mine_training_assignment_replacements_v1.py",
+      "sha256": "831fbe0d152ec01a00e67052e4535304dead513e8dc33b631417862e03751620"
     }
   ],
   "claims": {
