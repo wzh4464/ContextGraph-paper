@@ -55,6 +55,13 @@ This package recomputes statistics; the full raw verifier/delivery evidence and
 experimental environment still need a complete anonymous release and human review.
 `evidence-map.json` binds current claims and export validation to repository artifacts.
 
+The literature update also cites Saha's cue-anchored delivery/compaction study and
+Adam's ontology-grounded project-memory evaluation. Delivery and provenance audits
+have prior work; this draft's retention result concerns the fixed processor's
+selection of original responses in 198 original trajectories and does not establish
+a causal benefit from reinjection. The two versioned PDFs and full-text review
+are recorded in `docs/literature/2026-09-07/` in the parent repository.
+
 `delivery-reproduction-v1.zip` separately reproduces all 594 original memory and
 Control exposure records from source-bound projected histories, using the original
 classifier functions and preserving response text, frozen cards and trajectory

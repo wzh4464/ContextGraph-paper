@@ -1181,6 +1181,18 @@
     {
       "path_from_contextgraph_root": "paper/iclr2027/figures/original_response_retention.json",
       "sha256": "112a030c7f2ad12e528e5664d282a8e59984afa9a0c8a2ee61c2fe64dd373865"
+    },
+    {
+      "path_from_contextgraph_root": "docs/literature/2026-09-07/manifest.json",
+      "sha256": "94a0706cd89620a6385094fa273f65cf05d33a4fbaed85122c550d3495f71967"
+    },
+    {
+      "path_from_contextgraph_root": "docs/literature/2026-09-07/README.md",
+      "sha256": "174491e016ea6555094809e26516deed59a1637280ece843fc5855d0bb6d2cdd"
+    },
+    {
+      "path_from_contextgraph_root": "docs/literature/2026-09-07/validation.json",
+      "sha256": "78c7c5385bb9503f252e6f6a9dd943cf5297fdb51e3ba2023bb14729ad4cee67"
     }
   ],
   "claims": {
@@ -1440,6 +1452,11 @@
       "paper/iclr2027/figures/original_response_retention.svg",
       "paper/iclr2027/figures/original_response_retention.png",
       "paper/iclr2027/figures/original_response_retention.json"
+    ],
+    "prior_delivery_and_project_graph_work": [
+      "docs/literature/2026-09-07/manifest.json",
+      "docs/literature/2026-09-07/README.md",
+      "docs/literature/2026-09-07/validation.json"
     ]
   },
   "not_reused": [

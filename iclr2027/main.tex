@@ -50,6 +50,7 @@ The scientific question is which forms of prior repair evidence improve verified
 ExpeL extracts reusable natural-language insights from agent experience without requiring updates to proprietary model weights \citep{expel2024}.
 HippoRAG combines knowledge graphs and Personalized PageRank for associative retrieval \citep{hipporag2024}.
 These works motivate \cg{}'s representation and retrieval choices; they do not establish that the same mechanisms improve a coding agent's repair success under a fixed interaction budget.
+MOOSEDev models typed project records and supersession, evaluating structured questions over project documentation with an LLM judge \citep{moosedev2026}; that endpoint differs from executable repair verification.
 SWE-agent demonstrates the importance of the agent--computer interface for software engineering \citep{sweagent2024}, making interface fidelity part of our experimental specification.
 
 \paragraph{Skills, working memory, and transfer.}
@@ -66,6 +67,10 @@ Measure Before You Manage separates working-memory management and its evaluation
 ClawTrace relates skill distillation to trajectory costs \citep{clawtrace2026}.
 We use these works to motivate measurements of delivery, repeated errors, and consumption cost, while keeping official repair verdicts as the outcome of interest.
 We do not turn their setting-specific findings into universal claims about which memories help or harm.
+
+Saha's cue-anchored memory study evaluates deterministic delivery on one coding task and repeated-compaction fact survival \citep{cueanchored2026}.
+Delivery and its audit are therefore established concerns.
+Our retention analysis reconstructs the original responses selected by a fixed history processor across 198 first trajectories, linked to their original predictions and frozen-verifier evidence; it neither introduces reinjection nor estimates its causal benefit.
 
 Recent scaffold optimization also uses persistent beliefs: BCO calibrates a document against observed outcomes \citep{bco2026}.
 Its two memory-QA rows select the best held-out result among three candidates, a disclosed selection step that limits interpreting them as untouched test estimates.
