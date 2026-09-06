@@ -1,0 +1,7 @@
+{
+  "inventory_sha256": "6107799c60a44abbec365209a7c7fd314e3706555aaf3c67c0f3d284916a85eb",
+  "registry_plan_sha256": "4db51450083baefb003caf7d33ec22eaef4885c664e827e44a54a7479cf0838d",
+  "registry_observation_sha256": "f8db2e75bef2e369fc9fc6ee6b620578d936bbe530675afe5396b8cb628ac230",
+  "registry_checker_sha256": "1791a8945a3cde9687da5103b307b42f46e3e679620ae76aee2b4d2b1676978e",
+  "manifest_verifier_sha256": "fdaaae4ea277f9073d98e83578f5c74bfb6e3770f8e1c1247db4b55408b64508"
+}

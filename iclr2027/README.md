@@ -105,6 +105,18 @@ hashes, while prediction/report/verified-patch bytes are exact. This package doe
 not re-execute tests or reconstruct the full runtime and Docker evidence chain.
 It remains a local review draft, with no new predictions or changed outcomes.
 
+`runtime-image-manifests-v1.zip` checks the public-registry manifest bytes for
+the base and all 99 fixed task images against their original immutable digests.
+The 100 roots and selected platform descriptors correspond to 188 distinct raw
+manifest objects; two builds match, isolated replay passes, and nine corruption
+checks are rejected. It downloads no configuration/layer payloads and runs no
+images, so complete execution reproducibility remains unfinished. Extract and run
+`uv run --no-project python -I reproduce.py`. A separate source audit found the
+archived `environment.yml` is HTML; its recovered declaration differs from the
+frozen installation and is not used as an installation lock. The underlying
+observations and limitations are in `docs/reports/gfx-runtime-portability-20260907/`
+in the parent repository.
+
 `figures/original_response_retention.pdf` (also SVG/PNG) plots all 198 audited
 Flat/Card-v1 sequences in the same fixed task-ID order. Its four colors distinguish
 before first retention, original-response retention, later absence and no recorded

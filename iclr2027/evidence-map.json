@@ -1,6 +1,6 @@
 {
   "as_of": "2026-09-07",
-  "status": "The separate adaptive Card-v2 arm completed all 99 original receipt audits and fixed comparisons: 16/99 resolved, exact card delivery 97/99, no significant paired gain over Flat or Card-v1. Its 39 hard exit_cost labels exceed the registered maximum of 32. The original six-condition archives remain unchanged. Research draft; the original Verified execution and its operational-stop continuation closed incomplete on an optional-null parser crash. Fourteen original test slots attempted and thirteen audited; no formal effect estimate. The separately frozen parser correction completed all three real training-only infrastructure gates, with two nonempty official verifications and zero real optional-null omissions. The formal runtime and original outcomes are unchanged; the existing aggregate allowance cannot reserve another complete formal block.",
+  "status": "The separate adaptive Card-v2 arm completed all 99 original receipt audits and fixed comparisons: 16/99 resolved, exact card delivery 97/99, no significant paired gain over Flat or Card-v1. Its 39 hard exit_cost labels exceed the registered maximum of 32. The original six-condition archives remain unchanged. Research draft; the original Verified execution and its operational-stop continuation closed incomplete on an optional-null parser crash. Fourteen original test slots attempted and thirteen audited; no formal effect estimate. The separately frozen parser correction completed all three real training-only infrastructure gates, with two nonempty official verifications and zero real optional-null omissions. The formal runtime and original outcomes are unchanged; the existing aggregate allowance cannot reserve another complete formal block. Frozen verifier source portability and immutable public-registry manifest checks are staged; config/layer payloads and portable execution are not yet validated.",
   "artifacts": [
     {
       "path_from_contextgraph_root": "docs/reports/gfx-skill-audit-20260906/receipt-audit.json",
@@ -1357,6 +1357,94 @@
     {
       "path_from_contextgraph_root": "scripts/analysis/summarize_gfx_skill2_audit.py",
       "sha256": "d2b2912f19a8c9dd2c32f1d1ab730c9ef6ac45c9003c562c036a82dde2e159e0"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-runtime-portability-20260907/README.md",
+      "sha256": "cc59f894ab385661ae6b56b4b19e2d6156d1ab3d1c9519d5ed3568d90fc100cf"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-runtime-portability-20260907/docker-backend-observation.json",
+      "sha256": "f377f3d77f6975857bbb54ea3539f1f8ec84a529623b081a90629069023abdab"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-runtime-portability-20260907/environment-declaration-comparison.json",
+      "sha256": "1049fe9867d98f9bba51463cb91dd4a1cec8aabb8c8025e3c9f30280c31c7b1d"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-runtime-portability-20260907/image-bundle-build.json",
+      "sha256": "de9e28c66b195cb2d7772be52a8cbd6a7d4bd440c5549e1a0b9c2cff158d3af1"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-runtime-portability-20260907/image-bundle-validation.json",
+      "sha256": "11beceb0717e999ba9de051c71bf9133ffd4bce6d5e25c518fcdc42af53ab745"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-runtime-portability-20260907/initial-documentation-correction.json",
+      "sha256": "0c0254e5ab3acc9f1a12ab21008b47981a9126fd99b85f392184c7073a07ffe6"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-runtime-portability-20260907/registry-observation.json",
+      "sha256": "f8db2e75bef2e369fc9fc6ee6b620578d936bbe530675afe5396b8cb628ac230"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-runtime-portability-20260907/registry-plan.json",
+      "sha256": "4db51450083baefb003caf7d33ec22eaef4885c664e827e44a54a7479cf0838d"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-runtime-portability-20260907/source-audit.json",
+      "sha256": "3811f3faf79b04f9672a5904d1e77a0325f6e72f58ee0fd7eec46da2db520311"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-runtime-portability-20260907/source-validation.json",
+      "sha256": "9881ed45fc7a6d122d7ff9bd048507ad491958e6b0f9b8be03edc36cb5df6ed0"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/runtime-image-manifests-v1/README.md",
+      "sha256": "9073f468252a16642d8da9e73e9375b9c70556d102a64f6a2bb58dc60d2968d9"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/runtime-image-manifests-v1/images.json",
+      "sha256": "1f60068df89da12d4722a1ffd006549b46b756ae6ca4874e4ef2931758a8afc4"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/runtime-image-manifests-v1/manifest.json",
+      "sha256": "daeee3fe5584197a269430aa91e7e7a4874f12bb4d5345d79dbb0d390e6b3f4d"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/runtime-image-manifests-v1/raw-manifests.json.gz",
+      "sha256": "201cf9fac3692241e9df8ae7b1c95c01f3e867dcfffa15a58d825ce646fcb21a"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/runtime-image-manifests-v1/registry-observation.json",
+      "sha256": "7e584df9ac0ece766b66394bdb6eca045cfffc815bdc3afc5b42db0df1a7bd22"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/runtime-image-manifests-v1/reproduce.py",
+      "sha256": "fdaaae4ea277f9073d98e83578f5c74bfb6e3770f8e1c1247db4b55408b64508"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/runtime-image-manifests-v1/source-bindings.json",
+      "sha256": "55c88aeb458d58afb9c8db8a68b7938a8271299d72cf2e2b1abc750fb423622a"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/runtime-image-manifests-v1.zip",
+      "sha256": "f78b48bc099ad0941184aa24eaef595c0c4c2250bde8ad4ccc7d3117036c4af3"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/audit_gfx_runtime_portability_v1.py",
+      "sha256": "b4fc41f58aa22167510615754c58a2991c583f90abaaab8673d5fdb3e8901cec"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/check_gfx_registry_manifests_v1.py",
+      "sha256": "1791a8945a3cde9687da5103b307b42f46e3e679620ae76aee2b4d2b1676978e"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/verify_gfx_registry_manifest_bytes_v1.py",
+      "sha256": "fdaaae4ea277f9073d98e83578f5c74bfb6e3770f8e1c1247db4b55408b64508"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/build_gfx_image_manifest_bundle_v1.py",
+      "sha256": "c9de5ad7731b1af6cc7b562f8622087e02fc630e1ffa7fe2c7e0ff5422b6e30b"
     }
   ],
   "claims": {
@@ -1667,6 +1755,30 @@
       "docs/reports/local-env-sync-incident-20260907/README.md",
       "docs/reports/local-env-sync-incident-20260907/validation.json",
       "docs/reports/local-env-sync-incident-20260907/version-correction.json"
+    ],
+    "verifier_source_portability_and_registry_manifest_snapshot": [
+      "docs/reports/gfx-runtime-portability-20260907/README.md",
+      "docs/reports/gfx-runtime-portability-20260907/docker-backend-observation.json",
+      "docs/reports/gfx-runtime-portability-20260907/environment-declaration-comparison.json",
+      "docs/reports/gfx-runtime-portability-20260907/image-bundle-build.json",
+      "docs/reports/gfx-runtime-portability-20260907/image-bundle-validation.json",
+      "docs/reports/gfx-runtime-portability-20260907/initial-documentation-correction.json",
+      "docs/reports/gfx-runtime-portability-20260907/registry-observation.json",
+      "docs/reports/gfx-runtime-portability-20260907/registry-plan.json",
+      "docs/reports/gfx-runtime-portability-20260907/source-audit.json",
+      "docs/reports/gfx-runtime-portability-20260907/source-validation.json",
+      "paper/iclr2027/runtime-image-manifests-v1/README.md",
+      "paper/iclr2027/runtime-image-manifests-v1/images.json",
+      "paper/iclr2027/runtime-image-manifests-v1/manifest.json",
+      "paper/iclr2027/runtime-image-manifests-v1/raw-manifests.json.gz",
+      "paper/iclr2027/runtime-image-manifests-v1/registry-observation.json",
+      "paper/iclr2027/runtime-image-manifests-v1/reproduce.py",
+      "paper/iclr2027/runtime-image-manifests-v1/source-bindings.json",
+      "paper/iclr2027/runtime-image-manifests-v1.zip",
+      "scripts/analysis/audit_gfx_runtime_portability_v1.py",
+      "scripts/analysis/check_gfx_registry_manifests_v1.py",
+      "scripts/analysis/verify_gfx_registry_manifest_bytes_v1.py",
+      "scripts/analysis/build_gfx_image_manifest_bundle_v1.py"
     ]
   },
   "not_reused": [

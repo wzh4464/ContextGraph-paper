@@ -1,0 +1,1002 @@
+[
+  {
+    "instance_id": "__base__",
+    "reference": "jiayuanz3/swecontextbench:base",
+    "image_id": "sha256:38dbaeb2a1825a731e80299b3e48a0cd50f7ed8a28720ef2833c452e53b48f07",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:38dbaeb2a1825a731e80299b3e48a0cd50f7ed8a28720ef2833c452e53b48f07"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "astropy__astropy-15082",
+    "reference": "jiayuanz3/swecontextbench:astropy.astropy-15082",
+    "image_id": "sha256:f5fc6543da91a27f641c75c6003a5525e59b5ba69974254f61509a290b5ff289",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:f5fc6543da91a27f641c75c6003a5525e59b5ba69974254f61509a290b5ff289"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "astropy__astropy-4973",
+    "reference": "jiayuanz3/swecontextbench:astropy.astropy-4973",
+    "image_id": "sha256:c7920967cc2e9f41286e34873478aa2aea96112649b2b4870bec69c3696a691c",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:c7920967cc2e9f41286e34873478aa2aea96112649b2b4870bec69c3696a691c"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "django__django-11776",
+    "reference": "jiayuanz3/swecontextbench:django.django-11776",
+    "image_id": "sha256:c48357af68d8aad1dcc4cc9d8af419f58ace8ac66f6b00c8efea0a1236eed02b",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:c48357af68d8aad1dcc4cc9d8af419f58ace8ac66f6b00c8efea0a1236eed02b"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "django__django-18166",
+    "reference": "jiayuanz3/swecontextbench:django.django-18166",
+    "image_id": "sha256:4a48297b962b238295d25594f6c20db8fa5cee83092bc4261e5e5dd51033549e",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:4a48297b962b238295d25594f6c20db8fa5cee83092bc4261e5e5dd51033549e"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "django__django-1891",
+    "reference": "jiayuanz3/swecontextbench:django.django-1891",
+    "image_id": "sha256:d2e6f9347f132ef14ed0a670d7db790d8b923c097a378b815989919e6c13ad17",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:d2e6f9347f132ef14ed0a670d7db790d8b923c097a378b815989919e6c13ad17"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "django__django-20098",
+    "reference": "jiayuanz3/swecontextbench:django.django-20098",
+    "image_id": "sha256:9473831de6e90a227597c8e2e321455c8a008873d9a50e6398f065756257c374",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:9473831de6e90a227597c8e2e321455c8a008873d9a50e6398f065756257c374"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "django__django-21204",
+    "reference": "jiayuanz3/swecontextbench:django.django-21204",
+    "image_id": "sha256:29228c6779d7fa624ab2cc472e00043fbbc4525cd4dd3ef1f2411295f063372d",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:29228c6779d7fa624ab2cc472e00043fbbc4525cd4dd3ef1f2411295f063372d"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "django__django-21501",
+    "reference": "jiayuanz3/swecontextbench:django.django-21501",
+    "image_id": "sha256:7c9e253055c2abacde15212ad47a41a05f4ebf8d310eb28cc7bf0ddf9177cb22",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:7c9e253055c2abacde15212ad47a41a05f4ebf8d310eb28cc7bf0ddf9177cb22"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "django__django-25916",
+    "reference": "jiayuanz3/swecontextbench:django.django-25916",
+    "image_id": "sha256:54e5ffd218df87c152a79148b22de47d89ec9736387cd64c16a960e3d6a82081",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:54e5ffd218df87c152a79148b22de47d89ec9736387cd64c16a960e3d6a82081"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "django__django-26486",
+    "reference": "jiayuanz3/swecontextbench:django.django-26486",
+    "image_id": "sha256:b7a13982d30bf94289a584061c11e737394dbc2d7bf9d062fe26203421b14ce2",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:b7a13982d30bf94289a584061c11e737394dbc2d7bf9d062fe26203421b14ce2"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "django__django-27858",
+    "reference": "jiayuanz3/swecontextbench:django.django-27858",
+    "image_id": "sha256:05ded18d09fc61add0442b06e49b25537f4ab88fc851dae0f4395cb98406b67e",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:05ded18d09fc61add0442b06e49b25537f4ab88fc851dae0f4395cb98406b67e"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "django__django-27910",
+    "reference": "jiayuanz3/swecontextbench:django.django-27910",
+    "image_id": "sha256:c4b272432d3cc3c0d5c388a0545ea59bca34558a28ba7e0950a55e89e1013f81",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:c4b272432d3cc3c0d5c388a0545ea59bca34558a28ba7e0950a55e89e1013f81"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "django__django-27995",
+    "reference": "jiayuanz3/swecontextbench:django.django-27995",
+    "image_id": "sha256:c37da942d7998ec1f24f3fb8288369fbf60d1e3bcf61e27f8b03ae8139f6a67e",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:c37da942d7998ec1f24f3fb8288369fbf60d1e3bcf61e27f8b03ae8139f6a67e"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "django__django-28147",
+    "reference": "jiayuanz3/swecontextbench:django.django-28147",
+    "image_id": "sha256:e4b82ca40fd3ecb632d212b171b085ce11fbaa3fe248dd0a2e4e95a9a49b32d0",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:e4b82ca40fd3ecb632d212b171b085ce11fbaa3fe248dd0a2e4e95a9a49b32d0"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "django__django-28211",
+    "reference": "jiayuanz3/swecontextbench:django.django-28211",
+    "image_id": "sha256:a967134d97b9addafe9d7b585a32f1b340960a9817611530e2e788c3cab5afc4",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:a967134d97b9addafe9d7b585a32f1b340960a9817611530e2e788c3cab5afc4"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "django__django-28862",
+    "reference": "jiayuanz3/swecontextbench:django.django-28862",
+    "image_id": "sha256:870561b6422534cd01206071201f404174ec32074c5dc61c158701c6820f1859",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:870561b6422534cd01206071201f404174ec32074c5dc61c158701c6820f1859"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "django__django-28916",
+    "reference": "jiayuanz3/swecontextbench:django.django-28916",
+    "image_id": "sha256:3e44f42a70efc7bb18580183064e41d82cf6808738d276b3cf3f909662ef2f89",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:3e44f42a70efc7bb18580183064e41d82cf6808738d276b3cf3f909662ef2f89"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "django__django-29123",
+    "reference": "jiayuanz3/swecontextbench:django.django-29123",
+    "image_id": "sha256:d843ca9a489fbcc4e59519ab84e882341674a63f87d479790bd05195ac6ed018",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:d843ca9a489fbcc4e59519ab84e882341674a63f87d479790bd05195ac6ed018"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "django__django-29124",
+    "reference": "jiayuanz3/swecontextbench:django.django-29124",
+    "image_id": "sha256:2a09cf91b83c7396896db97b21e6ede36d95f0576d4ba82d28ed0af8845c679d",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:2a09cf91b83c7396896db97b21e6ede36d95f0576d4ba82d28ed0af8845c679d"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "django__django-29838",
+    "reference": "jiayuanz3/swecontextbench:django.django-29838",
+    "image_id": "sha256:ea16a0c9380428de0b2adb8540443b11d2c875559079bd84dc2eb3e829423654",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:ea16a0c9380428de0b2adb8540443b11d2c875559079bd84dc2eb3e829423654"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "django__django-30153",
+    "reference": "jiayuanz3/swecontextbench:django.django-30153",
+    "image_id": "sha256:b9b6ef5dcad5b1c497393ec4138c2025fdadcb2e14157782812996093684b867",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:b9b6ef5dcad5b1c497393ec4138c2025fdadcb2e14157782812996093684b867"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "django__django-30254",
+    "reference": "jiayuanz3/swecontextbench:django.django-30254",
+    "image_id": "sha256:cac4ebb292ae0c2560b8bb6d2a7444c17e557302313de599b82fa3e1177847ce",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:cac4ebb292ae0c2560b8bb6d2a7444c17e557302313de599b82fa3e1177847ce"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "django__django-30651",
+    "reference": "jiayuanz3/swecontextbench:django.django-30651",
+    "image_id": "sha256:48205293efc113873c038278829da3a65aad77deed9279484d97d59244f65b92",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:48205293efc113873c038278829da3a65aad77deed9279484d97d59244f65b92"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "django__django-30931",
+    "reference": "jiayuanz3/swecontextbench:django.django-30931",
+    "image_id": "sha256:fdbfb80ad6e43cd407d5415925098a8f33e436fb8fbc8d1d4a3b3f731b1ac675",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:fdbfb80ad6e43cd407d5415925098a8f33e436fb8fbc8d1d4a3b3f731b1ac675"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "django__django-31051",
+    "reference": "jiayuanz3/swecontextbench:django.django-31051",
+    "image_id": "sha256:ac2a5a53689945f9a633741e1afe1644ba95d37d4905c0d7dcee7bce8e8263aa",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:ac2a5a53689945f9a633741e1afe1644ba95d37d4905c0d7dcee7bce8e8263aa"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "django__django-31181",
+    "reference": "jiayuanz3/swecontextbench:django.django-31181",
+    "image_id": "sha256:90a0e352d05b39db3aa980d5b50c5df377ec290e7de4c87bcc8c5ce9400a6ef1",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:90a0e352d05b39db3aa980d5b50c5df377ec290e7de4c87bcc8c5ce9400a6ef1"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "django__django-31504",
+    "reference": "jiayuanz3/swecontextbench:django.django-31504",
+    "image_id": "sha256:9ca734e545138195f92a8ee00f5a86baeee3fce6af38f7935d3de1449530f9be",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:9ca734e545138195f92a8ee00f5a86baeee3fce6af38f7935d3de1449530f9be"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "django__django-31864",
+    "reference": "jiayuanz3/swecontextbench:django.django-31864",
+    "image_id": "sha256:877d36492cd57ea3b732a0da855448c596e19d0401da2732fb3a2f7b68408d3e",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:877d36492cd57ea3b732a0da855448c596e19d0401da2732fb3a2f7b68408d3e"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "django__django-32012",
+    "reference": "jiayuanz3/swecontextbench:django.django-32012",
+    "image_id": "sha256:f5d3ca50eaefa797ecb4b76ab32100152ed2848f06d966140e4b2621801f3b6b",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:f5d3ca50eaefa797ecb4b76ab32100152ed2848f06d966140e4b2621801f3b6b"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "django__django-32260",
+    "reference": "jiayuanz3/swecontextbench:django.django-32260",
+    "image_id": "sha256:c03c8ea35ae3a08a325b96da7bc119b672ae1ec5c950592cd8f9feb4bb096aa1",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:c03c8ea35ae3a08a325b96da7bc119b672ae1ec5c950592cd8f9feb4bb096aa1"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "django__django-32450",
+    "reference": "jiayuanz3/swecontextbench:django.django-32450",
+    "image_id": "sha256:d7afb60618277449a9b03adc7ca59baab962079b2e2811c8512553bafc6d1833",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:d7afb60618277449a9b03adc7ca59baab962079b2e2811c8512553bafc6d1833"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "django__django-33461",
+    "reference": "jiayuanz3/swecontextbench:django.django-33461",
+    "image_id": "sha256:fcc9caa61550a6e270fa7e8b9245196762fb1344ecf37e8eced554f06b4bf15c",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:fcc9caa61550a6e270fa7e8b9245196762fb1344ecf37e8eced554f06b4bf15c"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "django__django-33871",
+    "reference": "jiayuanz3/swecontextbench:django.django-33871",
+    "image_id": "sha256:c20fe44562d31a4206fce218a46b5ffe8651225ab823f69d6d204e056b6a1f53",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:c20fe44562d31a4206fce218a46b5ffe8651225ab823f69d6d204e056b6a1f53"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "django__django-34176",
+    "reference": "jiayuanz3/swecontextbench:django.django-34176",
+    "image_id": "sha256:3e879d771fb632a25a84e7494754978d5b0f8f4f9e41ef60c87fee345ed219ee",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:3e879d771fb632a25a84e7494754978d5b0f8f4f9e41ef60c87fee345ed219ee"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "django__django-34481",
+    "reference": "jiayuanz3/swecontextbench:django.django-34481",
+    "image_id": "sha256:9e41443142a64339d73dbe1ca8e64900899579f468782d8d67415f1f7b9192f4",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:9e41443142a64339d73dbe1ca8e64900899579f468782d8d67415f1f7b9192f4"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "django__django-34525",
+    "reference": "jiayuanz3/swecontextbench:django.django-34525",
+    "image_id": "sha256:eb02ffa6b015c36ddb96cb78ec6aaefba4c4225882b7dc7e88bd8bae84e49c2f",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:eb02ffa6b015c36ddb96cb78ec6aaefba4c4225882b7dc7e88bd8bae84e49c2f"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "django__django-34570",
+    "reference": "jiayuanz3/swecontextbench:django.django-34570",
+    "image_id": "sha256:13a7c00c8bec66f6718a917960778cdb1298fbd9a8afd0b013ddc8db4d4f0bcc",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:13a7c00c8bec66f6718a917960778cdb1298fbd9a8afd0b013ddc8db4d4f0bcc"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "django__django-35356",
+    "reference": "jiayuanz3/swecontextbench:django.django-35356",
+    "image_id": "sha256:f093ea0a279c3c7cd2b8ea586db11090fb2d644dc5d7130df451d5c812123c03",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:f093ea0a279c3c7cd2b8ea586db11090fb2d644dc5d7130df451d5c812123c03"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "matplotlib__matplotlib-10050",
+    "reference": "jiayuanz3/swecontextbench:matplotlib.matplotlib-10050",
+    "image_id": "sha256:04c4f08d3b78c21c80273f8df2b22f92123e089ea9aaf4fb7ca0308431a28105",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:04c4f08d3b78c21c80273f8df2b22f92123e089ea9aaf4fb7ca0308431a28105"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "matplotlib__matplotlib-18294",
+    "reference": "jiayuanz3/swecontextbench:matplotlib.matplotlib-18294",
+    "image_id": "sha256:1b25aa2f76ea093831039c58eb1bc8cbb5617fd8c77f47e123408e51deec90c2",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:1b25aa2f76ea093831039c58eb1bc8cbb5617fd8c77f47e123408e51deec90c2"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "matplotlib__matplotlib-22482",
+    "reference": "jiayuanz3/swecontextbench:matplotlib.matplotlib-22482",
+    "image_id": "sha256:8c62d53a15cfe5f869848c5193d0c52decb64d7a91d58a1d3635748182cd20f3",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:8c62d53a15cfe5f869848c5193d0c52decb64d7a91d58a1d3635748182cd20f3"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "matplotlib__matplotlib-22686",
+    "reference": "jiayuanz3/swecontextbench:matplotlib.matplotlib-22686",
+    "image_id": "sha256:db4581aed92bbaedfa6a9938954699adaf2a0c91e3baef07aab52b68cc1e6006",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:db4581aed92bbaedfa6a9938954699adaf2a0c91e3baef07aab52b68cc1e6006"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "matplotlib__matplotlib-22706",
+    "reference": "jiayuanz3/swecontextbench:matplotlib.matplotlib-22706",
+    "image_id": "sha256:f7aabd15aef389e8981f0f5fd661e568a8cd0dcf9a00c9e87c6ac81fd9e62a5c",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:f7aabd15aef389e8981f0f5fd661e568a8cd0dcf9a00c9e87c6ac81fd9e62a5c"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "matplotlib__matplotlib-23098",
+    "reference": "jiayuanz3/swecontextbench:matplotlib.matplotlib-23098",
+    "image_id": "sha256:38d899fdd2635708ffdccc52edcac25c07804338ebc3612ac9ee6357bdf0ec2c",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:38d899fdd2635708ffdccc52edcac25c07804338ebc3612ac9ee6357bdf0ec2c"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "matplotlib__matplotlib-23172",
+    "reference": "jiayuanz3/swecontextbench:matplotlib.matplotlib-23172",
+    "image_id": "sha256:6739b2bdc073096b37932bed80b3650e918fdbcada6c71500ea7bfdb3c971d11",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:6739b2bdc073096b37932bed80b3650e918fdbcada6c71500ea7bfdb3c971d11"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "matplotlib__matplotlib-23687",
+    "reference": "jiayuanz3/swecontextbench:matplotlib.matplotlib-23687",
+    "image_id": "sha256:ced54889e13787c2c235fca49d4cd39871fa62cb58a3bcf2984af05d4d665e1a",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:ced54889e13787c2c235fca49d4cd39871fa62cb58a3bcf2984af05d4d665e1a"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "matplotlib__matplotlib-24818",
+    "reference": "jiayuanz3/swecontextbench:matplotlib.matplotlib-24818",
+    "image_id": "sha256:f93c27bd68fb802899fb8eb427de7b50e133dcc670c7a6132261f8a0f3a679da",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:f93c27bd68fb802899fb8eb427de7b50e133dcc670c7a6132261f8a0f3a679da"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "matplotlib__matplotlib-25352",
+    "reference": "jiayuanz3/swecontextbench:matplotlib.matplotlib-25352",
+    "image_id": "sha256:3e3047f51b121acd5b2b13b70089118c029e2551d1667d3af47d912c2787e416",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:3e3047f51b121acd5b2b13b70089118c029e2551d1667d3af47d912c2787e416"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "matplotlib__matplotlib-26331",
+    "reference": "jiayuanz3/swecontextbench:matplotlib.matplotlib-26331",
+    "image_id": "sha256:7764a5d51d0a12477d3cc1874250a4187b1b2fe06c04b2e39933a8aa16f8230b",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:7764a5d51d0a12477d3cc1874250a4187b1b2fe06c04b2e39933a8aa16f8230b"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "matplotlib__matplotlib-27361",
+    "reference": "jiayuanz3/swecontextbench:matplotlib.matplotlib-27361",
+    "image_id": "sha256:5fab15e5a70d2a0abf93a5705c5ba6b898e4fb3b142a258862fa442e44ab1d07",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:5fab15e5a70d2a0abf93a5705c5ba6b898e4fb3b142a258862fa442e44ab1d07"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "mwaskom__seaborn-3091",
+    "reference": "jiayuanz3/swecontextbench:mwaskom.seaborn-3091",
+    "image_id": "sha256:1ff5984d1825cebdc9922c3b87a19ed2055b90bbfa9f6ac484273dee615acda9",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:1ff5984d1825cebdc9922c3b87a19ed2055b90bbfa9f6ac484273dee615acda9"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "mwaskom__seaborn-3203",
+    "reference": "jiayuanz3/swecontextbench:mwaskom.seaborn-3203",
+    "image_id": "sha256:46241bb75011807cbf990bd0cabf462ac1bacd4bf69b2f594892b1cca9def15d",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:46241bb75011807cbf990bd0cabf462ac1bacd4bf69b2f594892b1cca9def15d"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "pallets__flask-4039",
+    "reference": "jiayuanz3/swecontextbench:pallets.flask-4039",
+    "image_id": "sha256:68aa9c11c32d6c2a30727e2541ecbead7f0f9aec244c6e7168da90a5ca2e45fd",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:68aa9c11c32d6c2a30727e2541ecbead7f0f9aec244c6e7168da90a5ca2e45fd"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "psf__requests-2344",
+    "reference": "jiayuanz3/swecontextbench:psf.requests-2344",
+    "image_id": "sha256:700a69df22e47137727819574aa193c811f712c9d46256885bfe7af624176151",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:700a69df22e47137727819574aa193c811f712c9d46256885bfe7af624176151"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "psf__requests-3359",
+    "reference": "jiayuanz3/swecontextbench:psf.requests-3359",
+    "image_id": "sha256:fe14065af7800f3f65b9a03376d60979077d8a7d5b0b6c7426c7476d55fe1971",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:fe14065af7800f3f65b9a03376d60979077d8a7d5b0b6c7426c7476d55fe1971"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "psf__requests-3481",
+    "reference": "jiayuanz3/swecontextbench:psf.requests-3481",
+    "image_id": "sha256:514e58d62fcc10469b24b08a5b820860ca7aa873857e11c2ec0eb3544ac4bf11",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:514e58d62fcc10469b24b08a5b820860ca7aa873857e11c2ec0eb3544ac4bf11"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "pydata__xarray-4529",
+    "reference": "jiayuanz3/swecontextbench:pydata.xarray-4529",
+    "image_id": "sha256:5370053d347bb7cb9e90aeb82aef76ecafb0714ddfb06181e39dc29e67aed864",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:5370053d347bb7cb9e90aeb82aef76ecafb0714ddfb06181e39dc29e67aed864"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "pydata__xarray-508",
+    "reference": "jiayuanz3/swecontextbench:pydata.xarray-508",
+    "image_id": "sha256:124d36cd2ff00a49efcb55eb05a2383d1d3e8a1f1410d3c2e5a07d576232a791",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:124d36cd2ff00a49efcb55eb05a2383d1d3e8a1f1410d3c2e5a07d576232a791"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "pylint-dev__pylint-6471",
+    "reference": "jiayuanz3/swecontextbench:pylint-dev.pylint-6471",
+    "image_id": "sha256:7801c44f3689aa4b6665c5be09bf4cf9e9acf34d572e8b36e8e503de0adbf0f8",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:7801c44f3689aa4b6665c5be09bf4cf9e9acf34d572e8b36e8e503de0adbf0f8"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "pytest-dev__pytest-10341",
+    "reference": "jiayuanz3/swecontextbench:pytest-dev.pytest-10341",
+    "image_id": "sha256:bb540e8e41e0cda2e9bfc20e54382d551843809252c36e0651003599bbb7b7be",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:bb540e8e41e0cda2e9bfc20e54382d551843809252c36e0651003599bbb7b7be"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "pytest-dev__pytest-9358",
+    "reference": "jiayuanz3/swecontextbench:pytest-dev.pytest-9358",
+    "image_id": "sha256:85096a55670b7b2d183b01cffd9dda976b04d51867a2e639cd52e9233310d1eb",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:85096a55670b7b2d183b01cffd9dda976b04d51867a2e639cd52e9233310d1eb"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "scikit-learn__scikit-learn-12622",
+    "reference": "jiayuanz3/swecontextbench:scikit-learn.scikit-learn-12622",
+    "image_id": "sha256:f40cb8d1290515a0f9e6c1e81ffc6fbfa369d953fa452edae03592141b9ee36b",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:f40cb8d1290515a0f9e6c1e81ffc6fbfa369d953fa452edae03592141b9ee36b"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "scikit-learn__scikit-learn-13771",
+    "reference": "jiayuanz3/swecontextbench:scikit-learn.scikit-learn-13771",
+    "image_id": "sha256:dc519c4860d0f6cb69f17e8cb679dc1996d0a4f7d0c77b8ec555c0e77660f60f",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:dc519c4860d0f6cb69f17e8cb679dc1996d0a4f7d0c77b8ec555c0e77660f60f"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "scikit-learn__scikit-learn-15093",
+    "reference": "jiayuanz3/swecontextbench:scikit-learn.scikit-learn-15093",
+    "image_id": "sha256:55fb22dcbca99bcd420575a80251be07f0988276b5d8258638faff0c9231391c",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:55fb22dcbca99bcd420575a80251be07f0988276b5d8258638faff0c9231391c"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "scikit-learn__scikit-learn-25365",
+    "reference": "jiayuanz3/swecontextbench:scikit-learn.scikit-learn-25365",
+    "image_id": "sha256:9b5cb9e5c0b4bbc3305b57ef03f84df8b392ac76726539c737f9b189c8e04d56",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:9b5cb9e5c0b4bbc3305b57ef03f84df8b392ac76726539c737f9b189c8e04d56"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "scikit-learn__scikit-learn-25578",
+    "reference": "jiayuanz3/swecontextbench:scikit-learn.scikit-learn-25578",
+    "image_id": "sha256:21e83f37ba17134a0c80b037b212fcb1e109fdf013fd4a010a840a52a6a9811d",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:21e83f37ba17134a0c80b037b212fcb1e109fdf013fd4a010a840a52a6a9811d"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "scikit-learn__scikit-learn-25634",
+    "reference": "jiayuanz3/swecontextbench:scikit-learn.scikit-learn-25634",
+    "image_id": "sha256:492d74564330bf075e20d4e7be87e362532cdbb6ce740273f904624e1c4db810",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:492d74564330bf075e20d4e7be87e362532cdbb6ce740273f904624e1c4db810"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "scikit-learn__scikit-learn-25635",
+    "reference": "jiayuanz3/swecontextbench:scikit-learn.scikit-learn-25635",
+    "image_id": "sha256:b7ed54346226943bafb7640608d6dc0fda868b17454008adc895109ccc2f2b98",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:b7ed54346226943bafb7640608d6dc0fda868b17454008adc895109ccc2f2b98"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "scikit-learn__scikit-learn-25637",
+    "reference": "jiayuanz3/swecontextbench:scikit-learn.scikit-learn-25637",
+    "image_id": "sha256:0a846f045d1a2f67746be049aac322ea232d1ca0bf284f6686c1cc0d58106d3b",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:0a846f045d1a2f67746be049aac322ea232d1ca0bf284f6686c1cc0d58106d3b"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "scikit-learn__scikit-learn-25763",
+    "reference": "jiayuanz3/swecontextbench:scikit-learn.scikit-learn-25763",
+    "image_id": "sha256:48b58a31dc2a9a5b65614f494a4bf887138e0d67c5db573ea8b63406ae810840",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:48b58a31dc2a9a5b65614f494a4bf887138e0d67c5db573ea8b63406ae810840"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "scikit-learn__scikit-learn-5970",
+    "reference": "jiayuanz3/swecontextbench:scikit-learn.scikit-learn-5970",
+    "image_id": "sha256:c91a76aae80d96e36313ce5b6648203ceac96e14a3650f82ab1dd4974652df2e",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:c91a76aae80d96e36313ce5b6648203ceac96e14a3650f82ab1dd4974652df2e"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "sphinx-doc__sphinx-8127",
+    "reference": "jiayuanz3/swecontextbench:sphinx-doc.sphinx-8127",
+    "image_id": "sha256:bef9253dabccc79fc462331adda51d2837926bb6f777069858ef3dd723dabb1d",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:bef9253dabccc79fc462331adda51d2837926bb6f777069858ef3dd723dabb1d"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "sphinx-doc__sphinx-8588",
+    "reference": "jiayuanz3/swecontextbench:sphinx-doc.sphinx-8588",
+    "image_id": "sha256:72c71f37e04e2847dba1fe32a42841f42a38fcb6b763cf510e355ef350c5c17e",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:72c71f37e04e2847dba1fe32a42841f42a38fcb6b763cf510e355ef350c5c17e"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "sympy__sympy-11275",
+    "reference": "jiayuanz3/swecontextbench:sympy.sympy-11275",
+    "image_id": "sha256:fec76d4942658f871ce0011ace6ba4693186a1575bb3955199dea8514470570f",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:fec76d4942658f871ce0011ace6ba4693186a1575bb3955199dea8514470570f"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "sympy__sympy-11286",
+    "reference": "jiayuanz3/swecontextbench:sympy.sympy-11286",
+    "image_id": "sha256:0f23063bc5248786fb0a7f3d8deab9d5fc2cdbb6c5e85e2230a7f45961302612",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:0f23063bc5248786fb0a7f3d8deab9d5fc2cdbb6c5e85e2230a7f45961302612"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "sympy__sympy-12426",
+    "reference": "jiayuanz3/swecontextbench:sympy.sympy-12426",
+    "image_id": "sha256:1d7b5e8249ce98306618bd6eeeedd3bd5264fdfa1089408773181351ff0bad40",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:1d7b5e8249ce98306618bd6eeeedd3bd5264fdfa1089408773181351ff0bad40"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "sympy__sympy-12427",
+    "reference": "jiayuanz3/swecontextbench:sympy.sympy-12427",
+    "image_id": "sha256:a44e683fcf0354b3f8e92853935199b9d68b89a62539c26518e294bfc0c0662b",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:a44e683fcf0354b3f8e92853935199b9d68b89a62539c26518e294bfc0c0662b"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "sympy__sympy-12950",
+    "reference": "jiayuanz3/swecontextbench:sympy.sympy-12950",
+    "image_id": "sha256:b79653e237f672df73ce25e00bac6b51ca029546cd76735bebb37e67687a4b8b",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:b79653e237f672df73ce25e00bac6b51ca029546cd76735bebb37e67687a4b8b"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "sympy__sympy-13039",
+    "reference": "jiayuanz3/swecontextbench:sympy.sympy-13039",
+    "image_id": "sha256:50a28ee63e0ee3e03cb07d216d01ec301399447bb615cf4fc5acc1b9ac0ba0c8",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:50a28ee63e0ee3e03cb07d216d01ec301399447bb615cf4fc5acc1b9ac0ba0c8"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "sympy__sympy-15059",
+    "reference": "jiayuanz3/swecontextbench:sympy.sympy-15059",
+    "image_id": "sha256:41712217868c7b700739b5241a563c3df34738772700873156944df69ffe1dc1",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:41712217868c7b700739b5241a563c3df34738772700873156944df69ffe1dc1"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "sympy__sympy-16342",
+    "reference": "jiayuanz3/swecontextbench:sympy.sympy-16342",
+    "image_id": "sha256:b9cf8c0d39b649850e45d3f94508390ae020df3b96f1c8b097406afb49a37413",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:b9cf8c0d39b649850e45d3f94508390ae020df3b96f1c8b097406afb49a37413"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "sympy__sympy-16689",
+    "reference": "jiayuanz3/swecontextbench:sympy.sympy-16689",
+    "image_id": "sha256:fc03dc8addb2abc50a5fbaa53ae7243cc9b5e36c1f63d982af97f0b0bcb40503",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:fc03dc8addb2abc50a5fbaa53ae7243cc9b5e36c1f63d982af97f0b0bcb40503"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "sympy__sympy-16946",
+    "reference": "jiayuanz3/swecontextbench:sympy.sympy-16946",
+    "image_id": "sha256:8c25475bc782771a131f624aaa6efc2fd86f02f642bf5a8e71e720eed112a912",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:8c25475bc782771a131f624aaa6efc2fd86f02f642bf5a8e71e720eed112a912"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "sympy__sympy-16953",
+    "reference": "jiayuanz3/swecontextbench:sympy.sympy-16953",
+    "image_id": "sha256:2b507edfe21667854cfbb90a3988aa1b06f04a2d2420032180b973fa52164c2f",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:2b507edfe21667854cfbb90a3988aa1b06f04a2d2420032180b973fa52164c2f"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "sympy__sympy-17377",
+    "reference": "jiayuanz3/swecontextbench:sympy.sympy-17377",
+    "image_id": "sha256:901422da1f30c566dd3b685408f55441ab3110634077a35ed3c56bd08d4655fd",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:901422da1f30c566dd3b685408f55441ab3110634077a35ed3c56bd08d4655fd"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "sympy__sympy-18212",
+    "reference": "jiayuanz3/swecontextbench:sympy.sympy-18212",
+    "image_id": "sha256:4309d3f373c0eb7873bc462956a5db53c58746949a46e4456f2d926d376bdc86",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:4309d3f373c0eb7873bc462956a5db53c58746949a46e4456f2d926d376bdc86"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "sympy__sympy-18715",
+    "reference": "jiayuanz3/swecontextbench:sympy.sympy-18715",
+    "image_id": "sha256:4254d98f7290cc332a9f4479e2002781d12e4700d6ab9c33e6c61a6fc3d92a73",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:4254d98f7290cc332a9f4479e2002781d12e4700d6ab9c33e6c61a6fc3d92a73"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "sympy__sympy-19006",
+    "reference": "jiayuanz3/swecontextbench:sympy.sympy-19006",
+    "image_id": "sha256:cde316031dbf20479e9e0c44e03ee22e782348cc524961f00256ba1fcb72416c",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:cde316031dbf20479e9e0c44e03ee22e782348cc524961f00256ba1fcb72416c"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "sympy__sympy-19235",
+    "reference": "jiayuanz3/swecontextbench:sympy.sympy-19235",
+    "image_id": "sha256:ec73ff229175ef6d7503b95dbc3be68d591a67ea2d9c872aabf6cbaf28f7a9cd",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:ec73ff229175ef6d7503b95dbc3be68d591a67ea2d9c872aabf6cbaf28f7a9cd"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "sympy__sympy-19484",
+    "reference": "jiayuanz3/swecontextbench:sympy.sympy-19484",
+    "image_id": "sha256:69d20a278136c00b031b08146ffef22e0e1f10109e7f29bdf1a02449dc5e9f87",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:69d20a278136c00b031b08146ffef22e0e1f10109e7f29bdf1a02449dc5e9f87"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "sympy__sympy-19558",
+    "reference": "jiayuanz3/swecontextbench:sympy.sympy-19558",
+    "image_id": "sha256:7b7c345e5be76199aa72fa18c1fce28cef4c333ebce3fda8cd82c03776bfb657",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:7b7c345e5be76199aa72fa18c1fce28cef4c333ebce3fda8cd82c03776bfb657"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "sympy__sympy-21203",
+    "reference": "jiayuanz3/swecontextbench:sympy.sympy-21203",
+    "image_id": "sha256:3e451caa20b4cabe97b7567914b42b855cfb3def691996795872f1365c63a2ed",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:3e451caa20b4cabe97b7567914b42b855cfb3def691996795872f1365c63a2ed"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "sympy__sympy-21309",
+    "reference": "jiayuanz3/swecontextbench:sympy.sympy-21309",
+    "image_id": "sha256:707f9e158058ea6ce860e443dc3fbe5a81f2411aa0a06255b833e352a7c10c44",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:707f9e158058ea6ce860e443dc3fbe5a81f2411aa0a06255b833e352a7c10c44"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "sympy__sympy-23852",
+    "reference": "jiayuanz3/swecontextbench:sympy.sympy-23852",
+    "image_id": "sha256:5ca3fa10308d9d4acad52188994185811bad9fba273a02e1c28f1ca97e1599fa",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:5ca3fa10308d9d4acad52188994185811bad9fba273a02e1c28f1ca97e1599fa"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "sympy__sympy-26642",
+    "reference": "jiayuanz3/swecontextbench:sympy.sympy-26642",
+    "image_id": "sha256:67f945786ab0017cc3dec8c94eb294629826547f6315706c510230554c5c1176",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:67f945786ab0017cc3dec8c94eb294629826547f6315706c510230554c5c1176"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "sympy__sympy-27868",
+    "reference": "jiayuanz3/swecontextbench:sympy.sympy-27868",
+    "image_id": "sha256:39b65dd38ff5823778ab4c521b21bfb2586ded181e788658b58625d1c5d6c420",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:39b65dd38ff5823778ab4c521b21bfb2586ded181e788658b58625d1c5d6c420"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "sympy__sympy-8772",
+    "reference": "jiayuanz3/swecontextbench:sympy.sympy-8772",
+    "image_id": "sha256:f9cbe187a82698e14079140d477f8bdb919bbf0e7b07d16686f7d6c1b0a8075c",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:f9cbe187a82698e14079140d477f8bdb919bbf0e7b07d16686f7d6c1b0a8075c"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "sympy__sympy-9123",
+    "reference": "jiayuanz3/swecontextbench:sympy.sympy-9123",
+    "image_id": "sha256:8fc66bfbe97f78c228c031e73dfb93ce84015891623b42ea57972a660acea193",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:8fc66bfbe97f78c228c031e73dfb93ce84015891623b42ea57972a660acea193"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "instance_id": "sympy__sympy-9384",
+    "reference": "jiayuanz3/swecontextbench:sympy.sympy-9384",
+    "image_id": "sha256:bb453521654c80650e2fee1745a256eff6a2a3ff4e840be3ef7528586dec1bf0",
+    "repo_digests": [
+      "jiayuanz3/swecontextbench@sha256:bb453521654c80650e2fee1745a256eff6a2a3ff4e840be3ef7528586dec1bf0"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  }
+]
