@@ -21,9 +21,21 @@ identical persistent Graph packet from the 280-source bank. The intervention
 adds a policy requesting at most two discriminating checks before editing.
 This first prototype is a solver instruction, not an enforced gate or a learned
 classifier. The ordinary and applicability conditions use the same model,
-tools, images, 100-call limit and $3 budget threshold. Each of four attempts
-reserves another $5 for an in-flight call; the $32 admission fits inside the
-existing $300 allowance with the $20 monitoring reserve.
+tools, images, 100-call limit and $3 budget threshold.
+
+All four runs completed: the instruction arm resolved both tasks; ordinary
+memory produced two empty patches. The instruction arm first edited source at
+actions 19 and 10, while neither ordinary run edited source. This suggests a
+change in how the agent moves from diagnosis to editing, without establishing
+that a particular historical source supplied the decisive information.
+Two follow-up runs kept the same instruction and removed only the memory packet.
+Both also resolved, producing exactly the same patches in 30 and 34 calls.
+The instruction-only prototype will not be expanded as a memory method.
+The next candidate asks whether the behavior changed by a source repair selects
+more useful transferable checks; a real Django source check is working, while
+automatic extraction and target transfer remain untested.
+The parent repository's `docs/reports/applicability-pilot-v1.md` records the
+development result and the decision this comparison will inform.
 
 Pilot implementation in the parent repository:
 
