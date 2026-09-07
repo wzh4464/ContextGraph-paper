@@ -1,42 +1,35 @@
 # ContextGraph ICLR working paper
 
-The research question is whether a past repair's **observable effect** can
-identify useful observations for the next repair. The implemented source
-construction generates an executable check and runs it before and after the
-historical patch. Using that relation to guide a target repair remains an
-unresolved method step.
-
 Read [main.pdf](main.pdf) or edit [main.tex](main.tex).
 
-The earlier 99-task Related-Lite comparison resolves 17 tasks without memory,
-18 with flat patches, and 18 with an added procedure card. In a separate
-Verified development pilot, both successful applicability repairs also occur
-without memory, with identical patches. Those repairs therefore do not require
-historical content.
+The method turns a source repair's observable effect into an executed target
+diagnostic. A source writer generates a relation check from the patch and
+repaired code. A target writer binds that relation to the current task; the
+repair solver receives the probe and its actual observations.
 
-An automatically generated rendering check captures the Matplotlib 23314
-source repair: two inputs produce 57,600 and 40,000 non-background pixels before
-the patch, and zero afterward. This establishes a source contrast, not target
-use of that contrast.
+The completed Django development comparison establishes this execution path.
+The source-informed diagnostic adds a default-storage boundary, but both it and
+the issue-only procedure produce officially resolved repairs. Both patches also
+pass the unchanged source check on that boundary. Total target writer and solver
+costs are $3.059602 and $2.558255, respectively, under the experiment's meter.
 
-The completed Matplotlib 20826 comparison used the same solver, applicability
-instruction, and budget. The original-patch arm used 32 calls ($3.109032), the
-effect-check arm 34 ($3.011330), and no memory 33 ($3.031290). All reached the
-cost threshold without production-code edits and submitted empty patches,
-immediately recorded as unresolved by the official verifier. The effect-check
-arm did not adapt and execute the source rendering relation. Thus this trial
-tested supplying check text; it did not execute a target-transfer algorithm.
-Three unresolved outcomes establish neither equivalence nor that source checks
-are ineffective. Expansion of this text-delivery prototype is stopped.
+The resulting insight is that a distinct observation need not change the repair
+decision. The next method question is how to select source relations that
+distinguish candidate edits. The current result does not demonstrate a repair
+gain from memory.
 
-Matplotlib 20826 belongs to Verified's 70-task development partition. These
-pilots do not use the separate 150-task evaluation partition.
+Source Django 16493 belongs to the 280-task memory bank; target Django 13343
+belongs to the separate 70-task development partition. The 150-task evaluation
+partition is unused by this pilot.
 
 Implementation in the parent repository:
 
 - `scripts/analysis/run_repair_check_source_v1.py`
-- `scripts/analysis/run_repair_effect_pilot_v1.py`
-- `experiments/ab_test/repair_checks.py`
+- `scripts/analysis/build_executed_probe_v1.py`
+- `scripts/analysis/run_executed_probe_pilot_v1.py`
+- `scripts/analysis/replay_executed_probe_relation_v1.py`
+
+Results: `docs/reports/executed-probe-pilot-v1.md` in the parent repository.
 
 Build:
 

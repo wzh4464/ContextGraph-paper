@@ -5,143 +5,139 @@
 \title{ContextGraph: Repair Effects as Executable Memory}
 \author{Anonymous authors}
 \newcommand{\cg}{ContextGraph}
-\newcommand{\pp}{\,\mathrm{pp}}
 \begin{document}
 \maketitle
 
 \begin{abstract}
-A past repair can identify what to observe in another program, but only if its learned relation survives the change of context.
-We investigate a memory representation that records a repair's observable effect as an executable check, validated on the source before and after the repair.
-On a Matplotlib source repair, an automatically generated rendering check distinguishes the buggy and repaired behavior on two inputs.
-The central difficulty is turning this source contrast into an observation that informs the next repair decision.
-In our target pilot, supplying the check did not lead the solver to adapt and execute its relation.
-The evidence supports extracting a source repair effect; it does not yet establish a mechanism for using that effect in a new repair.
+A source repair can teach a coding agent what to observe in another program, provided the relevant program relation survives the change of context.
+We investigate a memory mechanism that connects a repair's observable effect to an executed target diagnostic.
+A writer generates a check from the source patch and repaired code; execution before and after the repair establishes the behavior it distinguishes.
+A target writer uses this relation to construct a diagnostic, whose code and actual observations become evidence for a common repair solver.
+In a Django training example, a source check about preserving callable parameters leads to a target observation that returning the default storage object causes a constructor argument to disappear from serialization.
+Both the source-informed and issue-only procedures produce officially verified repairs, and both preserve the additional source-derived boundary.
+This demonstrates an executed transfer of a condition while exposing a selection problem: a distinct observation need not change the repair decision.
 \end{abstract}
 
 \section{Introduction}
 Software repairs encode conditional knowledge.
-Adding a conversion, changing an ordering constraint, or copying an object can fix a bug because a particular input, runtime, and program state make that change necessary.
-Removing those conditions turns a useful experience into advice that may point in the wrong direction.
-Two issues can mention the same API and exception while requiring different edits.
-A memory that says what worked previously still leaves the agent to determine what is true now.
+The same conversion, copy, or ordering change can repair one program and break another because its value depends on the input and program state.
+For example, a Requests source patch normalizes an HTTP method with \texttt{builtin\_str(method)} in a Python 2 setting, whereas another training issue reports that the same conversion turns Python 3 bytes \texttt{b'GET'} into the unwanted string \texttt{"b'GET'"}.
+Retrieving the older edit does not determine the correct action.
+Nor does repeating information already stated in the issue explain what the experience adds.
+The useful question is which observation of the current program could distinguish plausible repair directions.
 
-Our starting point is to ask what observation would make a past experience useful for the next repair decision.
-Does comparing the behavior before and after a source repair identify what is worth measuring in a new task?
-We study a memory representation that records this behavioral contrast, with verified target repairs as the measure of its value.
+Our earlier exploratory comparison on 99 SWEContextBench Related-Lite tasks resolves 17 tasks without memory, 18 with retrieved patches, and 18 with an added repository procedure card \citep{swecontext2026}.
+This does not demonstrate a repair gain; memory was also retained only briefly in the solver history.
+These counts use the benchmark's frozen resolved criterion, which requires fail-to-pass success but does not veto every pass-to-pass regression.
+They motivate investigating how experience affects a repair decision, rather than assuming that relevant text is sufficient.
 
-\section{Why relevant experience can be insufficient}
-\label{sec:motivation}
-\paragraph{More guidance did not produce a clear gain.}
-Our completed exploratory Related-Lite experiment compares six memory interfaces on the same 99 tasks from SWEContextBench \citep{swecontext2026}.
-The solver is SWE-agent 1.1.0 with a DeepSeek V4 Pro model alias, temperature zero, a 500-call limit, and a history processor retaining the last five observations.
-Flat retrieves historical patches; Card adds a repository procedure card; Graph, Rules, and File list expose other representations of the available experience.
-Related source fixes can closely match target repairs.
-Table~\ref{tab:motivation} uses the benchmark's frozen \texttt{resolved} criterion, which requires fail-to-pass success but does not veto every pass-to-pass regression.
+We study a concrete alternative: remember what a repair changed in program behavior, and use that relation to choose an observation on the target.
+The mechanism has three steps: establish a source repair effect, execute a diagnostic informed by that effect on the target, and give the resulting evidence to a repair solver.
+The relation supplies a reason to examine a particular case; the target issue determines what behavior is required.
+This distinction allows a source experience to contribute an informative condition without treating its old patch as the target solution.
+
+\section{From repair effects to target observations}
+\label{sec:method}
+
+\subsection{Establishing the source relation}
+A source example contains the buggy program, its patch, and the repaired program.
+The memory writer receives the patch and relevant repaired code and produces an executable check, legal input cases, and a description of the relation being measured.
+We run the check in both source versions.
+An admitted check must execute normally in both versions, hold after the patch on both inputs, and change from false to true on at least one input.
+The memory record retains the source issue, check code, and relation.
+
+Conditioning generation on the repair matters because a valid test need not expose anything learned from that repair.
+Four checks generated from the fixed code of Matplotlib 23314 all pass in both versions while missing the repaired visibility behavior.
+A patch-conditioned rendering check instead shows that hidden axes leave non-background pixels before the repair and none afterward.
+The comparison identifies a repair effect; it does not make every property of the repaired program an informative memory.
+
+Django 16493 provides the running example.
+A \texttt{FileField} accepts a callable that selects a storage object, while \texttt{deconstruct()} returns constructor arguments used to serialize the field.
+The generated source check asks whether this representation preserves the original callable when it returns \texttt{default\_storage}.
+Before the repair, the \texttt{storage} argument is absent; afterward, it is present and identical to the original callable in both generated cases.
+Thus the observed effect concerns preserving a constructor dependency even when its evaluated value equals a default.
+
+\subsection{Binding and executing a target diagnostic}
+The target writer receives the current issue and relevant initial code, together with an optional source check.
+It produces a diagnostic question, an explanation of how the source relation maps to the target when applicable, and an executable probe.
+The intended mapping preserves the program relationship while selecting objects, API calls, and legal inputs in the target repository.
+The writer can decline a source relation that does not support a useful observation.
+A diagnostic generated without such a mapping is an issue-based probe, not evidence of source transfer.
+
+We execute the probe on the target's initial program before repair and pass successful runtime observations onward.
+The probe measures program behavior without proposing a patch or editing production code.
+Both source and target checks use rendered output or documented API behavior so that the measured relation need not depend on a source-specific internal cache.
+This still requires a meaningful mapping: replacing both the measured state and the question would create a different diagnostic rather than carry the source relation across.
+
+In the Django example, the target also exposes \texttt{FileField.deconstruct()} and callable storage.
+The source condition therefore identifies a concrete target input: a storage factory whose result is \texttt{default\_storage}.
+Executing that case can distinguish returning an evaluated object from omitting the argument entirely.
+The source does not determine how to change the target implementation; it selects a case whose behavior bears on that decision.
+
+\subsection{Repairing from observed evidence}
+The repair solver receives the target issue, the executed probe's question and code, and its actual observations.
+It receives no additional source patch or source implementation.
+The common instruction states that the probe has already run on the same initial code and that another diagnostic is useful when it answers a new question.
+Normal source editing, checks after editing, and final testing remain part of the repair task.
+The executed evidence stays in the solver's history.
+
+To measure the contribution of the source relation, the implemented comparison varies only whether the target writer receives the source check.
+Both arms otherwise use the same target issue and code, probe execution procedure, and DeepSeek V4 Pro repair solver.
+Each arm shares a \$3 metered threshold and a 100-call allowance between its target writer and solver: writer usage is deducted from the solver's allowance.
+This measures the effect of the complete diagnostic-and-repair procedure, including the cost of obtaining its observations.
+Each submitted repair is immediately graded by the official SWE-bench verifier \citep{swebench2024}.
+
+\section{What the current evidence establishes}
+\label{sec:evidence}
+The source construction and target diagnostics use the training side of a fixed SWE-bench Verified split: 280 source tasks and 70 development tasks, with a separate 150-task evaluation partition unused by these pilots.
+The Django pair consists of source 16493 and development target 13343.
+The target writer and solver receive the issue and initial code, not the target gold repair.
+
+\paragraph{A source condition becomes a target observation.}
+The target issue asks \texttt{deconstruct()} to preserve callable storage rather than serialize the selected storage instance.
+Both generated probes execute successfully and observe that a non-default storage factory is represented by its evaluated instance, not the original callable.
+The issue-only probe additionally records that the factory is called once during construction and is not called again by \texttt{deconstruct()}; it also confirms that the analogous \texttt{upload\_to} parameter preserves its callable.
+The source-informed probe examines the historical condition of returning \texttt{default\_storage} and observes that \texttt{storage} is then omitted entirely.
+This links a source condition to a distinct target observation.
+The resulting question is whether a repair must address argument omission as well as callable identity; the observation alone does not establish that the solver chooses a better patch.
+
+\paragraph{A distinct observation need not change the repair.}
+Both procedures produce patches that pass the official verifier (Table~\ref{tab:target}).
+We also run the unchanged source check on the initial target and each submitted patch.
+Both inputs fail the relation on the initial target and satisfy it after either repair: the original factory is preserved even when it returns \texttt{default\_storage}.
+The issue-only repair retains the unevaluated storage value; the source-informed repair retains the constructor argument and handles callable values separately.
+Both choices cover the reported fault and the additional boundary.
+Thus the source condition changes what is measured without improving the repair outcome or metered cost in this pair.
+The selection problem is to find relations that distinguish candidate repair decisions, rather than merely add a previously unmeasured case.
 
 \begin{table}[t]
 \centering
-\caption{Earlier memory interventions on the same 99 Related-Lite tasks.}
-\label{tab:motivation}
-\begin{tabular}{lrr}
+\caption{Completed Django 13343 development comparison. Cost includes the target writer and solver; boundary checks reuse the original source program.}
+\label{tab:target}
+\begin{tabular}{lccc}
 \toprule
-Memory interface & Resolved & Difference from no memory \\
+Diagnostic writer & Officially resolved & Boundary inputs & Metered cost \\
 \midrule
-No memory & 17/99 & --- \\
-Flat patches & 18/99 & $+1.01\pp$ \\
-Patches + procedure card & 18/99 & $+1.01\pp$ \\
-Graph & 12/99 & $-5.05\pp$ \\
-Rules & 13/99 & $-4.04\pp$ \\
-File list & 9/99 & $-8.08\pp$ \\
+Issue only & Yes & 2/2 & \$2.56 \\
+Source informed & Yes & 2/2 & \$3.06 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Flat and Card each gain one observed repair over no memory; both exact paired tests give $p=1$, providing no demonstrated gain in this setting.
-
-Patch memory reaches all 99 targets in both conditions, and the expected procedure card reaches 98.
-However, reconstructing 198 Flat/Card histories shows that an original memory response is retained for a median of only five action prefixes.
-The median trajectories contain 497 and 495 actions, respectively.
-The development pilot below keeps memory persistent to remove this delivery constraint.
-
-\paragraph{The same operation can be a repair or a bug.}
-A Requests training example makes the applicability problem concrete.
-Issue 1724's patch adds \texttt{method = builtin\_str(method)} to normalize an HTTP method in a Python 2 setting.
-Issue 2317 instead reports that this conversion turns Python 3 bytes \texttt{b'GET'} into the literal string \texttt{"b'GET'"}.
-Its training patch uses \texttt{to\_native\_string(method)}.
-A retrieved recommendation to perform the older conversion is related to the target but does not settle the correct action.
-
-Here the issue already states the relevant input and runtime; rerunning that example would confirm known information.
-The useful check would instead distinguish actions whose applicability remains uncertain after reading the issue.
-
-\section{The applicability pilot succeeds without memory}
-\label{sec:experiments}
-The completed pilot uses Requests 1921 and pytest 10051 from the training pool of our separate SWE-bench Verified split \citep{swebench2024}.
-The split allocates 350 tasks to memory construction and development and 150 to evaluation, with repository-stratified allocation and seed 42.
-The two pilot tasks belong to a 70-task development partition whose source rules are excluded from the remaining 280-source memory bank; the 150 evaluation tasks are unused here.
-
-The two memory conditions receive the same persistent packet from \cg{}'s dense, lexical, and graph retrieval pipeline.
-One uses the ordinary solver; the other adds an instruction to state an applicability condition, execute at most two short checks before editing, and use their observations to accept or reject a recommendation.
-The instruction does not enforce these decisions.
-We hold the model, tools, task images, \$3 metered threshold, and 100-call limit fixed, and grade each submitted patch immediately with the Verified harness.
-
-Ordinary memory produces two empty patches after 39 and 49 calls.
-Adding the instruction produces two verified repairs after 36 and 17 calls.
-Removing only the memory packet also produces two verified repairs, after 30 and 34 calls; both patches are identical to their counterparts with memory.
-The ordinary runs never edit source, whereas both instruction conditions do.
-This two-task result shows that the observed repairs can occur without historical content.
-It directs method development toward the information supplied by experience, rather than expanding the instruction-only prototype.
-
-\section{Remembering a repair's observable effect}
-\label{sec:method}
-A check that passes on a repaired program may describe a general property without exposing anything learned from the repair.
-In a source-side trial on Matplotlib 23314, four checks generated from fixed code all pass before and after the repair: they exercise initialization, axis limits, sharing, and drawing order while missing the repaired visibility behavior.
-Source repair sensitivity cannot select an informative check from this pool.
-
-Our revised construction gives the memory writer the source patch and fixed implementation and asks for a check of the changed observable behavior.
-It executes the check on the buggy and repaired source with two legal inputs.
-An admitted check must run normally in both versions and expose a false-to-true relation.
-The stored memory contains the source issue, relation, and executable check.
-
-The observable effect matters because a repair can also change incidental internal state.
-A generated check of Matplotlib's projection cache detects the source change, but the corresponding cache does not exist in the two-dimensional target API.
-Changing both the operation and the measured state would invent a different check.
-We therefore require observations of rendered output or documented API results, rather than an implementation-specific cache.
-A generated output check renders a hidden blue axes region on a red figure.
-Before the source repair, the two inputs leave 57,600 and 40,000 non-red pixels; after the repair, both leave zero.
-
-Using this contrast in a new repair requires binding the check to the target's objects and API while preserving its measured relation.
-Source validity alone does not establish this binding or show that the resulting observation changes a repair decision.
-
-On training target Matplotlib 20826, we compared providing the original source patch, the effect check, and no memory under the same applicability instruction, \$3 metered threshold, and 100-call limit.
-The three arms used 32, 34, and 33 calls, respectively.
-All stopped at the cost threshold without editing production code, submitted empty patches, and were immediately recorded as unresolved by the official verifier.
-They reproduced the target's two-dimensional axis-clearing fault, but the effect-check arm never adapted and executed the source rendering relation.
-This comparison tests supplying a source check as text, not an executed target-transfer mechanism.
-We stopped expanding this text-delivery prototype.
-
 \section{Related work}
-\paragraph{Experience and skills.}
-ExpeL distills reusable insights from agent trajectories \citep{expel2024}.
-SWE-Exp uses historical experience for software issue resolution \citep{sweexp2025}, and MemGovern turns human experience into searchable cards \citep{memgovern2026}.
-CODESKILL learns a skill extraction and maintenance policy using feedback from a frozen downstream solver \citep{codeskill2026}.
-ExpeRepair retrieves historical test demonstrations and reflective insights to generate reproduction and boundary tests \citep{experepair2026}.
+Experience-based agents such as ExpeL distill reusable insights from trajectories, while AdaMEM retrieves experience at intermediate states and synthesizes an updated strategy \citep{expel2024,adamem2026}.
+Getafix learns applicable edit patterns from human patches \citep{getafix2019}.
+Our focus is the observation suggested by a repair effect: source execution establishes a relation, and target execution supplies evidence before the solver chooses an edit.
 
-\paragraph{Repair patterns and context.}
-Getafix learns fix patterns from human patches and uses surrounding code to rank applicable edits \citep{getafix2019}.
-VulDebugger compares expected constraints with observed runtime state to guide vulnerability repair \citep{vuldebugger2025}.
-MemRepair combines historical fixes, security patterns, and refinement trajectories with runtime feedback \citep{memrepair2026}.
-MR-Scout parameterizes relations from existing tests, and MR-Coupler generates relation tests from coupled methods and evaluates historical defects \citep{mrscout2023,mrcoupler2026}.
-The question here is whether a source repair's observable effect can inform an executable check for a different repair task.
+ExpeRepair already uses historical test demonstrations and reflective insights to generate reproduction and boundary tests \citep{experepair2026}.
+The specific construction studied in this draft derives a check from a source repair's behavioral change and uses its condition to select a target diagnostic, compared with a writer receiving only the target issue and code.
 
-\paragraph{Graph retrieval and working memory.}
-HippoRAG motivates associative retrieval with Personalized PageRank \citep{hipporag2024}.
-SWE-MeM studies working-memory management \citep{swemem2026}, while cue-anchored memory studies delivery through coding-task and compaction experiments \citep{cueanchored2026}.
-AdaMEM retrieves experience at intermediate states and synthesizes an updated strategy \citep{adamem2026}.
-Decision-Aware Memory Cards scores context by estimated effects on actions \citep{cicl2026}.
+MR-Scout parameterizes relations from existing tests, and MR-Coupler generates relation checks from coupled methods and evaluates them on historical defects \citep{mrscout2023,mrcoupler2026}.
+These methods make relational behavior executable.
+We study relations selected by a source repair's behavioral change and used to inform diagnosis and repair in another task.
 
 \section*{AI use statement}
 Generative AI assisted literature review, method development, implementation, experiments, analysis, and writing.
-The manuscript is a working draft and has not been submitted.
 
 \bibliography{references}
 \bibliographystyle{iclr2027_conference}
