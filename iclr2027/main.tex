@@ -10,13 +10,12 @@
 
 \begin{abstract}
 Past repairs record requirements that a new issue may leave unstated.
-We study repair memory as a way to supply these missing requirements during code generation.
-On a Django development task, both a method writer and a complete repository agent produce ordinary repairs that pass official verification but discard query parameters during redirection.
-Supplying a repair of the same API enables both to preserve the required deployment prefix together with the omitted query parameters.
-For method generation, providing that history in the first call produces the same code logic as a later history-guided revision, using one target repair call instead of two.
-A second development case in pytest reaches both method-level and class-level skip requirements in one history-informed repair call, where the observed ordinary sequence needed a diagnostic revision.
-A further complete-agent comparison reaches the same Django fix with a retrieved distilled rule or the original repair that it summarizes.
-The evidence supports a simple procedure: give the writer the relevant historical requirement and evaluate whether the resulting repair preserves it together with the current requirement.
+We study a simple repair procedure: retrieve this experience before editing and use it to complete the repair requirements.
+In two Django development tasks, complete repository agents produce repairs that pass official verification with or without memory, but only the history-informed repairs satisfy an additional historical requirement.
+One retains query parameters while fixing a deployment prefix; the other removes a redundant unique constraint while retaining the primary key, extending the repair to a neighboring operation.
+Independent checks that distinguish buggy and repaired source versions expose these additional behaviors on the target repairs.
+Method-generation comparisons in Django and pytest further show that supplying history in the first call can reach behaviors that the observed ordinary sequences obtain only after revision, or leave unsatisfied.
+These cases show how repair memory can improve behavioral completeness beyond the requirements measured by the current task's official tests.
 \end{abstract}
 
 \section{Introduction}
@@ -39,7 +38,7 @@ The comparison determines whether the corrective information requires a separate
 
 \paragraph{Supply the requirement during generation.}
 The repair writer receives the target issue and retrieved repair memory before editing.
-In both studied cases, this source is the first entry in a frozen BM25 retrieval packet over memory built from the source partition.
+Memory is retrieved from the source partition using frozen BM25 rankings or cosine similarity with Qwen3-Embedding-8B \citep{qwen3embedding2025}.
 The historical record describes an additional behavior for the new repair to preserve.
 We use either the stored distilled rule or its original source issue and patch as the memory input.
 We study two writers: a method generator supplied with the initial implementation, and a complete SWE-agent that browses the repository, edits code, runs tools, and submits a patch.
@@ -123,6 +122,18 @@ The remaining entries and the delivery point are identical.
 Both repairs pass official verification and all three behavior checks, and their submitted patches are byte-identical.
 The attempts use 69 and 30 model calls, respectively.
 In this development comparison, either representation supplies enough information to preserve the current and historical requirements together.
+
+\paragraph{A historical requirement can extend to a neighboring operation.}
+In a further complete-agent pair on Django 12708, the issue reports ambiguous deletion of an ordinary index when a unique constraint uses the same columns.
+Qwen retrieval supplies three unchanged Flat rules, with source 15732 ranked first, from a development cohort selected for high retrieval similarity.
+That source concerns deletion of a unique constraint sharing its column with a primary key.
+Both agents fix ordinary-index selection and pass official verification.
+The memory-informed agent also excludes primary keys when deleting unique constraints.
+An independently constructed PostgreSQL check fails on the buggy source and succeeds after its repair; the unchanged check then fails on the ordinary target repair and succeeds on the memory-informed repair.
+A combined input creates an ordinary index, redundant uniqueness, and a primary key on the same column.
+On this PostgreSQL input, ordinary-index deletion already succeeds on the target base.
+Both repairs retain that behavior, but only the memory-informed repair also deletes the redundant uniqueness, retaining the primary key and original data.
+The useful historical information here supplies an additional operation's requirement, beyond the operation singled out by the current failure.
 
 \section{Related work}
 ExpeL distills reusable insights from experience, and Getafix learns applicable edit patterns from human repairs \citep{expel2024,getafix2019}.
