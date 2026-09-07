@@ -10,13 +10,12 @@
 \maketitle
 
 \begin{abstract}
-A past repair is useful only under the conditions that made it work.
-We investigate how coding agents can use past repairs to choose informative observations of the current program.
-Our motivating experiments on 99 SWEContextBench Related-Lite tasks find 17 resolved tasks without memory, 18 with flat patch retrieval, and 18 with an added repository procedure card.
-A two-task training pilot obtains the same successful patches with the applicability instruction both with and without memory.
-The pilot's repairs therefore do not require historical content.
-The resulting method represents a past repair by an executable check of its observable effect, confirmed by running the source before and after the repair.
-We are testing whether this representation helps a new repair more than the original patch.
+A past repair can identify what to observe in another program, but only if its learned relation survives the change of context.
+We investigate a memory representation that records a repair's observable effect as an executable check, validated on the source before and after the repair.
+On a Matplotlib source repair, an automatically generated rendering check distinguishes the buggy and repaired behavior on two inputs.
+The central difficulty is turning this source contrast into an observation that informs the next repair decision.
+In our target pilot, supplying the check did not lead the solver to adapt and execute its relation.
+The evidence supports extracting a source repair effect; it does not yet establish a mechanism for using that effect in a new repair.
 \end{abstract}
 
 \section{Introduction}
@@ -100,7 +99,7 @@ Source repair sensitivity cannot select an informative check from this pool.
 
 Our revised construction gives the memory writer the source patch and fixed implementation and asks for a check of the changed observable behavior.
 It executes the check on the buggy and repaired source with two legal inputs.
-An admitted check must run normally in both versions and expose a false-to-true relation; execution errors return to the writer for program correction.
+An admitted check must run normally in both versions and expose a false-to-true relation.
 The stored memory contains the source issue, relation, and executable check.
 
 The observable effect matters because a repair can also change incidental internal state.
@@ -109,13 +108,16 @@ Changing both the operation and the measured state would invent a different chec
 We therefore require observations of rendered output or documented API results, rather than an implementation-specific cache.
 A generated output check renders a hidden blue axes region on a red figure.
 Before the source repair, the two inputs leave 57,600 and 40,000 non-red pixels; after the repair, both leave zero.
-The writer corrected an invalid API call using its execution error before this contrast was measured.
 
-The target solver binds the check's objects and API calls to the current repository while retaining the operation sequence and measured relation.
-The current issue determines whether that relation should hold in the target.
-The intended benefit is an observation that changes a repair decision enough to repay the cost of adaptation and execution.
-The development comparison supplies either the original source patch, the constructed effect check, or no memory to the same target solver at the same budget.
-Target transfer remains under evaluation.
+Using this contrast in a new repair requires binding the check to the target's objects and API while preserving its measured relation.
+Source validity alone does not establish this binding or show that the resulting observation changes a repair decision.
+
+On training target Matplotlib 20826, we compared providing the original source patch, the effect check, and no memory under the same applicability instruction, \$3 metered threshold, and 100-call limit.
+The three arms used 32, 34, and 33 calls, respectively.
+All stopped at the cost threshold without editing production code, submitted empty patches, and were immediately recorded as unresolved by the official verifier.
+They reproduced the target's two-dimensional axis-clearing fault, but the effect-check arm never adapted and executed the source rendering relation.
+This comparison tests supplying a source check as text, not an executed target-transfer mechanism.
+We stopped expanding this text-delivery prototype.
 
 \section{Related work}
 \paragraph{Experience and skills.}
@@ -129,7 +131,7 @@ Getafix learns fix patterns from human patches and uses surrounding code to rank
 VulDebugger compares expected constraints with observed runtime state to guide vulnerability repair \citep{vuldebugger2025}.
 MemRepair combines historical fixes, security patterns, and refinement trajectories with runtime feedback \citep{memrepair2026}.
 MR-Scout parameterizes relations from existing tests, and MR-Coupler generates relation tests from coupled methods and evaluates historical defects \citep{mrscout2023,mrcoupler2026}.
-The question here is whether a source repair's behavioral change improves the selection of a check for a different repair task.
+The question here is whether a source repair's observable effect can inform an executable check for a different repair task.
 
 \paragraph{Graph retrieval and working memory.}
 HippoRAG motivates associative retrieval with Personalized PageRank \citep{hipporag2024}.
@@ -139,7 +141,7 @@ Decision-Aware Memory Cards scores context by estimated effects on actions \cite
 
 \section*{AI use statement}
 Generative AI assisted literature review, method development, implementation, experiments, analysis, and writing.
-The manuscript remains a working draft pending human review.
+The manuscript is a working draft and has not been submitted.
 
 \bibliography{references}
 \bibliographystyle{iclr2027_conference}
