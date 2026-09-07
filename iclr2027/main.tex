@@ -2,7 +2,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{iclr2027_conference,times}
 \usepackage{amsmath,amssymb,booktabs,graphicx,hyperref,url}
-\title{ContextGraph: Measuring Transfer from Experience to Verified Code Repairs}
+\title{ContextGraph: Testing When Repair Experience Applies}
 \author{Anonymous authors}
 \newcommand{\cg}{ContextGraph}
 \newcommand{\pp}{\,\mathrm{pp}}
@@ -10,602 +10,208 @@
 \maketitle
 
 \begin{abstract}
-Long-term memory can change what a coding agent reads without improving the patch it submits.
-We study this gap using \cg{}, a system that turns prior repair evidence into rules and retrieves them through dense, lexical, and graph channels.
-Our evaluation separates memory provenance, actual delivery, agent execution, and official repair verification.
-Existing official reports for two completed SWE Context Bench Related-Lite conditions record 18 resolved predictions each on the same 99 tasks, with six wins unique to each condition.
-The recorded paired difference is 0 percentage points (95\% bootstrap interval $[-7.07,7.07]$).
-A completed contemporaneous Control resolves 17/99; Flat and Card each gain only one observed repair over Control, with exact paired $p=1$ for both comparisons.
-An extended audit identified one appended historical Docker log; an independent frozen-verifier recheck of the identical prediction reproduces the original failure, with no outcome changed.
-Actual memory is delivered on all tasks, while the correct procedure card reaches 98 of 99 targets.
-An adaptive card revision resolves 16/99 with correct cards delivered on 97/99, without a significant paired gain.
-These observations do not establish a general limit on agent memory.
-We also prepare a separate SWE-bench Verified experiment that builds memory from 350 training tasks and compares no memory, flat rule retrieval, and graph rule retrieval on a fixed 150-task test set.
-This draft reports the audits, the retained provenance limitation, and the new experiment's design; it does not yet report a test-set gain from the latter.
+A past repair is useful only under the conditions that made it work.
+Coding-agent memory commonly retrieves an issue, patch, or rule and leaves the agent to infer these conditions.
+We develop an applicability-driven alternative: turn retrieved experience into a repair hypothesis, identify an observation that would support or contradict it in the current repository, and execute that check before committing to the suggested edit.
+The central hypothesis is that memory should reduce uncertainty about the next action, rather than merely increase the amount of relevant text.
+Our motivating experiments on 99 SWEContextBench Related-Lite tasks find 17 resolved tasks without memory, 18 with flat patch retrieval, and 18 with an added repository procedure card.
+A training example exposes a concrete ambiguity: a string conversion that fixes an HTTP-method bug under one input and runtime becomes the cause of a different bug under another.
+We specify the resulting method and the comparisons needed to test it.
+The method's repair benefit remains under investigation; the completed results motivate the intervention.
 \end{abstract}
 
-\paragraph{Draft status, 7 September 2026.}
-This is a research draft, not a completed submission. Related-Lite first predictions have checked frozen-verifier evidence, including one independent recheck for the historical log exception described below.
-The separate Verified 350/150 inputs are frozen; execution stopped on an agent-framework error, and no formal effect estimate is available.
-Historical results from other repository experiments are not pooled into either denominator.
+\paragraph{Working draft.}
+The method is being developed on training tasks. The result table below describes completed earlier interventions; it is not a result for the new method.
 
 \section{Introduction}
-Coding agents must locate relevant code, construct an explanation of a failure, edit a repository, and verify a repair.
-Prior experience could help at each stage, but a retrieval hit is not itself a successful repair.
-A memory system may return a correct example for the wrong software version, fail to deliver its output to the agent, or consume enough interaction budget to displace useful testing.
-Conversely, a low repair rate does not establish that the retrieved knowledge was unusable: the surrounding tool or evaluation protocol may have failed.
+Software repairs encode conditional knowledge.
+Adding a conversion, changing an ordering constraint, or copying an object can fix a bug because a particular input, runtime, and program state make that change necessary.
+Removing those conditions turns a useful experience into advice that may point in the wrong direction.
 
-We investigate this distinction in \cg{}, a long-term memory layer for coding agents.
-Its broader architecture combines typed experience nodes with lexical, embedding, and Personalized PageRank retrieval.
-The present study uses two distinct settings.
-The first is a retrospective audit of a completed repository-card intervention on SWE Context Bench Related-Lite \citep{swecontext2026}.
-The second is a new, deliberately narrower intervention on SWE-bench Verified \citep{swebench2024}: fixed rules derived from training issues and their official patches, with graph retrieval isolated from the rest of the retrieval stack.
-The latter is supervised memory construction with a frozen solver, not reinforcement learning or evidence of self-improvement from the solver's own successful attempts.
+This matters for coding agents because issue similarity is only an indirect guide to the next useful action.
+Two issues can mention the same API and exception while requiring different edits.
+A memory that says what worked previously still leaves the agent to determine what is true now.
+Our starting point is to make that determination part of memory use.
 
-Our current contributions are an evidence-linked evaluation procedure, an audited result for the repository-card intervention, and a controlled experiment specification for graph-based transfer.
-The scientific question is which forms of prior repair evidence improve verified outcomes after their delivery, cost, and source eligibility have been established.
+We propose to organize experience around \emph{testable repair hypotheses}.
+For each retrieved candidate, the agent identifies its applicability condition, a small check that distinguishes competing explanations, and the edit justified by the check's outcome.
+The check runs against the current repository before the agent adopts the repair.
+The result can support the candidate, reject it, or leave it unresolved.
+Rejected experience remains useful: it eliminates an attractive but unsuitable direction.
 
-\section{Related work}
-\paragraph{Experience and graph retrieval.}
-ExpeL extracts reusable natural-language insights from agent experience without requiring updates to proprietary model weights \citep{expel2024}.
-HippoRAG combines knowledge graphs and Personalized PageRank for associative retrieval \citep{hipporag2024}.
-These works motivate \cg{}'s representation and retrieval choices; they do not establish that the same mechanisms improve a coding agent's repair success under a fixed interaction budget.
-MOOSEDev models typed project records and supersession, evaluating structured questions over project documentation with an LLM judge \citep{moosedev2026}; that endpoint differs from executable repair verification.
-SWE-agent demonstrates the importance of the agent--computer interface for software engineering \citep{sweagent2024}, making interface fidelity part of our experimental specification.
+The proposed contribution is this connection between experience retrieval and active diagnosis.
+Graph retrieval supplies candidate experiences; execution determines how they should influence the current decision.
+The paper asks whether this connection improves repair success, whether its benefit comes from executing the condition checks, and whether it helps when superficially related experiences prescribe incompatible actions.
 
-\paragraph{Skills, working memory, and transfer.}
-CODESKILL trains a skill-management mechanism while retaining a fixed coding policy; its reported Verified setup uses 350 training tasks and 150 evaluation tasks \citep{codeskill2026}.
-Our split size follows the same general design, but we do not claim to reproduce its task IDs, optimization procedure, or results.
-SWE-MeM studies adaptive working-memory management for long-horizon coding \citep{swemem2026}, whereas our new experiment supplies a fixed cross-task packet before solving.
-Agent Memory Distillation studies hierarchical teacher memory for smaller agents \citep{distill2026}; our experiment uses neither a small-model distillation objective nor teacher-weight training.
-Memory Transfer Learning distinguishes memory representations and reports that abstract knowledge can transfer more effectively than concrete traces in its evaluated settings \citep{transfer2026}.
-This motivates a rule-based transfer hypothesis, without guaranteeing its outcome in our repositories.
-
-\paragraph{Process measurements are intermediate outcomes.}
-The Working Set studies coherence in repository-scale agent tasks \citep{workingset2026}.
-Measure Before You Manage separates working-memory management and its evaluation \citep{measure2026}; its small policy-evaluation populations and incomplete official repair verification limit direct comparison with a fully graded SWE campaign.
-ClawTrace relates skill distillation to trajectory costs \citep{clawtrace2026}.
-We use these works to motivate measurements of delivery, repeated errors, and consumption cost, while keeping official repair verdicts as the outcome of interest.
-We do not turn their setting-specific findings into universal claims about which memories help or harm.
-
-Saha's cue-anchored memory study evaluates deterministic delivery on one coding task and repeated-compaction fact survival \citep{cueanchored2026}.
-Delivery and its audit are therefore established concerns.
-Our retention analysis reconstructs the original responses selected by a fixed history processor across 198 first trajectories, linked to their original predictions and frozen-verifier evidence; it neither introduces reinjection nor estimates its causal benefit.
-
-Recent scaffold optimization also uses persistent beliefs: BCO calibrates a document against observed outcomes \citep{bco2026}.
-Its two memory-QA rows select the best held-out result among three candidates, a disclosed selection step that limits interpreting them as untouched test estimates.
-CANOPY instead trains the policy through outcome-only reinforcement learning \citep{canopy2026}; it is a distinct intervention from our frozen-model memory injection.
-
-\section{Evaluation model}
-For task $i$ and condition $a$, let $M_{ia}$ denote the supplied memory, $D_{ia}$ actual delivery, $T_{ia}$ the trajectory, and $Y_{ia}$ the official verifier's binary result.
-These objects are linked rather than inferred from one another:
-\[
-  \text{eligible sources}\longrightarrow M_{ia}\longrightarrow D_{ia}
-  \longrightarrow T_{ia}\longrightarrow \text{submitted patch}\longrightarrow Y_{ia}.
-\]
-Each link has a separate check. Source IDs must satisfy the frozen split; delivered content must appear in the actual model input or matching tool response; submitted patches and trajectories must match their recorded hashes; and a positive result must agree with both the task report and the harness summary.
-An unbound or protocol-invalid attempt lacks an admissible outcome. Explicit empty-submission and verifier-setup-failure labels follow the matching frozen policy and are distinguished from tested failures.
-
-\paragraph{Fixed universes.}
-An analysis uses its preregistered task list, never the intersection of whichever receipts happen to exist.
-If a campaign is incomplete, we report completion and missingness against that universe; we do not present a complete paired effect estimate.
-An infrastructure-only verifier repair is recorded separately and bound to the unchanged prediction.
-A valid failed attempt is not replaced by a later successful solver run.
-
-\paragraph{Delivery gates.}
-Before interpreting a memory condition, at least 95\% of targets must receive the expected memory and there must be no phase-based refusal.
-For the Related-Lite card condition, the expected card must match the target repository.
-Connection errors and an unbound string in a log do not count as delivery.
-Passing this gate establishes exposure, not relevance, correctness, or causal mediation through the memory.
-
-\paragraph{Cost and protocol.}
-Solver call counts, submitted completion status, and repair verdicts are different measurements.
-We record actual provider input/output tokens and charges where available.
-In local SWE-agent 1.1.0 diagnostics, retokenizing only assistant text omitted tool-call output from the reported output-token total, and local estimated costs differed from provider receipts.
-We therefore do not interpret unaudited legacy cost totals as measured savings.
-The local runtime also preserves the provider's returned reasoning fields across tool turns and checks the options actually sent on the wire.
-These are protocol controls; the present observations do not establish a causal repair-rate effect of any individual protocol change.
-
-\section{Completed Related-Lite audit}
-\label{sec:relatedlite}
-\paragraph{Setting.}
-The completed conditions use the same frozen 99-task Related-Lite manifest and the same frozen SWE Context Bench verifier.
-The flat condition retrieves reference patches from the existing source pool.
-The original card condition (Card-v1, denoted Card) adds a repository-specific procedure card: test commands, environment repair conditions, reproduction routines, and workflow information.
-Its sources include pool-derived evidence and environment recipes checked in benchmark containers.
-This is an intervention on repository environment knowledge, not an isolated test of graph traversal.
-The actual retrieved patch sets can vary with agent-generated queries, so identical serving logic does not imply byte-identical patch inputs across runs.
-
-\paragraph{Saved solver settings.}
-All 594 first trajectories declare SWE-agent 1.1.0 at one Git commit and SWE-ReX 1.4.0.
-Selected settings agree across the six conditions: model alias \texttt{openai/deepseek-v4-pro}, temperature 0, top-$p$ 1, configured input/output limits of 100,000/8,192 tokens, 500-call/\$30 per-task limits, and LastNObservations with $n=5$.
-No fallback is configured.
-The version recorder reads Git HEAD without checking a dirty tree; these declarations do not attest historical solver file contents, the complete interpreter/dependency state, or every wire request.
-
-\paragraph{Receipt audit.}
-All 99 receipts in each condition pass task-identity, literal-boolean verdict, trajectory/prediction hash, and report/summary consistency checks.
-For nonempty patches, the initial audit also checks the frozen harness evidence inventory, its file hashes, recorded offline Docker attestations, and runtime identity before and after verification.
-The harness commit is recorded in the accompanying evidence index.
-One task has a later verifier receipt, but its original receipt is already a valid failure; the analysis retains that original result.
-
-An extended check of raw Docker logs flags Flat's matplotlib-23687: its original 15 log records reproduce the receipt's exact hash, but 21 later execution records have been appended.
-The original official report is unchanged and records failure (3/4 fail-to-pass and 791/791 pass-to-pass tests).
-The relationship of the appended execution records to that receipt is not fully established.
-A separate diagnostic verification of the identical prediction reproduces the original failure and passes the raw-log, frozen-runtime, report, and input-hash checks.
-It neither reruns the solver nor replaces the original outcome.
-We attach this independent evidence to that first prediction and retain the original provenance exception: the recheck does not reconstruct the historical execution.
-All reported first-prediction outcomes remain unchanged.
-
-\paragraph{Verdict semantics.}
-This frozen Related-Lite harness requires all fail-to-pass tests to pass for \texttt{resolved}, irrespective of pass-to-pass failures.
-Across the six original conditions, replaying all 287 complete recorded before/after comparisons exactly reproduces the reports; 15 setup failures and 292 empty predictions remain separate.
-Four officially resolved predictions contain a recorded pass-to-pass transition from PASSED to FAILED.
-Pass-to-pass success also admits some unchanged skipped, failed, or missing statuses.
-Thus neither label guarantees all regression tests passed. The logs contain parsed status maps, not complete raw test stdout; official scores remain unchanged, and these semantics are not transferred to Verified.
+\section{Why relevant experience can be insufficient}
+\label{sec:motivation}
+\paragraph{More guidance did not produce a clear gain.}
+Our completed exploratory Related-Lite experiment compares six memory interfaces on the same 99 tasks from SWEContextBench \citep{swecontext2026}.
+The solver is SWE-agent 1.1.0 with a DeepSeek V4 Pro model alias, temperature zero, a 500-call limit, and a history processor retaining the last five observations.
+Flat retrieves historical patches; Card adds a repository procedure card; Graph, Rules, and File list expose other representations of the available experience.
+Table~\ref{tab:motivation} retains every original condition.
 
 \begin{table}[t]
 \centering
-\caption{Audited Related-Lite first-prediction outcomes. The historical 88-task source-overlap sensitivity set does not replace the full 99-task denominator. Differences and exact two-sided McNemar tests are versus the contemporaneous Control on all 99 tasks. The historical Flat log exception remains disclosed in the text.}
-\label{tab:audit}
-\begin{tabular}{lrrrr}
+\caption{Completed Related-Lite results used to motivate method development. Each condition uses all 99 tasks and the benchmark's frozen verifier. These are earlier interventions, separate from the new applicability method.}
+\label{tab:motivation}
+\begin{tabular}{lrr}
 \toprule
-Condition & Fixed 99 & Sensitivity 88 & Difference & Exact $p$ \\
+Memory interface & Resolved & Difference from no memory \\
 \midrule
-Control & 17/99 & 16/88 & Reference & --- \\
-Flat & 18/99 & 18/88 & $+1.01\pp$ & 1.000 \\
-Card & 18/99 & 15/88 & $+1.01\pp$ & 1.000 \\
-Graph & 12/99 & 12/88 & $-5.05\pp$ & 0.227 \\
-Rules & 13/99 & 12/88 & $-4.04\pp$ & 0.424 \\
-File list & 9/99 & 8/88 & $-8.08\pp$ & 0.057 \\
+No memory & 17/99 & --- \\
+Flat patches & 18/99 & $+1.01\pp$ \\
+Patches + procedure card & 18/99 & $+1.01\pp$ \\
+Graph & 12/99 & $-5.05\pp$ \\
+Rules & 13/99 & $-4.04\pp$ \\
+File list & 9/99 & $-8.08\pp$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\paragraph{Outcomes.}
-On the fixed universe, both conditions resolve 18/99 tasks (Table~\ref{tab:audit}).
-Twelve successes are shared, six belong only to Flat, and six only to Card.
-The two-sided exact McNemar test gives $p=1$, and the paired 95\% bootstrap interval for Card minus Flat is $[-7.07,7.07]$ percentage points.
-The interval is compatible with effects in both directions; lack of significance is not evidence of equivalence.
-These tasks have been used in multiple prior interventions, so this is an exploratory audit rather than a newly untouched confirmatory evaluation.
+Flat and Card each gain one observed repair over no memory; both exact paired tests give $p=1$.
+Flat and Card share 12 successes and have six unique successes each.
+Their paired difference is $0\pp$, with a 95\% bootstrap interval of $[-7.07,7.07]\pp$.
+Thus richer repository guidance did not produce a demonstrated gain in this setting.
 
-\paragraph{Source-overlap sensitivity.}
-The complete historical 11-task near-duplicate exclusion list defines an 88-task sensitivity set.
-Flat resolves 18/88 and Card 15/88; the discordant counts are six versus three, with $p=0.508$ and interval $[-10.23,3.41]$ percentage points.
-Three Card-only successes on the full set are flagged by the prior patch-overlap scan with Jaccard similarity 1.
-A subsequent screen of all 693 original trajectories finds same-repository added-line Jaccard $\geq0.5$ on 17/99 targets in Flat, Card, Graph, File list and Card-v2, and 14/99 in Rules; seven detected targets lie outside the historical list (Appendix~\ref{app:overlap}).
-These overlap observations do not prove cheating or redefine the sensitivity set, and neither audit certifies all contamination channels.
+Patch memory reaches all 99 targets in both conditions, and the expected procedure card reaches 98.
+However, reconstructing 198 Flat/Card histories shows that an original memory response is retained for a median of only five action prefixes.
+The median trajectories contain 497 and 495 actions, respectively.
+This identifies a delivery constraint, while leaving open the more consequential question of what the agent should do with the experience.
+Our new comparisons keep memory persistent in every condition so that retention is held fixed.
 
-\paragraph{Actual exposure and mechanism checks.}
-The tool-response census finds patch memory on 99/99 targets in each condition, no missing trajectories, and no phase refusals.
-The correct frozen repository card appears exactly in 98/99 Card trajectories.
-The exception is a scikit-learn task that receives a Matplotlib card; we retain its result in the fixed universe.
-The registered 95\% exposure threshold is met, while this single routing failure remains part of the intervention's observed behavior.
-All 198 debug logs are present, with no matches to the enumerated rate-limit error patterns; this narrow log check does not rule out every provider-side failure.
+\paragraph{The same operation can be a repair or a bug.}
+A Requests training example makes the applicability problem concrete.
+Issue 1724's patch adds \texttt{method = builtin\_str(method)} to normalize an HTTP method in a Python 2 setting.
+Issue 2317 instead reports that this conversion turns Python 3 bytes \texttt{b'GET'} into the literal string \texttt{"b'GET'"}.
+Its training patch uses \texttt{to\_native\_string(method)}.
+A retrieved recommendation to perform the older conversion is related to the target but does not settle the correct action.
 
-A post-observation reconstruction of all 198 first trajectories distinguishes delivery from retention.
-Using the pinned history processor and each saved configuration (\texttt{last\_n\_observations}, $n=5$), the original served responses remain in a median of five recorded assistant-action prefixes per task in both arms, compared with median trajectory lengths of 497 for Flat and 495 for Card.
-Neither arm retains an original response at its last recorded action prefix.
-All 1,426 direct processor boundary checks agree with the reconstruction.
-This measures original response-content retention, excluding paraphrases or copies elsewhere; it does not reconstruct every wire request or establish forgetting or a causal effect.
-Figure~\ref{fig:retention} shows every recorded sequence. First retention ranges from prefixes 3--125 for Flat and 3--359 for Card, so five retained prefixes does not mean the first five actions.
+A short execution can distinguish the two situations: inspect the input type and compare the converted value with the intended method name.
+The transferable lesson is the condition on the conversion, including the case in which it should be rejected.
+This inspected training example motivates the method; it does not estimate how frequently such conflicts occur.
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.98\textwidth]{figures/original_response_retention.pdf}
-\caption{Original memory-response retention across all 198 first trajectories. Rows use the same fixed task-ID order in both panels. Blue marks a recorded input prefix retaining any original response; gray distinguishes before-first-retention and later absence. White is outside the recorded sequence. No outcomes determine row order or inclusion; absence here does not establish forgetting.}
-\label{fig:retention}
-\end{figure}
+\section{Applicability-driven experience use}
+\label{sec:method}
+Let $s_t$ contain the issue, current code, runtime, and observations available at step $t$.
+An experience contains a source problem and its repair evidence.
+Instead of mapping issue text directly to advice, the proposed procedure follows
+\[
+s_t \longrightarrow \text{candidate experiences}
+\longrightarrow \text{discriminating check}
+\longrightarrow \text{observation}
+\longrightarrow \text{next repair action}.
+\]
 
-The hard \texttt{exit\_cost} label occurs on 32 Flat tasks and 41 Card tasks, so Card does not meet its registered $<32$ threshold.
-Both conditions have a median saved model-call counter of 501 under the legacy post-response call-limit behavior.
-The label can reflect the call cap, and must not be read as 41 dollar-budget overruns.
-An audit of all 198 first trajectories reproduces the archived test-output proxy: 81 Flat tasks and 73 Card tasks match, with conditional median first-match indices of 128 and 98 assistant messages.
-The proxy accepts failed tests, zero-test runs, and standalone \texttt{OK} prints; it is not a first-passing-test measure.
-Card meets the numerical timing threshold under this proxy but fails its coverage threshold.
-A conservative direct-runner and positive-execution-summary census recognizes 78/99 Flat tasks and 67/99 Card tasks, with conditional median indices of 116.5 and 97 recorded trajectory entries.
-Among the 60 tasks recognized in both conditions, Card is earlier on 38 and later on 22.
-This census omits some real tests in unsupported command forms; its step counter also differs from the archived counter, and counted unittest loader placeholders require the sensitivity check below.
-Conditional timing and incomplete recognition do not establish an overall speedup, test relevance, or a cause of the unchanged repair score.
+\paragraph{Retrieve candidates.}
+\cg{} retrieves a small shared pool through dense similarity, lexical matching, and Personalized PageRank over experience and mechanism nodes.
+Reciprocal-rank fusion and diversity reranking produce the candidate packet.
+For the first method experiment, this packet is computed once and held identical between conditions.
+This isolates how experience is used after retrieval.
 
-The available gold-file call recognizer matches 61/99 Flat tasks and 49/99 Card tasks, with conditional median indices 212 and 165 assistant messages.
-Card meets this numerical median threshold on a smaller recognized subset.
-An exact-path-spelling sensitivity leaves Flat unchanged and recognizes 48 Card tasks, with median 161; the removed Card call names a different \texttt{\_\_init\_\_.py} and explicitly fails to replace its text.
-Both measures recognize mutation-like commands, including failed calls and incidental mentions, rather than certifying successful source edits.
+\paragraph{Make the repair hypothesis explicit.}
+For candidate $m$, the agent forms
+\[
+h_m=(c_m,\;q_m,\;e_m),
+\]
+where $c_m$ states the conditions needed by the source repair, $q_m$ is a check of a condition that matters for the target, and $e_m$ is the edit or debugging action supported by that condition.
+The check must distinguish plausible actions.
+Printing a version number is useful only when the version changes whether the repair applies; rerunning an unrelated passing test does not distinguish the candidates.
 
-\paragraph{Protocol diagnostic.}
-Two literal thinking/tool markers occur inside submitted actions on 12/99 Flat tasks and 19/99 Card tasks; their paired observations contain syntax-error or cancellation messages.
-On one fixed completed task in each of Flat, Card, and Control, 13/15 sampled logged responses contain independent reasoning content, while the stored assistant histories omit those fields.
-The inspected client also omits them when constructing messages, although this source check is not a capture of transmitted requests.
-These findings document execution limitations; they do not establish why the markers appeared, whether reasoning loss caused them, or their effect on repair performance.
+The initial implementation uses a common solver and tools to construct these hypotheses from the retrieved packet and current code.
+It does not require a separate model or a larger memory bank.
+At most two short checks are requested before editing, so the procedure spends its diagnostic budget on the most consequential uncertainty.
 
-\paragraph{Other archived interventions.}
-The extended audit also covers a graph-channel variant, an added-rule variant, and an added-file-list variant.
-All 99 prediction/verifier chains in each of these three conditions pass its checks, with 12, 13, and 9 recorded first-attempt repairs, respectively; eleven later solver reruns in the rule condition are not substituted.
-Their actual patch-memory exposure is 99/99, 95/99, and 96/99, with no phase refusals; the latter two meet their registered requirements for rule and file-list presence.
-Eleven SymPy tasks in the file-list condition receive paths with Matplotlib, Sphinx, or Astropy prefixes, illustrating that delivered candidates need not be useful repository locations.
-The rule retriever and file-list design used offline metrics on these same 99 targets during method selection.
-Together with runtime failures and the retained Flat provenance limitation, this prevents treating the archived counts as a clean confirmatory comparison of memory mechanisms.
-In a retrospective family of four comparisons against Flat, Holm-adjusted exact McNemar $p$ values are 1.000 (Card), 0.094 (Graph), 0.453 (Rules), and 0.047 (file list).
-The file-list difference is $-9.09\pp$ with a paired bootstrap interval $[-16.16,-3.03]$ percentage points; this interval is not adjusted for multiple comparisons.
-The observed difference does not isolate which aspect of the intervention or execution caused it.
-Figure~\ref{fig:archived-effects} shows the paired estimates for both fixed task universes.
+\paragraph{Execute, then choose.}
+A check returns supporting evidence, contradicting evidence, or an unresolved result.
+The agent records the observation together with the candidate it concerns.
+Supporting evidence allows the agent to adapt the proposed action to the target.
+Contradicting evidence removes that candidate from the current repair decision.
+An unresolved check, including an environment error, does not decide applicability.
+If the retrieved candidates remain unhelpful, the solver continues from the issue and repository.
 
-\begin{figure}[ht]
-\centering
-\includegraphics[width=0.98\textwidth]{figures/archived_effects_with_control.pdf}
-\caption{Archived Related-Lite first-prediction differences relative to Flat (left) and the contemporaneous Control (right). Bars are unadjusted 95\% paired percentile-bootstrap intervals (200,000 draws; seed 42), not inversions of the exact McNemar tests. These retrospective comparisons include operational failures and retain the historical receipt limitation; they do not isolate causal memory effects.}
-\label{fig:archived-effects}
-\end{figure}
+This three-way decision avoids treating an unsuccessful check as evidence that a repair is wrong.
+It also makes a negative memory result actionable: the agent can stop repeating a tempting edit whose required condition is absent.
 
-\paragraph{Control comparison.}
-The contemporaneous Control now has 99 checked first-prediction receipts and resolves 17/99.
-Its exact corresponding trajectories show no enumerated memory markers in initial prompts and no explicit memory calls; this is a direct-exposure check, not a general contamination certificate.
-Flat and Card each exceed Control by one observed repair ($+1.01\pp$), with respective paired bootstrap intervals $[-6.06,8.08]$ and $[-5.05,8.08]$ percentage points and exact $p=1$ for both.
-Neither comparison shows a stable gain, and neither establishes equivalence.
-In the retrospective five-comparison Holm family against Control, adjusted $p$ values are 1.000 (Flat), 1.000 (Card), 0.906 (Graph), 1.000 (Rules), and 0.287 (file list).
-The file-list percentile interval excludes zero but does not override its exact test ($p=0.057$) or that correction.
-The complete historical sensitivity list leaves Control at 16/88, Flat at 18/88, and Card at 15/88.
-Control has 48 hard \texttt{exit\_cost} labels, versus 32 for Flat and 41 for Card; these labels can denote the call cap.
-We retain runtime failures and empty submissions, never substitute later solver runs, and do not reuse the historical 14/99 Control.
+\paragraph{Validate the resulting repair.}
+The solver reruns its issue reproduction after editing and checks relevant existing tests.
+The benchmark verifier grades each submitted patch immediately after that task.
+The method's local condition checks use information available to the solver; the benchmark's held-out tests remain evaluation targets.
+At evaluation time the source memory bank is fixed.
 
-The same original test-summary recognizer covers 61/99 Control tasks, with conditional median first-match index 134.
-A deterministic source check finds that unittest can report a positive test count for an artificial \texttt{\_FailedTest} when the named test cannot be loaded.
-A uniform 297-trajectory sensitivity excludes observations with enumerated loader-placeholder markers: recognized coverage is then 61/99 Control, 78/99 Flat, and 66/99 Card, with conditional medians 146, 116.5, and 97.5.
-This preserves the original statistics and all repair outcomes; the revised summaries still do not certify test-body execution or overall speedup.
+\section{Experiments that test the argument}
+\label{sec:experiments}
+The development sequence centers on three questions.
+Each comparison changes a component needed by the method's argument.
 
-\paragraph{Separate adaptive Card-v2 revision.}
-A subsequently completed revision changes the environment-check and conditional-repair instructions using the same historical tasks.
-All 99 original prediction chains pass the frozen receipt audit; Card-v2 resolves 16/99, versus 18/99 for both Flat and Card-v1.
-Its differences are $-2.02\pp$, with paired 95\% intervals $[-8.08,3.03]$ against Flat and $[-9.09,5.05]$ against Card-v1.
-Exact $p$ values are 0.727 and 0.774; both become 1.000 after Holm correction within these two comparisons.
-The same 88-task sensitivity gives 16/88 for Card-v2, 18/88 for Flat, and 15/88 for Card-v1.
-Exact repository cards reach 97/99 targets with no phase refusals; the two unserved attempts remain included.
-The 39 hard \texttt{exit\_cost} labels fail the registered maximum of 32, without establishing 39 dollar-budget overruns.
-The completion analysis was attached after the arm started and partial outcomes were visible.
-This adaptive result does not establish a repair gain or a causal effect of the revised instructions; its statistics are supplied separately from the original six-condition bundle.
+\paragraph{Does checking applicability improve repairs?}
+Compare the same persistent memory packet with ordinary use and with explicit applicability checks.
+Keep the model, tools, task images, generation settings, and total budget equal.
+The outcome is verified repair success; trajectories show whether a candidate was accepted or rejected before editing.
+The first local pilot uses training tasks and a deliberately small shared budget to determine whether the intervention produces the intended behavior.
 
-\section{Verified 350/150 experiment}
-\label{sec:verified}
-\paragraph{Split and eligibility.}
-This campaign is separate from Related-Lite.
-We pin the official 500-task Verified dataset and deterministically allocate 350 training and 150 test tasks using repository-stratified largest-remainder allocation and a fixed hashed ordering (seed 42).
-The two ID sets are disjoint.
-The split is within repositories and is not chronological; it does not establish that test tasks are absent from the base model's training history or earlier project experiments.
-One issue-text near-duplicate pair is documented before formal solving; excluding its test member defines a fixed 149-task sensitivity analysis.
-The primary universe remains all 150 tasks.
+\paragraph{Does execution supply information beyond more reasoning?}
+Compare executed checks with a condition that writes down the same hypotheses and expected outcomes but does not run the extra checks.
+All conditions retain the ordinary issue reproduction and final testing.
+This comparison asks whether observing the current program changes repair decisions, rather than attributing a gain to additional instructions alone.
 
-\paragraph{Memory construction.}
-Only training issues and their official gold patches are used to derive rules.
-Each extracted record carries source identity and evidence references, with mechanical coverage and evidence-line checks.
-The complete bank contains 459 rules from 350 sources and 61 mechanism tags.
-Passing these checks does not prove that every generalized rule is semantically valid; semantic overgeneralization remains a limitation.
-A deterministic training-only sample of 30 rules received a source-reading AI audit: 20 were judged supported and 10 partly supported, with core edits grounded but errors in explanation or scope.
-Examples include widening an exact Boolean predicate to truthiness and reversing the explanation of which join comparison includes a filtered condition.
-These advisory judgments are neither blinded human annotations nor a correctness estimate for the full bank; the frozen bank and evaluation packets remain unchanged.
-Embeddings are computed locally with a pinned 384-dimensional MiniLM model, without additional embedding API calls.
-The solver weights remain fixed.
+\paragraph{Do applicability boundaries explain transfer?}
+Examine development cases in which related experiences recommend incompatible actions, alongside cases where the source repair applies directly.
+For each case, record the candidate decision before and after the discriminating observation and the resulting patch.
+A useful mechanism result is a wrong candidate being rejected and a correct repair following from that observation.
+Final selection and reporting must include the cases where probing costs time or rejects useful experience.
 
-\paragraph{Three conditions.}
-Control receives no reference memory.
-Flat and Graph share the same rule corpus, dense search, lexical search, rank fusion, diversity reranking, top-three limit, and text budget.
-Graph additionally enables the Personalized PageRank channel over the fixed rule/source/mechanism structure.
-All memory packets are constructed from public test descriptions before formal solver calls, then frozen; there are no test-time memory writes.
-Each packet is inserted once into the initial task input.
-The saved local configurations apply no history processors.
-A reconstruction of all 14 attempted formal slots and three separate training attempts preserves the initial task message at every recorded action prefix; all nine formal and both training memory attempts retain their full packets.
-This checks input retention, not repair efficacy or every wire request.
-This narrows the estimand to the effect of enabling the graph channel in this implementation, not the effect of every component in the broader \cg{} system.
+\paragraph{Evaluation split.}
+The separate SWE-bench Verified campaign \citep{swebench2024} allocates 350 tasks to memory construction and development and 150 to evaluation, with repository-stratified allocation and seed 42.
+Within the 350-task pool, an existing 70-task development partition excludes all of its source rules from the remaining 280-source bank.
+The bank contains 376 rules.
+These development tasks support method selection without using the 150 evaluation tasks.
+The earlier 150-task experiment is incomplete and supplies no aggregate effect estimate for this draft.
 
-The frozen packet contrast confirms a real intervention: the ordered rule IDs differ on 94/150 tasks, and the top-three sets differ on 87/150.
-All 150 tasks remain in the primary comparison, including those receiving identical packets.
-Restricting the reported result to tasks whose retrieval changes would answer a different question and is not the primary analysis.
+The principal evaluation will compare the selected method against no memory and the same memory without applicability checks.
+The decision to retain graph retrieval will depend on its contribution with memory use held constant.
+A larger graph, additional prose, or a new audit is not itself an experimental objective.
 
-\paragraph{Execution controls.}
-All three conditions use SWE-agent 1.1.0 and the exact DeepSeek V4 Pro endpoint, with no alternate-model fallback.
-The frozen per-attempt limits are 500 completed calls and a \$30 conservative budget-meter threshold, with equal generation settings and preserved reasoning history.
-A \$35 per-attempt reservation accounts for the post-response check; the OpenLux route has no provider-enforced price filter.
-The campaign's \$300 admission allowance includes \$20 for monitoring and may leave the campaign incomplete.
-Task blocks contain all three conditions; their six possible orders occur 25 times each across the 150 tasks.
-The first block uses one worker to measure resources, after which up to four may run if the host and campaign budget permit.
-No task is admitted without a reservation for its complete three-condition block.
+\section{Related work}
+\paragraph{Experience and skills.}
+ExpeL distills reusable insights from agent trajectories \citep{expel2024}.
+SWE-Exp uses historical experience for software issue resolution \citep{sweexp2025}, and MemGovern turns human experience into searchable cards \citep{memgovern2026}.
+CODESKILL learns a skill extraction and maintenance policy using feedback from a frozen downstream solver \citep{codeskill2026}.
+These approaches establish experience as a useful object of learning.
+Our question concerns how a retrieved experience should be tested against the current program before it determines an action.
 
-Solver containers receive only public task fields, the frozen memory packet, and a sealed base-commit checkout.
-The Git seal preserves the base tree and its ancestors while removing future or unreachable commit objects.
-The solver's Docker network has no external egress.
-Credentials remain on the host, and evaluation labels are consumed only by the host-side verifier.
-Each submission is immediately evaluated with the pinned official SWE-bench 4.1.0 harness and its task-specific original image.
-Verifier containers have the same two-CPU/eight-GiB cap across all conditions; grading logic is unchanged.
-Runtime, configuration, tool bundle, image, and source hashes are checked before and after execution.
-Ten-minute reviews inspect trajectories and execution progress without editing the frozen treatment.
+\paragraph{Repair patterns and context.}
+Getafix learns fix patterns from human patches and uses surrounding code to rank applicable edits \citep{getafix2019}.
+Thus executable edits and context-sensitive repair reuse are established ideas.
+The proposed direction here is interactive discrimination: an agent uses a retrieved experience to choose an observation, and that observation changes which repair hypothesis it follows.
+Its value must be established against ordinary repair reasoning and testing.
 
-\paragraph{Analysis plan.}
-The primary contrast is Graph minus Flat, and the secondary contrast is Flat minus Control.
-We use two-sided exact McNemar tests with Holm correction over these two registered comparisons, and paired-task bootstrap confidence intervals with 200,000 replicates and seed 42.
-We report outcomes against the full 150-task universe, plus the predeclared 149-task sensitivity set.
-Raw provider usage and a separate conservative budget meter are retained; unreconciled estimates do not establish cost efficiency.
-Other repository or task slices are exploratory.
-Budget or infrastructure interruption preserves all artifacts and leaves the campaign incomplete; it does not shrink the primary denominator.
+\paragraph{Graph retrieval and working memory.}
+HippoRAG motivates associative retrieval with Personalized PageRank \citep{hipporag2024}.
+SWE-MeM studies working-memory management \citep{swemem2026}, while cue-anchored memory studies delivery through coding-task and compaction experiments \citep{cueanchored2026}.
+These address candidate access and retention.
+Holding delivery fixed lets our experiments focus on the information gained by checking applicability.
 
-\paragraph{Current evidence.}
-The 350-source bank and 450 memory packets are complete.
-Training-only real-agent runs exercise memory delivery, the provider protocol, and the official verifier before formal deployment.
-Their task is excluded from the smoke memory bank and their outcomes are not test-set observations.
-All 150 images and 450 task/condition inputs are frozen; the original provider passed all three training-only gates before an account-credit error paused launch.
-A subsequently authorized OpenLux route uses the same DeepSeek V4 Pro snapshot alias as the archived experiments, preserving the split, packets, images, and task order in a separate runtime version.
-Its tool/reasoning probes and all three training protocol/delivery checks passed.
-On the excluded training task, Control's original prediction was officially resolved; Flat's empty patch and Graph's reproduction-only patch were unresolved.
-The original scheduler closed at 12:52 UTC with two complete blocks: all three conditions resolve Django11740 and none resolves Xarray6992.
-A seventh attempt, Django16256 Flat, autosubmits an empty patch after consecutive command timeouts and is officially unresolved; its outer status classification stops new-block admission.
-The original registered analysis remains incomplete and has no paired effect estimate.
-A separately recorded amendment then resumes only previously unstarted slots, accepting ordinary agent-stop outcomes when the original protocol, delivery, prediction and verifier audits pass.
-It retains all seven original attempts and terminal states, the 150-task denominator, and the original runtime, inputs, limits and budget policy.
-This post-start interpretation change is disclosed separately; any eventual combined analysis is not an untouched confirmatory experiment.
-The amendment closed at 14:05 UTC after four complete blocks when a Sphinx Control response supplied a null optional array argument that crashed the agent's tool parser.
-Its 47 provider calls pass the protocol audit, but the generic error stop remains inadmissible and the official receipt records an empty patch.
-Fourteen original slots were attempted, thirteen pass the full audit, and 436 remain unstarted; no failed attempt is replaced.
-A separately frozen parser correction passes all three training protocol/delivery gates: Control and Flat resolve the excluded training task, while Graph submits an empty patch.
-All three runs record zero optional-null omissions; the recorded-call regression supplies coverage of the original defect.
-The formal test runtime and its original outcomes remain unchanged.
-OpenLux sometimes omits cost and reports non-additive token counts, so raw counters and conservative budget estimates are stored separately without a billing claim.
-Ten-minute reviews continued until verification ended; incomplete semantic reviews remain recorded.
+\section{Scope of the current evidence}
+The completed Related-Lite results are exploratory and include related source fixes that can closely match target repairs.
+The benchmark's frozen \texttt{resolved} criterion requires fail-to-pass success but does not veto every pass-to-pass regression.
+We therefore use those results to motivate development, while reporting new Verified results under its own harness.
+The Requests example is an inspected training case.
+Neither it nor the earlier aggregate scores establishes a repair gain for the proposed method.
 
-\section{Discussion and limitations}
-The completed audit rules out a particular ambiguity: the card intervention's lack of measured gain cannot be explained by widespread absence of any memory response, because actual delivery is observed.
-However, the reconstructed original responses are transient, and delivery alone does not establish sustained availability.
-The audit also leaves open incorrect relevance judgments, stale environments, provider variation and insufficient repair skill.
-Two frozen Pytest test patches already contain their candidate fixes; Matplotlib's target test also passes before candidate application (Appendix~\ref{app:readiness}).
-
-A training-only case illustrates conditional transfer.
-Flat and Graph both retrieve two rules from Requests1724, whose Python 2 Unicode-method repair adds \texttt{builtin\_str(method)}.
-The excluded training task Requests2317 instead reports a Python 3 bytes-method failure at that line; its official training patch replaces the call with \texttt{to\_native\_string(method)}.
-The retrieved rules already state the Python 2 condition.
-In the new Graph training run, the agent observes the correct conversion output but ultimately submits an empty patch at its budget limit.
-Flat, which receives both source rules as well, is officially resolved on the same training task.
-This documents version dependence and a gap between observing a relevant operation and submitting a repair; it does not establish that memory caused the failure or that an applicability filter improves outcomes.
-A narrow, case-motivated scan of all 350 training patches recovers this pair only; this is neither an independently sampled case nor an estimate of prevalence.
-
-The new Verified design reduces several confounds by sharing the rule corpus, packet size limits, model settings, and task order policy while varying one retrieval channel.
-It still has important limits: a single model endpoint, one stochastic attempt per condition, a within-repository random split, official training-patch supervision, and potential historical task exposure.
-The new protocol also changes multiple execution details relative to historical experiments.
-Consequently, a future difference from an old score would not isolate the effect of memory.
-
-A stronger causal account would require an independent environment-by-memory intervention, repeated attempts or additional model backbones, and process measures that are validated against real test execution.
-Such work should use training/development evidence for method selection and freeze evaluation eligibility before inspecting outcomes.
-The aspiration to improve memory should not make success the inclusion criterion for evidence.
+The unresolved scientific question is whether experience-guided checks choose better actions often enough to repay their cost.
+A successful method should improve verified repairs at a matched budget and show decisions changed by informative observations.
+If the checks merely lengthen trajectories, the intervention has not achieved its purpose.
 
 \section*{Reproducibility statement}
-Frozen task lists, source and runtime hashes, per-task official receipts, and the evidence map support the reported claims.
-Five local anonymous supplements reproduce 18 Related-Lite paired comparisons, 594 exposure checks, 198 retention records with 1,426 processor-boundary checks, all 594 original prediction/report joins, and 287 frozen status comparisons.
-Delivery uses actual responses and cards; retention uses source-bound structural histories.
-The verification package contains 302 nonempty predictions with original official reports and 292 empty-prediction exemptions, retaining the historical log exception.
-These packages do not rerun tests or the complete runtime/Docker audits.
-The patch-overlap supplement replays Appendix~\ref{app:overlap} from hashed features.
-Credentials and host-only evaluation labels are excluded from agent inputs.
-The complete anonymous experimental release and human author review remain to be completed.
+Code, task splits, trajectories, patches, and per-task verification records accompany the working repository.
+The completed result table can be recomputed from the existing statistical package.
+Operational logs and detailed evidence inventories are maintained with the experiments.
 
 \section*{AI use statement}
-Generative AI tools were used to assist literature discovery and interpretation, formulate and refine hypotheses, design experiments, implement and test code, extract training-memory rules, audit trajectories, analyze results, and draft this manuscript.
-DeepSeek V4 Pro is also the experimental solver and the source-rule extraction model in the new Verified campaign.
-Automated progress reviews are advisory; official harness receipts determine repair outcomes.
-This draft has not yet completed human author review of all AI-assisted claims and artifacts. The final disclosure must reflect the review actually performed before submission.
+Generative AI assisted literature review, method development, implementation, experiments, analysis, and writing.
+The manuscript remains a working draft pending human review.
 
 \bibliography{references}
 \bibliographystyle{iclr2027_conference}
-
-\clearpage
-\appendix
-\section{Full-universe patch-overlap audit}
-\label{app:overlap}
-We retrospectively compare the reference patches actually recorded in all seven conditions, retaining every original task irrespective of its outcome.
-The source extraction joins 693 original trajectory identities and 641 bound tool-response hashes to the existing delivery audits, yielding 3,020 patch blocks on 585 task--condition records.
-Separately, we compare all 291 patches in the observed source-pool snapshot with all 99 pinned Related-Lite target patches (28,809 pairs).
-The snapshot was collected on September 7, 2026; it does not alone attest historical availability.
-
-The primary text screen takes the maximum per-block Jaccard between sets of nonblank added-line contents, stripping surrounding whitespace and excluding diff file headers.
-It ignores line order and multiplicity and may overstate similarity for short/common edits.
-We also parse hunk bodies and compare signed changes and file/sign/line features retaining indentation.
-All threshold counts below use same-repository sources; allowing all repositories gives the same counts.
-
-\begin{table}[h]
-\centering
-\caption{Targets with observed patch overlap, with all counts against the fixed 99-task universe. The first row measures source-pool availability; other rows measure recorded delivery. Missing memory is not certified clean knowledge. No repair outcomes select these records.}
-\label{tab:overlap}
-\begin{tabular}{lrrrr}
-\toprule
-Scope & Received patches & $J\geq0.5$ & $J\geq0.7$ & $J=1$ \\
-\midrule
-Full source-pool snapshot & --- & 18 & 12 & 10 \\
-\midrule
-Control & 0 & 0 & 0 & 0 \\
-Flat & 99 & 17 & 11 & 8 \\
-Card & 99 & 17 & 11 & 8 \\
-Graph & 99 & 17 & 11 & 8 \\
-Rules & 95 & 14 & 8 & 5 \\
-File list & 96 & 17 & 11 & 8 \\
-Card-v2 & 97 & 17 & 11 & 8 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Seven targets outside the historical exclusion list reach $J\geq0.5$ in every memory condition.
-One, Django-34525, shares 38 of 44 normalized added lines in the union with source Django-16820 ($J=0.864$); its file/sign comparison is $39/46$.
-For Sympy-26642, the one shared added line is the complete Python-file fix; the other is a contributor entry, as the exact-hunk follow-up shows (Appendix~\ref{app:hunks}).
-The historical 88-task sensitivity remains unchanged and is not a complete source-overlap certificate.
-
-No returned source ID belongs to the 99 target IDs, and no block contains its target's entire patch verbatim.
-This does not preclude identical edits with different context or hunk locations.
-The current source patch, after trimming outer whitespace, appears literally in 2,939 blocks; 81 lack that full-patch match, including 64 with interrupted hunks.
-Text-screen and recognized-hunk added features agree on all observed blocks, but incomplete delivery remains explicit.
-One pinned target patch, Sympy-27868, fails both our hunk parser and Git's read-only syntax check at line 319; its strict-hunk comparisons are unknown, while its original bytes and task membership are retained.
-The file/sign threshold of 0.5 yields 16 observed targets in each memory condition except Rules (13).
-
-The hashed-feature supplement reproduces every pair and task record using only the Python standard library.
-It does not re-extract private histories or repeat source capture.
-Lexical overlap does not identify unauthorized access, actual use or a causal contribution to a repair; legitimately related tasks can share fixes.
-Cards, rule prose, test hints, pretraining and unrecorded channels remain outside this patch-block certificate.
-All original verifier outcomes are preserved, with no new task exclusion or effect estimate.
-
-\clearpage
-\section{Exact patch-hunk correspondence}
-\label{app:hunks}
-A retrospective follow-up compares complete file hunks across the same 28,809 source--target pairs and 693 original records, after inspecting the seven lexical flags.
-It retains path headers, hunk coordinates, context, order, indentation and no-newline markers; Git object hashes and mode metadata are outside this equality claim.
-The Python-file comparison includes every changed \texttt{.py} file and its complete hunks, including comments and docstrings.
-Empty Python-file sets and malformed patches remain unknown.
-No repair outcomes select pairs.
-
-Nineteen targets have the same nonempty Python-file sets and exact hunks as a source.
-Ten match on every changed file; the other nine differ only by additional target documentation, changelog or contributor-metadata files.
-Every source file's hunks match its target counterpart in these 19 pairs.
-To certify recorded delivery here, the complete current source patch must occur literally in a bound response; matching IDs or partial blocks do not suffice.
-
-\begin{table}[h]
-\centering
-\caption{Exact hunk matches, retaining all 99 targets. Counts measure source-pool availability or confirmed complete delivery, not successful repairs. Missing or partial delivery remains explicit.}
-\label{tab:hunks}
-\begin{tabular}{lrr}
-\toprule
-Scope & All changed files & All Python files \\
-\midrule
-Current source snapshot & 10 & 19 \\
-Control & 0 & 0 \\
-Flat & 8 & 16 \\
-Card & 8 & 16 \\
-Graph & 8 & 16 \\
-Rules & 5 & 13 \\
-File list & 8 & 16 \\
-Card-v2 & 8 & 16 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-All seven new lexical flags have exact Python-hunk matches in the pool.
-Six have confirmed complete matching delivery in every memory condition; Django-34525's full source-patch delivery remains unconfirmed.
-An additional target, Matplotlib-23172, exactly matches source Matplotlib-23299 in \texttt{lib/matplotlib/\_\_init\_\_.py}, including the backend-preservation fix in \texttt{rc\_context}.
-Its extra release note reduces added-line Jaccard to $3/8=0.375$, below the earlier threshold; all six memory conditions received the complete matching source.
-Thus whole-patch lexical thresholds can miss exact implementation fixes when auxiliary files differ.
-
-SWE-ContextBench explicitly includes related issues sharing a resolving pull request \citep{swecontext2026}.
-These exact matches can arise from the benchmark's intended construction; they do not establish unauthorized access or causal use by an agent.
-A separate, incomplete literal replay is described in Appendix~\ref{app:literal}.
-The original scores and historical 88-task sensitivity remain unchanged.
-The follow-up's hashed-file replay reproduces every pair and record using isolated standard-library Python; Git's weaker stable patch-ID check independently agrees on all 19 Python-file pairs.
-Human semantic review remains pending.
-
-\clearpage
-\section{Literal memory replay and verifier readiness}
-\label{app:literal}
-A separate diagnostic freezes all 99 targets in lexicographic order.
-For each target, it takes the first source block from the first recorded Flat \texttt{query\_memory} response.
-It submits the exact current source patch only if the complete patch occurs in that block and the repositories match; otherwise it submits an empty patch.
-Later sources, later queries, target gold patches, overlap scores and repair outcomes cannot select a substitute.
-This yields 95 nonempty predictions and four empty predictions.
-Queries and source order inherit earlier solver trajectories, so this is a trajectory-conditioned replay, not an independent agent benchmark or a claim of zero historical inference cost.
-It makes no new model calls.
-
-The replay uses the archived verifier code, offline containers and immediate per-task verification.
-Its new case files use every pinned parquet field, with missing values represented as JSON null.
-Comparison with the archived cases found 31 field differences across 25 tasks: 25 nullable hint differences, five version differences, and one gold-patch difference.
-For Sympy-27868, four Unicode line/paragraph separators in the archived patch are LF characters in the parquet; Git accepts the former diff and rejects the latter.
-The transformation's upstream cause is unknown.
-The malformed parquet patch remains unchanged, and these new case files do not replace archived evaluation inputs.
-
-The first run stopped after seven attempts, retaining 92 unstarted tasks and every original receipt.
-Astropy-4973's official false verdict explicitly reports a verifier setup failure: its offline image lacks build dependencies, so the submitted patch was not validly tested.
-The runner checked receipt integrity but failed to reject this readiness error, admitting five further tasks before manual inspection stopped it.
-The original flag and a separate retrospective readiness classification are both preserved.
-Among the retained per-task reports, Django-1891's literal source Django-13315 receives an official resolved verdict.
-No overall replay repair rate or effect estimate is calculated from this incomplete run.
-A corrected runner separately checks verifier readiness and stops on explicit infrastructure errors.
-Original agent scores, task universes and the stopped replay remain unchanged.
-
-An isolated dependency-only image allowed Astropy to import but still yielded zero baseline tests; the corrected runner stopped on that explicit setup error.
-A further image precompiled the existing extensions without changing the tracked source diff.
-Initial compilation took 147.8 seconds, exceeding the verifier's 120-second inner pytest limit.
-With the same case, source patch and verifier code, this diagnostic then completed: the target test changed from failed to passed and all 55 preservation tests passed.
-Both earlier failures are retained, and this known-failure diagnostic is not pooled into a replay score.
-The frozen harness did not retain raw pytest output for the zero-result attempt, limiting attribution of its exact exit cause.
-After the further diagnostics below, a fresh, separately frozen full-99 replay starts with five declared prepared-image substitutions and mandatory raw-output checks.
-The seven-attempt run remains closed; the new run is ongoing and supplies no complete repair rate here.
-
-\clearpage
-\section{Further readiness diagnostics and test-patch scope}
-\label{app:readiness}
-Five additional single-task diagnostics retain the same literal predictions, canonical cases and frozen verifier, with no new model calls.
-They neither replace the stopped seven-attempt replay nor supply a pooled repair rate.
-The original Matplotlib image's final report says only that the candidate patch failed to apply.
-Newly captured subprocess output also shows an earlier reinstall failure and two pytest collection errors: offline rebuilding cannot download FreeType, leaving the installed testing module without a helper added by the test patch.
-A separate image caches the exact FreeType and Qhull archives named by the original build metadata and limits compilation to two jobs.
-Reinstallation then succeeds and all 195 requested statuses are collected.
-The candidate still fails to apply, and the target test already passes before its application.
-There is no after-patch test result for this candidate.
-
-\paragraph{Preapplied implementation changes.}
-A static audit compares both patch fields of all 99 canonical cases with the pinned parquet.
-An explicit path rule identifies Python files outside test directories and filenames in exactly two test patches, Pytest-10341 and Pytest-9358.
-The paths are \texttt{src/\_pytest/pathlib.py} and \texttt{src/\_pytest/tmpdir.py}; their gold \texttt{patch} fields contain only changelog entries.
-Every file hunk of each already selected literal candidate exactly matches a hunk sequence in its \texttt{test\_patch}, including coordinates and context.
-The verifier applies these test patches before the candidates.
-After separate offline dependency preparation, all three requested target tests are reported passed before candidate application; raw output confirms the corresponding test methods.
-Both candidates then fail Git application, consistent with their fixes having already been applied.
-These failures do not establish that the remembered changes were irrelevant.
-Pytest-10341 also has two other baseline failures, retained in the raw output.
-The verifier's existing test-name matching and pretend-version override remain unchanged.
-The upstream cause of the field split is unknown; the path screen is not a semantic certificate for all other files.
-No field, task membership, exclusion or original score is changed.
-
-\paragraph{A verified source-patch transfer.}
-A separate scikit-learn image installs Cython 0.29.37 and precompiles its existing checkout with two jobs, retaining an empty tracked source diff.
-Build and import take 203.1 seconds.
-The unchanged source-25500 patch is then evaluated on target-25763.
-Its target test changes from failed to passed and all 45 preservation tests pass, with matching raw pytest output and official report.
-This selected known-failure diagnostic establishes one executable transfer; it does not estimate prevalence, isolate the environment repair's cause or identify a causal advantage over another agent condition.
-
-\paragraph{Admission and evidence.}
-Report-only readiness had missed the first Matplotlib diagnostic's intermediate failures because its final report lacked an infrastructure-error label.
-The original flag is retained.
-A new runner checks captured output hashes and rejects explicit install, pytest collection/invocation, timeout and signal failures before admitting another task.
-It distinguishes ordinary failing tests and patch-application errors.
-Retrospective checking rejects the first Matplotlib attempt and accepts the other four captured sequences; this does not certify stages never executed after application failure.
-The wrapper captures byte writes returned by the frozen run/create shim, preserving stdin and exit status; inherited OS writes from other Docker verbs are outside scope.
-Twenty focused software checks pass.
-All five services are closed, and the local copies match 449 remote file hashes in total.
-Each package's source-image and input-preservation checks pass, while all original failures and the full 99-task denominator remain intact.
-
-\clearpage
-\section{Historical target-test transitions}
-\label{app:target-transitions}
-The already-passing target tests in the new readiness diagnostics motivate a posthoc check of all 594 original records from the six-condition experiment.
-This check replays the previously frozen status audit exactly, including its receipt/report joins, before classifying each recorded target status before and after a prediction.
-It runs neither a solver nor a verifier and preserves the original outcomes and denominators.
-The 292 empty submissions and 15 setup failures remain distinct from 287 complete comparisons.
-
-None of the 287 complete comparisons records every target test passed before the candidate.
-All 87 original official resolved labels therefore contain at least one target not recorded passed beforehand.
-In 71 of these records, every target is recorded \texttt{FAILED} before and \texttt{PASSED} after.
-The other 16 include \texttt{ERROR} and, in one case, \texttt{MISSING} beforehand; neither status is silently treated as an observed test failure.
-
-\begin{center}
-\begin{tabular}{lrrr}
-\toprule
-Condition & Complete comparisons & Official resolved & All targets initially failed \\
-\midrule
-Control & 45 & 17 & 14 \\
-Flat & 63 & 18 & 14 \\
-Card-v1 & 54 & 18 & 16 \\
-Graph & 56 & 12 & 9 \\
-Rules & 37 & 13 & 10 \\
-File list & 32 & 9 & 8 \\
-\bottomrule
-\end{tabular}
-\end{center}
-The last column counts resolved records whose every target initially has the exact status \texttt{FAILED}.
-All 16 resolved records outside this group are Django records, and none uses the status audit's baseline fallback.
-The 1,622 target-test occurrences repeat tasks across conditions and are not independent observations.
-
-This census uses the archived parsed status maps, not complete original pytest stdout.
-It does not certify the new prepared images, dismiss the two Pytest field anomalies, change the known preservation-test regressions, or establish a causal memory advantage.
-The new literal replay, its readiness diagnostics, adaptive Card-v2 and the separate Verified experiment remain outside this historical census.
-Their baseline witnesses do not replace historical maps, and historical maps do not overwrite their new failures.
-The reproduction plan binds the existing status bundle and the new classifier; a second execution reproduces all classifications and counts.
 \end{document}
