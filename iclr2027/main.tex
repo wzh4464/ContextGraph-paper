@@ -14,7 +14,8 @@ We study repair memory as a way to supply these missing requirements during code
 On a Django development task, an ordinary repair and an additional issue-based review pass official verification but discard query parameters during redirection.
 Supplying a repair of the same API enables the writer to preserve both the required deployment prefix and the omitted query parameters.
 Providing that history in the first call produces the same code logic as a later history-guided revision, using one target repair call instead of two.
-An executed source relation identifies the missing behavior, but its delivery yields the same revision as the original historical patch.
+A second development case in pytest reaches both method-level and class-level skip requirements in one history-informed repair call, where the observed ordinary sequence needed a diagnostic revision.
+An executed source relation identifies the missing Django behavior, but its delivery yields the same revision as the original historical patch.
 The evidence supports a simple procedure: give the writer the relevant historical requirement and evaluate whether the resulting repair preserves it together with the current requirement.
 \end{abstract}
 
@@ -99,11 +100,21 @@ An independently prepared check combines the deployment prefix with repeated que
 The input is withheld from all writers and executed after their official verifications.
 Both history-guided revisions and the direct history generation preserve the exact prefix and query string; the initial and issue-reviewed candidates lose the query string.
 
+\paragraph{A second application avoids a failed initial repair.}
+The public issue in Pytest 7236 concerns a skipped test method whose \texttt{tearDown()} still runs under \texttt{--pdb}.
+Source 10081 records the corresponding class-level skip requirement.
+One call supplied with this history adapts the source helper to the target's existing \texttt{\_\_unittest\_skip\_\_} flags and checks both the method and its containing class.
+It passes official verification (1 fail-to-pass and 51 pass-to-pass tests), both skip checks, and a joint session that also checks a normal test's lifecycle.
+The earlier ordinary initial call fails; one issue-only diagnostic revision then repairs both skip conditions using the runtime skip state.
+Direct history reaches these measured behaviors in the first repair call, using 8,346 provider-reported tokens compared with 25,883 for that observed two-call sequence.
+
 \section{Related work}
 ExpeL distills reusable insights from experience, and Getafix learns applicable edit patterns from human repairs \citep{expel2024,getafix2019}.
 ExpeRepair uses historical test demonstrations and reflective insights to generate reproduction and boundary tests \citep{experepair2026}.
 MIRA constructs repair memory from SQL corrections and uses database evidence to activate and combine applicable repair units \citep{mira2026}.
-Our empirical focus is the missing requirement: whether historical information completes a repair that the reported issue and official tests leave incomplete, and when that information should enter generation.
+STAIR abstracts trajectories into hierarchical plans supplied before repair, including guidance that completes partial fixes \citep{stair2026}.
+\citet{laterequirements2026} study late requirement disclosure in coding-agent sessions and controlled tasks.
+Our development comparison examines when the compact source issue and patch suffice to preserve the historical and current requirements together, and whether an additional revision or executed-relation input changes the result.
 
 \section*{AI use statement}
 Generative AI assisted literature review, method development, implementation, experiments, analysis, and writing.
