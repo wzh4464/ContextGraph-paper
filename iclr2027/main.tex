@@ -11,11 +11,11 @@
 \begin{abstract}
 Past repairs record requirements that a new issue may leave unstated.
 We study repair memory as a way to supply these missing requirements during code generation.
-On a Django development task, an ordinary repair and an additional issue-based review pass official verification but discard query parameters during redirection.
-Supplying a repair of the same API enables the writer to preserve both the required deployment prefix and the omitted query parameters.
-Providing that history in the first call produces the same code logic as a later history-guided revision, using one target repair call instead of two.
+On a Django development task, both a method writer and a complete repository agent produce ordinary repairs that pass official verification but discard query parameters during redirection.
+Supplying a repair of the same API enables both to preserve the required deployment prefix together with the omitted query parameters.
+For method generation, providing that history in the first call produces the same code logic as a later history-guided revision, using one target repair call instead of two.
 A second development case in pytest reaches both method-level and class-level skip requirements in one history-informed repair call, where the observed ordinary sequence needed a diagnostic revision.
-An executed source relation identifies the missing Django behavior, but its delivery yields the same revision as the original historical patch.
+A further complete-agent comparison reaches the same Django fix with a retrieved distilled rule or the original repair that it summarizes.
 The evidence supports a simple procedure: give the writer the relevant historical requirement and evaluate whether the resulting repair preserves it together with the current requirement.
 \end{abstract}
 
@@ -38,11 +38,12 @@ The comparison determines whether the corrective information requires a separate
 \label{sec:method}
 
 \paragraph{Supply the requirement during generation.}
-The repair writer receives the target issue, initial implementation, and selected source issue and patch.
+The repair writer receives the target issue and retrieved repair memory before editing.
+In both studied cases, this source is the first entry in a frozen BM25 retrieval packet over memory built from the source partition.
 The historical record describes an additional behavior for the new repair to preserve.
-The writer returns a repaired method adapted to the target implementation while preserving the method's public signature and decorator.
-The procedure uses one target repair call.
-Our experiments supply a source repair of the same API to study how its information changes the result.
+We use either the stored distilled rule or its original source issue and patch as the memory input.
+We study two writers: a method generator supplied with the initial implementation, and a complete SWE-agent that browses the repository, edits code, runs tools, and submits a patch.
+The method generator returns one repaired method while preserving its public signature and decorator; the repository agent controls its own sequence of actions.
 
 \paragraph{Measure the requirements together.}
 We immediately evaluate every generated patch with the official SWE-bench verifier \citep{swebench2024}.
@@ -50,7 +51,6 @@ To measure the behavior contributed by the source repair, a separate writer gene
 A normal execution changing from false on the buggy source to true on the repaired source demonstrates the historical behavior on the supplied inputs.
 We then execute this check unchanged on the patched target.
 An issue check measures the reported requirement, and a joint input exercises it together with the historical requirement.
-These are measurement programs; the direct repair writer receives only the issue, initial code, and raw history.
 
 \section{Evidence: a historical requirement completes the repair}
 \label{sec:evidence}
@@ -66,10 +66,10 @@ Official verification passes, and the issue check confirms that the deployment p
 The source check executes normally on this candidate and observes that both query strings are discarded.
 
 \paragraph{History supplies the corrective information.}
-Three independent revision calls start from this candidate and receive either the issue-based evidence alone, the historical issue and patch, or the executed source relation.
+Two independent revision calls start from this candidate and receive either the issue-based evidence alone or the historical issue and patch.
 The issue-based review retains the initial patch.
-Both memory conditions replace path concatenation with \texttt{get\_full\_path(force\_append\_slash=True)}, producing byte-identical patches that preserve the prefix and query.
-All calls use the same model, temperature 0.7, and a 16,384-token output allowance.
+The historical issue and patch lead to a replacement of path concatenation with \texttt{get\_full\_path(force\_append\_slash=True)}, preserving the prefix and query.
+These method-generation calls use the same model, temperature 0.7, and a 16,384-token output allowance.
 
 \paragraph{The information can be supplied in the first call.}
 We then append the identical historical issue and patch to the original initial-generation prompt, without supplying a candidate or diagnostic feedback.
@@ -88,7 +88,6 @@ Procedure & Calls & Prefix & Query & Joint \\
 Issue only & 1 & Pass & Fail & Fail \\
 Issue + ordinary review & 2 & Pass & Fail & Fail \\
 History in revision & 2 & Pass & Pass & Pass \\
-Executed relation in revision & 2 & Pass & Pass & Pass \\
 History in first call & 1 & Pass & Pass & Pass \\
 \bottomrule
 \end{tabular}
@@ -98,23 +97,39 @@ History in first call & 1 & Pass & Pass & Pass \\
 An independently prepared check combines the deployment prefix with repeated query parameters and percent-encoded values:
 \texttt{keep=a\%2Fb}\allowbreak\texttt{\&keep=c\%20d}.
 The input is withheld from all writers and executed after their official verifications.
-Both history-guided revisions and the direct history generation preserve the exact prefix and query string; the initial and issue-reviewed candidates lose the query string.
+The history-guided revision and the direct history generation preserve the exact prefix and query string; the initial and issue-reviewed candidates lose the query string.
 
 \paragraph{A second application avoids a failed initial repair.}
-The public issue in Pytest 7236 concerns a skipped test method whose \texttt{tearDown()} still runs under \texttt{--pdb}.
+The public issue in Pytest 7236 concerns a skipped test method whose \texttt{tearDown()} still runs under \texttt{-{}-pdb}.
 Source 10081 records the corresponding class-level skip requirement.
 One call supplied with this history adapts the source helper to the target's existing \texttt{\_\_unittest\_skip\_\_} flags and checks both the method and its containing class.
 It passes official verification (1 fail-to-pass and 51 pass-to-pass tests), both skip checks, and a joint session that also checks a normal test's lifecycle.
 The earlier ordinary initial call fails; one issue-only diagnostic revision then repairs both skip conditions using the runtime skip state.
 Direct history reaches these measured behaviors in the first repair call, using 8,346 provider-reported tokens compared with 25,883 for that observed two-call sequence.
 
+\paragraph{The gap also occurs in a complete repository agent.}
+We run a fresh pair of SWE-agent attempts on Django 14404, supplying either no memory or the same first-ranked source issue and patch before the agent begins.
+These runs use DeepSeek V4 Pro0423 through OpenRouter, temperature 0, and a 32,768-token output allowance per call; the preceding method-generation comparisons use the 0813 snapshot.
+Both agents browse the repository, execute tests, and submit normally.
+Both pass all 2 fail-to-pass and 323 pass-to-pass tests, but only the history-informed repair preserves the query and passes the joint check.
+The ordinary agent's actual observations include both the existing redirect helper and the implementation that retains \texttt{QUERY\_STRING}, before it edits the method.
+With history, the agent preserves a behavior whose implementation was already visible to the ordinary agent.
+The two attempts use 36 and 25 model calls, respectively.
+
+\paragraph{The requirement survives distillation.}
+The existing first-ranked Flat rule explicitly describes query loss and supplies \texttt{get\_full\_path(force\_append\_slash=True)}.
+We run a second fixed pair of complete-agent attempts: one receives the unchanged three-entry Flat packet, while the other receives the same packet with only its first entry replaced by the original source issue and patch.
+The remaining entries and the delivery point are identical.
+Both repairs pass official verification and all three behavior checks, and their submitted patches are byte-identical.
+The attempts use 69 and 30 model calls, respectively.
+In this development comparison, either representation supplies enough information to preserve the current and historical requirements together.
+
 \section{Related work}
 ExpeL distills reusable insights from experience, and Getafix learns applicable edit patterns from human repairs \citep{expel2024,getafix2019}.
 ExpeRepair uses historical test demonstrations and reflective insights to generate reproduction and boundary tests \citep{experepair2026}.
-MIRA constructs repair memory from SQL corrections and uses database evidence to activate and combine applicable repair units \citep{mira2026}.
 STAIR abstracts trajectories into hierarchical plans supplied before repair, including guidance that completes partial fixes \citep{stair2026}.
 \citet{laterequirements2026} study late requirement disclosure in coding-agent sessions and controlled tasks.
-Our development comparison examines when the compact source issue and patch suffice to preserve the historical and current requirements together, and whether an additional revision or executed-relation input changes the result.
+Our development comparison examines when a retrieved historical requirement helps preserve current and historical behaviors together, including behavior absent from the official target tests.
 
 \section*{AI use statement}
 Generative AI assisted literature review, method development, implementation, experiments, analysis, and writing.
