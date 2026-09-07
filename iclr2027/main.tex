@@ -29,15 +29,12 @@ Consider an administrative redirect that must preserve a deployment prefix.
 Changing its destination from \texttt{request.path\_info} to \texttt{request.path} fixes that reported fault.
 However, appending a slash to the resulting path still discards query parameters.
 A different repair of the same API records this omitted behavior and replaces path concatenation with \texttt{request.get\_full\_path(force\_append\_slash=True)}.
-The historical experience can therefore improve the current repair even after the reported fault has been fixed.
-Its contribution is a requirement the initial candidate missed.
 
 We investigate a procedure organized around this residual defect.
 First construct a candidate from the current issue.
 Then assess a relevant historical condition on the patched program and revise when that condition exposes an omission compatible with the current task.
 This makes the proposed repair, rather than issue relevance alone, the object of the memory decision.
 Our development evidence distinguishes this useful omission from a historical condition already covered by ordinary repairs.
-It also shows that the historical patch can contain enough information to perform the revision: executing a source relation is not automatically a better way to deliver that information.
 
 \section{Memory conditioned on the candidate repair}
 \label{sec:method}
@@ -49,13 +46,10 @@ We execute it in both source versions.
 The check must run normally, hold after the repair on the supplied legal inputs, and change from false to true on at least one input.
 The resulting memory records the relation and the behavior demonstrating its relevance to the source repair.
 
-For Django 16612, the generated check sends requests with query parameters through the administrative redirect.
-The original code redirects to a path without those parameters; the source repair retains them.
-The learned condition is that this redirect preserves the original query string.
-
 \paragraph{Look for a remaining violation.}
 Let $p$ be the initial candidate for target program $T$, and let $r$ be a source relation that can be instantiated on that target.
 We evaluate $r$ on $T\oplus p$, the program after applying the candidate.
+In the experiments below, we select a source repair of the same API and execute its generated check unchanged on the target candidate.
 A normal execution with a false result identifies a possible omission; a true result means that this relation provides no reason to revise the candidate.
 The target's required behavior determines whether the source condition is relevant.
 Execution errors provide neither observation.
@@ -63,12 +57,12 @@ Execution errors provide neither observation.
 This distinction matters when every candidate receives the same source-check result.
 If all satisfy the relation, it supplies no selection value.
 If all violate a relevant relation, ranking the same candidates cannot recover the missing behavior; the useful operation is to generate a corrective edit.
-The procedure therefore uses a violated source condition to request a revision, preserving the behavior the initial candidate already fixes.
+The procedure therefore uses a violated source condition to request a revision and instructs the writer to preserve the behavior the initial candidate already fixes.
 
 \paragraph{Revise using the experience.}
 The revision writer receives the issue, initial implementation, candidate, and observations of the reported fault after the candidate is applied.
 Historical information can be supplied as the source issue and patch, or as the source relation, its before/after observations, and the check's observed failure on the candidate.
-The writer returns a complete revised method.
+The writer makes one revision call and returns a complete revised method.
 Each resulting patch is immediately evaluated by the official SWE-bench verifier \citep{swebench2024}; the behavioral checks then measure whether the reported requirement and historical condition hold together.
 The experiment supplies a selected source repair so that this comparison isolates its contribution to revision.
 
@@ -114,19 +108,14 @@ An independently prepared joint check combines the deployment prefix with repeat
 \texttt{keep=a\%2Fb\&keep=c\%20d}.
 This input is withheld from all writers and executed after their revisions and official verifications complete.
 Both memory revisions preserve the exact prefix and query string in the redirect; the initial and issue-reviewed candidates lose the query string.
-Thus the additional behavior survives a combined input, rather than merely passing the unprefixed historical example.
-The four model calls cost \$0.2564 under the experiment's token meter; constructing the source check costs another \$0.0479.
-These localized method-writing calls do not measure the cost of a full repository agent.
 
 \paragraph{A covered condition contributes no corrective signal.}
 Source Django 16493 records that serializing a \texttt{FileField} should preserve its original storage factory even when the factory returns \texttt{default\_storage}.
 On development target Django 13343, four independent source-blind candidates produce the same AST repair and all satisfy that relation.
 Each also passes official verification.
 The source condition therefore supplies no additional candidate-selection value in that pool.
-This contrast motivates conditioning memory use on what the proposed repair still omits.
 
 The positive case establishes a concrete corrective contribution from historical information, not an improvement in official resolved rate or an advantage of executable delivery over the patch.
-The next method question is how to find these residual requirements across tasks without spending effort on conditions already covered by the candidate.
 
 \section{Related work}
 ExpeL distills reusable insights from experience, and Getafix learns applicable edit patterns from human repairs \citep{expel2024,getafix2019}.
