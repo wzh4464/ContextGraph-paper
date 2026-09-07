@@ -11,8 +11,8 @@
 \begin{abstract}
 Past repairs record requirements that a new issue may leave unstated.
 We study a simple repair procedure: retrieve this experience before editing and use it to complete the repair requirements.
-In two Django development tasks, complete repository agents produce repairs that pass official verification with or without memory, but only the history-informed repairs satisfy an additional historical requirement.
-One retains query parameters while fixing a deployment prefix; the other removes a redundant unique constraint while retaining the primary key, extending the repair to a neighboring operation.
+In three Django development tasks, complete repository agents produce repairs that pass official verification with or without memory, but only the history-informed repairs satisfy additional historical requirements.
+The added behavior preserves query parameters, removes redundant uniqueness, or honors an explicit destination timezone alongside the reported repair.
 Independent checks that distinguish buggy and repaired source versions expose these additional behaviors on the target repairs.
 Method-generation comparisons in Django and pytest further show that supplying history in the first call can reach behaviors that the observed ordinary sequences obtain only after revision, or leave unsatisfied.
 These cases show how repair memory can improve behavioral completeness beyond the requirements measured by the current task's official tests.
@@ -133,6 +133,16 @@ A combined input creates an ordinary index, redundant uniqueness, and a primary 
 On this PostgreSQL input, ordinary-index deletion already succeeds on the target base.
 Both repairs retain that behavior, but only the memory-informed repair also deletes the redundant uniqueness, retaining the primary key and original data.
 The useful historical information here supplies an additional operation's requirement, beyond the operation singled out by the current failure.
+
+\paragraph{History can complete a different argument of the same operation.}
+Django 11138 asks date conversions to respect the database's configured source timezone.
+Source 13363 instead requires \texttt{TruncDate} and \texttt{TruncTime} to honor an expression's explicit destination timezone.
+Both complete-agent repairs pass official verification and correctly interpret a database configured as UTC+1.
+Only the Qwen Flat repair also honors the explicit destination.
+A check generated from source evidence distinguishes both source versions using a New York date aggregation and a Tokyo time aggregation; it runs unchanged on the target, failing on the ordinary repair and passing on the memory-informed repair.
+An independent SQLite input combines a UTC+1 database with an explicit New York destination.
+Only the memory-informed repair returns the correct date and time.
+The current issue and the retrieved history supply independent requirements for the two ends of the conversion.
 
 \section{Related work}
 ExpeL distills reusable insights from experience, and Getafix learns applicable edit patterns from human repairs \citep{expel2024,getafix2019}.
