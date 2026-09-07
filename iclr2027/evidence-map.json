@@ -1557,6 +1557,162 @@
     {
       "path_from_contextgraph_root": "tests/test_verified_rule_revision_v2.py",
       "sha256": "a447c321cac3195921f96b5b54286f510903490f17b56eb917fb58db8f6c8b5f"
+    },
+    {
+      "path_from_contextgraph_root": "configs/verified_train_test_v1/source_holdout_v1/bm25-candidate-plan-v1.json",
+      "sha256": "224b7afc96be463f3eca588dd12352dcce0123cb2e083745c7831c813e1a85a8"
+    },
+    {
+      "path_from_contextgraph_root": "configs/verified_train_test_v1/source_holdout_v1/bm25-candidate-plan-v2.json",
+      "sha256": "a93a6d88c866bd402e8aad5704d36845875a6032e9c59f6266521c2bac0352e3"
+    },
+    {
+      "path_from_contextgraph_root": "configs/verified_train_test_v1/source_holdout_v1/operational-amendment-v2.json",
+      "sha256": "6aa16e01eca673b66c1eb114e8f21afd95f1a607da68699ef07012244dc47711"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-source-holdout-20260907/README.md",
+      "sha256": "8bcb0f350edf93f0a877123e35ab02576ae996bea817cc472fba7af7e7f36764"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-source-holdout-20260907/candidate-plan.json",
+      "sha256": "a93a6d88c866bd402e8aad5704d36845875a6032e9c59f6266521c2bac0352e3"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-source-holdout-20260907/candidate-terminal.json",
+      "sha256": "9328481b42c2aa89ed2bdf6cea67c1fe75ebaabc81531a9be5bb9a90b5bfbc5d"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-source-holdout-20260907/candidate-tests.json",
+      "sha256": "979cd49cb5b2654f3a7fc3e1143065d6e0a773852e8feac7f0566dfff846522b"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-source-holdout-20260907/existing-graphs-after.json",
+      "sha256": "1b296bc94fac219990a820633248553fa020fd715946b0cbef320fb4c04f24ea"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-source-holdout-20260907/existing-graphs-before.json",
+      "sha256": "4067cb38657d5655e1c2e33b29cce017bbccc39222728e7c00baf08072d83115"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-source-holdout-20260907/incomplete-score-rejections.json",
+      "sha256": "b6f3af703ca5b1b28b21604b1754732a1c85b174352d8fd1eccbe04713cbf539"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-source-holdout-20260907/initial-candidate-cleanup-followup.json",
+      "sha256": "732da5a1bab80ed36e0e21a751f11015e09e8ce8b22539de1431b5c030358a0d"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-source-holdout-20260907/initial-candidate-terminal.json",
+      "sha256": "9f03ab71d3ce1c3d92f1deda8b7240e881ad068fd6ff311a52d9c56e3186f824"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-source-holdout-20260907/input-and-endpoint-tests.json",
+      "sha256": "f095c5cab8199d75d252caa7e58a3f89d5f9ceda7316b4a6746339e29b1155ca"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-source-holdout-20260907/input-manifest.json",
+      "sha256": "2355ca84fa0b7dd99d2a10d8503c3d0bf5c6d38ec1fcd0964d0a352cdd87e13f"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-source-holdout-20260907/input-plan.json",
+      "sha256": "b722cce483981d5b3d97041cefd241b9e3e0848a63614c94479f41dddd642095"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-source-holdout-20260907/input-validation.json",
+      "sha256": "2e05a52e288295e138fcb2e415714850ac5f88567750d7a178d5fb2683a9d848"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-source-holdout-20260907/operations-review.json",
+      "sha256": "ae49c4b7d8e79f25b3e1ed50f6e08c95dad9eafaaa7d710f8e808fe6ab4683aa"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-source-holdout-20260907/original-retrieval-terminal.json",
+      "sha256": "0b7609b71aaf8e5a44f48a8298d433f5f86c710be408fc73eb7a8f092ca46807"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-source-holdout-20260907/original-startup-terminal.json",
+      "sha256": "6d7c2218ad2aab3809a040df5bdd7098646d4b31145e1bee84dfe8be8bc2bf5e"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-source-holdout-20260907/packet-projection.json.gz",
+      "sha256": "21b46d8f7950b807f0c6b16f686ceb185ab19a88d1b58043f99e1f65b6f29f94"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-source-holdout-20260907/per-query.json",
+      "sha256": "ad83bfa10df4065567f5ee8bf8cb1430df352820b2fee804243611dbbb1e4321"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-source-holdout-20260907/port-diagnosis.json",
+      "sha256": "f1d8c694c09f9b31f0a0bed388a7a417b55634d510ca8a75d246f89abdd97008"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-source-holdout-20260907/private-files.json",
+      "sha256": "bc6fa65c2c967782fc1387f138fc858ca8c7309e6bb23695e1b036533bd8e327"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-source-holdout-20260907/runtime-amendment-check.json",
+      "sha256": "e32291160687651dd20d50e8a2e024794b55025f9eecb4385b475db475b5cc37"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-source-holdout-20260907/short-query-regression.json",
+      "sha256": "8d187185d4b4ef7b65576f4ef4f3ae2e8c42da5463fbccb3689e1bf7fd4d1b5d"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-source-holdout-20260907/startup-followup.json",
+      "sha256": "edd8e70d3c2cce3bd4b533b9aa463593205cd9f11ff2dd1d060e4ea4bd32eaab"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-source-holdout-20260907/summary.json",
+      "sha256": "aa09235a2027e5948ebd35ce4e5ede86d3e690d030dc2b694c3ff444f5bf3d55"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-source-holdout-20260907/validation.json",
+      "sha256": "2716bcb1ed1ec278166e0a0326f7d50b2848a464e9e53843bf14ade179ea0d16"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/collect_verified_bm25_candidate_v1.py",
+      "sha256": "7a2015327adb1ab4129e0a2d720660d26599b23194859ce224857c839efc9920"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/run_verified_bm25_candidate_v1.py",
+      "sha256": "7c5640cc228d412db971fa7e1eb0ab598a4ddb8dd2010b168d93ab2a5597f7ce"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/run_verified_bm25_candidate_v2.py",
+      "sha256": "5769e3ebc00194a17caca10da3ca481eaeabe6d86b51b27057de0814bd975a13"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/run_verified_source_holdout_v1.py",
+      "sha256": "9800edc27ed953c3041933f9c050db09bb02f874d9c414f9b3d17160355babab"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/run_verified_source_holdout_v2.py",
+      "sha256": "dd894df0e425af8ceb336a2c921f0c941eb0fea494a82b5a499a50aa269cfea0"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/verified_bm25_candidate_v1.py",
+      "sha256": "fea28d722658d0e6f6abf5d1c51207a09b97e16c80094235160d792d102d2947"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/verified_source_holdout_v1.py",
+      "sha256": "1cb944691efc40afb1eaac666ed3dcfc3c9b45385706ab1efda8f97325cd5742"
+    },
+    {
+      "path_from_contextgraph_root": "tests/test_verified_bm25_candidate_v1.py",
+      "sha256": "4e0436f5643a3160f579e5fdda2dc50b9a757395a53bc753e1a55372288da866"
+    },
+    {
+      "path_from_contextgraph_root": "tests/test_verified_source_holdout_v1.py",
+      "sha256": "4005d0e58c1f58394c1e7be745637ae02969ec99f11079791074195106a8d262"
+    },
+    {
+      "path_from_contextgraph_root": "tests/test_verified_source_holdout_v2.py",
+      "sha256": "649510706741d1619143ec3c2aff7a6686e03eac6d2c2da0cd09db7f0f5ff229"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/verified-source-holdout-20260907/paper-validation.json",
+      "sha256": "7e92593c7bba40efa6cbe31c1bcb34d8f8969538c1681e96cddcf01d0bf42313"
     }
   ],
   "claims": {
@@ -1923,6 +2079,47 @@
       "scripts/analysis/build_verified_rule_revision_v2.py",
       "scripts/analysis/check_verified_rule_revision_sources_v2.py",
       "tests/test_verified_rule_revision_v2.py"
+    ],
+    "separate_training_source_exclusion_and_bm25_overflow_candidate": [
+      "configs/verified_train_test_v1/source_holdout_v1/bm25-candidate-plan-v1.json",
+      "configs/verified_train_test_v1/source_holdout_v1/bm25-candidate-plan-v2.json",
+      "configs/verified_train_test_v1/source_holdout_v1/operational-amendment-v2.json",
+      "docs/reports/verified-source-holdout-20260907/README.md",
+      "docs/reports/verified-source-holdout-20260907/candidate-plan.json",
+      "docs/reports/verified-source-holdout-20260907/candidate-terminal.json",
+      "docs/reports/verified-source-holdout-20260907/candidate-tests.json",
+      "docs/reports/verified-source-holdout-20260907/existing-graphs-after.json",
+      "docs/reports/verified-source-holdout-20260907/existing-graphs-before.json",
+      "docs/reports/verified-source-holdout-20260907/incomplete-score-rejections.json",
+      "docs/reports/verified-source-holdout-20260907/initial-candidate-cleanup-followup.json",
+      "docs/reports/verified-source-holdout-20260907/initial-candidate-terminal.json",
+      "docs/reports/verified-source-holdout-20260907/input-and-endpoint-tests.json",
+      "docs/reports/verified-source-holdout-20260907/input-manifest.json",
+      "docs/reports/verified-source-holdout-20260907/input-plan.json",
+      "docs/reports/verified-source-holdout-20260907/input-validation.json",
+      "docs/reports/verified-source-holdout-20260907/operations-review.json",
+      "docs/reports/verified-source-holdout-20260907/original-retrieval-terminal.json",
+      "docs/reports/verified-source-holdout-20260907/original-startup-terminal.json",
+      "docs/reports/verified-source-holdout-20260907/packet-projection.json.gz",
+      "docs/reports/verified-source-holdout-20260907/per-query.json",
+      "docs/reports/verified-source-holdout-20260907/port-diagnosis.json",
+      "docs/reports/verified-source-holdout-20260907/private-files.json",
+      "docs/reports/verified-source-holdout-20260907/runtime-amendment-check.json",
+      "docs/reports/verified-source-holdout-20260907/short-query-regression.json",
+      "docs/reports/verified-source-holdout-20260907/startup-followup.json",
+      "docs/reports/verified-source-holdout-20260907/summary.json",
+      "docs/reports/verified-source-holdout-20260907/validation.json",
+      "scripts/analysis/collect_verified_bm25_candidate_v1.py",
+      "scripts/analysis/run_verified_bm25_candidate_v1.py",
+      "scripts/analysis/run_verified_bm25_candidate_v2.py",
+      "scripts/analysis/run_verified_source_holdout_v1.py",
+      "scripts/analysis/run_verified_source_holdout_v2.py",
+      "scripts/analysis/verified_bm25_candidate_v1.py",
+      "scripts/analysis/verified_source_holdout_v1.py",
+      "tests/test_verified_bm25_candidate_v1.py",
+      "tests/test_verified_source_holdout_v1.py",
+      "tests/test_verified_source_holdout_v2.py",
+      "docs/reports/verified-source-holdout-20260907/paper-validation.json"
     ]
   },
   "not_reused": [

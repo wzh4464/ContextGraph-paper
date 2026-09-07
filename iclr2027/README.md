@@ -185,3 +185,16 @@ is reported. See the bound amendment checkpoint and deployment records.
 Two separate portable-entry Docker diagnostics completed on September 7 (Beijing), using the frozen evaluator and original Flat predictions for Astropy-15082 and Django-11776. Both full reports were byte-identical to their original p1 reports, retaining one resolved and one unresolved result. All 36 container inspections were network-none; original input images and package bytes were unchanged. These known-outcome checks reused images on jie and are not a new benchmark score or a clean-machine release test. The source package and full execution archive remain private local drafts pending source licensing and publication review. See `../../docs/reports/gfx-portable-verifier-20260907/README.md` and its collection receipt.
 
 A separate training-only source-scoped candidate bank was built after the prior 30-rule semantic audit. It revises the ten partly-supported explanations, retaining all 350 sources and 459 rules; 449 original records/vectors and all evidence/tags are unchanged. Twenty unchanged sample vectors reproduce exactly with the pinned local embedding stack. Ten source-derived checks and six boundary tests pass. This candidate is not deployed to the frozen formal experiment, and no repair effect is measured. See `../../docs/reports/verified-rule-revision-20260907/README.md`; the earlier manuscript findings continue to describe the original bank.
+
+A later source-excluded development diagnostic selects 70 public issues from that
+previously inspected training pool and builds both retrieval banks from the other
+280 sources. It exposed a swallowed Lucene clause-limit error on Matplotlib-22719.
+A separate BM25 chunking candidate completed all 280 retrieval calls after two
+disclosed infrastructure adjustments; all earlier incomplete records are retained.
+Graph's weak-tag Hit@3 is 52/70 in the base bank and 53/70 in the revised bank,
+versus 50/70 for Flat in each. The labels share the graph's mechanism taxonomy and
+are not independent relevance judgments or repair outcomes. All 74 available
+ordinary-query BM25 reference outputs reproduce exactly, and all four long-query
+recoveries are recorded. The formal runtime, manuscript and PDF are unchanged.
+See `../../docs/reports/verified-source-holdout-20260907/README.md` for complete
+denominators, failed starts, candidate semantics and source-exclusion checks.
