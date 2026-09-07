@@ -198,3 +198,15 @@ ordinary-query BM25 reference outputs reproduce exactly, and all four long-query
 recoveries are recorded. The formal runtime, manuscript and PDF are unchanged.
 See `../../docs/reports/verified-source-holdout-20260907/README.md` for complete
 denominators, failed starts, candidate semantics and source-exclusion checks.
+
+The new full-universe patch-overlap appendix audits all 693 original Related-Lite
+records, including the separate Card-v2 condition. It joins 641 recorded response
+hashes and measures 3,020 actual patch blocks, alongside all 28,809 source-pool /
+target pairs. Seven targets outside the historical exclusion list have observed
+same-repository added-line Jaccard at least 0.5 in every memory condition. The old
+99-task scores and 88-task sensitivity are retained; lexical overlap is not a
+cheating or causal-use verdict. One pinned target diff is malformed, and its
+strict-hunk comparisons remain unknown. `patch-overlap-reproduction-v1.zip`
+provides a standalone replay from hashed edit features, with no raw patch lines
+or response text. Follow its README; the underlying capture and source-extraction
+checks are bound in `../../docs/reports/gfx-full-overlap-20260907/`.

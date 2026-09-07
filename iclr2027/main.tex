@@ -43,7 +43,6 @@ The second is a new, deliberately narrower intervention on SWE-bench Verified \c
 The latter is supervised memory construction with a frozen solver, not reinforcement learning or evidence of self-improvement from the solver's own successful attempts.
 
 Our current contributions are an evidence-linked evaluation procedure, an audited result for the repository-card intervention, and a controlled experiment specification for graph-based transfer.
-We do not claim that the audit alone establishes a new state of the art or that a null result identifies the agent's intrinsic capability ceiling.
 The scientific question is which forms of prior repair evidence improve verified outcomes after their delivery, cost, and source eligibility have been established.
 
 \section{Related work}
@@ -170,11 +169,11 @@ The interval is compatible with effects in both directions; lack of significance
 These tasks have been used in multiple prior interventions, so this is an exploratory audit rather than a newly untouched confirmatory evaluation.
 
 \paragraph{Source-overlap sensitivity.}
-A pre-existing 11-task near-duplicate exclusion list yields an 88-task sensitivity set.
+The complete historical 11-task near-duplicate exclusion list defines an 88-task sensitivity set.
 Flat resolves 18/88 and Card 15/88; the discordant counts are six versus three, with $p=0.508$ and interval $[-10.23,3.41]$ percentage points.
 Three Card-only successes on the full set are flagged by the prior patch-overlap scan with Jaccard similarity 1.
-The sensitivity analysis applies the complete existing 11-task list, rather than removing only those three successful examples.
-The original scan focuses on resolved tasks; it does not certify all possible contamination channels over the entire task universe.
+A subsequent screen of all 693 original trajectories finds same-repository added-line Jaccard $\geq0.5$ on 17/99 targets in Flat, Card, Graph, File list and Card-v2, and 14/99 in Rules; seven detected targets lie outside the historical list (Appendix~\ref{app:overlap}).
+These overlap observations do not prove cheating or redefine the sensitivity set, and neither audit certifies all contamination channels.
 
 \paragraph{Actual exposure and mechanism checks.}
 The tool-response census finds patch memory on 99/99 targets in each condition, no missing trajectories, and no phase refusals.
@@ -335,7 +334,6 @@ All 150 images and 450 task/condition inputs are frozen; the original provider p
 A subsequently authorized OpenLux route uses the same DeepSeek V4 Pro snapshot alias as the archived experiments, preserving the split, packets, images, and task order in a separate runtime version.
 Its tool/reasoning probes and all three training protocol/delivery checks passed.
 On the excluded training task, Control's original prediction was officially resolved; Flat's empty patch and Graph's reproduction-only patch were unresolved.
-The formal campaign began on September 6 at 11:21 UTC.
 The original scheduler closed at 12:52 UTC with two complete blocks: all three conditions resolve Django11740 and none resolves Xarray6992.
 A seventh attempt, Django16256 Flat, autosubmits an empty patch after consecutive command timeouts and is officially unresolved; its outer status classification stops new-block admission.
 The original registered analysis remains incomplete and has no paired effect estimate.
@@ -349,8 +347,7 @@ A separately frozen parser correction passes all three training protocol/deliver
 All three runs record zero optional-null omissions; the recorded-call regression supplies coverage of the original defect.
 The formal test runtime and its original outcomes remain unchanged.
 OpenLux sometimes omits cost and reports non-additive token counts, so raw counters and conservative budget estimates are stored separately without a billing claim.
-Ten-minute evidence was collected until active runs and verification ended, with incomplete semantic reviews explicitly retained.
-No formal Verified success rate is reported in this draft.
+Ten-minute reviews continued until verification ended; incomplete semantic reviews remain recorded.
 
 \section{Discussion and limitations}
 The completed audit rules out a particular ambiguity: the card intervention's lack of measured gain cannot be explained by widespread absence of any memory response, because actual delivery is observed.
@@ -381,6 +378,7 @@ Five local anonymous supplements reproduce 18 Related-Lite paired comparisons, 5
 Delivery uses actual responses and cards; retention uses source-bound structural histories.
 The verification package contains 302 nonempty predictions with original official reports and 292 empty-prediction exemptions, retaining the historical log exception.
 These packages do not rerun tests or the complete runtime/Docker audits.
+The patch-overlap supplement replays Appendix~\ref{app:overlap} from hashed features.
 Credentials and host-only evaluation labels are excluded from agent inputs.
 The complete anonymous experimental release and human author review remain to be completed.
 
@@ -392,4 +390,57 @@ This draft has not yet completed human author review of all AI-assisted claims a
 
 \bibliography{references}
 \bibliographystyle{iclr2027_conference}
+
+\clearpage
+\appendix
+\section{Full-universe patch-overlap audit}
+\label{app:overlap}
+We retrospectively compare the reference patches actually recorded in all seven conditions, retaining every original task irrespective of its outcome.
+The source extraction joins 693 original trajectory identities and 641 bound tool-response hashes to the existing delivery audits, yielding 3,020 patch blocks on 585 task--condition records.
+Separately, we compare all 291 patches in the observed source-pool snapshot with all 99 pinned Related-Lite target patches (28,809 pairs).
+The snapshot was collected on September 7, 2026; it does not alone attest historical availability.
+
+The primary text screen takes the maximum per-block Jaccard between sets of nonblank added-line contents, stripping surrounding whitespace and excluding diff file headers.
+It ignores line order and multiplicity and may overstate similarity for short/common edits.
+We also parse hunk bodies and compare signed changes and file/sign/line features retaining indentation.
+All threshold counts below use same-repository sources; allowing all repositories gives the same counts.
+
+\begin{table}[h]
+\centering
+\caption{Targets with observed patch overlap, with all counts against the fixed 99-task universe. The first row measures source-pool availability; other rows measure recorded delivery. Missing memory is not certified clean knowledge. No repair outcomes select these records.}
+\label{tab:overlap}
+\begin{tabular}{lrrrr}
+\toprule
+Scope & Received patches & $J\geq0.5$ & $J\geq0.7$ & $J=1$ \\
+\midrule
+Full source-pool snapshot & --- & 18 & 12 & 10 \\
+\midrule
+Control & 0 & 0 & 0 & 0 \\
+Flat & 99 & 17 & 11 & 8 \\
+Card & 99 & 17 & 11 & 8 \\
+Graph & 99 & 17 & 11 & 8 \\
+Rules & 95 & 14 & 8 & 5 \\
+File list & 96 & 17 & 11 & 8 \\
+Card-v2 & 97 & 17 & 11 & 8 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Seven targets outside the historical exclusion list reach $J\geq0.5$ in every memory condition.
+One, Django-34525, shares 38 of 44 normalized added lines in the union with source Django-16820 ($J=0.864$); its file/sign comparison is $39/46$.
+Another, Sympy-26642, matches only one of two added lines in the union, illustrating why a threshold alone does not establish semantic duplication.
+The historical 88-task sensitivity remains unchanged and is not a complete source-overlap certificate.
+
+No returned source ID belongs to the 99 target IDs, and no block contains its target's entire patch verbatim.
+This does not preclude identical edits with different context or hunk locations.
+The current source patch, after trimming outer whitespace, appears literally in 2,939 blocks; 81 lack that full-patch match, including 64 with interrupted hunks.
+Text-screen and recognized-hunk added features agree on all observed blocks, but incomplete delivery remains explicit.
+One pinned target patch, Sympy-27868, fails both our hunk parser and Git's read-only syntax check at line 319; its strict-hunk comparisons are unknown, while its original bytes and task membership are retained.
+The file/sign threshold of 0.5 yields 16 observed targets in each memory condition except Rules (13).
+
+The hashed-feature supplement reproduces every pair and task record using only the Python standard library.
+It does not re-extract private histories or repeat source capture.
+Lexical overlap does not identify unauthorized access, actual use or a causal contribution to a repair; legitimately related tasks can share fixes.
+Cards, rule prose, test hints, pretraining and unrecorded channels remain outside this patch-block certificate.
+All original verifier outcomes are preserved, with no new task exclusion or effect estimate.
 \end{document}

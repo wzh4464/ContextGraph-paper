@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-09-07",
+  "as_of": "2026-09-07T01:00:16.548981+00:00",
   "status": "The separate adaptive Card-v2 arm completed all 99 original receipt audits and fixed comparisons: 16/99 resolved, exact card delivery 97/99, no significant paired gain over Flat or Card-v1. Its 39 hard exit_cost labels exceed the registered maximum of 32. The original six-condition archives remain unchanged. Research draft; the original Verified execution and its operational-stop continuation closed incomplete on an optional-null parser crash. Fourteen original test slots attempted and thirteen audited; no formal effect estimate. The separately frozen parser correction completed all three real training-only infrastructure gates, with two nonempty official verifications and zero real optional-null omissions. The formal runtime and original outcomes are unchanged; the existing aggregate allowance cannot reserve another complete formal block. Frozen verifier source portability and immutable public-registry manifest checks are staged; config/layer downloads remain unvalidated. A separate portable entry executed two known-outcome original predictions on jie with byte-identical reports, unchanged source images and 36 network-none container inspections. This reused existing images and is not a clean-machine or anonymous runtime release. A separate source-scoped training candidate revises ten prior partly-supported rules while preserving all 350 sources and 459 rules; it has not been deployed or evaluated for repair efficacy.",
   "artifacts": [
     {
@@ -1713,6 +1713,126 @@
     {
       "path_from_contextgraph_root": "docs/reports/verified-source-holdout-20260907/paper-validation.json",
       "sha256": "7e92593c7bba40efa6cbe31c1bcb34d8f8969538c1681e96cddcf01d0bf42313"
+    },
+    {
+      "path_from_contextgraph_root": "configs/gfx_full_overlap_v1/plan-v2.json",
+      "sha256": "feb5a9142cc2c9e4eb6b6642b08282edbe9ce44dd8e1f320fbd044a1367b4504"
+    },
+    {
+      "path_from_contextgraph_root": "configs/gfx_full_overlap_v1/plan.json",
+      "sha256": "31e71a1d0c1ecd484d8e994d31b0b037218fefd2b3414ad61617980e8bde5575"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-full-overlap-20260907/README.md",
+      "sha256": "df29453e22b2f9589cd3bbe46d81caeeb93acc79c3ace17206a98559d06087b9"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-full-overlap-20260907/branch-refresh.json",
+      "sha256": "c39fb6f0750cc48934116d4c0c36041911d84e389e7dd5404be12240fb050fd3"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-full-overlap-20260907/bundle-validation.json",
+      "sha256": "d37febb46eef4dfe6441949064f05026c1a587988c7d9e4ec37fcb63d1de8fd3"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-full-overlap-20260907/card2-extraction-plan.json",
+      "sha256": "c33ea35f379610e352233d5ae74753f37b124cf366e23b6ee4a2269ba71095ed"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-full-overlap-20260907/card2-projection-receipt.json",
+      "sha256": "96ed45f93b2adb1bd7417a87f92e5ac2966ef878ef75e3b380fc949b2152a9e9"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-full-overlap-20260907/collection.json",
+      "sha256": "371252c07c28bc2e4e8f4c1ca68876fc1df56d5704b509a30fe25b7de723f3ab"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-full-overlap-20260907/initial-collection-error.json",
+      "sha256": "d8959a743d677f45bd63b8e95346a4bd425c9d0c8adf338f9a0f1523753e225e"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-full-overlap-20260907/interpretation.json",
+      "sha256": "846b78200f83b25cf58c76a127b9613ddf41637d189f5626d90567116f0e7fc6"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-full-overlap-20260907/paper-validation.json",
+      "sha256": "c5b424645d422595d34eebce65771b5a993e9f8b47e1e1e3e694efad0c17a1b1"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-full-overlap-20260907/source-collection.json",
+      "sha256": "8d88aaf2dae756af950534a65c829c1035183f1d92e1dd6185d78adfafd2e60a"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-full-overlap-20260907/source-validation.json",
+      "sha256": "c28f7a496a506fb1baefc5f251f20f690d0144e58fe095d13596dd0afccb9ee5"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-full-overlap-20260907/summary.json",
+      "sha256": "02207a6a83d10df099f6f987a9e1dffd6f559093c2289490a83b6675887bf501"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-full-overlap-20260907/target-patch-syntax.json",
+      "sha256": "e9d0971beeca0a8859cc807a833a40c759bca6a2865bb15bf2e306ba1d8161a8"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-full-overlap-20260907/tests.json",
+      "sha256": "0b880fd105ca3b3e9d004824eb30dc3e9677397d715725380321b4ab2c5de7c6"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/audit_gfx_full_overlap_v1.py",
+      "sha256": "8abe959c83724a3b00a499a7cd210f00b0c1a9ea787089c507999da0243e751c"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/audit_gfx_full_overlap_v2.py",
+      "sha256": "a4d603fe7ccc99d7e56d77e6f060e9bdeb0584bb94ba7d3bfd80a25cf702e2f1"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/build_gfx_full_overlap_bundle_v1.py",
+      "sha256": "ec0ef3bbfac4da8dfa57edb7d4809790af08630872dd8eb7d5432a4153c07946"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/project_gfx_card2_memory_v1.py",
+      "sha256": "50fe2d056c3263b7119092e678b4055c8d036c882e6902fc0dff0d2d87790b7e"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/reproduce_gfx_full_overlap_v1.py",
+      "sha256": "aaf63f8aedfe4512acad91f64a37781eccfbdfddb22d5fed031fce99b0085601"
+    },
+    {
+      "path_from_contextgraph_root": "tests/test_gfx_full_overlap_v1.py",
+      "sha256": "b1a9f4e9de31c681a450eba0b3b0cf44d4620cdfd7f7655ba725321f6005d6db"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/patch-overlap-reproduction-v1/README.md",
+      "sha256": "504d00cf99512bdd5c7cb7054e1080823559abeefaebea9266d455dce8230232"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/patch-overlap-reproduction-v1/audit-inputs.json.gz",
+      "sha256": "61883ee30b9fc5792a89214722ee3f3ee2bdae4cd92a0e7b940d624c7bd6ecf5"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/patch-overlap-reproduction-v1/expected-results.json.gz",
+      "sha256": "3c1b4f5d9aaeb98a4d805335b6b1faabc67377fc15a6e313ace9ac05796b2f7c"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/patch-overlap-reproduction-v1/manifest.json",
+      "sha256": "66a6a1dc7e212c3224e90f6a6064ff6f35762c674838016f0d8678bb586d1b9b"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/patch-overlap-reproduction-v1/overlap_core.py",
+      "sha256": "8abe959c83724a3b00a499a7cd210f00b0c1a9ea787089c507999da0243e751c"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/patch-overlap-reproduction-v1/reproduce.py",
+      "sha256": "aaf63f8aedfe4512acad91f64a37781eccfbdfddb22d5fed031fce99b0085601"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/patch-overlap-reproduction-v1/source-bindings.json",
+      "sha256": "a1189936db77643f990931f628fb3dc4824a500daf1aad8e71fe928f91c87a40"
+    },
+    {
+      "path_from_contextgraph_root": "paper/iclr2027/patch-overlap-reproduction-v1.zip",
+      "sha256": "ba4ced7eeb9986d5e2c9c2180aacac61246f3f248fc6d00085602ee89a0ba295"
     }
   ],
   "claims": {
@@ -2120,6 +2240,38 @@
       "tests/test_verified_source_holdout_v1.py",
       "tests/test_verified_source_holdout_v2.py",
       "docs/reports/verified-source-holdout-20260907/paper-validation.json"
+    ],
+    "full_universe_recorded_patch_overlap": [
+      "configs/gfx_full_overlap_v1/plan-v2.json",
+      "configs/gfx_full_overlap_v1/plan.json",
+      "docs/reports/gfx-full-overlap-20260907/README.md",
+      "docs/reports/gfx-full-overlap-20260907/branch-refresh.json",
+      "docs/reports/gfx-full-overlap-20260907/bundle-validation.json",
+      "docs/reports/gfx-full-overlap-20260907/card2-extraction-plan.json",
+      "docs/reports/gfx-full-overlap-20260907/card2-projection-receipt.json",
+      "docs/reports/gfx-full-overlap-20260907/collection.json",
+      "docs/reports/gfx-full-overlap-20260907/initial-collection-error.json",
+      "docs/reports/gfx-full-overlap-20260907/interpretation.json",
+      "docs/reports/gfx-full-overlap-20260907/paper-validation.json",
+      "docs/reports/gfx-full-overlap-20260907/source-collection.json",
+      "docs/reports/gfx-full-overlap-20260907/source-validation.json",
+      "docs/reports/gfx-full-overlap-20260907/summary.json",
+      "docs/reports/gfx-full-overlap-20260907/target-patch-syntax.json",
+      "docs/reports/gfx-full-overlap-20260907/tests.json",
+      "scripts/analysis/audit_gfx_full_overlap_v1.py",
+      "scripts/analysis/audit_gfx_full_overlap_v2.py",
+      "scripts/analysis/build_gfx_full_overlap_bundle_v1.py",
+      "scripts/analysis/project_gfx_card2_memory_v1.py",
+      "scripts/analysis/reproduce_gfx_full_overlap_v1.py",
+      "tests/test_gfx_full_overlap_v1.py",
+      "paper/iclr2027/patch-overlap-reproduction-v1/README.md",
+      "paper/iclr2027/patch-overlap-reproduction-v1/audit-inputs.json.gz",
+      "paper/iclr2027/patch-overlap-reproduction-v1/expected-results.json.gz",
+      "paper/iclr2027/patch-overlap-reproduction-v1/manifest.json",
+      "paper/iclr2027/patch-overlap-reproduction-v1/overlap_core.py",
+      "paper/iclr2027/patch-overlap-reproduction-v1/reproduce.py",
+      "paper/iclr2027/patch-overlap-reproduction-v1/source-bindings.json",
+      "paper/iclr2027/patch-overlap-reproduction-v1.zip"
     ]
   },
   "not_reused": [
