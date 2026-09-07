@@ -1,6 +1,6 @@
 {
-  "as_of": "2026-09-07T03:44:47.354060+00:00",
-  "status": "Research draft. Original Related-Lite scores and the historical 88-task sensitivity remain unchanged; no significant memory gain is established. The paid Verified 350/150 campaign remains incomplete under its existing aggregate allowance. The full-universe correspondence audits remain retrospective. A separate first-memory literal replay stopped after seven attempts with 92 unstarted targets. Later isolated environment diagnostics verify an unchanged Astropy source patch (one target plus 55 preservation tests) and an unchanged scikit-learn source patch (one target plus 45 preservation tests); they are not pooled into a repair rate. Five further readiness diagnostics are closed with 449 matching remote/local file hashes. Raw output checks identify intermediate Matplotlib failures hidden by its final patch-application label. Exact offline archive caching enables its baseline tests, but its target already passes before candidate application. Both frozen Pytest test patches contain all implementation hunks of their selected literal candidates; their gold fields contain only changelogs and their target tests already pass before application. The 99-task universe and all original fields, reports and failed attempts are retained. No new full-99 replay has started with these derived images. Complete anonymous runtime release and human review remain unfinished.",
+  "as_of": "2026-09-07T04:39:42.933391+00:00",
+  "status": "Research draft. Original Related-Lite scores and the historical 88-task sensitivity remain unchanged; no significant memory gain is established. The paid Verified 350/150 campaign remains incomplete under its existing aggregate allowance. The full-universe correspondence audits remain retrospective. A separate first-memory literal replay stopped after seven attempts with 92 unstarted targets. Later isolated environment diagnostics verify an unchanged Astropy source patch (one target plus 55 preservation tests) and an unchanged scikit-learn source patch (one target plus 45 preservation tests); they are not pooled into a repair rate. Five further readiness diagnostics are closed with 449 matching remote/local file hashes. Raw output checks identify intermediate Matplotlib failures hidden by its final patch-application label. Exact offline archive caching enables its baseline tests, but its target already passes before candidate application. Both frozen Pytest test patches contain all implementation hunks of their selected literal candidates; their gold fields contain only changelogs and their target tests already pass before application. The 99-task universe and all original fields, reports and failed attempts are retained. A fresh, separately frozen full-99 replay is active with five declared prepared images and mandatory raw-output checks; no complete repair rate is available. A posthoc replay of all 594 original records finds 287 complete target comparisons and no record with every target already passed. Of 87 original official resolved records, 71 have every target FAILED before and PASSED after; 16 include ERROR/MISSING and remain distinct. Independently launched larger-budget FlatL/GraphL solvers were found without immediate verification. Another process restarted them from execution_timeout 600 to 280 and archived their old outputs. Seven old predictions now have separate frozen-harness verdicts, including a null/null exit_error treated as an explicitly empty verifier input; source bytes and the rejected earlier admission remain unchanged. Three closed verification queues match 849 remote/local file-path hashes, plus five files for a watcher closed before any prediction. The first 146-file task collection is a subset and is not counted again. A v3 watcher is active for the restarted 198-slot campaign, binding configuration hashes and output-directory identities, with 22 focused tests passing. The full 99-task literal replay is independently active with 40 completed tasks at 04:38 UTC. Neither run is a complete effect estimate or a change to the local Verified allowance. Complete anonymous runtime release and human review remain unfinished.",
   "artifacts": [
     {
       "path_from_contextgraph_root": "docs/reports/gfx-skill-audit-20260906/receipt-audit.json",
@@ -2805,6 +2805,534 @@
     {
       "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/build-metadata-input-v1/plan.json",
       "sha256": "8e712b9fbb1b0aba59b8086c07f64beda65fc5d14bf5abe2e45badd42bea5224"
+    },
+    {
+      "path_from_contextgraph_root": "configs/gfx_existing_verification_v1/aborted-exec600-plan-v1.json",
+      "sha256": "22e4f11de745a3d49d15904b8b45dbe606cc2ffb443c70499729f654ea8e2874"
+    },
+    {
+      "path_from_contextgraph_root": "configs/gfx_existing_verification_v1/aborted-null-v1-plan.json",
+      "sha256": "182256cd782af1d7aa2d1043a7b2db41520589cc1659d5f5585301dc16d566b1"
+    },
+    {
+      "path_from_contextgraph_root": "configs/gfx_existing_verification_v1/current-exec280-plan-v1.json",
+      "sha256": "74f332f3e34e67170e0fa492e715fe5845d3fd25a7ea82cca950049046c2dd74"
+    },
+    {
+      "path_from_contextgraph_root": "configs/gfx_existing_verification_v1/current-exec280-v2-plan.json",
+      "sha256": "7dac0abb3e146185a424caa5f3673333160c40d27e895be19e20757fbe6d7a47"
+    },
+    {
+      "path_from_contextgraph_root": "configs/gfx_existing_verification_v1/plan.json",
+      "sha256": "8573005e96d29a00bef20e7f57fae305708c998a3567e41242e44d3f9f7a9b3b"
+    },
+    {
+      "path_from_contextgraph_root": "configs/gfx_literal_replay_v2/amendment.json",
+      "sha256": "c7604969eded4c22ae61f30768aff22773b27b4b7441cb2a6a6f5aec15af20a2"
+    },
+    {
+      "path_from_contextgraph_root": "configs/gfx_target_transitions_v1/plan.json",
+      "sha256": "93ae315bdf5e42dda9026123ecd95f747466e57f9b1d3d57e26f2f6590dfd3e6"
+    },
+    {
+      "path_from_contextgraph_root": "data/gfx-existing-verification-v1/aborted-exec600-code-v1/manifest.json",
+      "sha256": "9afc3315815541d5ab7059de60e1f2e682afad38839be39b4f1815a1bd2d52d1"
+    },
+    {
+      "path_from_contextgraph_root": "data/gfx-existing-verification-v1/aborted-null-v1-code/manifest.json",
+      "sha256": "61a9f9c15d5b372f902238e0c030a4877e41dc7943c3cb7d1a6dde07f9b5c573"
+    },
+    {
+      "path_from_contextgraph_root": "data/gfx-existing-verification-v1/code-v1/manifest.json",
+      "sha256": "dc36c669e632e81c24e29c21945e8326527359184181d2d2351a49d78d0d091c"
+    },
+    {
+      "path_from_contextgraph_root": "data/gfx-existing-verification-v1/current-exec280-code-v1/manifest.json",
+      "sha256": "a690aa68733c96073e04cdf6054faa41cf7adf94e95b0684ac6581c9bf879658"
+    },
+    {
+      "path_from_contextgraph_root": "data/gfx-existing-verification-v1/current-exec280-v2-code/manifest.json",
+      "sha256": "2bf809ebe158bf9679e2205a4d69772fca5201cffed1585dcc9b0473efe03af7"
+    },
+    {
+      "path_from_contextgraph_root": "data/gfx-literal-replay-v2/package-v1/manifest.json",
+      "sha256": "590c4bb7666027f0d826cb30c2819eb19391383bf6b72a4be13b16a4878601c5"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/branch-refresh-20260907-v2/README.md",
+      "sha256": "b699fd69bc0f3a7b02eef537dd15ccd86468d946fa0fd201937956841f37457f"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/branch-refresh-20260907-v2/receipt.json",
+      "sha256": "da76d80f47cb8adc73ffbdf2b9ecdd56519ae0fc3f1f441cb038a626f4ef06b2"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/branch-refresh-20260907-v2/remote-campaign-observation.json",
+      "sha256": "6b657082807b3c1a0bf822b4df917236eea53a375d94a8f92a949f2c924b3c34"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/branch-refresh-20260907-v2/review-binding.json",
+      "sha256": "40976e0a7783fe03c4d98024cd496cd23b531e7d931a67b8eb1bc9041863eae5"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/README.md",
+      "sha256": "8928024496e2cd79085836091c89d877b4d79540a48e702a92489f96706f2e18"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/campaign-restart-v1.json",
+      "sha256": "758a1454684148a67bc11b407aa3d9959711c35c1782bae6404645fe49c6c40c"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-aborted-exec600-execution-v1/collection.json",
+      "sha256": "bff5bb578bdd6a0e4c5e084b56792c058cef5e70d8d682763f919954ea474a50"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-aborted-exec600-execution-v1/completed.json",
+      "sha256": "566262956f7dfaf17144da1eb767989cd3f8b0e2a47517d9a8aab20fa491f13b"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-aborted-exec600-execution-v1/gfx-flatL-exec600-aborted--django__django-32012/cleanup.json",
+      "sha256": "0abfb89df6c5ca9f6e5e07939a3e0d3611eead72e489229d4c9bb4405664071d"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-aborted-exec600-execution-v1/gfx-flatL-exec600-aborted--django__django-32012/manifest.json",
+      "sha256": "53f314fe3187287cdb5857c5ef6b5ad74e2009412aae2c832df152265e4e9f85"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-aborted-exec600-execution-v1/gfx-flatL-exec600-aborted--django__django-32012/raw-output-readiness.json",
+      "sha256": "d5e2a278b9035bc7085a716eaa7519d58e2e1f8df57be22a06edbd0008f756fe"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-aborted-exec600-execution-v1/gfx-flatL-exec600-aborted--django__django-32012/report.json",
+      "sha256": "b5324fdfba2aa6820f10f52e5027484246a460c8534ea326b1b941d01360dee4"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-aborted-exec600-execution-v1/gfx-flatL-exec600-aborted--django__django-32012/run_instance.log",
+      "sha256": "fe9738fa44d7a40a55dadcbe2adf1bd0df7455ed984557302b1f5d1e968fa7f7"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-aborted-exec600-execution-v1/gfx-flatL-exec600-aborted--django__django-32012/source-binding.json",
+      "sha256": "59bae7473f15f9e2c6e0c5fa913b2c039b5fd71b3d63e97077398de250d0f600"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-aborted-exec600-execution-v1/gfx-flatL-exec600-aborted--django__django-32012/terminal.json",
+      "sha256": "880ef6ad47d8483a429d0a0a7e41824293bb1e247782f4566fb6372e231bb38a"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-aborted-exec600-execution-v1/gfx-flatL-exec600-aborted--django__django-32012/test_output.txt",
+      "sha256": "e3ba08de4fee19dc46ed007114b16d60a009d43d2b2acf04f912f84c88843c68"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-aborted-exec600-execution-v1/gfx-flatL-exec600-aborted--django__django-32012/verification-result.json",
+      "sha256": "5ba472d2b773a1003842e257f62dc3e1964ff89411cd79860a97953648471a41"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-aborted-exec600-execution-v1/gfx-graphL-exec600-aborted--django__django-29124/cleanup.json",
+      "sha256": "1e222cb04495d29a659624e13ba1e791c22a7a94564d86e8f43f20afd9387385"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-aborted-exec600-execution-v1/gfx-graphL-exec600-aborted--django__django-29124/manifest.json",
+      "sha256": "6f12f62b291b483ce1355dff61cacf5121ffc5f96439bc1c3b3871e170d041f8"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-aborted-exec600-execution-v1/gfx-graphL-exec600-aborted--django__django-29124/raw-output-readiness.json",
+      "sha256": "c546827390e487682d2476897af10f3b4014e7fdaf703b4f88a09e5b5595178a"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-aborted-exec600-execution-v1/gfx-graphL-exec600-aborted--django__django-29124/report.json",
+      "sha256": "449d1ef8f2028c60e2e77e31059e4baabbd55f16421bc516c567d6baa19c9945"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-aborted-exec600-execution-v1/gfx-graphL-exec600-aborted--django__django-29124/run_instance.log",
+      "sha256": "bf5bd6b1e2ad7bdcac21b57fab2f6cc09e38db030bdf20f470bee3583c6d19bc"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-aborted-exec600-execution-v1/gfx-graphL-exec600-aborted--django__django-29124/source-binding.json",
+      "sha256": "7b1c4ae7992537e2744173974a28ccd9ff23cc0b94ae8770ad71ca36ccf665b4"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-aborted-exec600-execution-v1/gfx-graphL-exec600-aborted--django__django-29124/terminal.json",
+      "sha256": "04a7dcfe01acb36cdf28ee5fb2563a5ac0c3309720d7a273e697b6b13e0c83da"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-aborted-exec600-execution-v1/gfx-graphL-exec600-aborted--django__django-29124/test_output.txt",
+      "sha256": "6117e29b2d1d3dbd06714ed1103681f2737ac147e6a48fcfa0e68f4bf36b31af"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-aborted-exec600-execution-v1/gfx-graphL-exec600-aborted--django__django-29124/verification-result.json",
+      "sha256": "419e4aeaa6c4fb6cfce88f03496e1ccd06f624a1f1bf88d91dc13594d5e43a3c"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-aborted-exec600-execution-v1/ten-minute-reviews.jsonl",
+      "sha256": "0f4cec88df01ad1e9fc39db60bc3c01ef54165fe1c88b634d9e7c7e8932fc72c"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-aborted-exec600-execution-v1/watch-terminal.json",
+      "sha256": "c2a602c5a44d8334cd794b8a632306dad2b28c1717fad221e03522d8f5e0d5eb"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-aborted-null-v1-execution/collection.json",
+      "sha256": "0cc515ef1003535595e7579cfa1a1515fab5a0400f759fa2ef139802563a1897"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-aborted-null-v1-execution/completed.json",
+      "sha256": "0aaa34f616b9d4ab2ba6832ff86901032ad415725887d5f3883c793ffa571168"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-aborted-null-v1-execution/gfx-graphL-exec600-aborted-null--django__django-26486/cleanup.json",
+      "sha256": "0499837d44268c2bdc36d8930f2fdb0a3cc4e1b16b7e89d7cd47c3cc3f5d59f0"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-aborted-null-v1-execution/gfx-graphL-exec600-aborted-null--django__django-26486/manifest.json",
+      "sha256": "f3cdfbd4fdc748508a70cc71cf7cc830810c32081a0a83ae569ed16f07e1f3d6"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-aborted-null-v1-execution/gfx-graphL-exec600-aborted-null--django__django-26486/raw-output-readiness.json",
+      "sha256": "c04e52b925169bc559d80b4ec97aaec220c7c45e541436e49d5b02190bee2d05"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-aborted-null-v1-execution/gfx-graphL-exec600-aborted-null--django__django-26486/report.json",
+      "sha256": "a3003c37a5a52efe6eabee75e88e01b80893f84fc904cc8bdef54b4eb9602822"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-aborted-null-v1-execution/gfx-graphL-exec600-aborted-null--django__django-26486/run_instance.log",
+      "sha256": "f47d4d448c0f8549dc242bb5d85554e6eb8afde89c5dcb2ccb1f6ea0b0a17196"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-aborted-null-v1-execution/gfx-graphL-exec600-aborted-null--django__django-26486/source-binding.json",
+      "sha256": "9387e9429e7e4b0e01a028e43032a9417eeefc4c73ee97c3ed047e5bd3166ac2"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-aborted-null-v1-execution/gfx-graphL-exec600-aborted-null--django__django-26486/terminal.json",
+      "sha256": "8807fc3c5797587951c09eb39089e81165b074340619c67c757661a934a90a1e"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-aborted-null-v1-execution/gfx-graphL-exec600-aborted-null--django__django-26486/verification-result.json",
+      "sha256": "97bf2453c7047b0c28690d253975fe8eb582421328302fa32817cf98dae896c6"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-aborted-null-v1-execution/ten-minute-reviews.jsonl",
+      "sha256": "fe4b09023c04fa42ae4f57c74f1ae2d2721cf28132515680f87d1f90f7a7bf2d"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-aborted-null-v1-execution/watch-terminal.json",
+      "sha256": "b2d8fdae956315729124cbbbe32b2cb00f5f13240ae4a399f35fa7fd030d7de3"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-current-exec280-execution-v1/STOP",
+      "sha256": "1ed51654a896e43b4ede9a602bbce587cd307fd2167a5ff41ed036960056336e"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-current-exec280-execution-v1/collection.json",
+      "sha256": "3e19283c22070d489b93624c8b1949149b101c9ce1ba011f8c0c871664848427"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-current-exec280-execution-v1/ten-minute-reviews.jsonl",
+      "sha256": "b5422fcac23e3b7a0467e4b1dce648df9d425e3de1006194158992a99c198373"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-current-exec280-execution-v1/watch-terminal.json",
+      "sha256": "e4db74b799a2a7a0235173fe91725a38fcff2f637b47c192a76c4186a31c0756"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/STOP",
+      "sha256": "7fa64981ea022717a7d8cbd9d9ef9625a5af270ca881225bedf878374e72c552"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/collection.json",
+      "sha256": "09833205e9a99f7920d1f77d571e3983a4de5de0f144fb677deeaaca5ac90a85"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/completed.json",
+      "sha256": "8ba9bfdc50d837e1a40a62671003fc996aeeae5d3dcb23dbf93653c643fa4175"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/gfx-flatL--astropy__astropy-15082/cleanup.json",
+      "sha256": "c95e835721fa2eebb1618b4e27f79769c92403daebf0748602a85b1489e95195"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/gfx-flatL--astropy__astropy-15082/manifest.json",
+      "sha256": "aac1fda253312c3c14a995780cb163e22677dd42b35e56c3d8fdc4bba0aba4a6"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/gfx-flatL--astropy__astropy-15082/raw-output-readiness.json",
+      "sha256": "2c8ab45606d0cb3b054e9cbd5d7193f7acc0c5b1b62fa38bd376f9510f38a0c7"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/gfx-flatL--astropy__astropy-15082/report.json",
+      "sha256": "92abe64b73df231dce1afb126e16ca9cec14fa3ca39c0533f3ac004b3e180fb7"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/gfx-flatL--astropy__astropy-15082/run_instance.log",
+      "sha256": "dff4493e468fe2c3b8496008474b2702807425476835b89b93b35c79040103a1"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/gfx-flatL--astropy__astropy-15082/source-binding.json",
+      "sha256": "6fe937a939203d91118b7d954a6b529b07627950bbc186fd4a366e3af0da748d"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/gfx-flatL--astropy__astropy-15082/terminal.json",
+      "sha256": "c630b8fbfc077e437c26675f1ffd2e0718061843b877a7bf11519336a492c01b"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/gfx-flatL--astropy__astropy-15082/test_output.txt",
+      "sha256": "37ba834341a345f9ca130b23e7e6edd7a3ac1bc3d558b7efec4013865a982d1c"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/gfx-flatL--astropy__astropy-15082/verification-result.json",
+      "sha256": "4b3d24e13cabd4bdb03c84e8fd4c94b01cbb0f46384aa89056eec3d56a35f0af"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/gfx-flatL--django__django-31864/cleanup.json",
+      "sha256": "1e962a384b8fc66232bfcfcf572ca4c59a0f634307cb25bd0d19b477e7bd9e34"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/gfx-flatL--django__django-31864/manifest.json",
+      "sha256": "85d4e774c3ebf49bca098a9eaf2ca76f2a3af1cef6bc2a62c45ba5d5f40b7196"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/gfx-flatL--django__django-31864/raw-output-readiness.json",
+      "sha256": "2fa980fe855c9517059d65d7d342bb7445c2b4b360f1a999745e8d09905dc16c"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/gfx-flatL--django__django-31864/report.json",
+      "sha256": "468a213a7b4f5dea8274bc7c13280f01d3cf1764c2f6a4121383eec2e4233a43"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/gfx-flatL--django__django-31864/run_instance.log",
+      "sha256": "30b88a56fd78fb1f8b2e904621e746a8895eb910e0c628e69ba2c731f8ff255d"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/gfx-flatL--django__django-31864/source-binding.json",
+      "sha256": "934cd609f464c513531d73213cd0aba8296092df71b6339627b4dab298c983ee"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/gfx-flatL--django__django-31864/terminal.json",
+      "sha256": "611806e7da2ac5cf4e8e8812db7a67deaf83bee018d534fdbc78f0a98988f554"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/gfx-flatL--django__django-31864/test_output.txt",
+      "sha256": "8fdfbf5cbc530c8be58eee1415d1c0a06629a3e508a2d1dded511c09d21c6a73"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/gfx-flatL--django__django-31864/verification-result.json",
+      "sha256": "fac6f2b3c36c43bd9534879efc6cf696cf0804c94fcbd274509c7b6e0313b539"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/gfx-graphL--astropy__astropy-15082/cleanup.json",
+      "sha256": "f76a74dadf42b2f3009685c6778b812803cd913d0fb89e5ec0dba34ebaf5f15f"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/gfx-graphL--astropy__astropy-15082/manifest.json",
+      "sha256": "6b655ffabf353dadd099a57be52051c641c2683ccc4c2d3b3c628ad87f4fa7a0"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/gfx-graphL--astropy__astropy-15082/raw-output-readiness.json",
+      "sha256": "e44d9379d698c622f09b6c541c8b0f71f6dbd1d43856c97fcbd1e7ff9423021e"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/gfx-graphL--astropy__astropy-15082/report.json",
+      "sha256": "821f374db12e50ff257075becb5e11af1bc7e7ddfd3638be27989ee92d63c786"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/gfx-graphL--astropy__astropy-15082/run_instance.log",
+      "sha256": "c75adc62e1dc34012d59ce59569045844aff6193ed131754120d173394210b4a"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/gfx-graphL--astropy__astropy-15082/source-binding.json",
+      "sha256": "c65ee6a81d089dcc693a4d25a1861c7ba7a5ced18feee8b847d8b47a36f29f00"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/gfx-graphL--astropy__astropy-15082/terminal.json",
+      "sha256": "36c28fd391e14abd691dae64c470f507b5094b9543d7e9936ffa5fdd8ee30c5c"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/gfx-graphL--astropy__astropy-15082/test_output.txt",
+      "sha256": "e13147a37dc6a27550e18fa7e3bf19fbc7d76846791904b7c29783df963430cb"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/gfx-graphL--astropy__astropy-15082/verification-result.json",
+      "sha256": "3f0c6c8ef9c6a82e017dbe06d61d4a4112692b65ee635918d2546102fad6491e"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/gfx-graphL--django__django-31864/cleanup.json",
+      "sha256": "39f5c385e9a6d10dfe79f51ddade54e51e35a91631992ae4dbf3ca0c2db92489"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/gfx-graphL--django__django-31864/manifest.json",
+      "sha256": "a47da62e68b8fdd6fc9431212b4df72ebe745262f809a55afbf3d4376dba90ad"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/gfx-graphL--django__django-31864/raw-output-readiness.json",
+      "sha256": "2f2742f8305ac4c9ccbea6e7f061fd7c500a34bff557830ddc0a5cabfbb99342"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/gfx-graphL--django__django-31864/report.json",
+      "sha256": "468a213a7b4f5dea8274bc7c13280f01d3cf1764c2f6a4121383eec2e4233a43"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/gfx-graphL--django__django-31864/run_instance.log",
+      "sha256": "d6e6bc6176382ef41f8cb421a6ad112bfa6c3630653f1ecef36c58c414a7b743"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/gfx-graphL--django__django-31864/source-binding.json",
+      "sha256": "9cd75c107cb6f73aecf49b1772c1c457c6f5416bf5eaa44e068f9ef20a1c82e1"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/gfx-graphL--django__django-31864/terminal.json",
+      "sha256": "489d26be4baf2ef9e24a423a2517c611a57f104425e088d19bcbef94ce0a3c1f"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/gfx-graphL--django__django-31864/test_output.txt",
+      "sha256": "f45854d41907c7d21fc85212474c4cac088af04cadff376f7295ff41218c9062"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/gfx-graphL--django__django-31864/verification-result.json",
+      "sha256": "540ea3999a85a0ce9834056f53a39dcacda058373536c7473baf937e9656a421"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/ten-minute-reviews.jsonl",
+      "sha256": "368087ecb9dc9c63919817ad93ed6531d9eed14d46d81fb436b3cb4f9f9c6df9"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/closed-first-queue-v1/watch-terminal.json",
+      "sha256": "9f4c10235d0c2b58ed24fee588ed05d695209ed99d1025200ea6f585dbfcdc71"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/gfx-flatL--astropy__astropy-15082/cleanup.json",
+      "sha256": "c95e835721fa2eebb1618b4e27f79769c92403daebf0748602a85b1489e95195"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/gfx-flatL--astropy__astropy-15082/collection.json",
+      "sha256": "0a619d5743a59101d6d3df81b50c5f4bbb0faaeff03a08b41af060536c543dec"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/gfx-flatL--astropy__astropy-15082/manifest.json",
+      "sha256": "aac1fda253312c3c14a995780cb163e22677dd42b35e56c3d8fdc4bba0aba4a6"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/gfx-flatL--astropy__astropy-15082/raw-output-readiness.json",
+      "sha256": "2c8ab45606d0cb3b054e9cbd5d7193f7acc0c5b1b62fa38bd376f9510f38a0c7"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/gfx-flatL--astropy__astropy-15082/report.json",
+      "sha256": "92abe64b73df231dce1afb126e16ca9cec14fa3ca39c0533f3ac004b3e180fb7"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/gfx-flatL--astropy__astropy-15082/run_instance.log",
+      "sha256": "dff4493e468fe2c3b8496008474b2702807425476835b89b93b35c79040103a1"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/gfx-flatL--astropy__astropy-15082/source-binding.json",
+      "sha256": "6fe937a939203d91118b7d954a6b529b07627950bbc186fd4a366e3af0da748d"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/gfx-flatL--astropy__astropy-15082/terminal.json",
+      "sha256": "c630b8fbfc077e437c26675f1ffd2e0718061843b877a7bf11519336a492c01b"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/gfx-flatL--astropy__astropy-15082/test_output.txt",
+      "sha256": "37ba834341a345f9ca130b23e7e6edd7a3ac1bc3d558b7efec4013865a982d1c"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/gfx-flatL--astropy__astropy-15082/verification-result.json",
+      "sha256": "4b3d24e13cabd4bdb03c84e8fd4c94b01cbb0f46384aa89056eec3d56a35f0af"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/observation-v1.json",
+      "sha256": "16125508260f9cfa32757fca903e834276c87a35fc99aad04f1a909dd740f638"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/observation-v2.json",
+      "sha256": "709eae2552ca94907dae9c48e27794448350bf84d4d4aef09e7dafd9b552a717"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/observation-v3.json",
+      "sha256": "dbe2d2eb7d15e3863028b2d567b5533fa0a6e85fa3e44458334f46794ed74f2c"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-existing-verification-20260907/observation-v4.json",
+      "sha256": "00fa4bbd0c0ca6cc633a3804368fe3d9de41d01c218bce0f5790583be61af43d"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-full-replay-20260907/README.md",
+      "sha256": "04e0ddb97798cc80d3fb33cc6ad19aa5e7be04ab7ba6b1827587a2af25581024"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-full-replay-20260907/observation-0355.json",
+      "sha256": "b9c76c37ff3bac8902d2e9b6fbf139f4190f9100cba05f1ca078f6c4cc700e56"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-full-replay-20260907/review-0402.json",
+      "sha256": "cfa74efce0be0303fed246e9d258dc0917e8f5f55cf6c9710386be721efa7b92"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-target-transitions-20260907/README.md",
+      "sha256": "7baa2643db61993fe009e108ca0df4bc62e56bf2fedcb47e0667a5c7026fd27e"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-target-transitions-20260907/audit.json",
+      "sha256": "8f23a23dff4b508cef49a0fa1a92deb1b0a704ebc56cefad1b3d7c544644b25c"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-target-transitions-20260907/collection.json",
+      "sha256": "124107add7211669b7698f33dc4672a0d5e4a8a9fda4ffc5d92c2e5931a2babe"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-target-transitions-20260907/paper-validation.json",
+      "sha256": "2ebe1c328e3d836d7ff7e1c6d45f3b5ff2bdcac1a7fa3c798e223b17304439cd"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-target-transitions-20260907/replay-check.json",
+      "sha256": "02f189c289d46a4fc2fed53f267277dca59d2fbb077e32f18221abc4aa88a1b0"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/audit_gfx_target_transitions_v1.py",
+      "sha256": "c07d67330010f7b167c1360b58e7464b667c9a358240cf5f5166a71b0fb34507"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/build_gfx_full_readiness_replay_v1.py",
+      "sha256": "b5ae6c58dadd9ebe7b090833ed6e2022016adb0500895fb9cc9eada35a6a495d"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/observe_gfx_campaigns_v1.py",
+      "sha256": "d748495232ed2fabcf053ab8b151565d444bdcd2b39d0b016edbcc3f19be7efc"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/observe_gfx_campaigns_v2.py",
+      "sha256": "e048e5a5a231c8bd92dbbb1775e83675dbffd541373ab0798b527905ea6f8d60"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/observe_gfx_campaigns_v3.py",
+      "sha256": "96d47d632bbfd72282c000e4696554f548fa7f9ebd1e9439df0da887e0e69eab"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/run_gfx_existing_prediction_v1.py",
+      "sha256": "660c583cee2e80be6df7ac84d0635a11e3fdef0ec9ccd30f78e9e0debe93b3f3"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/watch_gfx_existing_predictions_v1.py",
+      "sha256": "4fc39ad27dba62cd4ebe198d3cbadbf5d85b4240bf4dfcce7a20aeb7d39efc97"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/watch_gfx_existing_predictions_v2.py",
+      "sha256": "672668ad2d263b0424bacaeaa957615bacd2225de0643bacdb164dbca0c8043e"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/watch_gfx_existing_predictions_v3.py",
+      "sha256": "554d415d7326668f23985ee18e91d882fe444b98a3b39d5b939a7a97e610d1dc"
+    },
+    {
+      "path_from_contextgraph_root": "tests/test_gfx_campaign_identity_v2.py",
+      "sha256": "a587ab441ddeb5cf3c2d3a3a09939c62d4fec10da3aa435b1bb8c49df04fe25c"
+    },
+    {
+      "path_from_contextgraph_root": "tests/test_gfx_existing_predictions_v1.py",
+      "sha256": "d4a09daedd7f70c4436193ea40ecbbfbe7298281564e5b8ab9ee061af8151da7"
+    },
+    {
+      "path_from_contextgraph_root": "tests/test_gfx_null_prediction_v3.py",
+      "sha256": "4a315c4831f7e8ade8dcae685a4d87ad987571891a9bc17a35bd16d2b09e9a42"
     }
   ],
   "claims": {

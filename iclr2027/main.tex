@@ -525,7 +525,8 @@ Initial compilation took 147.8 seconds, exceeding the verifier's 120-second inne
 With the same case, source patch and verifier code, this diagnostic then completed: the target test changed from failed to passed and all 55 preservation tests passed.
 Both earlier failures are retained, and this known-failure diagnostic is not pooled into a replay score.
 The frozen harness did not retain raw pytest output for the zero-result attempt, limiting attribution of its exact exit cause.
-The full replay remains stopped while other recorded setup errors are investigated.
+After the further diagnostics below, a fresh, separately frozen full-99 replay starts with five declared prepared-image substitutions and mandatory raw-output checks.
+The seven-attempt run remains closed; the new run is ongoing and supplies no complete repair rate here.
 
 \clearpage
 \section{Further readiness diagnostics and test-patch scope}
@@ -570,4 +571,41 @@ The wrapper captures byte writes returned by the frozen run/create shim, preserv
 Twenty focused software checks pass.
 All five services are closed, and the local copies match 449 remote file hashes in total.
 Each package's source-image and input-preservation checks pass, while all original failures and the full 99-task denominator remain intact.
+
+\clearpage
+\section{Historical target-test transitions}
+\label{app:target-transitions}
+The already-passing target tests in the new readiness diagnostics motivate a posthoc check of all 594 original records from the six-condition experiment.
+This check replays the previously frozen status audit exactly, including its receipt/report joins, before classifying each recorded target status before and after a prediction.
+It runs neither a solver nor a verifier and preserves the original outcomes and denominators.
+The 292 empty submissions and 15 setup failures remain distinct from 287 complete comparisons.
+
+None of the 287 complete comparisons records every target test passed before the candidate.
+All 87 original official resolved labels therefore contain at least one target not recorded passed beforehand.
+In 71 of these records, every target is recorded \texttt{FAILED} before and \texttt{PASSED} after.
+The other 16 include \texttt{ERROR} and, in one case, \texttt{MISSING} beforehand; neither status is silently treated as an observed test failure.
+
+\begin{center}
+\begin{tabular}{lrrr}
+\toprule
+Condition & Complete comparisons & Official resolved & All targets initially failed \\
+\midrule
+Control & 45 & 17 & 14 \\
+Flat & 63 & 18 & 14 \\
+Card-v1 & 54 & 18 & 16 \\
+Graph & 56 & 12 & 9 \\
+Rules & 37 & 13 & 10 \\
+File list & 32 & 9 & 8 \\
+\bottomrule
+\end{tabular}
+\end{center}
+The last column counts resolved records whose every target initially has the exact status \texttt{FAILED}.
+All 16 resolved records outside this group are Django records, and none uses the status audit's baseline fallback.
+The 1,622 target-test occurrences repeat tasks across conditions and are not independent observations.
+
+This census uses the archived parsed status maps, not complete original pytest stdout.
+It does not certify the new prepared images, dismiss the two Pytest field anomalies, change the known preservation-test regressions, or establish a causal memory advantage.
+The new literal replay, its readiness diagnostics, adaptive Card-v2 and the separate Verified experiment remain outside this historical census.
+Their baseline witnesses do not replace historical maps, and historical maps do not overwrite their new failures.
+The reproduction plan binds the existing status bundle and the new classifier; a second execution reproduces all classifications and counts.
 \end{document}

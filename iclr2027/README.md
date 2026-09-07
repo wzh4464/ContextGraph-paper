@@ -243,5 +243,18 @@ before candidate application. These findings limit repair attribution without
 changing original scores or exclusions. The new admission rule inspects raw
 subprocess outputs so a final patch-application error cannot hide an earlier
 build or collection failure. All five runs are closed, 449 remote/local file
-hashes match, and the 99-task replay remains stopped. See
+hashes match. The first seven-attempt replay remains closed. See
 `../../docs/reports/gfx-readiness-20260907/README.md`.
+
+A fresh full-99 literal replay now runs with five explicitly bound prepared-image
+substitutions and mandatory raw-output readiness checks. It preserves the same
+99 canonical cases, 95 nonempty and four empty predictions. Its ongoing outputs
+do not replace the old seven-attempt run and are not a completed repair rate.
+See `../../docs/reports/gfx-full-replay-20260907/README.md`.
+
+Appendix E checks target-test transitions in all 594 original six-condition
+records. None of 287 complete comparisons has every target passed beforehand.
+Of 87 original resolved records, 71 have every target FAILED before and PASSED
+after; the remaining 16 include ERROR or MISSING and are kept distinct. This
+parsed-map audit does not certify new image readiness or establish causality.
+See `../../docs/reports/gfx-target-transitions-20260907/README.md`.
