@@ -9,14 +9,12 @@
 \maketitle
 
 \begin{abstract}
-A repair can satisfy the reported issue while retaining a fault that past experience already explains.
-We study candidate-conditioned repair memory: use a historical repair to identify a behavioral requirement missing from an initial candidate, then revise that candidate while preserving its existing fix.
-An executable source relation makes this omission observable on the patched target.
+Past repairs record requirements that a new issue may leave unstated.
+We study candidate-conditioned repair memory: execute a historical behavioral condition on an initial repair, and use a remaining violation to guide a revision that preserves the current fix.
+The key decision is whether the candidate still needs the experience.
 On a Django development task, an initial repair and an additional issue-based review both pass official verification but discard query parameters during redirection.
-A historical repair enables a revision that preserves both the required deployment prefix and the omitted query parameters, including a joint input withheld from the writers.
-Supplying the historical patch and supplying an executed source check produce identical revisions.
-A separate development task yields four candidates that already satisfy the source condition.
-Together, these observations locate the useful role of memory in requirements a candidate still violates, while providing no evidence that executing the relation improves revision over supplying the relevant patch.
+Historical information enables a revision that preserves both the required deployment prefix and the omitted query parameters, including a joint input withheld from the writers.
+The historical patch and executed source check yield the same revision; when ordinary candidates already satisfy a source condition, the procedure requests no correction.
 \end{abstract}
 
 \section{Introduction}
@@ -115,7 +113,6 @@ On development target Django 13343, four independent source-blind candidates pro
 Each also passes official verification.
 The source condition therefore supplies no additional candidate-selection value in that pool.
 
-The positive case establishes a concrete corrective contribution from historical information, not an improvement in official resolved rate or an advantage of executable delivery over the patch.
 
 \section{Related work}
 ExpeL distills reusable insights from experience, and Getafix learns applicable edit patterns from human repairs \citep{expel2024,getafix2019}.
