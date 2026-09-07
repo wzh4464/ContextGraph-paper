@@ -2,7 +2,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{iclr2027_conference,times}
 \usepackage{amsmath,amssymb,booktabs,graphicx,hyperref,url}
-\title{ContextGraph: Memory for Incomplete Repairs}
+\title{ContextGraph: Repair Memory for Missing Requirements}
 \author{Anonymous authors}
 \newcommand{\cg}{ContextGraph}
 \begin{document}
@@ -10,116 +10,100 @@
 
 \begin{abstract}
 Past repairs record requirements that a new issue may leave unstated.
-We study candidate-conditioned repair memory: execute a historical behavioral condition on an initial repair, and use a remaining violation to guide a revision that preserves the current fix.
-The key decision is whether the candidate still needs the experience.
-On a Django development task, an initial repair and an additional issue-based review both pass official verification but discard query parameters during redirection.
-Historical information enables a revision that preserves both the required deployment prefix and the omitted query parameters, including a joint input withheld from the writers.
-The historical patch and executed source check yield the same revision; when ordinary candidates already satisfy a source condition, the procedure requests no correction.
+We study repair memory as a way to supply these missing requirements during code generation.
+On a Django development task, an ordinary repair and an additional issue-based review pass official verification but discard query parameters during redirection.
+Supplying a repair of the same API enables the writer to preserve both the required deployment prefix and the omitted query parameters.
+Providing that history in the first call produces the same code logic as a later history-guided revision, using one target repair call instead of two.
+An executed source relation identifies the missing behavior, but its delivery yields the same revision as the original historical patch.
+The evidence supports a simple procedure: give the writer the relevant historical requirement and evaluate whether the resulting repair preserves it together with the current requirement.
 \end{abstract}
 
 \section{Introduction}
 The issue description tells a coding agent what is currently reported as broken.
 It need not enumerate every behavior a complete repair should preserve.
-A retrieved experience is useful when it supplies a missing requirement that changes the candidate repair.
-Similarity to the issue, or a new observation about the program, is insufficient if the candidate already handles that condition.
+A past repair can supply a requirement absent from the new issue, allowing memory to improve a repair that already passes the target's tests.
 
 Consider an administrative redirect that must preserve a deployment prefix.
 Changing its destination from \texttt{request.path\_info} to \texttt{request.path} fixes that reported fault.
 However, appending a slash to the resulting path still discards query parameters.
 A different repair of the same API records this omitted behavior and replaces path concatenation with \texttt{request.get\_full\_path(force\_append\_slash=True)}.
+The useful information in this experience is the requirement to retain the query, which must hold together with the deployment-prefix requirement.
 
-We investigate a procedure organized around this residual defect.
-First construct a candidate from the current issue.
-Then assess a relevant historical condition on the patched program and revise when that condition exposes an omission compatible with the current task.
-This makes the proposed repair, rather than issue relevance alone, the object of the memory decision.
-Our development evidence distinguishes this useful omission from a historical condition already covered by ordinary repairs.
+This view leads to a direct repair procedure: supply the current issue and a relevant historical repair before generating code.
+We compare this procedure with supplying the same experience after an initial repair, and with an additional review using only the current issue.
+The comparison determines whether the corrective information requires a separate revision stage.
 
-\section{Memory conditioned on the candidate repair}
+\section{Using history to complete the repair requirements}
 \label{sec:method}
 
-\paragraph{Recover the historical requirement.}
-A source record contains a buggy program, its repair, and the repaired program.
-A writer receives the patch and relevant repaired code and generates a short executable check of the repair's observable effect.
-We execute it in both source versions.
-The check must run normally, hold after the repair on the supplied legal inputs, and change from false to true on at least one input.
-The resulting memory records the relation and the behavior demonstrating its relevance to the source repair.
+\paragraph{Supply the requirement during generation.}
+The repair writer receives the target issue, initial implementation, and selected source issue and patch.
+The historical record describes an additional behavior for the new repair to preserve.
+The writer returns a repaired method adapted to the target implementation while preserving the method's public signature and decorator.
+The procedure uses one target repair call.
+Our experiments supply a source repair of the same API to study how its information changes the result.
 
-\paragraph{Look for a remaining violation.}
-Let $p$ be the initial candidate for target program $T$, and let $r$ be a source relation that can be instantiated on that target.
-We evaluate $r$ on $T\oplus p$, the program after applying the candidate.
-In the experiments below, we select a source repair of the same API and execute its generated check unchanged on the target candidate.
-A normal execution with a false result identifies a possible omission; a true result means that this relation provides no reason to revise the candidate.
-The target's required behavior determines whether the source condition is relevant.
-Execution errors provide neither observation.
+\paragraph{Measure the requirements together.}
+We immediately evaluate every generated patch with the official SWE-bench verifier \citep{swebench2024}.
+To measure the behavior contributed by the source repair, a separate writer generates a short check from its patch and relevant repaired code.
+A normal execution changing from false on the buggy source to true on the repaired source demonstrates the historical behavior on the supplied inputs.
+We then execute this check unchanged on the patched target.
+An issue check measures the reported requirement, and a joint input exercises it together with the historical requirement.
+These are measurement programs; the direct repair writer receives only the issue, initial code, and raw history.
 
-This distinction matters when every candidate receives the same source-check result.
-If all satisfy the relation, it supplies no selection value.
-If all violate a relevant relation, ranking the same candidates cannot recover the missing behavior; the useful operation is to generate a corrective edit.
-The procedure therefore uses a violated source condition to request a revision and instructs the writer to preserve the behavior the initial candidate already fixes.
-
-\paragraph{Revise using the experience.}
-The revision writer receives the issue, initial implementation, candidate, and observations of the reported fault after the candidate is applied.
-Historical information can be supplied as the source issue and patch, or as the source relation, its before/after observations, and the check's observed failure on the candidate.
-The writer makes one revision call and returns a complete revised method.
-Each resulting patch is immediately evaluated by the official SWE-bench verifier \citep{swebench2024}; the behavioral checks then measure whether the reported requirement and historical condition hold together.
-The experiment supplies a selected source repair so that this comparison isolates its contribution to revision.
-
-\section{Evidence: recovering an omitted requirement}
+\section{Evidence: a historical requirement completes the repair}
 \label{sec:evidence}
 We use the training side of a SWE-bench Verified split with 280 source tasks, 70 development tasks, and a separate 150-task evaluation partition unused by these experiments.
-The principal pair is source Django 16612 and development target Django 14404.
-The target issue asks for support of \texttt{FORCE\_SCRIPT\_NAME} in administrative redirects.
-The source condition concerns query preservation in the same method.
+The development comparison pairs source Django 16612 with target Django 14404.
+The target issue asks for support of \texttt{FORCE\_SCRIPT\_NAME} in administrative redirects; the source records query preservation in the same method.
 
-\paragraph{An ordinary repair leaves the historical fault.}
+\paragraph{An ordinary repair omits the query.}
 DeepSeek V4 Pro generates one initial repair from the issue and relevant initial code, including the available request-path APIs.
 The writer may replace \texttt{AdminSite.catch\_all\_view()} while preserving its signature and decorator.
 Its repair keeps URL resolution based on \texttt{path\_info} and constructs the redirect from \texttt{request.path}.
-Official verification passes, and an issue-based check confirms that the deployment prefix is retained.
-The unchanged source program executes normally on this candidate and observes that both query strings are discarded.
+Official verification passes, and the issue check confirms that the deployment prefix is retained.
+The source check executes normally on this candidate and observes that both query strings are discarded.
 
-\paragraph{Memory changes the revision.}
-Starting from that same candidate, three independent revision calls receive either the issue-based evidence alone, the historical issue and patch, or the executed source relation.
-All use the same model, temperature 0.7, and one call with a 16,384-token output allowance.
+\paragraph{History supplies the corrective information.}
+Three independent revision calls start from this candidate and receive either the issue-based evidence alone, the historical issue and patch, or the executed source relation.
 The issue-based review retains the initial patch.
-Both memory conditions replace path concatenation with \texttt{get\_full\_path(force\_append\_slash=True)}, producing byte-identical patches.
-Those revisions retain the deployment prefix and preserve the query parameters (Table~\ref{tab:residual}).
+Both memory conditions replace path concatenation with \texttt{get\_full\_path(force\_append\_slash=True)}, producing byte-identical patches that preserve the prefix and query.
+All calls use the same model, temperature 0.7, and a 16,384-token output allowance.
+
+\paragraph{The information can be supplied in the first call.}
+We then append the identical historical issue and patch to the original initial-generation prompt, without supplying a candidate or diagnostic feedback.
+This one-call procedure produces a method with the same AST as the history-guided revision and passes the same checks (Table~\ref{tab:residual}).
+The observed generation uses 4,482 provider-reported tokens, compared with 13,601 for the original initial call and historical-patch revision combined.
+For this development case, the additional revision stage contributes no behavioral improvement over supplying history initially.
 
 \begin{table}[t]
 \centering
-\caption{Django 14404 development repair. Every row passes official verification: 2 fail-to-pass and 323 pass-to-pass tests. Behavioral checks distinguish the omitted requirement.}
+\caption{Django 14404 development comparison. Every row passes official verification: 2 fail-to-pass and 323 pass-to-pass tests. Calls include the initial generation when a revision is used.}
 \label{tab:residual}
-\begin{tabular}{lccc}
+\begin{tabular}{lcccc}
 \toprule
-Candidate & Prefix & Query & Prefix + query \\
+Procedure & Calls & Prefix & Query & Joint \\
 \midrule
-Initial repair & Pass & Fail & Fail \\
-Issue-based revision & Pass & Fail & Fail \\
-Historical patch revision & Pass & Pass & Pass \\
-Executed relation revision & Pass & Pass & Pass \\
+Issue only & 1 & Pass & Fail & Fail \\
+Issue + ordinary review & 2 & Pass & Fail & Fail \\
+History in revision & 2 & Pass & Pass & Pass \\
+Executed relation in revision & 2 & Pass & Pass & Pass \\
+History in first call & 1 & Pass & Pass & Pass \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\paragraph{The revision preserves the requirements together.}
-An independently prepared joint check combines the deployment prefix with repeated query parameters and percent-encoded values:
-\texttt{keep=a\%2Fb\&keep=c\%20d}.
-This input is withheld from all writers and executed after their revisions and official verifications complete.
-Both memory revisions preserve the exact prefix and query string in the redirect; the initial and issue-reviewed candidates lose the query string.
-
-\paragraph{A covered condition contributes no corrective signal.}
-Source Django 16493 records that serializing a \texttt{FileField} should preserve its original storage factory even when the factory returns \texttt{default\_storage}.
-On development target Django 13343, four independent source-blind candidates produce the same AST repair and all satisfy that relation.
-Each also passes official verification.
-The source condition therefore supplies no additional candidate-selection value in that pool.
-
+\paragraph{Both requirements hold on a joint input.}
+An independently prepared check combines the deployment prefix with repeated query parameters and percent-encoded values:
+\texttt{keep=a\%2Fb}\allowbreak\texttt{\&keep=c\%20d}.
+The input is withheld from all writers and executed after their official verifications.
+Both history-guided revisions and the direct history generation preserve the exact prefix and query string; the initial and issue-reviewed candidates lose the query string.
 
 \section{Related work}
 ExpeL distills reusable insights from experience, and Getafix learns applicable edit patterns from human repairs \citep{expel2024,getafix2019}.
 ExpeRepair uses historical test demonstrations and reflective insights to generate reproduction and boundary tests \citep{experepair2026}.
 MIRA constructs repair memory from SQL corrections and uses database evidence to activate and combine applicable repair units \citep{mira2026}.
-These works already establish repair reuse, historical test guidance, and execution-based memory activation.
-Our empirical focus is the residual requirement: whether historical information changes a candidate that already fixes the reported fault, and whether the resulting revision preserves the old and new requirements together.
+Our empirical focus is the missing requirement: whether historical information completes a repair that the reported issue and official tests leave incomplete, and when that information should enter generation.
 
 \section*{AI use statement}
 Generative AI assisted literature review, method development, implementation, experiments, analysis, and writing.
