@@ -221,3 +221,13 @@ Python fix, and the extra line is contributor metadata. These observations do no
 change repair scores or task exclusions. The hashed-feature replay, all 19 pairs,
 limits, and independent Git checks are in
 `../../docs/reports/gfx-exact-hunks-20260907/README.md`.
+
+Appendix C records a separately frozen first-memory literal-patch replay. The
+selection preserves all 99 targets (95 nonempty predictions, four empty), but
+the first run stopped after seven attempts following an Astropy verifier setup
+failure and an admission-check defect. Every report and the 92 unstarted targets
+are retained; no overall replay rate is computed. The new readiness classifier
+is separate from receipt integrity and has been exercised by a real one-task
+environment diagnostic. The replay also records the 31 field differences between
+archived cases and pinned parquet metadata, without replacing original evidence.
+See `../../docs/reports/gfx-literal-replay-20260907/README.md`.

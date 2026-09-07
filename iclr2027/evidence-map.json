@@ -1897,6 +1897,434 @@
     {
       "path_from_contextgraph_root": "docs/reports/gfx-exact-hunks-20260907/validation.json",
       "sha256": "e5926e964ae00816f5ac347744c996a4cbbd6ad1ed0aa70fde0f7c2702718288"
+    },
+    {
+      "path_from_contextgraph_root": "configs/gfx_literal_replay_v1/plan-v2.json",
+      "sha256": "822ac003958ddc2eca1444fc0fe7d488d2efe5676d7b41664df597ba7e1a8052"
+    },
+    {
+      "path_from_contextgraph_root": "configs/gfx_literal_replay_v1/plan.json",
+      "sha256": "2180c1ce56e2a2c61938b15c08b2ebd12a30d3b0274283abb667d97a0a2535df"
+    },
+    {
+      "path_from_contextgraph_root": "configs/gfx_literal_replay_v1/prebuild_astropy_v1.py",
+      "sha256": "f270b5d8675816addb56262c68e44f92d980e423fddfd47153d9c0e021bd0f72"
+    },
+    {
+      "path_from_contextgraph_root": "configs/gfx_literal_replay_v1/remaining-readiness-plan-v1.json",
+      "sha256": "6f324e12513ac8067bcfb51b7b2d707da07ae35f58455ccabd10244019f1776c"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/README.md",
+      "sha256": "57bfa978462df9cf9321330bf9cd787374ed13cb9b7a036fa580211777948cb4"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/build-v2.json",
+      "sha256": "3fdeb410883baa2dc9e21284cba7b4542c86927226459ab9e2295b06b78e3f90"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/case-bindings.json",
+      "sha256": "7296ae2b86e4cc126ef23887b77eb3a023cda20283d2e638a25a0bdf16ca0602"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/case-parquet-difference.json",
+      "sha256": "c1df4da2672d86c4a9d5871b3f0b0a472a7f404c7ba9548aa518e6f477a29b72"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/checkpoint-02.json",
+      "sha256": "f4360e6a3fa23d7392ea062b431f11a0d0f6b11a2c1f3a11f231e631f1d997ea"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/checkpoint-03.json",
+      "sha256": "791c89d29148bf61c7c5ff33adbfe1e4a591b7a0ecc9361eb5f06ecda7ed623d"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/closed-run-v1/astropy__astropy-15082/cleanup.json",
+      "sha256": "1e4da52b3b1d903e5ed52d0f04ef4804ffd6ea470b0b69170ce3445326d6e092"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/closed-run-v1/astropy__astropy-15082/report.json",
+      "sha256": "df43f04c1f1ec8b2de579ae6bbafd716b77331e2d1cc40d897a2feec8266281a"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/closed-run-v1/astropy__astropy-15082/verification-result.json",
+      "sha256": "7e762b1604fc3fee79c907e4b65f2c443c320ed92ec97d4a67d4c425342dadaa"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/closed-run-v1/astropy__astropy-4973/cleanup.json",
+      "sha256": "c8cca46945a07c395569985a0627e47c9b707df0bba468f4893c3eb7dc58b47c"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/closed-run-v1/astropy__astropy-4973/report.json",
+      "sha256": "f22353cd6e406c42673d7ae1ddf73c3d9e90763f97ecb3bd49fac3d11399a5fe"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/closed-run-v1/astropy__astropy-4973/verification-result.json",
+      "sha256": "dd528d6908c55f7923a70c0bd757a6c3d086bd12bef6bdd349035125721cb048"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/closed-run-v1/collection.json",
+      "sha256": "3d0a701f3a7f8ce67c3c7ec11aac22bea3a669550fa30d5ab0962e866db0ebcb"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/closed-run-v1/django__django-11776/cleanup.json",
+      "sha256": "dcc5673d78bc12b1ab7d3bf9b64a534a0237fdaf497e30bd422bd2423985f356"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/closed-run-v1/django__django-11776/report.json",
+      "sha256": "27e320bf87fad9b04919a3d7fb5f7df8073cf28c5872fdb5304ce561f7374eff"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/closed-run-v1/django__django-11776/verification-result.json",
+      "sha256": "bf37b5effe9ff843336366973a7b162bf6583e3594d9cd5acec406e32427afa4"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/closed-run-v1/django__django-18166/cleanup.json",
+      "sha256": "b14f30a4326592bb8d11a6450396d23e296a47e8916cd9e6efeb62b7f09c2df3"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/closed-run-v1/django__django-18166/report.json",
+      "sha256": "e64c964ae9f5de37286ba0fe7fb895d1af84159eadb9b3f0cc79cc5445cb9ad3"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/closed-run-v1/django__django-18166/verification-result.json",
+      "sha256": "c7e9ab179c4a4849a87880fc41e470481fed25f3f9b7d164721d2085b9b4c42b"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/closed-run-v1/django__django-1891/cleanup.json",
+      "sha256": "afc38df4d23c6b61323627511a1dcb81d867f8ebe88c6e4dfea927f673e7e416"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/closed-run-v1/django__django-1891/report.json",
+      "sha256": "45452c6b9088fa119d5833f1809680ff55e3607efd325238d4ca4c530dacd357"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/closed-run-v1/django__django-1891/verification-result.json",
+      "sha256": "1b881b816d470228d196d9ac394fd2696915e076114361d4795fae7a743e1b60"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/closed-run-v1/django__django-20098/cleanup.json",
+      "sha256": "cb731c2d3042d37668cd4288eb61a7f5f7f8d542cb66e71d9e0191961fea0c7a"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/closed-run-v1/django__django-20098/report.json",
+      "sha256": "829276ba9e862f76091b3ec6792fb724278c2d3bf8c70a163bcf0b9f7b391b6e"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/closed-run-v1/django__django-20098/verification-result.json",
+      "sha256": "fa3c1773b76b7fc1a27c16e7c39bf60d33c6e3e3996a8807b22e4e0e5c216598"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/closed-run-v1/django__django-21204/cleanup.json",
+      "sha256": "665a695fe48292a49064ce8b3545378649d44cbb92f3c7df85150547e8945b66"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/closed-run-v1/django__django-21204/report.json",
+      "sha256": "7e0e22c7b0104de223b98b00e0c74eb22312a93c97da84f9c9ba2d385b945351"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/closed-run-v1/django__django-21204/verification-result.json",
+      "sha256": "494aeb6a95c32adbe1fad5f1e524137670d1cfac5983ffaedd493b10bfb347ff"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/closed-run-v1/remote-files.json",
+      "sha256": "a5409abb0a12d9f058d839678dd49ea86e1ae9897dd75fb5d31d9b5d527f32e8"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/closed-run-v1/runtime-before.json",
+      "sha256": "aca36bed74e90dadb7525dd3596bccb9da821bde544bcd559c13e9c5bfacc221"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/closed-run-v1/ten-minute-reviews.jsonl",
+      "sha256": "add03212ad1b81c31222781022e69645f1fd091fcb640ca51de64dba577aad36"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/closed-run-v1/terminal.json",
+      "sha256": "8d79f61262398d82dfd88ed15802437133564bdea0cd1040aeb2fc7d7bee5a09"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/build-input/.dockerignore",
+      "sha256": "582ae6a6188e059ab83d73d8840e86a1d10be7d034e60347ae8a7490e201c959"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/build-input/Dockerfile",
+      "sha256": "9768e14f76aa7ca9105e3b5b2ef592d84ce3409055f69f5423d37d3b3be0b0e1"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/build-input/downloads.json",
+      "sha256": "6c7efba362eaf746c59440d355f95be4e2252b3aa45066ae9d0f867d9436f221"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/build-input/manifest.json",
+      "sha256": "5c540c6286d71e232b80eb0d2ac3492dbc4e5292c099ac88ad0c4fa8b4c71cef"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/build-input/plan.json",
+      "sha256": "852e6d24aaed5ea5f5e633096974eebf1dfd7d69a6e1d7b887b2c1d440f37513"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/build-output/build.log",
+      "sha256": "bbb72c09ea16c2261ec4f2b339ccc74ab4d1e1487bb034298bf38c0a98249923"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/build-output/receipt.json",
+      "sha256": "fd0229181e75dbe4330d97aa1bc9de388f537c12d2d440ca2dfbcbdbe557b69f"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/cleanup.json",
+      "sha256": "c6e38b4cb70a4f027f092c1cbbb0df1fb6a07df874b4ddab4e900a99059a631d"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/collection.json",
+      "sha256": "2a30f4cc26ecd8d4e84b9cd602e311637a8ebd6635b7bd0e1218f7dee8efafa0"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/diagnostic-checkpoint-01.json",
+      "sha256": "85d8d4c680bfc183c4454ec6eaa67641edad4949a5f0e2aa42382d7039d4c135"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/diagnostic-checkpoint-02.json",
+      "sha256": "2e1a3a03622f1f9526c3268b2826d2fcd7394d0f3dd16349f6c2e0102210e95c"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/diagnostic-checkpoint-03.json",
+      "sha256": "66a0178b4ece1c157bdfe05c3b769e682382d7415e86a1b27a1484c4ab39161c"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/diagnostic-checkpoint-04.json",
+      "sha256": "4140130f509155e19ec33b9c38780156836e6f5b321f9aaab76a9bed84b8a65e"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/diagnostic-checkpoint-05.json",
+      "sha256": "c0142d2995792ada0995e5d637f5bca070b294c1dcdd9e0228210493dea9b82f"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/diagnostic-checkpoint-06.json",
+      "sha256": "86eec6e0c249709230927196a364c17d2f3bce0df9f6a193d47f2bc4412c1bbd"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/diagnostic-closed-files.json",
+      "sha256": "8c5af53bc8989a6916178a087b7854e96bb037f40a342e13032e5072d02ab294"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/diagnostic-package-v2/manifest.json",
+      "sha256": "ac2b4221b1fbf7eb7944388e5d00310d2778c8a28549e57a19f5ff3faa3d45d5"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/diagnostic-package-v2/plan.json",
+      "sha256": "0b9f09be1a72415ecdc91be7e1a96f8ca0de395af016b61c0c9df3b5e355752b"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/launch.json",
+      "sha256": "4609d29e6ab3de1c9ae16ab379e91c92569f5ed504c7e02b2622ead2887a0dc6"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/report.json",
+      "sha256": "ff001e5ef8f2d6230f28bb6276941dbb854c7fa2a564322f4791d12ec87ab117"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/run_instance.log",
+      "sha256": "ea7183d08b0b3569ad1ab8f3006dc8a5a887ecf46be6ed3ec75d537ee64b8d6f"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/runtime-before.json",
+      "sha256": "73aecfeef49ee80284c4d6281c446f9555f853abfe943dd15f03a014eaf4d1c5"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/ten-minute-reviews.jsonl",
+      "sha256": "e5d519f6dcf212459ac739d0c8e382253d414469669ea34b98655fa9f39f2487"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/terminal.json",
+      "sha256": "9bbcbad17a8c6e6ff799a49db44e994b8e5d9b23a70a4d48369ca18070b5b9f7"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/test_output.txt",
+      "sha256": "7f1199dd6e4e15ad910e63e5aea629ef7f0a23f1c61a6843ebfbade221a29691"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/verification-result.json",
+      "sha256": "abd87f92e29f62a22c265d371f905829f2a60bb733d826eccad2b5def3e16678"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/before-after-test-witness.json",
+      "sha256": "d46c58c4a745c7cdfddd4051a4f5e7d113676f2acbe2b661926603214daf1c40"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/build-input-v4/.dockerignore",
+      "sha256": "afb363525180549d61d52616a6cf31cf1bd6202af4585778baf25e62400265f7"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/build-input-v4/Dockerfile",
+      "sha256": "c5dd3cf363790ab903cdb99ef054edeb244e573bd7020605279619b8ba4af46a"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/build-input-v4/manifest.json",
+      "sha256": "46eb46e2e7d84c8a4064e4f9a2d131a796d49ba88df4167290fb207ab9f63fb7"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/build-input-v4/plan.json",
+      "sha256": "0914bef666ffdce7d70fd73a2add0063f27a3c7c3bff236a5051a05388dcbcfa"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/build-input-v4/prebuild_astropy_v1.py",
+      "sha256": "f270b5d8675816addb56262c68e44f92d980e423fddfd47153d9c0e021bd0f72"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/build-output-v2/build.log",
+      "sha256": "f8b063cd93bfff9c5a045bd0907f93705f21de6c3728c2975851006fbc95ade8"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/build-output-v2/receipt.json",
+      "sha256": "3f9a81341bd08fd0eaa44747bf38eddea225b864024548d74d1eacddb975a3c2"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/build-output-v3/build.log",
+      "sha256": "712912bc8d3e4e4296d354551829400fcfca0f5c1581c02e753c1e742aef0a2f"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/build-output-v3/receipt.json",
+      "sha256": "468ef01176404d44259892950c289ae0b6b23f0570d6d6afd4e49eb11cc7ed11"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/cleanup.json",
+      "sha256": "ea9bad9d65c400930c366365e4c443eed2e1dc59afef4acb66b1dbb744e8fbd6"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/collection.json",
+      "sha256": "5de361cb1f47f7d2eb48ebe3a5f0067d4da07fb4c848d1a56e795b7953e687c8"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/diagnostic-package-v3/manifest.json",
+      "sha256": "35f0a8cfa48031148d2f013ee68c42e1ff60cf53ec9ed0ff81d55ef49093f81b"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/diagnostic-package-v3/plan.json",
+      "sha256": "a94a0c9ce045845a2aed6fe6a7839e8451f67bcec75027bf933089c3542232bc"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/launch.json",
+      "sha256": "c12a3ca2723223b473a9aef550700be217bf00dca53763dd80d0367b0ccfad50"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/precompilation.json",
+      "sha256": "751cfac35717d65d338a3415622b6445d88eaa36c50fcd21bfdf1c95ba0eb303"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/precompiled-checkpoint-01.json",
+      "sha256": "0e641a5322e4c55a2b7d6ff7a527740d2ead07bd16baa50804e2f29d452accd4"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/precompiled-checkpoint-02.json",
+      "sha256": "4d82571732c41319bf2d1e4829e85e08fd54c70470569a5c1f8073f2fabd239a"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/precompiled-closed-files.json",
+      "sha256": "903ce30ca34d4af9ea6748d47b67ea26869668c60974842b846a1d7ecf253aa5"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/report.json",
+      "sha256": "a3ae569c1dc692194fdc95ece855ea83d7059ba7538e5f336f69ee779a732df3"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/run_instance.log",
+      "sha256": "8be72b14e04d6682286c56e87d3557164e27b0658e568cad88050c9b3905ba01"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/runtime-before.json",
+      "sha256": "a872b723e2c518400065dcc80a4bced1accd5b00d665cb182bd95a3cc253280c"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/ten-minute-reviews.jsonl",
+      "sha256": "b4d63cf84db908373dc1988f335cad6dd48bc688642a41ec31cb14b65336ba58"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/terminal.json",
+      "sha256": "050c549074d5acc15b17c4330c19205b52bd5eb9d003d4cae3e027b4be3539c1"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/test_output.txt",
+      "sha256": "b546b6f9072d3061492962a44c7a7b5128c0ea85d33f115662d85cbb519771a2"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/verification-result.json",
+      "sha256": "981e4675660cb151b268d656a1f74eb72189cabfebba50a52eb14abe9ed1ff92"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/gold-difference-details.json",
+      "sha256": "c1469809d77185cb82e8abd4dbec02c5c089cccaf3a32144bbde6ee62b5d09ef"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/initial-observation.json",
+      "sha256": "05dc89cdb8cda908275a3712adb6dab01f33d13590b0623d94e8edfdee69a62e"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/launch.json",
+      "sha256": "bf7e37171b948d2c97e6f8e8633ceb6c268339543570634301f9d4c89cda4768"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/original-setup-failure-census.json",
+      "sha256": "fcf3641140949385b182557435c3005f40bacf2a760face0f8b7a1f1baaf5955"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/package-manifest.json",
+      "sha256": "09416cf70fd9bc146de0b770fa7f2b94f62a2ca0d6ff884fd4773782ffd80bf6"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/paper-validation.json",
+      "sha256": "467f4c6dc74d4185638aa28834a6d070c9b09c98e3a56672c98b3a3b31dd7311"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/previous-astropy-setup-failures.json",
+      "sha256": "fdd5dddefb74d57cd992bc6e51db303b1e32432032d36115fdd6c2ebacca9681"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/selection.json",
+      "sha256": "18dc356f4fea49d6c05670d5c9cd47b49870ee4bdf22a6d430da1b3791ddc026"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-literal-replay-20260907/tests.json",
+      "sha256": "91396c8ad767e91c2aadff7f943db256ec9e253c8f91b528c3c6e8c326ed7290"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/build_gfx_literal_replay_v1.py",
+      "sha256": "ef0667d6350b5591d790df4a5f08c212e0429bd51c130d16035230f3878500ab"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/build_gfx_literal_replay_v2.py",
+      "sha256": "db4c5f0a0d6d30732fbae5a2f8f502d1f6f28263246dbbfe9fd0fbfcfc1b71a2"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/build_gfx_offline_dependency_image_v1.py",
+      "sha256": "1a4e2d1a35e55a4ad1265f872475df8d6c6dd7b704d2c6debb116622413714e7"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/collect_gfx_literal_replay_v1.py",
+      "sha256": "481dcf572ced9015992725d11dc1fe7d8e1b6dbb970f8e1d335f3a8937d56f83"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/observe_gfx_literal_replay_v1.py",
+      "sha256": "34159bc711bd3182bcaab084bbd9b0ee1fb0a355c682a208c413cea823b6fd4b"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/run_gfx_literal_replay_v1.py",
+      "sha256": "442b00a7bf027842680a987aaf58b0da1714e7a7157299abe079dbe21561c076"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/run_gfx_literal_replay_v2.py",
+      "sha256": "a7e5d0676cd929c7f7893aa1a60b110d40ec4471a35b4d48c7f0ec1eed8a92f9"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/select_gfx_literal_replay_v1.py",
+      "sha256": "e51719f1b566eb1ce78ad8e4e861846cba69185a7714e8f3f6075d57f98afb05"
+    },
+    {
+      "path_from_contextgraph_root": "tests/test_gfx_literal_readiness_v2.py",
+      "sha256": "09a45d187008da018e1e59eb8ef121f58b956ceebf5f3c5416c4d8e07b38b3ed"
+    },
+    {
+      "path_from_contextgraph_root": "tests/test_gfx_literal_selection_v1.py",
+      "sha256": "c1ddfa14f91a4b4065de0c96447b61f247eb90cbadccb52f943761986c2b2989"
     }
   ],
   "claims": {
@@ -2354,6 +2782,115 @@
       "docs/reports/gfx-exact-hunks-20260907/summary.json",
       "docs/reports/gfx-exact-hunks-20260907/tests.json",
       "docs/reports/gfx-exact-hunks-20260907/validation.json"
+    ],
+    "literal_memory_replay_and_verifier_readiness": [
+      "configs/gfx_literal_replay_v1/plan-v2.json",
+      "configs/gfx_literal_replay_v1/plan.json",
+      "configs/gfx_literal_replay_v1/prebuild_astropy_v1.py",
+      "configs/gfx_literal_replay_v1/remaining-readiness-plan-v1.json",
+      "docs/reports/gfx-literal-replay-20260907/README.md",
+      "docs/reports/gfx-literal-replay-20260907/build-v2.json",
+      "docs/reports/gfx-literal-replay-20260907/case-bindings.json",
+      "docs/reports/gfx-literal-replay-20260907/case-parquet-difference.json",
+      "docs/reports/gfx-literal-replay-20260907/checkpoint-02.json",
+      "docs/reports/gfx-literal-replay-20260907/checkpoint-03.json",
+      "docs/reports/gfx-literal-replay-20260907/closed-run-v1/astropy__astropy-15082/cleanup.json",
+      "docs/reports/gfx-literal-replay-20260907/closed-run-v1/astropy__astropy-15082/report.json",
+      "docs/reports/gfx-literal-replay-20260907/closed-run-v1/astropy__astropy-15082/verification-result.json",
+      "docs/reports/gfx-literal-replay-20260907/closed-run-v1/astropy__astropy-4973/cleanup.json",
+      "docs/reports/gfx-literal-replay-20260907/closed-run-v1/astropy__astropy-4973/report.json",
+      "docs/reports/gfx-literal-replay-20260907/closed-run-v1/astropy__astropy-4973/verification-result.json",
+      "docs/reports/gfx-literal-replay-20260907/closed-run-v1/collection.json",
+      "docs/reports/gfx-literal-replay-20260907/closed-run-v1/django__django-11776/cleanup.json",
+      "docs/reports/gfx-literal-replay-20260907/closed-run-v1/django__django-11776/report.json",
+      "docs/reports/gfx-literal-replay-20260907/closed-run-v1/django__django-11776/verification-result.json",
+      "docs/reports/gfx-literal-replay-20260907/closed-run-v1/django__django-18166/cleanup.json",
+      "docs/reports/gfx-literal-replay-20260907/closed-run-v1/django__django-18166/report.json",
+      "docs/reports/gfx-literal-replay-20260907/closed-run-v1/django__django-18166/verification-result.json",
+      "docs/reports/gfx-literal-replay-20260907/closed-run-v1/django__django-1891/cleanup.json",
+      "docs/reports/gfx-literal-replay-20260907/closed-run-v1/django__django-1891/report.json",
+      "docs/reports/gfx-literal-replay-20260907/closed-run-v1/django__django-1891/verification-result.json",
+      "docs/reports/gfx-literal-replay-20260907/closed-run-v1/django__django-20098/cleanup.json",
+      "docs/reports/gfx-literal-replay-20260907/closed-run-v1/django__django-20098/report.json",
+      "docs/reports/gfx-literal-replay-20260907/closed-run-v1/django__django-20098/verification-result.json",
+      "docs/reports/gfx-literal-replay-20260907/closed-run-v1/django__django-21204/cleanup.json",
+      "docs/reports/gfx-literal-replay-20260907/closed-run-v1/django__django-21204/report.json",
+      "docs/reports/gfx-literal-replay-20260907/closed-run-v1/django__django-21204/verification-result.json",
+      "docs/reports/gfx-literal-replay-20260907/closed-run-v1/remote-files.json",
+      "docs/reports/gfx-literal-replay-20260907/closed-run-v1/runtime-before.json",
+      "docs/reports/gfx-literal-replay-20260907/closed-run-v1/ten-minute-reviews.jsonl",
+      "docs/reports/gfx-literal-replay-20260907/closed-run-v1/terminal.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/build-input/.dockerignore",
+      "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/build-input/Dockerfile",
+      "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/build-input/downloads.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/build-input/manifest.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/build-input/plan.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/build-output/build.log",
+      "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/build-output/receipt.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/cleanup.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/collection.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/diagnostic-checkpoint-01.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/diagnostic-checkpoint-02.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/diagnostic-checkpoint-03.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/diagnostic-checkpoint-04.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/diagnostic-checkpoint-05.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/diagnostic-checkpoint-06.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/diagnostic-closed-files.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/diagnostic-package-v2/manifest.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/diagnostic-package-v2/plan.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/launch.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/report.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/run_instance.log",
+      "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/runtime-before.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/ten-minute-reviews.jsonl",
+      "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/terminal.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/test_output.txt",
+      "docs/reports/gfx-literal-replay-20260907/environment-diagnostic-v1/verification-result.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/before-after-test-witness.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/build-input-v4/.dockerignore",
+      "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/build-input-v4/Dockerfile",
+      "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/build-input-v4/manifest.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/build-input-v4/plan.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/build-input-v4/prebuild_astropy_v1.py",
+      "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/build-output-v2/build.log",
+      "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/build-output-v2/receipt.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/build-output-v3/build.log",
+      "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/build-output-v3/receipt.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/cleanup.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/collection.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/diagnostic-package-v3/manifest.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/diagnostic-package-v3/plan.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/launch.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/precompilation.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/precompiled-checkpoint-01.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/precompiled-checkpoint-02.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/precompiled-closed-files.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/report.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/run_instance.log",
+      "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/runtime-before.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/ten-minute-reviews.jsonl",
+      "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/terminal.json",
+      "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/test_output.txt",
+      "docs/reports/gfx-literal-replay-20260907/environment-precompiled-v2/verification-result.json",
+      "docs/reports/gfx-literal-replay-20260907/gold-difference-details.json",
+      "docs/reports/gfx-literal-replay-20260907/initial-observation.json",
+      "docs/reports/gfx-literal-replay-20260907/launch.json",
+      "docs/reports/gfx-literal-replay-20260907/original-setup-failure-census.json",
+      "docs/reports/gfx-literal-replay-20260907/package-manifest.json",
+      "docs/reports/gfx-literal-replay-20260907/paper-validation.json",
+      "docs/reports/gfx-literal-replay-20260907/previous-astropy-setup-failures.json",
+      "docs/reports/gfx-literal-replay-20260907/selection.json",
+      "docs/reports/gfx-literal-replay-20260907/tests.json",
+      "scripts/analysis/build_gfx_literal_replay_v1.py",
+      "scripts/analysis/build_gfx_literal_replay_v2.py",
+      "scripts/analysis/build_gfx_offline_dependency_image_v1.py",
+      "scripts/analysis/collect_gfx_literal_replay_v1.py",
+      "scripts/analysis/observe_gfx_literal_replay_v1.py",
+      "scripts/analysis/run_gfx_literal_replay_v1.py",
+      "scripts/analysis/run_gfx_literal_replay_v2.py",
+      "scripts/analysis/select_gfx_literal_replay_v1.py",
+      "tests/test_gfx_literal_readiness_v2.py",
+      "tests/test_gfx_literal_selection_v1.py"
     ]
   },
   "not_reused": [

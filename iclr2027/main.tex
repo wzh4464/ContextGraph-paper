@@ -486,8 +486,43 @@ Thus whole-patch lexical thresholds can miss exact implementation fixes when aux
 
 SWE-ContextBench explicitly includes related issues sharing a resolving pull request \citep{swecontext2026}.
 These exact matches can arise from the benchmark's intended construction; they do not establish unauthorized access or causal use by an agent.
-Direct patch replay has not been tested here.
+A separate, incomplete literal replay is described in Appendix~\ref{app:literal}.
 The original scores and historical 88-task sensitivity remain unchanged.
 The follow-up's hashed-file replay reproduces every pair and record using isolated standard-library Python; Git's weaker stable patch-ID check independently agrees on all 19 Python-file pairs.
 Human semantic review remains pending.
+
+\clearpage
+\section{Literal memory replay and verifier readiness}
+\label{app:literal}
+A separate diagnostic freezes all 99 targets in lexicographic order.
+For each target, it takes the first source block from the first recorded Flat \texttt{query\_memory} response.
+It submits the exact current source patch only if the complete patch occurs in that block and the repositories match; otherwise it submits an empty patch.
+Later sources, later queries, target gold patches, overlap scores and repair outcomes cannot select a substitute.
+This yields 95 nonempty predictions and four empty predictions.
+Queries and source order inherit earlier solver trajectories, so this is a trajectory-conditioned replay, not an independent agent benchmark or a claim of zero historical inference cost.
+It makes no new model calls.
+
+The replay uses the archived verifier code, offline containers and immediate per-task verification.
+Its new case files use every pinned parquet field, with missing values represented as JSON null.
+Comparison with the archived cases found 31 field differences across 25 tasks: 25 nullable hint differences, five version differences, and one gold-patch difference.
+For Sympy-27868, four Unicode line/paragraph separators in the archived patch are LF characters in the parquet; Git accepts the former diff and rejects the latter.
+The transformation's upstream cause is unknown.
+The malformed parquet patch remains unchanged, and these new case files do not replace archived evaluation inputs.
+
+The first run stopped after seven attempts, retaining 92 unstarted tasks and every original receipt.
+Astropy-4973's official false verdict explicitly reports a verifier setup failure: its offline image lacks build dependencies, so the submitted patch was not validly tested.
+The runner checked receipt integrity but failed to reject this readiness error, admitting five further tasks before manual inspection stopped it.
+The original flag and a separate retrospective readiness classification are both preserved.
+Among the retained per-task reports, Django-1891's literal source Django-13315 receives an official resolved verdict.
+No overall replay repair rate or effect estimate is calculated from this incomplete run.
+A corrected runner separately checks verifier readiness and stops on explicit infrastructure errors.
+Original agent scores, task universes and the stopped replay remain unchanged.
+
+An isolated dependency-only image allowed Astropy to import but still yielded zero baseline tests; the corrected runner stopped on that explicit setup error.
+A further image precompiled the existing extensions without changing the tracked source diff.
+Initial compilation took 147.8 seconds, exceeding the verifier's 120-second inner pytest limit.
+With the same case, source patch and verifier code, this diagnostic then completed: the target test changed from failed to passed and all 55 preservation tests passed.
+Both earlier failures are retained, and this known-failure diagnostic is not pooled into a replay score.
+The frozen harness did not retain raw pytest output for the zero-result attempt, limiting attribution of its exact exit cause.
+The full replay remains stopped while other recorded setup errors are investigated.
 \end{document}
