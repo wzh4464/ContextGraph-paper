@@ -183,14 +183,15 @@ Our question concerns how a retrieved experience should be tested against the cu
 \paragraph{Repair patterns and context.}
 Getafix learns fix patterns from human patches and uses surrounding code to rank applicable edits \citep{getafix2019}.
 Thus executable edits and context-sensitive repair reuse are established ideas.
-The proposed direction here is interactive discrimination: an agent uses a retrieved experience to choose an observation, and that observation changes which repair hypothesis it follows.
-Its value must be established against ordinary repair reasoning and testing.
+VulDebugger compares expected constraints with observed runtime state to guide vulnerability repair \citep{vuldebugger2025}.
+MemRepair combines historical fixes, security patterns, and refinement trajectories with runtime feedback \citep{memrepair2026}.
+These methods motivate a sharper target for experience use: selecting a check that discriminates between competing source-derived repair hypotheses before committing to an edit.
 
 \paragraph{Graph retrieval and working memory.}
 HippoRAG motivates associative retrieval with Personalized PageRank \citep{hipporag2024}.
 SWE-MeM studies working-memory management \citep{swemem2026}, while cue-anchored memory studies delivery through coding-task and compaction experiments \citep{cueanchored2026}.
-These address candidate access and retention.
-Holding delivery fixed lets our experiments focus on the information gained by checking applicability.
+AdaMEM retrieves experience at intermediate states and synthesizes an updated strategy \citep{adamem2026}.
+Our proposed comparison holds the candidate packet and its retention fixed to test the information gained by executing an applicability check.
 
 \section{Scope of the current evidence}
 The completed Related-Lite results are exploratory and include related source fixes that can closely match target repairs.
