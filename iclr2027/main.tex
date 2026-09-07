@@ -428,7 +428,7 @@ Card-v2 & 97 & 17 & 11 & 8 \\
 
 Seven targets outside the historical exclusion list reach $J\geq0.5$ in every memory condition.
 One, Django-34525, shares 38 of 44 normalized added lines in the union with source Django-16820 ($J=0.864$); its file/sign comparison is $39/46$.
-Another, Sympy-26642, matches only one of two added lines in the union, illustrating why a threshold alone does not establish semantic duplication.
+For Sympy-26642, the one shared added line is the complete Python-file fix; the other is a contributor entry, as the exact-hunk follow-up shows (Appendix~\ref{app:hunks}).
 The historical 88-task sensitivity remains unchanged and is not a complete source-overlap certificate.
 
 No returned source ID belongs to the 99 target IDs, and no block contains its target's entire patch verbatim.
@@ -443,4 +443,51 @@ It does not re-extract private histories or repeat source capture.
 Lexical overlap does not identify unauthorized access, actual use or a causal contribution to a repair; legitimately related tasks can share fixes.
 Cards, rule prose, test hints, pretraining and unrecorded channels remain outside this patch-block certificate.
 All original verifier outcomes are preserved, with no new task exclusion or effect estimate.
+
+\clearpage
+\section{Exact patch-hunk correspondence}
+\label{app:hunks}
+A retrospective follow-up compares complete file hunks across the same 28,809 source--target pairs and 693 original records, after inspecting the seven lexical flags.
+It retains path headers, hunk coordinates, context, order, indentation and no-newline markers; Git object hashes and mode metadata are outside this equality claim.
+The Python-file comparison includes every changed \texttt{.py} file and its complete hunks, including comments and docstrings.
+Empty Python-file sets and malformed patches remain unknown.
+No repair outcomes select pairs.
+
+Nineteen targets have the same nonempty Python-file sets and exact hunks as a source.
+Ten match on every changed file; the other nine differ only by additional target documentation, changelog or contributor-metadata files.
+Every source file's hunks match its target counterpart in these 19 pairs.
+To certify recorded delivery here, the complete current source patch must occur literally in a bound response; matching IDs or partial blocks do not suffice.
+
+\begin{table}[h]
+\centering
+\caption{Exact hunk matches, retaining all 99 targets. Counts measure source-pool availability or confirmed complete delivery, not successful repairs. Missing or partial delivery remains explicit.}
+\label{tab:hunks}
+\begin{tabular}{lrr}
+\toprule
+Scope & All changed files & All Python files \\
+\midrule
+Current source snapshot & 10 & 19 \\
+Control & 0 & 0 \\
+Flat & 8 & 16 \\
+Card & 8 & 16 \\
+Graph & 8 & 16 \\
+Rules & 5 & 13 \\
+File list & 8 & 16 \\
+Card-v2 & 8 & 16 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+All seven new lexical flags have exact Python-hunk matches in the pool.
+Six have confirmed complete matching delivery in every memory condition; Django-34525's full source-patch delivery remains unconfirmed.
+An additional target, Matplotlib-23172, exactly matches source Matplotlib-23299 in \texttt{lib/matplotlib/\_\_init\_\_.py}, including the backend-preservation fix in \texttt{rc\_context}.
+Its extra release note reduces added-line Jaccard to $3/8=0.375$, below the earlier threshold; all six memory conditions received the complete matching source.
+Thus whole-patch lexical thresholds can miss exact implementation fixes when auxiliary files differ.
+
+SWE-ContextBench explicitly includes related issues sharing a resolving pull request \citep{swecontext2026}.
+These exact matches can arise from the benchmark's intended construction; they do not establish unauthorized access or causal use by an agent.
+Direct patch replay has not been tested here.
+The original scores and historical 88-task sensitivity remain unchanged.
+The follow-up's hashed-file replay reproduces every pair and record using isolated standard-library Python; Git's weaker stable patch-ID check independently agrees on all 19 Python-file pairs.
+Human semantic review remains pending.
 \end{document}

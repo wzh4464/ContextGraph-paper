@@ -1,6 +1,6 @@
 {
-  "as_of": "2026-09-07T01:00:16.548981+00:00",
-  "status": "The separate adaptive Card-v2 arm completed all 99 original receipt audits and fixed comparisons: 16/99 resolved, exact card delivery 97/99, no significant paired gain over Flat or Card-v1. Its 39 hard exit_cost labels exceed the registered maximum of 32. The original six-condition archives remain unchanged. Research draft; the original Verified execution and its operational-stop continuation closed incomplete on an optional-null parser crash. Fourteen original test slots attempted and thirteen audited; no formal effect estimate. The separately frozen parser correction completed all three real training-only infrastructure gates, with two nonempty official verifications and zero real optional-null omissions. The formal runtime and original outcomes are unchanged; the existing aggregate allowance cannot reserve another complete formal block. Frozen verifier source portability and immutable public-registry manifest checks are staged; config/layer downloads remain unvalidated. A separate portable entry executed two known-outcome original predictions on jie with byte-identical reports, unchanged source images and 36 network-none container inspections. This reused existing images and is not a clean-machine or anonymous runtime release. A separate source-scoped training candidate revises ten prior partly-supported rules while preserving all 350 sources and 459 rules; it has not been deployed or evaluated for repair efficacy.",
+  "as_of": "2026-09-07T01:20:58.211378+00:00",
+  "status": "The separate adaptive Card-v2 arm completed all 99 original receipt audits and fixed comparisons: 16/99 resolved, exact card delivery 97/99, no significant paired gain over Flat or Card-v1. Its 39 hard exit_cost labels exceed the registered maximum of 32. The original six-condition archives remain unchanged. Research draft; the original Verified execution and its operational-stop continuation closed incomplete on an optional-null parser crash. Fourteen original test slots attempted and thirteen audited; no formal effect estimate. The separately frozen parser correction completed all three real training-only infrastructure gates, with two nonempty official verifications and zero real optional-null omissions. The formal runtime and original outcomes are unchanged; the existing aggregate allowance cannot reserve another complete formal block. Frozen verifier source portability and immutable public-registry manifest checks are staged; config/layer downloads remain unvalidated. A separate portable entry executed two known-outcome original predictions on jie with byte-identical reports, unchanged source images and 36 network-none container inspections. This reused existing images and is not a clean-machine or anonymous runtime release. A separate source-scoped training candidate revises ten prior partly-supported rules while preserving all 350 sources and 459 rules; it has not been deployed or evaluated for repair efficacy. A full-universe exact-hunk follow-up identifies 19 targets with matching Python-file hunks in the current source pool, with confirmed complete delivery on 16 targets in each memory condition except Rules (13). This retrospective correspondence audit changes no original repair outcomes or exclusions; direct patch replay remains untested.",
   "artifacts": [
     {
       "path_from_contextgraph_root": "docs/reports/gfx-skill-audit-20260906/receipt-audit.json",
@@ -1833,6 +1833,70 @@
     {
       "path_from_contextgraph_root": "paper/iclr2027/patch-overlap-reproduction-v1.zip",
       "sha256": "ba4ced7eeb9986d5e2c9c2180aacac61246f3f248fc6d00085602ee89a0ba295"
+    },
+    {
+      "path_from_contextgraph_root": "configs/gfx_full_overlap_v1/exact-hunks-plan-v1.json",
+      "sha256": "16c6d7ac925ef43bd2c07bc170ae2b585942e8ca3fe722a3d801e05c9b076486"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/audit_gfx_exact_hunks_v1.py",
+      "sha256": "79a716979d4630f9031afa040a45ecef65d8a43c9920030e32f31ec3a3da4fb3"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/check_gfx_exact_hunks_v1.py",
+      "sha256": "140ea8d7f847a1c678affcaf4d04a8e3f25d8f68b1f30fb46bc1f3b4f0e589d0"
+    },
+    {
+      "path_from_contextgraph_root": "tests/test_gfx_exact_hunks_v1.py",
+      "sha256": "9e7111f41a787413e242b79a37eba74e41b54dd8b4cd8c8e1505419206652b0b"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-exact-hunks-20260907/README.md",
+      "sha256": "55e7006545496ad0330fb059c01af91c73ae8de6edf9f16e2d544a05241cde4d"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-exact-hunks-20260907/collection.json",
+      "sha256": "9a6a785336d80d587c815f7f03ea62a3ba3cc261c06a826159cddbd35b4e4b63"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-exact-hunks-20260907/initial-validation-check.json",
+      "sha256": "902e7af8f245738f06f2135966d0331c3c9f4e3390b266c48a9e3c4bd156e3f9"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-exact-hunks-20260907/inputs.json.gz",
+      "sha256": "70a4fb46c9821401862efe942cccc6de028b913b8d6054c3bcc3d6fe8d8529e4"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-exact-hunks-20260907/matched-pairs.json",
+      "sha256": "4b6c1a3f1917729cbe7c9a0728a4815b3c49983ae222bc08ee259fc8658f686f"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-exact-hunks-20260907/paper-validation.json",
+      "sha256": "80117f89100765efaca3037fb214c64603bd84f466865518e92c577e16560b0d"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-exact-hunks-20260907/results.json.gz",
+      "sha256": "bb6eb61314ee90005eebb23e4e330ad22e420de8e165a8aced81e2bce3bb2301"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-exact-hunks-20260907/source-interpretation.json",
+      "sha256": "e8b73395dcbbb9b4a2ae382a21262fa8803fd20e2c0262e17783ef8f7ad299d4"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-exact-hunks-20260907/source-validation.json",
+      "sha256": "d89b2eafbc28c29ddb766f3d8376aeaf3a4c16728fb39baf3cf068cb150f0eaa"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-exact-hunks-20260907/summary.json",
+      "sha256": "46dc1144bb73443351adf0c25c2e01f4767e7705198a9fb203762b17d2fab4c6"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-exact-hunks-20260907/tests.json",
+      "sha256": "7e7f3987f8667cc99edfad733ce16ce9fd1a0984ed7e8311232901f785e9b227"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-exact-hunks-20260907/validation.json",
+      "sha256": "e5926e964ae00816f5ac347744c996a4cbbd6ad1ed0aa70fde0f7c2702718288"
     }
   ],
   "claims": {
@@ -2272,6 +2336,24 @@
       "paper/iclr2027/patch-overlap-reproduction-v1/reproduce.py",
       "paper/iclr2027/patch-overlap-reproduction-v1/source-bindings.json",
       "paper/iclr2027/patch-overlap-reproduction-v1.zip"
+    ],
+    "full_universe_exact_hunk_correspondence": [
+      "configs/gfx_full_overlap_v1/exact-hunks-plan-v1.json",
+      "scripts/analysis/audit_gfx_exact_hunks_v1.py",
+      "scripts/analysis/check_gfx_exact_hunks_v1.py",
+      "tests/test_gfx_exact_hunks_v1.py",
+      "docs/reports/gfx-exact-hunks-20260907/README.md",
+      "docs/reports/gfx-exact-hunks-20260907/collection.json",
+      "docs/reports/gfx-exact-hunks-20260907/initial-validation-check.json",
+      "docs/reports/gfx-exact-hunks-20260907/inputs.json.gz",
+      "docs/reports/gfx-exact-hunks-20260907/matched-pairs.json",
+      "docs/reports/gfx-exact-hunks-20260907/paper-validation.json",
+      "docs/reports/gfx-exact-hunks-20260907/results.json.gz",
+      "docs/reports/gfx-exact-hunks-20260907/source-interpretation.json",
+      "docs/reports/gfx-exact-hunks-20260907/source-validation.json",
+      "docs/reports/gfx-exact-hunks-20260907/summary.json",
+      "docs/reports/gfx-exact-hunks-20260907/tests.json",
+      "docs/reports/gfx-exact-hunks-20260907/validation.json"
     ]
   },
   "not_reused": [

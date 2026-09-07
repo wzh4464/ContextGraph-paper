@@ -210,3 +210,14 @@ strict-hunk comparisons remain unknown. `patch-overlap-reproduction-v1.zip`
 provides a standalone replay from hashed edit features, with no raw patch lines
 or response text. Follow its README; the underlying capture and source-extraction
 checks are bound in `../../docs/reports/gfx-full-overlap-20260907/`.
+
+Appendix B follows this with an exact file-hunk comparison over the same full
+universe. Nineteen targets have exactly matching Python-file hunks in the current
+source pool; full matching source delivery is confirmed on 16/99 targets in each
+memory condition except Rules (13/99). The additional Matplotlib-23172 case has
+an exact implementation match despite whole-patch Jaccard .375. The earlier
+Sympy-26642 short-edit example is clarified: its shared line is the complete
+Python fix, and the extra line is contributor metadata. These observations do not
+change repair scores or task exclusions. The hashed-feature replay, all 19 pairs,
+limits, and independent Git checks are in
+`../../docs/reports/gfx-exact-hunks-20260907/README.md`.
