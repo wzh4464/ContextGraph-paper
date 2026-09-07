@@ -231,3 +231,17 @@ is separate from receipt integrity and has been exercised by a real one-task
 environment diagnostic. The replay also records the 31 field differences between
 archived cases and pinned parquet metadata, without replacing original evidence.
 See `../../docs/reports/gfx-literal-replay-20260907/README.md`.
+
+Appendix D records five further readiness diagnostics. A precompiled scikit-learn
+image lets the unchanged source patch change one target test from failed to
+passed while preserving all 45 other tests. Matplotlib's offline rebuild now
+succeeds, but its literal patch still does not apply and its target test already
+passes before application. An all-99 field audit identifies two Pytest test
+patches that contain their complete literal candidates' implementation hunks;
+their gold patch fields contain only changelogs. Those target tests also pass
+before candidate application. These findings limit repair attribution without
+changing original scores or exclusions. The new admission rule inspects raw
+subprocess outputs so a final patch-application error cannot hide an earlier
+build or collection failure. All five runs are closed, 449 remote/local file
+hashes match, and the 99-task replay remains stopped. See
+`../../docs/reports/gfx-readiness-20260907/README.md`.

@@ -1,6 +1,6 @@
 {
-  "as_of": "2026-09-07T01:20:58.211378+00:00",
-  "status": "The separate adaptive Card-v2 arm completed all 99 original receipt audits and fixed comparisons: 16/99 resolved, exact card delivery 97/99, no significant paired gain over Flat or Card-v1. Its 39 hard exit_cost labels exceed the registered maximum of 32. The original six-condition archives remain unchanged. Research draft; the original Verified execution and its operational-stop continuation closed incomplete on an optional-null parser crash. Fourteen original test slots attempted and thirteen audited; no formal effect estimate. The separately frozen parser correction completed all three real training-only infrastructure gates, with two nonempty official verifications and zero real optional-null omissions. The formal runtime and original outcomes are unchanged; the existing aggregate allowance cannot reserve another complete formal block. Frozen verifier source portability and immutable public-registry manifest checks are staged; config/layer downloads remain unvalidated. A separate portable entry executed two known-outcome original predictions on jie with byte-identical reports, unchanged source images and 36 network-none container inspections. This reused existing images and is not a clean-machine or anonymous runtime release. A separate source-scoped training candidate revises ten prior partly-supported rules while preserving all 350 sources and 459 rules; it has not been deployed or evaluated for repair efficacy. A full-universe exact-hunk follow-up identifies 19 targets with matching Python-file hunks in the current source pool, with confirmed complete delivery on 16 targets in each memory condition except Rules (13). This retrospective correspondence audit changes no original repair outcomes or exclusions; direct patch replay remains untested.",
+  "as_of": "2026-09-07T03:44:47.354060+00:00",
+  "status": "Research draft. Original Related-Lite scores and the historical 88-task sensitivity remain unchanged; no significant memory gain is established. The paid Verified 350/150 campaign remains incomplete under its existing aggregate allowance. The full-universe correspondence audits remain retrospective. A separate first-memory literal replay stopped after seven attempts with 92 unstarted targets. Later isolated environment diagnostics verify an unchanged Astropy source patch (one target plus 55 preservation tests) and an unchanged scikit-learn source patch (one target plus 45 preservation tests); they are not pooled into a repair rate. Five further readiness diagnostics are closed with 449 matching remote/local file hashes. Raw output checks identify intermediate Matplotlib failures hidden by its final patch-application label. Exact offline archive caching enables its baseline tests, but its target already passes before candidate application. Both frozen Pytest test patches contain all implementation hunks of their selected literal candidates; their gold fields contain only changelogs and their target tests already pass before application. The 99-task universe and all original fields, reports and failed attempts are retained. No new full-99 replay has started with these derived images. Complete anonymous runtime release and human review remain unfinished.",
   "artifacts": [
     {
       "path_from_contextgraph_root": "docs/reports/gfx-skill-audit-20260906/receipt-audit.json",
@@ -2325,6 +2325,486 @@
     {
       "path_from_contextgraph_root": "tests/test_gfx_literal_selection_v1.py",
       "sha256": "c1ddfa14f91a4b4065de0c96447b61f247eb90cbadccb52f943761986c2b2989"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/build_gfx_readiness_diagnostic_v1.py",
+      "sha256": "b6f0e7745c70fd469f2914cb68d47b141e14a56146644e76a91b96a6719aed68"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/prebuild_gfx_sklearn_v1.py",
+      "sha256": "b5314259fed66342617a85601284f29165c8f0fa2736deb07c1867eeb2d2cbcf"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/preinstall_gfx_pytest_v1.py",
+      "sha256": "d7ec4cb7f98676d5f2db006af418d7149e359ed8d2afddb02ead0a3585e4ccd0"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/inventory_gfx_readiness_images_v2.py",
+      "sha256": "01b04bc5183b1e4abe06f0c945f0b9bfdbb8325d25fa735592bd68660ba3bfd6"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/run_gfx_literal_replay_v4.py",
+      "sha256": "644997bf1280682e230a81c118c3f74e30c844c452cdc768f27c6cfeffc2fc41"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/restore_gfx_pytest_tag_v1.py",
+      "sha256": "8801f933cd69500f6cf54f58b5b97bd452ae99894d9718a9660633536a7c14a1"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/capture_gfx_docker_v1.py",
+      "sha256": "725c4704c87efce3481d2c5d60889fac154ed8fd5fc1bb9247f87da3bace9b46"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/build_gfx_readiness_diagnostic_v2.py",
+      "sha256": "1a19ce84e5ff19fde069e7d6b9e45841234eb520860197de763fa88ef607b52c"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/audit_gfx_test_patch_scope_v1.py",
+      "sha256": "a80d525de6a246453a8a924116f1f6bd4a4f80d9359f93ca57f8e5fb4ba57714"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/inventory_gfx_readiness_images_v1.py",
+      "sha256": "014153938ecb33aa8eb375b33470a27638e7a5f9eebd30f21589aea958ac277d"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/collect_gfx_readiness_diagnostic_v1.py",
+      "sha256": "0e4282db9957b57bfea680070aff14cf7a1daba934d457c77649f3ffe7e78268"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/inventory_gfx_readiness_images_v3.py",
+      "sha256": "adf40dc6d0a5a7883b486c1fe6811b7773f40b7135bf400085c8b4243d2a0a25"
+    },
+    {
+      "path_from_contextgraph_root": "scripts/analysis/run_gfx_literal_replay_v3.py",
+      "sha256": "dc914f73fbc8d7bd0798a82f1495c6afbe73fedc48e96d76a8ad2d1c04cd9e4d"
+    },
+    {
+      "path_from_contextgraph_root": "tests/test_gfx_docker_capture_v1.py",
+      "sha256": "afb37a28408fbb415c68a79ffb60bbf10a0646c85918ecbebc17b87a6fc4113e"
+    },
+    {
+      "path_from_contextgraph_root": "tests/test_gfx_raw_readiness_v4.py",
+      "sha256": "f973c07ebbfeb538b9d4ddb2757edee56ccecc1650415fbde661058cd960aa8f"
+    },
+    {
+      "path_from_contextgraph_root": "tests/test_gfx_test_patch_scope_v1.py",
+      "sha256": "31be3055e57cd2e4de995ff6e053ffa335178b0b6f0b7af51ded8958f65e81c3"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/paper-build-check.json",
+      "sha256": "8c3867ce868220b0b29c99c51fe9292f5ad5d2732564deffd767894d3ead0faa"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/test-patch-scope-v1.json",
+      "sha256": "449a3e3b9a13b8ab5c2555883ee6b5a0ca1160fc2b30e2b90e0ade486b8f5063"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/sklearn-test-witness.json",
+      "sha256": "e9c6dcce73de7826c047cfd5548f3bd4cb0fccdde127c031522ab93a2bef041e"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/manifest.json",
+      "sha256": "505c795a5c7412eda0f1c2fb7c8d8caf067fc332778402eec5232023b5fb2911"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/private-bindings.json",
+      "sha256": "9c02e0d9a989432c36b65da07089d029e88a680e8680df9b2ab82a849fbf901c"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/README.md",
+      "sha256": "eeac4e2c6ac21552fdc6ae69ad9581ffe2803a8743c5319532b9036da7e20698"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/pytest-9358-v1/raw-docker.json.gz",
+      "sha256": "686349cbdeba55f32f6815639e2c33ad661e635ee6440683c591988a2d58a63a"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/pytest-9358-v1/test_output.txt",
+      "sha256": "9938ac4ba1ee523b965f6265ad9cbe21846e68bb2ae7c2673d3a3b0efe18ed7f"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/pytest-9358-v1/ten-minute-reviews.jsonl",
+      "sha256": "a6405bd13e19fd0c9be10dc155f3b7d3714d8eced1fd781f04e53d165731b355"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/pytest-9358-v1/run_instance.log",
+      "sha256": "f69b1190730fdabd1e263701221c366e599bc03f20ca347fca6480f39d9eb1b1"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/pytest-9358-v1/cleanup.json",
+      "sha256": "01ac387c9a2dea42dd6b58caf707413bc56517af17905fc2dda0ac9d1d94db39"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/pytest-9358-v1/verification-result.json",
+      "sha256": "51298b35caabdb2ab6f630fe13b42a557b8d254cd525406a01df2b9be8c3b0e6"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/pytest-9358-v1/remote-files.json",
+      "sha256": "315a51c14097a23b4daf9108e5112b761096280b45645e81608994d04041241b"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/pytest-9358-v1/retrospective-raw-readiness.json",
+      "sha256": "046a5ad01ee9cae322988f28c464bbfe2eb74f6f5fcad6e22240aea458504558"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/pytest-9358-v1/collection.json",
+      "sha256": "256c086855cd9458e39bda6bc76902a163f586ee420fa90fc144f7d85d0a40a0"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/pytest-9358-v1/terminal.json",
+      "sha256": "b8eb53372f16012c929a3927fe11e5c13de153bc5eb89ac5d1cc22bec87f0548"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/pytest-9358-v1/report.json",
+      "sha256": "5086eb552e1bb51640705aabb84e72c8b786a66c2eaa2c233f9c89dd2c4d76ae"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/sklearn-precompiled-v1/raw-docker.json.gz",
+      "sha256": "e65c0cbe364ece74992aa4e6935e685638ea4a9b01befaf00cd8e7138f077249"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/sklearn-precompiled-v1/test_output.txt",
+      "sha256": "c244cbf0afb24653cd48475290c77134dcab16f06b671ac36de1bd6b8932a39f"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/sklearn-precompiled-v1/ten-minute-reviews.jsonl",
+      "sha256": "e23daeb579805d4d31108b60009e56e4b7ce622c436b94657cd7b1efa9d4eae5"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/sklearn-precompiled-v1/run_instance.log",
+      "sha256": "5a06f316715ecc22e5014ce351003d833bc5d5dfdb3edd18c443d561e779c142"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/sklearn-precompiled-v1/cleanup.json",
+      "sha256": "72f9edb000c454d3fc3d4d27109aaf24d8aae8f6b729f0b91b738f4816ed4599"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/sklearn-precompiled-v1/verification-result.json",
+      "sha256": "00fe022517ac4c1c259aac2b265f6a7728a3fcd35bd1c5f05a18b1866db8b201"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/sklearn-precompiled-v1/remote-files.json",
+      "sha256": "370cb6a5bf82fb9d8971a5706cd0e4791a6e4a9ccf78fc7a539c95d0e78d34df"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/sklearn-precompiled-v1/retrospective-raw-readiness.json",
+      "sha256": "9fb2cb5eb93c929d46b23b295dbd7e12a1fb171c9dcdcb4135f30192f8ff9cac"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/sklearn-precompiled-v1/collection.json",
+      "sha256": "775b773556150801500928d1193fac3f253b2d00b338954b8f74e500f6dabc7a"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/sklearn-precompiled-v1/terminal.json",
+      "sha256": "290ad8c1e4c227c8ca2657dc30864fb6ca48f1e349297dc4204c60e1f2b8c05b"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/sklearn-precompiled-v1/report.json",
+      "sha256": "d6cd0d9eb9d1cf359aa94c0c9b41397fe4b32301bda26b9b2239c0ea82614530"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/matplotlib-cached-v2/raw-docker.json.gz",
+      "sha256": "31b766604d6652c9c9000c1fd10fb24454d6fdb25ab57dd7ad29c296c8f37368"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/matplotlib-cached-v2/test_output.txt",
+      "sha256": "dfc732f94066a1769546c0653febfb815f19aa2f21b7269beb4d02c17b747429"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/matplotlib-cached-v2/ten-minute-reviews.jsonl",
+      "sha256": "a48d0218f0c6a5521b2fb842e6c337d15692a08bc0e837d13380b537d0ffdc27"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/matplotlib-cached-v2/run_instance.log",
+      "sha256": "fd3f58e617113656273837a7c328b0a9fe0c6ed9bcc82e3858a1c25b588b093c"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/matplotlib-cached-v2/cleanup.json",
+      "sha256": "2d97f18cfb0e04f0ce62398cee971696b8797a4a490de792770598133e8c5b7b"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/matplotlib-cached-v2/verification-result.json",
+      "sha256": "49290e0575bfda1ca99c147d34b1a83ec5dcf8c55ad1b1b1eb2d3a78c15c7cfd"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/matplotlib-cached-v2/remote-files.json",
+      "sha256": "2deeb7f4696926c879f9c32b48c2bd90c7b2a0206c8aab9ea32ef4bc27305a44"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/matplotlib-cached-v2/retrospective-raw-readiness.json",
+      "sha256": "5d76f4aafae926f21cec353ee87505aced0d60a362ee6c33a875ba0498e086f5"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/matplotlib-cached-v2/collection.json",
+      "sha256": "c0237afd140a0bda189936745be3eb95ee045c5c1143d55b439bd9c2ab477ba4"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/matplotlib-cached-v2/terminal.json",
+      "sha256": "b07c34e671f010101410d4911b06d15aa1ba758f4561159bf3f56eebcf57809e"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/matplotlib-cached-v2/report.json",
+      "sha256": "e0e5c4fb4bbc8a15028c3d128ae721b9f03fdb476a1ca10a49d3a5fe5b95e1f2"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/pytest-10341-v1/raw-docker.json.gz",
+      "sha256": "173f1d1853837a0485103f8581b4e4c0c0ac8b61605b854b697717c6d9e29142"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/pytest-10341-v1/test_output.txt",
+      "sha256": "f1983b747484ee1f6e4ad42c37018310a6fa75bf1ac07473b0d3951f52bbc7d0"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/pytest-10341-v1/ten-minute-reviews.jsonl",
+      "sha256": "786bffe5ba1b2c50a836107b2dad22a5b2a4e54dcb1da7660eb9cf53826bb5e1"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/pytest-10341-v1/run_instance.log",
+      "sha256": "d01f630378f806ce9483fcfe418115f3f83c4a93da6057984eea4184523b8ed4"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/pytest-10341-v1/cleanup.json",
+      "sha256": "7b14513fc0be1253d65d602dbd35d9108ce98f0e4b407cebb16a264a556d3762"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/pytest-10341-v1/verification-result.json",
+      "sha256": "1d5b94665d6ee9a0c614878c9fc6fcda7e86f3ad4cc81245c7e3d136336a3e11"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/pytest-10341-v1/remote-files.json",
+      "sha256": "d4df82144f5b742119d0dbba1eb85824f630cf849fcf77eb91d124da90fa1c4e"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/pytest-10341-v1/retrospective-raw-readiness.json",
+      "sha256": "6b3945b84742f1d50f1bd6cd2e292b14662adf53828acafdde8a85c7a52c2b17"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/pytest-10341-v1/collection.json",
+      "sha256": "638f291c78dc88274f568f3d62cfdc7b09ce4939cc8a52e33e251cd2e5a48cdf"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/pytest-10341-v1/terminal.json",
+      "sha256": "6bbda6d3e9493ef0747d7a31b9e0a7ddc5fdfe22eeaf31f852c37f9473ebfd4c"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/pytest-10341-v1/report.json",
+      "sha256": "495c17082fc1495927b44d547a5bbedc35a5de30d8c69285abb621f418fd8832"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/all-preparation-files.json",
+      "sha256": "c196af20ea46bb2342c1c1e3b64cf64b70b7f9286d33b5b855fa04a571b50a4f"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/matplotlib-original-v1/raw-docker.json.gz",
+      "sha256": "a2819df6e4139cac1a48da9d98ece572fab756c6b96e52e5d89e1c0dc6493655"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/matplotlib-original-v1/test_output.txt",
+      "sha256": "93f10ea6c93b8d9d4430ab7351974220be56810f058a5024a92e683f4da52501"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/matplotlib-original-v1/ten-minute-reviews.jsonl",
+      "sha256": "ce48a350abcd5007e8005ad401e41d61d389ddc0a820c582889f3a029a395056"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/matplotlib-original-v1/run_instance.log",
+      "sha256": "78552bd40ae6d11ca889f595c5f52ca112e874c4ec7c4c2715e1ca20a327aa5b"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/matplotlib-original-v1/cleanup.json",
+      "sha256": "099d8dd28605af2234b99cea69f76cc5dd8d3f623f784d7be80bce6bc516cd29"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/matplotlib-original-v1/verification-result.json",
+      "sha256": "8e7af0dad3109d04e5e53ee6305a9cd19df998aedb2a16215a08efcda64a27ee"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/matplotlib-original-v1/remote-files.json",
+      "sha256": "bd168f5b41c690027bfdee8131380f51ea154b8cd1112de96746f8bd3ceca552"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/matplotlib-original-v1/retrospective-raw-readiness.json",
+      "sha256": "304675fb3d9be20bab615f4ab4efa71c5d7e7731487e03dac88ff68f5fc97c9a"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/matplotlib-original-v1/collection.json",
+      "sha256": "c41333b917effc7353c20087f6a14f083bcc2a8c10f85dbfc0b216e81c98a5f0"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/matplotlib-original-v1/terminal.json",
+      "sha256": "758e8fcaa93f2ee719908b1591140b62b1b510c1f3a3a39b43d14b914acd72bd"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/matplotlib-original-v1/report.json",
+      "sha256": "e0e5c4fb4bbc8a15028c3d128ae721b9f03fdb476a1ca10a49d3a5fe5b95e1f2"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/matplotlib-cache-input-v1/manifest.json",
+      "sha256": "8007352897c0f599aee9070442538c5704608adfbb54a8b5261f185664d67621"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/matplotlib-cache-input-v1/plan.json",
+      "sha256": "f559d17611353be27051e2aa04bf33df313b44a6d0e535a0cdab900686c6cff5"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/pytest-build-output-10341-v2/build.log",
+      "sha256": "b6af354f2ed57b4c8294a5d34f5e94685e3ce9d9f8ee1013ca40126b3bc50235"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/pytest-build-output-10341-v2/receipt.json",
+      "sha256": "9d310f73d53c19e8a8f82f130bb02e715bd81e4cb7fedd22905ad23bc108bfff"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/pytest-build-output-9358-v1/build.log",
+      "sha256": "c5d4f74e72bead64809996dd6818120d9d07235bfb5e07ba62ce78ad355ba36c"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/pytest-build-output-9358-v1/receipt.json",
+      "sha256": "e2187837a3e71cb4095300256c1ac4655f558f17dd518e3b75bb93ea6858c5d8"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/sklearn-build-input-v1/manifest.json",
+      "sha256": "a47b5094ff96a9679d45f118483f9623035e271a3b79d97c321a98195cf978ea"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/sklearn-build-input-v1/plan.json",
+      "sha256": "ce3e7f63e1b066279dfb788f1197360ae960157c8204244dc43c7b42c50070e2"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/inventory-output/receipt.json",
+      "sha256": "a4350a86d5b7f4f0b599e489a87969592fb942665fe967dc4837e601197a0cdf"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/pytest-tag-build-inputs--pytest-dev__pytest-9358/metadata.json",
+      "sha256": "27141ba5a7984a1ddb47413b309d9f2b0d1c6c67470ddf6e38e91ef56cf478ec"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/pytest-tag-build-inputs--pytest-dev__pytest-9358/manifest.json",
+      "sha256": "b7353dfa42e652d36cf5198e9a5db2ecc7df27479dea0bd033c466dc256ec61e"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/pytest-tag-build-inputs--pytest-dev__pytest-9358/plan.json",
+      "sha256": "f0d59df503c215b0d381286dc9d162f86f2111a4cc597e0da331635db916cdf8"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/matplotlib-cache-output-v1/build.log",
+      "sha256": "38f14a20b9c820d64591ab4000d4da28edbc736223224f54926bc912909a156a"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/matplotlib-cache-output-v1/receipt.json",
+      "sha256": "a580007a61c51abbf51f29351b1436bcf60235c6bb7cb36a307d8960b5d75fe9"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/inventory-input/manifest.json",
+      "sha256": "f28a4ca2b282e761ef18208c5bfef74368a7b890ecad3d411e7dcf9f4eff167c"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/inventory-input/plan.json",
+      "sha256": "6f324e12513ac8067bcfb51b7b2d707da07ae35f58455ccabd10244019f1776c"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/inventory-input-v2/manifest.json",
+      "sha256": "7b052dba86524415bae9609de295028aba9c15208fd498415a99ace2675f93af"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/inventory-input-v2/plan.json",
+      "sha256": "51866a5b24efe6ed37a7bfab3af60db2f628de041d70d4bab5928145eb7d1f69"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/pytest-tag-build-inputs--pytest-dev__pytest-10341/metadata.json",
+      "sha256": "e9ca36a2dc901b8a430f905e0bdf1a5ede8b130314a0e0b6d9232d5d400bcf2a"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/pytest-tag-build-inputs--pytest-dev__pytest-10341/manifest.json",
+      "sha256": "833c4132189de45c0acd979e694796215cbab83459525881f9901503e53b3b99"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/pytest-tag-build-inputs--pytest-dev__pytest-10341/plan.json",
+      "sha256": "d893d73fa1a907431305d80691994735547b8c3b84fdfe9d5434ecf8ca251d90"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/pytest-build-inputs--pytest-dev__pytest-10341/manifest.json",
+      "sha256": "1f3583fc1ccc3b5213b6370c266aeb116de27a18a58414c4a9b3ec28e167e7cc"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/pytest-build-inputs--pytest-dev__pytest-10341/plan.json",
+      "sha256": "8c5c148b1ad40c5604f6b1df51737d6d41f5a5bff2967131f1aa2a5f5eadbae0"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/pytest-build-inputs--pytest-dev__pytest-10341/download.json",
+      "sha256": "5655b11a85f886617200cf11986ffdf485d12ad68a9e4c8bdee8d49e38de1177"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/downloads/offline-downloads-v1--freetype-fallback-receipt.json",
+      "sha256": "0d560c0b846fcbb2409b30081147aaa573885d82a178a6c13dbf0e398e115436"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/downloads/pytest-upstream-tags.tsv",
+      "sha256": "c01534ed9e25293b901afc65eadac016477264bb0af31c5295fe52db6c2abe3a"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/downloads/offline-downloads-v1--receipt.json",
+      "sha256": "254bd7e6df7743bb365895561b2ed34f075fd298405b142d1c07d6f35d1794e7"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/downloads/pytest-tag-metadata--pytest-dev__pytest-9358--metadata.json",
+      "sha256": "27141ba5a7984a1ddb47413b309d9f2b0d1c6c67470ddf6e38e91ef56cf478ec"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/downloads/pytest-tag-metadata--pytest-dev__pytest-10341--metadata.json",
+      "sha256": "e9ca36a2dc901b8a430f905e0bdf1a5ede8b130314a0e0b6d9232d5d400bcf2a"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/build-metadata-output-v1/receipt.json",
+      "sha256": "87f8c2d0eb70163fabc259566ce35dc2d08f26c2639707c876c90ae5a72df602"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/sklearn-build-output-v1/build.log",
+      "sha256": "b866549779f57cac154ecc3051ef55e312700df515795aa723c18a66ef0a1277"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/sklearn-build-output-v1/receipt.json",
+      "sha256": "2ea697278469dff433bb9f3ee0424f0b49912016ec70ebcaa42d452ce214402b"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/pytest-build-output-10341-v1/build.log",
+      "sha256": "b70dc391da431ca064ee10d7ec4ae3e08b08f3f504cb067c0895dc410cc9e667"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/pytest-build-output-10341-v1/receipt.json",
+      "sha256": "adb9acf7aed05336ac125977e3461736b4ffb29ecc789d5a90ee36e1a1e10300"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/pytest-build-output-9358-v2/build.log",
+      "sha256": "4426e28ceb992e1f444238447824d9b95491f1a2dfdbb7aae58aff86c72793c2"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/pytest-build-output-9358-v2/receipt.json",
+      "sha256": "bbbf9fef148af3cde497a6b5b2c9ca3c42946ebcc5a1398ae8b9f73743b78129"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/pytest-build-inputs--pytest-dev__pytest-9358/manifest.json",
+      "sha256": "f53abb76bc86137181da7a4ddecbc08039a9339edc6f76bcdbf177cbabe0ca98"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/pytest-build-inputs--pytest-dev__pytest-9358/plan.json",
+      "sha256": "864e3a2ef29a8b8ffcd3d57b94042464c9ad433dbd9ff0d3b7501f9abe60652d"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/pytest-build-inputs--pytest-dev__pytest-9358/download.json",
+      "sha256": "5655b11a85f886617200cf11986ffdf485d12ad68a9e4c8bdee8d49e38de1177"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/inventory-output-v2/receipt.json",
+      "sha256": "ebae3ffa9f7b7dbec2b8a738b71d1e4d12e66eadfba294804a4231f3b85582f2"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/build-metadata-input-v1/manifest.json",
+      "sha256": "fbd9c004fc99562a2903b02a5c6d9f98a0f48846c036151ce8c8ac509e56b7bd"
+    },
+    {
+      "path_from_contextgraph_root": "docs/reports/gfx-readiness-20260907/preparation/build-metadata-input-v1/plan.json",
+      "sha256": "8e712b9fbb1b0aba59b8086c07f64beda65fc5d14bf5abe2e45badd42bea5224"
     }
   ],
   "claims": {
@@ -2891,7 +3371,16 @@
       "scripts/analysis/select_gfx_literal_replay_v1.py",
       "tests/test_gfx_literal_readiness_v2.py",
       "tests/test_gfx_literal_selection_v1.py"
-    ]
+    ],
+    "readiness_followup_20260907": {
+      "report": "docs/reports/gfx-readiness-20260907/README.md",
+      "diagnostics": 5,
+      "remote_local_file_hashes": 449,
+      "sklearn_target_transition": "FAILED to PASSED",
+      "sklearn_preservation_passes": 45,
+      "test_patch_field_flags": 2,
+      "pooled_effect_estimate": false
+    }
   },
   "not_reused": [
     "Historical post-hoc 67.2% projection",

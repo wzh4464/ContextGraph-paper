@@ -352,7 +352,8 @@ Ten-minute reviews continued until verification ended; incomplete semantic revie
 \section{Discussion and limitations}
 The completed audit rules out a particular ambiguity: the card intervention's lack of measured gain cannot be explained by widespread absence of any memory response, because actual delivery is observed.
 However, the reconstructed original responses are transient, and delivery alone does not establish sustained availability.
-The audit also leaves open incorrect relevance judgments, stale environment knowledge, variable retrieval queries, different provider behavior, and insufficient repair skill.
+The audit also leaves open incorrect relevance judgments, stale environments, provider variation and insufficient repair skill.
+Two frozen Pytest test patches already contain their candidate fixes; Matplotlib's target test also passes before candidate application (Appendix~\ref{app:readiness}).
 
 A training-only case illustrates conditional transfer.
 Flat and Graph both retrieve two rules from Requests1724, whose Python 2 Unicode-method repair adds \texttt{builtin\_str(method)}.
@@ -525,4 +526,48 @@ With the same case, source patch and verifier code, this diagnostic then complet
 Both earlier failures are retained, and this known-failure diagnostic is not pooled into a replay score.
 The frozen harness did not retain raw pytest output for the zero-result attempt, limiting attribution of its exact exit cause.
 The full replay remains stopped while other recorded setup errors are investigated.
+
+\clearpage
+\section{Further readiness diagnostics and test-patch scope}
+\label{app:readiness}
+Five additional single-task diagnostics retain the same literal predictions, canonical cases and frozen verifier, with no new model calls.
+They neither replace the stopped seven-attempt replay nor supply a pooled repair rate.
+The original Matplotlib image's final report says only that the candidate patch failed to apply.
+Newly captured subprocess output also shows an earlier reinstall failure and two pytest collection errors: offline rebuilding cannot download FreeType, leaving the installed testing module without a helper added by the test patch.
+A separate image caches the exact FreeType and Qhull archives named by the original build metadata and limits compilation to two jobs.
+Reinstallation then succeeds and all 195 requested statuses are collected.
+The candidate still fails to apply, and the target test already passes before its application.
+There is no after-patch test result for this candidate.
+
+\paragraph{Preapplied implementation changes.}
+A static audit compares both patch fields of all 99 canonical cases with the pinned parquet.
+An explicit path rule identifies Python files outside test directories and filenames in exactly two test patches, Pytest-10341 and Pytest-9358.
+The paths are \texttt{src/\_pytest/pathlib.py} and \texttt{src/\_pytest/tmpdir.py}; their gold \texttt{patch} fields contain only changelog entries.
+Every file hunk of each already selected literal candidate exactly matches a hunk sequence in its \texttt{test\_patch}, including coordinates and context.
+The verifier applies these test patches before the candidates.
+After separate offline dependency preparation, all three requested target tests are reported passed before candidate application; raw output confirms the corresponding test methods.
+Both candidates then fail Git application, consistent with their fixes having already been applied.
+These failures do not establish that the remembered changes were irrelevant.
+Pytest-10341 also has two other baseline failures, retained in the raw output.
+The verifier's existing test-name matching and pretend-version override remain unchanged.
+The upstream cause of the field split is unknown; the path screen is not a semantic certificate for all other files.
+No field, task membership, exclusion or original score is changed.
+
+\paragraph{A verified source-patch transfer.}
+A separate scikit-learn image installs Cython 0.29.37 and precompiles its existing checkout with two jobs, retaining an empty tracked source diff.
+Build and import take 203.1 seconds.
+The unchanged source-25500 patch is then evaluated on target-25763.
+Its target test changes from failed to passed and all 45 preservation tests pass, with matching raw pytest output and official report.
+This selected known-failure diagnostic establishes one executable transfer; it does not estimate prevalence, isolate the environment repair's cause or identify a causal advantage over another agent condition.
+
+\paragraph{Admission and evidence.}
+Report-only readiness had missed the first Matplotlib diagnostic's intermediate failures because its final report lacked an infrastructure-error label.
+The original flag is retained.
+A new runner checks captured output hashes and rejects explicit install, pytest collection/invocation, timeout and signal failures before admitting another task.
+It distinguishes ordinary failing tests and patch-application errors.
+Retrospective checking rejects the first Matplotlib attempt and accepts the other four captured sequences; this does not certify stages never executed after application failure.
+The wrapper captures byte writes returned by the frozen run/create shim, preserving stdin and exit status; inherited OS writes from other Docker verbs are outside scope.
+Twenty focused software checks pass.
+All five services are closed, and the local copies match 449 remote file hashes in total.
+Each package's source-image and input-preservation checks pass, while all original failures and the full 99-task denominator remain intact.
 \end{document}
