@@ -2,139 +2,138 @@
 \usepackage[T1]{fontenc}
 \usepackage{iclr2027_conference,times}
 \usepackage{amsmath,amssymb,booktabs,graphicx,hyperref,url}
-\title{ContextGraph: Repair Effects as Executable Memory}
+\title{ContextGraph: Memory for Incomplete Repairs}
 \author{Anonymous authors}
 \newcommand{\cg}{ContextGraph}
 \begin{document}
 \maketitle
 
 \begin{abstract}
-A source repair can teach a coding agent what to observe in another program, provided the relevant program relation survives the change of context.
-We investigate a memory mechanism that connects a repair's observable effect to an executed target diagnostic.
-A writer generates a check from the source patch and repaired code; execution before and after the repair establishes the behavior it distinguishes.
-A target writer uses this relation to construct a diagnostic, whose code and actual observations become evidence for a common repair solver.
-In a Django training example, a source check about preserving callable parameters leads to a target observation that returning the default storage object causes a constructor argument to disappear from serialization.
-Both the source-informed and issue-only procedures produce officially verified repairs, and both preserve the additional source-derived boundary.
-This demonstrates an executed transfer of a condition while exposing a selection problem: a distinct observation need not change the repair decision.
+A repair can satisfy the reported issue while retaining a fault that past experience already explains.
+We study candidate-conditioned repair memory: use a historical repair to identify a behavioral requirement missing from an initial candidate, then revise that candidate while preserving its existing fix.
+An executable source relation makes this omission observable on the patched target.
+On a Django development task, an initial repair and an additional issue-based review both pass official verification but discard query parameters during redirection.
+A historical repair enables a revision that preserves both the required deployment prefix and the omitted query parameters, including a joint input withheld from the writers.
+Supplying the historical patch and supplying an executed source check produce identical revisions.
+A separate development task yields four candidates that already satisfy the source condition.
+Together, these observations locate the useful role of memory in requirements a candidate still violates, while providing no evidence that executing the relation improves revision over supplying the relevant patch.
 \end{abstract}
 
 \section{Introduction}
-Software repairs encode conditional knowledge.
-The same conversion, copy, or ordering change can repair one program and break another because its value depends on the input and program state.
-For example, a Requests source patch normalizes an HTTP method with \texttt{builtin\_str(method)} in a Python 2 setting, whereas another training issue reports that the same conversion turns Python 3 bytes \texttt{b'GET'} into the unwanted string \texttt{"b'GET'"}.
-Retrieving the older edit does not determine the correct action.
-Nor does repeating information already stated in the issue explain what the experience adds.
-The useful question is which observation of the current program could distinguish plausible repair directions.
+The issue description tells a coding agent what is currently reported as broken.
+It need not enumerate every behavior a complete repair should preserve.
+A retrieved experience is useful when it supplies a missing requirement that changes the candidate repair.
+Similarity to the issue, or a new observation about the program, is insufficient if the candidate already handles that condition.
 
-Our earlier exploratory comparison on 99 SWEContextBench Related-Lite tasks resolves 17 tasks without memory, 18 with retrieved patches, and 18 with an added repository procedure card \citep{swecontext2026}.
-This does not demonstrate a repair gain; memory was also retained only briefly in the solver history.
-These counts use the benchmark's frozen resolved criterion, which requires fail-to-pass success but does not veto every pass-to-pass regression.
-They motivate investigating how experience affects a repair decision, rather than assuming that relevant text is sufficient.
+Consider an administrative redirect that must preserve a deployment prefix.
+Changing its destination from \texttt{request.path\_info} to \texttt{request.path} fixes that reported fault.
+However, appending a slash to the resulting path still discards query parameters.
+A different repair of the same API records this omitted behavior and replaces path concatenation with \texttt{request.get\_full\_path(force\_append\_slash=True)}.
+The historical experience can therefore improve the current repair even after the reported fault has been fixed.
+Its contribution is a requirement the initial candidate missed.
 
-We study a concrete alternative: remember what a repair changed in program behavior, and use that relation to choose an observation on the target.
-The mechanism has three steps: establish a source repair effect, execute a diagnostic informed by that effect on the target, and give the resulting evidence to a repair solver.
-The relation supplies a reason to examine a particular case; the target issue determines what behavior is required.
-This distinction allows a source experience to contribute an informative condition without treating its old patch as the target solution.
+We investigate a procedure organized around this residual defect.
+First construct a candidate from the current issue.
+Then assess a relevant historical condition on the patched program and revise when that condition exposes an omission compatible with the current task.
+This makes the proposed repair, rather than issue relevance alone, the object of the memory decision.
+Our development evidence distinguishes this useful omission from a historical condition already covered by ordinary repairs.
+It also shows that the historical patch can contain enough information to perform the revision: executing a source relation is not automatically a better way to deliver that information.
 
-\section{From repair effects to target observations}
+\section{Memory conditioned on the candidate repair}
 \label{sec:method}
 
-\subsection{Establishing the source relation}
-A source example contains the buggy program, its patch, and the repaired program.
-The memory writer receives the patch and relevant repaired code and produces an executable check, legal input cases, and a description of the relation being measured.
-We run the check in both source versions.
-An admitted check must execute normally in both versions, hold after the patch on both inputs, and change from false to true on at least one input.
-The memory record retains the source issue, check code, and relation.
+\paragraph{Recover the historical requirement.}
+A source record contains a buggy program, its repair, and the repaired program.
+A writer receives the patch and relevant repaired code and generates a short executable check of the repair's observable effect.
+We execute it in both source versions.
+The check must run normally, hold after the repair on the supplied legal inputs, and change from false to true on at least one input.
+The resulting memory records the relation and the behavior demonstrating its relevance to the source repair.
 
-Conditioning generation on the repair matters because a valid test need not expose anything learned from that repair.
-Four checks generated from the fixed code of Matplotlib 23314 all pass in both versions while missing the repaired visibility behavior.
-A patch-conditioned rendering check instead shows that hidden axes leave non-background pixels before the repair and none afterward.
-The comparison identifies a repair effect; it does not make every property of the repaired program an informative memory.
+For Django 16612, the generated check sends requests with query parameters through the administrative redirect.
+The original code redirects to a path without those parameters; the source repair retains them.
+The learned condition is that this redirect preserves the original query string.
 
-Django 16493 provides the running example.
-A \texttt{FileField} accepts a callable that selects a storage object, while \texttt{deconstruct()} returns constructor arguments used to serialize the field.
-The generated source check asks whether this representation preserves the original callable when it returns \texttt{default\_storage}.
-Before the repair, the \texttt{storage} argument is absent; afterward, it is present and identical to the original callable in both generated cases.
-Thus the observed effect concerns preserving a constructor dependency even when its evaluated value equals a default.
+\paragraph{Look for a remaining violation.}
+Let $p$ be the initial candidate for target program $T$, and let $r$ be a source relation that can be instantiated on that target.
+We evaluate $r$ on $T\oplus p$, the program after applying the candidate.
+A normal execution with a false result identifies a possible omission; a true result means that this relation provides no reason to revise the candidate.
+The target's required behavior determines whether the source condition is relevant.
+Execution errors provide neither observation.
 
-\subsection{Binding and executing a target diagnostic}
-The target writer receives the current issue and relevant initial code, together with an optional source check.
-It produces a diagnostic question, an explanation of how the source relation maps to the target when applicable, and an executable probe.
-The intended mapping preserves the program relationship while selecting objects, API calls, and legal inputs in the target repository.
-The writer can decline a source relation that does not support a useful observation.
-A diagnostic generated without such a mapping is an issue-based probe, not evidence of source transfer.
+This distinction matters when every candidate receives the same source-check result.
+If all satisfy the relation, it supplies no selection value.
+If all violate a relevant relation, ranking the same candidates cannot recover the missing behavior; the useful operation is to generate a corrective edit.
+The procedure therefore uses a violated source condition to request a revision, preserving the behavior the initial candidate already fixes.
 
-We execute the probe on the target's initial program before repair and pass successful runtime observations onward.
-The probe measures program behavior without proposing a patch or editing production code.
-Both source and target checks use rendered output or documented API behavior so that the measured relation need not depend on a source-specific internal cache.
-This still requires a meaningful mapping: replacing both the measured state and the question would create a different diagnostic rather than carry the source relation across.
+\paragraph{Revise using the experience.}
+The revision writer receives the issue, initial implementation, candidate, and observations of the reported fault after the candidate is applied.
+Historical information can be supplied as the source issue and patch, or as the source relation, its before/after observations, and the check's observed failure on the candidate.
+The writer returns a complete revised method.
+Each resulting patch is immediately evaluated by the official SWE-bench verifier \citep{swebench2024}; the behavioral checks then measure whether the reported requirement and historical condition hold together.
+The experiment supplies a selected source repair so that this comparison isolates its contribution to revision.
 
-In the Django example, the target also exposes \texttt{FileField.deconstruct()} and callable storage.
-The source condition therefore identifies a concrete target input: a storage factory whose result is \texttt{default\_storage}.
-Executing that case can distinguish returning an evaluated object from omitting the argument entirely.
-The source does not determine how to change the target implementation; it selects a case whose behavior bears on that decision.
-
-\subsection{Repairing from observed evidence}
-The repair solver receives the target issue, the executed probe's question and code, and its actual observations.
-It receives no additional source patch or source implementation.
-The common instruction states that the probe has already run on the same initial code and that another diagnostic is useful when it answers a new question.
-Normal source editing, checks after editing, and final testing remain part of the repair task.
-The executed evidence stays in the solver's history.
-
-To measure the contribution of the source relation, the implemented comparison varies only whether the target writer receives the source check.
-Both arms otherwise use the same target issue and code, probe execution procedure, and DeepSeek V4 Pro repair solver.
-Each arm shares a \$3 metered threshold and a 100-call allowance between its target writer and solver: writer usage is deducted from the solver's allowance.
-This measures the effect of the complete diagnostic-and-repair procedure, including the cost of obtaining its observations.
-Each submitted repair is immediately graded by the official SWE-bench verifier \citep{swebench2024}.
-
-\section{What the current evidence establishes}
+\section{Evidence: recovering an omitted requirement}
 \label{sec:evidence}
-The source construction and target diagnostics use the training side of a fixed SWE-bench Verified split: 280 source tasks and 70 development tasks, with a separate 150-task evaluation partition unused by these pilots.
-The Django pair consists of source 16493 and development target 13343.
-The target writer and solver receive the issue and initial code, not the target gold repair.
+We use the training side of a SWE-bench Verified split with 280 source tasks, 70 development tasks, and a separate 150-task evaluation partition unused by these experiments.
+The principal pair is source Django 16612 and development target Django 14404.
+The target issue asks for support of \texttt{FORCE\_SCRIPT\_NAME} in administrative redirects.
+The source condition concerns query preservation in the same method.
 
-\paragraph{A source condition becomes a target observation.}
-The target issue asks \texttt{deconstruct()} to preserve callable storage rather than serialize the selected storage instance.
-Both generated probes execute successfully and observe that a non-default storage factory is represented by its evaluated instance, not the original callable.
-The issue-only probe additionally records that the factory is called once during construction and is not called again by \texttt{deconstruct()}; it also confirms that the analogous \texttt{upload\_to} parameter preserves its callable.
-The source-informed probe examines the historical condition of returning \texttt{default\_storage} and observes that \texttt{storage} is then omitted entirely.
-This links a source condition to a distinct target observation.
-The resulting question is whether a repair must address argument omission as well as callable identity; the observation alone does not establish that the solver chooses a better patch.
+\paragraph{An ordinary repair leaves the historical fault.}
+DeepSeek V4 Pro generates one initial repair from the issue and relevant initial code, including the available request-path APIs.
+The writer may replace \texttt{AdminSite.catch\_all\_view()} while preserving its signature and decorator.
+Its repair keeps URL resolution based on \texttt{path\_info} and constructs the redirect from \texttt{request.path}.
+Official verification passes, and an issue-based check confirms that the deployment prefix is retained.
+The unchanged source program executes normally on this candidate and observes that both query strings are discarded.
 
-\paragraph{A distinct observation need not change the repair.}
-Both procedures produce patches that pass the official verifier (Table~\ref{tab:target}).
-We also run the unchanged source check on the initial target and each submitted patch.
-Both inputs fail the relation on the initial target and satisfy it after either repair: the original factory is preserved even when it returns \texttt{default\_storage}.
-The issue-only repair retains the unevaluated storage value; the source-informed repair retains the constructor argument and handles callable values separately.
-Both choices cover the reported fault and the additional boundary.
-Thus the source condition changes what is measured without improving the repair outcome or metered cost in this pair.
-The selection problem is to find relations that distinguish candidate repair decisions, rather than merely add a previously unmeasured case.
+\paragraph{Memory changes the revision.}
+Starting from that same candidate, three independent revision calls receive either the issue-based evidence alone, the historical issue and patch, or the executed source relation.
+All use the same model, temperature 0.7, and one call with a 16,384-token output allowance.
+The issue-based review retains the initial patch.
+Both memory conditions replace path concatenation with \texttt{get\_full\_path(force\_append\_slash=True)}, producing byte-identical patches.
+Those revisions retain the deployment prefix and preserve the query parameters (Table~\ref{tab:residual}).
 
 \begin{table}[t]
 \centering
-\caption{Completed Django 13343 development comparison. Cost includes the target writer and solver; boundary checks reuse the original source program.}
-\label{tab:target}
+\caption{Django 14404 development repair. Every row passes official verification: 2 fail-to-pass and 323 pass-to-pass tests. Behavioral checks distinguish the omitted requirement.}
+\label{tab:residual}
 \begin{tabular}{lccc}
 \toprule
-Diagnostic writer & Officially resolved & Boundary inputs & Metered cost \\
+Candidate & Prefix & Query & Prefix + query \\
 \midrule
-Issue only & Yes & 2/2 & \$2.56 \\
-Source informed & Yes & 2/2 & \$3.06 \\
+Initial repair & Pass & Fail & Fail \\
+Issue-based revision & Pass & Fail & Fail \\
+Historical patch revision & Pass & Pass & Pass \\
+Executed relation revision & Pass & Pass & Pass \\
 \bottomrule
 \end{tabular}
 \end{table}
 
+\paragraph{The revision preserves the requirements together.}
+An independently prepared joint check combines the deployment prefix with repeated query parameters and percent-encoded values:
+\texttt{keep=a\%2Fb\&keep=c\%20d}.
+This input is withheld from all writers and executed after their revisions and official verifications complete.
+Both memory revisions preserve the exact prefix and query string in the redirect; the initial and issue-reviewed candidates lose the query string.
+Thus the additional behavior survives a combined input, rather than merely passing the unprefixed historical example.
+The four model calls cost \$0.2564 under the experiment's token meter; constructing the source check costs another \$0.0479.
+These localized method-writing calls do not measure the cost of a full repository agent.
+
+\paragraph{A covered condition contributes no corrective signal.}
+Source Django 16493 records that serializing a \texttt{FileField} should preserve its original storage factory even when the factory returns \texttt{default\_storage}.
+On development target Django 13343, four independent source-blind candidates produce the same AST repair and all satisfy that relation.
+Each also passes official verification.
+The source condition therefore supplies no additional candidate-selection value in that pool.
+This contrast motivates conditioning memory use on what the proposed repair still omits.
+
+The positive case establishes a concrete corrective contribution from historical information, not an improvement in official resolved rate or an advantage of executable delivery over the patch.
+The next method question is how to find these residual requirements across tasks without spending effort on conditions already covered by the candidate.
+
 \section{Related work}
-Experience-based agents such as ExpeL distill reusable insights from trajectories, while AdaMEM retrieves experience at intermediate states and synthesizes an updated strategy \citep{expel2024,adamem2026}.
-Getafix learns applicable edit patterns from human patches \citep{getafix2019}.
-Our focus is the observation suggested by a repair effect: source execution establishes a relation, and target execution supplies evidence before the solver chooses an edit.
-
-ExpeRepair already uses historical test demonstrations and reflective insights to generate reproduction and boundary tests \citep{experepair2026}.
-The specific construction studied in this draft derives a check from a source repair's behavioral change and uses its condition to select a target diagnostic, compared with a writer receiving only the target issue and code.
-
-MR-Scout parameterizes relations from existing tests, and MR-Coupler generates relation checks from coupled methods and evaluates them on historical defects \citep{mrscout2023,mrcoupler2026}.
-These methods make relational behavior executable.
-We study relations selected by a source repair's behavioral change and used to inform diagnosis and repair in another task.
+ExpeL distills reusable insights from experience, and Getafix learns applicable edit patterns from human repairs \citep{expel2024,getafix2019}.
+ExpeRepair uses historical test demonstrations and reflective insights to generate reproduction and boundary tests \citep{experepair2026}.
+MIRA constructs repair memory from SQL corrections and uses database evidence to activate and combine applicable repair units \citep{mira2026}.
+These works already establish repair reuse, historical test guidance, and execution-based memory activation.
+Our empirical focus is the residual requirement: whether historical information changes a candidate that already fixes the reported fault, and whether the resulting revision preserves the old and new requirements together.
 
 \section*{AI use statement}
 Generative AI assisted literature review, method development, implementation, experiments, analysis, and writing.

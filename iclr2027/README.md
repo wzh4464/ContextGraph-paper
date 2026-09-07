@@ -2,34 +2,25 @@
 
 Read [main.pdf](main.pdf) or edit [main.tex](main.tex).
 
-The method turns a source repair's observable effect into an executed target
-diagnostic. A source writer generates a relation check from the patch and
-repaired code. A target writer binds that relation to the current task; the
-repair solver receives the probe and its actual observations.
+The method question is which historical requirement an initial repair still
+violates. On Django 14404, an initial repair and an issue-based revision pass
+official verification but discard query parameters. A historical patch and an
+executed source relation both produce the same revision, preserving the required
+deployment prefix and the query string together. This establishes a corrective
+contribution from memory; it does not establish a gain in official resolved rate
+or an advantage of executable delivery over the patch.
 
-The completed Django development comparison establishes this execution path.
-The source-informed diagnostic adds a default-storage boundary, but both it and
-the issue-only procedure produce officially resolved repairs. Both patches also
-pass the unchanged source check on that boundary. Total target writer and solver
-costs are $3.059602 and $2.558255, respectively, under the experiment's meter.
+Four source-blind candidates for Django 13343 already cover their historical
+condition, illustrating when that relation adds no corrective signal. Both
+cases use the development partition; the 150-task evaluation partition remains
+unused by these pilots.
 
-The resulting insight is that a distinct observation need not change the repair
-decision. The next method question is how to select source relations that
-distinguish candidate edits. The current result does not demonstrate a repair
-gain from memory.
+Implementation and evidence in the parent repository:
 
-Source Django 16493 belongs to the 280-task memory bank; target Django 13343
-belongs to the separate 70-task development partition. The 150-task evaluation
-partition is unused by this pilot.
-
-Implementation in the parent repository:
-
-- `scripts/analysis/run_repair_check_source_v1.py`
-- `scripts/analysis/build_executed_probe_v1.py`
-- `scripts/analysis/run_executed_probe_pilot_v1.py`
-- `scripts/analysis/replay_executed_probe_relation_v1.py`
-
-Results: `docs/reports/executed-probe-pilot-v1.md` in the parent repository.
+- `scripts/analysis/run_repair_residual_pilot_v1.py`
+- `scripts/analysis/run_repair_candidate_pilot_v1.py`
+- `docs/reports/repair-residual-v1.md`
+- `docs/reports/repair-candidate-v1.md`
 
 Build:
 
