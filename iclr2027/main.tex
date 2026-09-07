@@ -2,7 +2,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{iclr2027_conference,times}
 \usepackage{amsmath,amssymb,booktabs,graphicx,hyperref,url}
-\title{ContextGraph: Testing When Repair Experience Applies}
+\title{ContextGraph: Repair Effects as Executable Memory}
 \author{Anonymous authors}
 \newcommand{\cg}{ContextGraph}
 \newcommand{\pp}{\,\mathrm{pp}}
@@ -11,37 +11,24 @@
 
 \begin{abstract}
 A past repair is useful only under the conditions that made it work.
-Coding-agent memory commonly retrieves an issue, patch, or rule and leaves the agent to infer these conditions.
-We develop an applicability-driven alternative: turn retrieved experience into a repair hypothesis, identify an observation that would support or contradict it in the current repository, and execute that check before committing to the suggested edit.
-The central hypothesis is that memory should reduce uncertainty about the next action, rather than merely increase the amount of relevant text.
+We investigate how coding agents can use past repairs to choose informative observations of the current program.
 Our motivating experiments on 99 SWEContextBench Related-Lite tasks find 17 resolved tasks without memory, 18 with flat patch retrieval, and 18 with an added repository procedure card.
 A two-task training pilot obtains the same successful patches with the applicability instruction both with and without memory.
-This narrows the method question: what information from a past repair makes a target check worth executing?
-We investigate the behavior changed by a source repair as a signal for selecting transferable checks.
+The pilot's repairs therefore do not require historical content.
+The resulting method represents a past repair by an executable check of its observable effect, confirmed by running the source before and after the repair.
+We are testing whether this representation helps a new repair more than the original patch.
 \end{abstract}
-
-\paragraph{Working draft.}
-Method development uses training tasks; the applicability prototype is currently an instruction to the solver.
 
 \section{Introduction}
 Software repairs encode conditional knowledge.
 Adding a conversion, changing an ordering constraint, or copying an object can fix a bug because a particular input, runtime, and program state make that change necessary.
 Removing those conditions turns a useful experience into advice that may point in the wrong direction.
-
-This matters for coding agents because issue similarity is only an indirect guide to the next useful action.
 Two issues can mention the same API and exception while requiring different edits.
 A memory that says what worked previously still leaves the agent to determine what is true now.
-Our starting point is to make that determination part of memory use.
 
-We propose to organize experience around \emph{testable repair hypotheses}.
-For each retrieved candidate, the agent identifies its applicability condition, a small check that distinguishes competing explanations, and the edit justified by the check's outcome.
-The check runs against the current repository before the agent adopts the repair.
-The result can support the candidate, reject it, or leave it unresolved.
-Rejected experience remains useful: it eliminates an attractive but unsuitable direction.
-
-The method question is whether the behavior changed by a past repair identifies what is worth measuring in a new task.
-Graph retrieval supplies candidate experiences; source execution can distinguish checks that merely pass from checks that expose the repair's effect.
-Target execution then determines whether that relation matters for the current decision.
+Our starting point is to ask what observation would make a past experience useful for the next repair decision.
+Does comparing the behavior before and after a source repair identify what is worth measuring in a new task?
+We study a memory representation that records this behavioral contrast, with verified target repairs as the measure of its value.
 
 \section{Why relevant experience can be insufficient}
 \label{sec:motivation}
@@ -49,11 +36,12 @@ Target execution then determines whether that relation matters for the current d
 Our completed exploratory Related-Lite experiment compares six memory interfaces on the same 99 tasks from SWEContextBench \citep{swecontext2026}.
 The solver is SWE-agent 1.1.0 with a DeepSeek V4 Pro model alias, temperature zero, a 500-call limit, and a history processor retaining the last five observations.
 Flat retrieves historical patches; Card adds a repository procedure card; Graph, Rules, and File list expose other representations of the available experience.
-Table~\ref{tab:motivation} summarizes these interventions.
+Related source fixes can closely match target repairs.
+Table~\ref{tab:motivation} uses the benchmark's frozen \texttt{resolved} criterion, which requires fail-to-pass success but does not veto every pass-to-pass regression.
 
 \begin{table}[t]
 \centering
-\caption{Completed Related-Lite results used to motivate method development. Each condition uses all 99 tasks and the benchmark's frozen verifier. These are earlier interventions, separate from the new applicability method.}
+\caption{Earlier memory interventions on the same 99 Related-Lite tasks.}
 \label{tab:motivation}
 \begin{tabular}{lrr}
 \toprule
@@ -69,14 +57,12 @@ File list & 9/99 & $-8.08\pp$ \\
 \end{tabular}
 \end{table}
 
-Flat and Card each gain one observed repair over no memory; both exact paired tests give $p=1$.
-Richer repository guidance did not produce a demonstrated gain in this setting.
+Flat and Card each gain one observed repair over no memory; both exact paired tests give $p=1$, providing no demonstrated gain in this setting.
 
 Patch memory reaches all 99 targets in both conditions, and the expected procedure card reaches 98.
 However, reconstructing 198 Flat/Card histories shows that an original memory response is retained for a median of only five action prefixes.
 The median trajectories contain 497 and 495 actions, respectively.
-This identifies a delivery constraint, while leaving open the more consequential question of what the agent should do with the experience.
-Our new comparisons keep memory persistent in every condition so that retention is held fixed.
+The development pilot below keeps memory persistent to remove this delivery constraint.
 
 \paragraph{The same operation can be a repair or a bug.}
 A Requests training example makes the applicability problem concrete.
@@ -85,98 +71,51 @@ Issue 2317 instead reports that this conversion turns Python 3 bytes \texttt{b'G
 Its training patch uses \texttt{to\_native\_string(method)}.
 A retrieved recommendation to perform the older conversion is related to the target but does not settle the correct action.
 
-The transferable lesson is the condition on the conversion, including the case in which it should be rejected.
 Here the issue already states the relevant input and runtime; rerunning that example would confirm known information.
-The method needs a harder kind of check: an observation of the current program that separates actions whose applicability is still uncertain.
+The useful check would instead distinguish actions whose applicability remains uncertain after reading the issue.
 
-\section{Applicability-driven experience use}
-\label{sec:method}
-Let $s_t$ contain the issue, current code, runtime, and observations available at step $t$.
-An experience contains a source problem and its repair evidence.
-Instead of mapping issue text directly to advice, the proposed procedure follows
-\[
-s_t \longrightarrow \text{candidate experiences}
-\longrightarrow \text{discriminating check}
-\longrightarrow \text{observation}
-\longrightarrow \text{next repair action}.
-\]
-
-\paragraph{Retrieve candidates.}
-\cg{} retrieves a small shared pool through dense similarity, lexical matching, and Personalized PageRank over experience and mechanism nodes.
-Reciprocal-rank fusion and diversity reranking produce the candidate packet.
-For the first method experiment, this packet is computed once and held identical between conditions.
-This isolates how experience is used after retrieval.
-
-\paragraph{Make the repair hypothesis explicit.}
-For candidate $m$, the agent forms
-\[
-h_m=(c_m,\;q_m,\;e_m),
-\]
-where $c_m$ states the conditions needed by the source repair, $q_m$ is a check of a condition that matters for the target, and $e_m$ is the edit or debugging action supported by that condition.
-The check must distinguish plausible actions.
-Printing a version number is useful only when the version changes whether the repair applies; rerunning an unrelated passing test does not distinguish the candidates.
-
-The initial implementation asks the common solver to construct these hypotheses from the retrieved packet and current code.
-The instruction does not enforce their construction or selection.
-At most two short checks are requested before editing, so the procedure spends its diagnostic budget on the most consequential uncertainty.
-
-\paragraph{Execute, then choose.}
-A check returns supporting evidence, contradicting evidence, or an unresolved result.
-The agent records the observation together with the candidate it concerns.
-Supporting evidence allows the agent to adapt the proposed action to the target.
-Contradicting evidence removes that candidate from the current repair decision.
-An unresolved check, including an environment error, does not decide applicability.
-If the retrieved candidates remain unhelpful, the solver continues from the issue and repository.
-
-Rejecting a candidate should change the next action: the agent stops repeating an edit whose required condition is absent.
-
-\paragraph{Validate the resulting repair.}
-The solver reruns its issue reproduction after editing and checks relevant existing tests.
-The benchmark verifier grades each submitted patch immediately after that task.
-The method's local condition checks use information available to the solver; the benchmark's held-out tests remain evaluation targets.
-At evaluation time the source memory bank is fixed.
-
-\section{Experiments that test the argument}
+\section{The applicability pilot succeeds without memory}
 \label{sec:experiments}
-\paragraph{Does checking applicability improve repairs?}
-Compare the same persistent memory packet with ordinary use and with explicit applicability checks.
-Keep the model, tools, task images, generation settings, and total budget equal.
-The outcome is verified repair success; trajectories show whether a candidate was accepted or rejected before editing.
-The completed pilot uses Requests 1921 and pytest 10051 from the training pool, with a shared \$3 metered threshold and a 100-call limit.
+The completed pilot uses Requests 1921 and pytest 10051 from the training pool of our separate SWE-bench Verified split \citep{swebench2024}.
+The split allocates 350 tasks to memory construction and development and 150 to evaluation, with repository-stratified allocation and seed 42.
+The two pilot tasks belong to a 70-task development partition whose source rules are excluded from the remaining 280-source memory bank; the 150 evaluation tasks are unused here.
+
+The two memory conditions receive the same persistent packet from \cg{}'s dense, lexical, and graph retrieval pipeline.
+One uses the ordinary solver; the other adds an instruction to state an applicability condition, execute at most two short checks before editing, and use their observations to accept or reject a recommendation.
+The instruction does not enforce these decisions.
+We hold the model, tools, task images, \$3 metered threshold, and 100-call limit fixed, and grade each submitted patch immediately with the Verified harness.
+
 Ordinary memory produces two empty patches after 39 and 49 calls.
 Adding the instruction produces two verified repairs after 36 and 17 calls.
 Removing only the memory packet also produces two verified repairs, after 30 and 34 calls; both patches are identical to their counterparts with memory.
-The ordinary runs never edit source, whereas the instruction conditions do.
-Thus the observed repairs can occur without historical content, and this prototype does not establish a memory mechanism.
-We stop expanding the instruction-only prototype.
+The ordinary runs never edit source, whereas both instruction conditions do.
+This two-task result shows that the observed repairs can occur without historical content.
+It directs method development toward the information supplied by experience, rather than expanding the instruction-only prototype.
 
-\paragraph{Which source checks should transfer?}
-The next candidate uses the behavior changed by a source repair to select checks.
-Starting from the same automatically generated source-check pool, compare selection by validity on the fixed source with selection by the contrast between buggy and fixed behavior.
-Keep the number of supplied checks and the target adaptation procedure equal.
-A manually written source check for Django 11880 confirms feasibility of the contrast: modifying a copied field's \texttt{error\_messages} changes the original before the repair and leaves it unchanged afterward.
-Automatic extraction and transfer to another task remain to be implemented and tested.
+\section{Remembering a repair's observable effect}
+\label{sec:method}
+A check that passes on a repaired program may describe a general property without exposing anything learned from the repair.
+In a source-side trial on Matplotlib 23314, four checks generated from fixed code all pass before and after the repair: they exercise initialization, axis limits, sharing, and drawing order while missing the repaired visibility behavior.
+Source repair sensitivity cannot select an informative check from this pool.
 
-\paragraph{Does execution supply information beyond more reasoning?}
-Compare executed checks with a condition that writes down the same hypotheses and expected outcomes but does not run the extra checks.
-All conditions retain the ordinary issue reproduction and final testing.
-This comparison asks whether observing the current program changes repair decisions, rather than attributing a gain to additional instructions alone.
+Our revised construction gives the memory writer the source patch and fixed implementation and asks for a check of the changed observable behavior.
+It executes the check on the buggy and repaired source with two legal inputs.
+An admitted check must run normally in both versions and expose a false-to-true relation; execution errors return to the writer for program correction.
+The stored memory contains the source issue, relation, and executable check.
 
-\paragraph{Do applicability boundaries explain transfer?}
-Examine development cases in which related experiences recommend incompatible actions, alongside cases where the source repair applies directly.
-For each case, record the candidate decision before and after the discriminating observation and the resulting patch.
-A useful mechanism result is a wrong candidate being rejected and a correct repair following from that observation.
-The cost of the check is part of the task budget.
+The observable effect matters because a repair can also change incidental internal state.
+A generated check of Matplotlib's projection cache detects the source change, but the corresponding cache does not exist in the two-dimensional target API.
+Changing both the operation and the measured state would invent a different check.
+We therefore require observations of rendered output or documented API results, rather than an implementation-specific cache.
+A generated output check renders a hidden blue axes region on a red figure.
+Before the source repair, the two inputs leave 57,600 and 40,000 non-red pixels; after the repair, both leave zero.
+The writer corrected an invalid API call using its execution error before this contrast was measured.
 
-\paragraph{Evaluation split.}
-The separate SWE-bench Verified campaign \citep{swebench2024} allocates 350 tasks to memory construction and development and 150 to evaluation, with repository-stratified allocation and seed 42.
-Within the 350-task pool, an existing 70-task development partition excludes all of its source rules from the remaining 280-source bank.
-The bank contains 376 rules.
-These development tasks support method selection without using the 150 evaluation tasks.
-The 150 evaluation tasks do not participate in the pilot.
-
-The principal evaluation will compare the selected method against no memory and the same memory without applicability checks.
-The decision to retain graph retrieval will depend on its contribution with memory use held constant.
+The target solver binds the check's objects and API calls to the current repository while retaining the operation sequence and measured relation.
+The current issue determines whether that relation should hold in the target.
+The intended benefit is an observation that changes a repair decision enough to repay the cost of adaptation and execution.
+The development comparison supplies either the original source patch, the constructed effect check, or no memory to the same target solver at the same budget.
+Target transfer remains under evaluation.
 
 \section{Related work}
 \paragraph{Experience and skills.}
@@ -184,36 +123,19 @@ ExpeL distills reusable insights from agent trajectories \citep{expel2024}.
 SWE-Exp uses historical experience for software issue resolution \citep{sweexp2025}, and MemGovern turns human experience into searchable cards \citep{memgovern2026}.
 CODESKILL learns a skill extraction and maintenance policy using feedback from a frozen downstream solver \citep{codeskill2026}.
 ExpeRepair retrieves historical test demonstrations and reflective insights to generate reproduction and boundary tests \citep{experepair2026}.
-Thus using repair experience to guide testing is already established.
-Our narrower question is whether a check derived from the source repair can distinguish unresolved target actions more effectively than generating a test afresh from the same evidence.
 
 \paragraph{Repair patterns and context.}
 Getafix learns fix patterns from human patches and uses surrounding code to rank applicable edits \citep{getafix2019}.
-Thus executable edits and context-sensitive repair reuse are established ideas.
 VulDebugger compares expected constraints with observed runtime state to guide vulnerability repair \citep{vuldebugger2025}.
 MemRepair combines historical fixes, security patterns, and refinement trajectories with runtime feedback \citep{memrepair2026}.
-These methods motivate a sharper target for experience use: selecting a check that discriminates between competing source-derived repair hypotheses before committing to an edit.
 MR-Scout parameterizes relations from existing tests, and MR-Coupler generates relation tests from coupled methods and evaluates historical defects \citep{mrscout2023,mrcoupler2026}.
-Our proposed comparison concerns using a source repair's behavioral change to select a check for a different repair task.
+The question here is whether a source repair's behavioral change improves the selection of a check for a different repair task.
 
 \paragraph{Graph retrieval and working memory.}
 HippoRAG motivates associative retrieval with Personalized PageRank \citep{hipporag2024}.
 SWE-MeM studies working-memory management \citep{swemem2026}, while cue-anchored memory studies delivery through coding-task and compaction experiments \citep{cueanchored2026}.
 AdaMEM retrieves experience at intermediate states and synthesizes an updated strategy \citep{adamem2026}.
-Our proposed comparison holds the candidate packet and its retention fixed to test the information gained by executing an applicability check.
-Decision-Aware Memory Cards scores context by estimated effects on actions \citep{cicl2026}; action relevance alone is therefore not a new memory mechanism.
-
-\section{Scope of the current evidence}
-The completed Related-Lite results are exploratory and include related source fixes that can closely match target repairs.
-The benchmark's frozen \texttt{resolved} criterion requires fail-to-pass success but does not veto every pass-to-pass regression.
-We therefore use those results to motivate development, while reporting new Verified results under its own harness.
-The Requests example is an inspected training case.
-The two-task pilot identifies an instruction effect to investigate, but its successful patches also occur without memory.
-The Django source check measures a known repair's effect; it does not establish target transfer.
-
-The unresolved scientific question is whether experience-guided checks choose better actions often enough to repay their cost.
-A successful method should improve verified repairs at a matched budget and show decisions changed by informative observations.
-If the checks merely lengthen trajectories, the intervention has not achieved its purpose.
+Decision-Aware Memory Cards scores context by estimated effects on actions \citep{cicl2026}.
 
 \section*{AI use statement}
 Generative AI assisted literature review, method development, implementation, experiments, analysis, and writing.
