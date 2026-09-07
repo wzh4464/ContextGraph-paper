@@ -113,14 +113,12 @@ Both agents browse the repository, execute tests, and submit normally.
 Both pass all 2 fail-to-pass and 323 pass-to-pass tests, but only the history-informed repair preserves the query and passes the joint check.
 The ordinary agent's actual observations include both the existing redirect helper and the implementation that retains \texttt{QUERY\_STRING}, before it edits the method.
 With history, the agent preserves a behavior whose implementation was already visible to the ordinary agent.
-The two attempts use 36 and 25 model calls, respectively.
 
 \paragraph{The requirement survives distillation.}
 The existing first-ranked Flat rule explicitly describes query loss and supplies \texttt{get\_full\_path(force\_append\_slash=True)}.
 We run a second fixed pair of complete-agent attempts: one receives the unchanged three-entry Flat packet, while the other receives the same packet with only its first entry replaced by the original source issue and patch.
 The remaining entries and the delivery point are identical.
 Both repairs pass official verification and all three behavior checks, and their submitted patches are byte-identical.
-The attempts use 69 and 30 model calls, respectively.
 In this development comparison, either representation supplies enough information to preserve the current and historical requirements together.
 
 \paragraph{A historical requirement can extend to a neighboring operation.}
@@ -129,7 +127,8 @@ Qwen retrieval supplies three unchanged Flat rules, with source 15732 ranked fir
 That source concerns deletion of a unique constraint sharing its column with a primary key.
 Both agents fix ordinary-index selection and pass official verification.
 The memory-informed agent also excludes primary keys when deleting unique constraints.
-An independently constructed PostgreSQL check fails on the buggy source and succeeds after its repair; the unchanged check then fails on the ordinary target repair and succeeds on the memory-informed repair.
+A PostgreSQL check generated from source evidence covers redundant uniqueness beside a primary key or a field-level unique constraint.
+Both inputs distinguish the source versions; the unchanged check fails on the ordinary target repair and passes on the memory-informed repair, with original constraints retained.
 A combined input creates an ordinary index, redundant uniqueness, and a primary key on the same column.
 On this PostgreSQL input, ordinary-index deletion already succeeds on the target base.
 Both repairs retain that behavior, but only the memory-informed repair also deletes the redundant uniqueness, retaining the primary key and original data.
