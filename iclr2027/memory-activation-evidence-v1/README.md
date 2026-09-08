@@ -18,4 +18,9 @@ Full original artifacts in ContextGraph:
 - `data/verified_train_test_v1/codepath-memory-activation-v2/final-assessment.json`
 - `data/verified_train_test_v1/range-subclass-preservation-v1/`
 
-A subsequent no-reference review is running and is not included here.
+The subsequent no-reference review also completed: it returned the exact initial
+candidate, passed official verification, and failed both historical cases and
+the named-tuple joint case. `no-reference-summary.json` preserves it separately.
+The old runner rejected an empty reference tag; an exact-input audit confirmed
+that its content was empty as prepared. Original outputs were unchanged and no
+model or verifier was rerun.

@@ -1,0 +1,18 @@
+{
+  "state": "completed_with_separate_delivery_audit",
+  "audit_sha256": "d0abd0ba53b763154b0d47c84d185e08bb6c0e678114af9bb4d5a2bd00aaa8ae",
+  "patch_sha256": "4733f6898b1589f6392dbaa76d5099eb75bfc9b8bfed5300e33526c3be471fc5",
+  "patch_equals_initial": true,
+  "official_resolved": true,
+  "checks": {
+    "source_case_0": false,
+    "source_case_1": false,
+    "joint_scalar": true,
+    "joint_tuple": true,
+    "joint_namedtuple": false
+  },
+  "calls": 95,
+  "cost_usd": 0.713342076705,
+  "cumulative_meter_usd": 316.507156775385,
+  "model_calls_added_by_audit": 0
+}

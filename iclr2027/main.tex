@@ -174,6 +174,7 @@ On Django12663, both a three-source packet selected through code connections and
 Three subsequent fresh revisions hold that source and the initial candidate fixed.
 The original issue and patch, or the requirement plus its executable failures, each restore both historical cases and the withheld named-tuple/lazy-User combination; the requirement sentence alone does not.
 All three repairs pass official verification.
+A subsequent review with the same budget and an empty reference returns the initial candidate unchanged: it passes official verification but still fails both historical cases and the named-tuple combination.
 However, additional inputs chosen after inspecting the feedback repair expose its overgeneralization: it expands every non-builtin sequence into positional constructor arguments, breaking ordinary tuple and list subclasses.
 Both subclasses work on the original-history repair, sentence-only repair, shared initial candidate and unmodified target.
 The source example identifies a missing behavior, but recovering that example does not establish the boundary of the implementation rule.
