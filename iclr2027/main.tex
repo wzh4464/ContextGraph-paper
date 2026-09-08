@@ -169,6 +169,15 @@ Both revisions pass official verification and the withheld joint sequence, so th
 The useful feedback identifies which stated condition the candidate still fails to implement.
 
 \section{Applicability is part of repair memory}
+\paragraph{Recovering an example can overgeneralize its rule.}
+On Django12663, both a three-source packet selected through code connections and a ten-source similarity packet contain source13590, yet neither repair recovers its named-tuple range behavior.
+Three subsequent fresh revisions hold that source and the initial candidate fixed.
+The original issue and patch, or the requirement plus its executable failures, each restore both historical cases and the withheld named-tuple/lazy-User combination; the requirement sentence alone does not.
+All three repairs pass official verification.
+However, additional inputs chosen after inspecting the feedback repair expose its overgeneralization: it expands every non-builtin sequence into positional constructor arguments, breaking ordinary tuple and list subclasses.
+Both subclasses work on the original-history repair, sentence-only repair, shared initial candidate and unmodified target.
+The source example identifies a missing behavior, but recovering that example does not establish the boundary of the implementation rule.
+
 \paragraph{Relevant history need not add a missing requirement.}
 A further fixed cohort takes the first four distinct repositories in the development ranking after recorded local-path exclusions, without filtering again for expected memory benefit.
 Holding each top-ranked source fixed, sixteen original-base attempts compare no memory, Requirement, Implementation, and Both.
