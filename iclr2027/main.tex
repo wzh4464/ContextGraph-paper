@@ -127,8 +127,7 @@ Executable feedback adds no observed behavior in this pair.
 
 \paragraph{Which information makes the requirement usable?}
 We select the constraint and timezone benefit cases and run four fresh complete agents per task, fixing the single historical source and its delivery before editing.
-Two source-only constructions separate a behavioral requirement from an implementation reference; the combined input concatenates them unchanged.
-The reference also conveys behavior, so the comparison concerns these actual inputs rather than disjoint information categories.
+Two source-only constructions produce a behavioral requirement and an implementation reference; the combined input concatenates them unchanged.
 All eight repairs pass official verification (Table~\ref{tab:memorycontent}).
 On Django12708, only Implementation and Both also remove redundant uniqueness while preserving the primary key.
 The Requirement agent tests a field with \texttt{unique=True}, but places \texttt{unique\_together} on a different, two-column set.
@@ -166,8 +165,8 @@ Two fresh agents refine the same original failed Requirement candidate, both rec
 One also receives the unchanged source-generated check and its actual failures for a field with a primary key or \texttt{unique=True}.
 Requirement-only review excludes the primary key but still fails the ordinary unique-field condition.
 Feedback adds generated-name disambiguation and passes both conditions.
-Both revisions pass official verification and the withheld joint sequence, so the added behavior is recovery of the supplied condition, not an independent joint gain.
-The useful feedback identifies which stated condition the candidate still fails to implement.
+Both revisions pass official verification and the withheld joint sequence.
+The added behavior is recovery of the ordinary unique-field condition identified by feedback.
 
 \section{Applicability is part of repair memory}
 \paragraph{Recovering an example can overgeneralize its rule.}
@@ -198,21 +197,15 @@ These memories concern behavior already satisfied on the observed inputs.
 A historical behavior missing from the target also need not improve its repair.
 We select two further development cases whose source-validated examples fail on their target versions, then compare no memory, original history, and a requirement with its source examples.
 All six repairs pass official verification; neither memory input improves the measured historical behavior on Sympy21379 or Astropy13236.
-Execution tracing separates the conditions: the Sympy history exercises \texttt{PolyElement.as\_expr()}, while the public issue enters \texttt{\_parallel\_poly\_from\_expr()}.
-In Astropy, both enter \texttt{\_convert\_data\_to\_col()}, but only the public structured-array input takes its \texttt{NdarrayMixin} conversion branch.
+Execution tracing separates the conditions: the Sympy history exercises \texttt{PolyElement.\allowbreak as\_expr()}, while the public issue enters \texttt{\_parallel\_\allowbreak poly\_\allowbreak from\_\allowbreak expr()}.
+In Astropy, both enter the same column-conversion function, but only the public structured-array input takes its \texttt{NdarrayMixin} branch.
 These observations motivate selecting memory by the condition it contributes to the current repair; a shared function alone does not establish that connection.
 
-We compare historical requirements with concrete edit advice on three further development tasks, holding the three retrieved sources per task fixed.
-Both forms resolve Django 16819 and Django 12858, and fail Xarray 7229: two of three official successes per arm.
-On Django 16819, both repairs incorrectly cancel \texttt{RemoveIndex} followed by \texttt{AddIndex} whenever the name is unchanged.
-A SQLite diagnostic, motivated by the first agent's intermediate actions, exposes the lost effect: removing an index on \texttt{pink} and adding the same name on \texttt{weight} should change the indexed column.
-Both submitted repairs reduce this sequence to no operations, leaving \texttt{pink} indexed.
-The original version preserves the replacement; both repairs also preserve the add-then-remove and unchanged-definition comparison cases.
-
-The matched comparison on Xarray 7229 illustrates excessive preservation.
-Both agents repair the common coordinate-attribute reproduction and pass all 280 official pass-to-pass tests, but fail the official target test.
-The edit-advice repair retains the condition array's coordinate attributes when both value arguments to \texttt{where} are scalars; the requirements repair already does so when only the first is scalar.
-Neither memory form establishes the boundary between required preservation and required change in these repairs.
+\paragraph{Preservation must allow the required change.}
+A further three-task development comparison holds the retrieved sources fixed and supplies historical requirements or concrete edit advice.
+Both Django16819 repairs cancel a same-name \texttt{RemoveIndex}/\texttt{AddIndex} sequence, although changing its indexed column must take effect; a subsequent SQLite diagnostic exposes the lost replacement.
+Both Xarray7229 repairs instead preserve coordinate attributes in scalar \texttt{where} cases that require dropping them, failing official target verification.
+The useful boundary must specify both what remains valid and when the current operation requires change.
 
 That boundary can already be wrong in the historical memory.
 We generate source-only contracts with applicability, intended-change and preservation fields.
