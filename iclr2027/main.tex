@@ -10,14 +10,13 @@
 
 \begin{abstract}
 Past repairs record requirements that a new issue may leave unstated.
-We study a repair procedure that retrieves this experience before editing and uses it to complete the repair requirements.
-In complete-agent comparisons on three Django development tasks, repairs pass official verification with or without memory, but only the history-informed repairs satisfy additional historical requirements together with the current repair.
+We study how retrieving these requirements before editing changes a complete coding agent's repair.
+In paired comparisons on three Django development tasks, repairs pass official verification with or without memory, but only the history-informed repairs satisfy the historical requirement together with the current one.
 The added behavior preserves query parameters, removes redundant uniqueness, or honors an explicit destination timezone.
-A fresh four-way comparison on two known benefit cases holds the historical source fixed and supplies no memory, a behavioral requirement, an implementation reference, or both.
-The requirement alone suffices for the observed timezone repair.
-On the constraint task, one requirement-only agent changes the same-column trigger to constraints on different column sets and misses the historical behavior; a later fixed attempt with the identical input preserves that trigger and the behavior.
-Further development cases expose incorrect applicability and excessive preservation under both requirements and edit advice.
-The useful memory must supply the missing behavior and enough information to apply it under the right conditions; a plausible requirement sentence alone does not ensure that these conditions survive use.
+Content interventions show that a behavioral requirement can suffice without its historical implementation.
+They also expose loss of triggering conditions during use: the same requirement produces different repairs when agents reconstruct different inputs.
+Further executions identify incorrect applicability and excessive preservation.
+These findings motivate memory that communicates the missing behavior together with the conditions under which it is required.
 \end{abstract}
 
 \section{Introduction}
@@ -31,135 +30,95 @@ However, appending a slash to the resulting path still discards query parameters
 A different repair of the same API records this omitted behavior and replaces path concatenation with \texttt{request.get\_full\_path(force\_append\_slash=True)}.
 The useful information in this experience is the requirement to retain the query, which must hold together with the deployment-prefix requirement.
 
-This view leads to a direct repair procedure: supply the current issue and a relevant historical repair before generating code.
-We compare this procedure with supplying the same experience after an initial repair, and with an additional review using only the current issue.
-The comparison determines whether the corrective information requires a separate revision stage.
+We investigate three questions: what a historical repair adds to the current issue, what information suffices to communicate that addition, and how its conditions can be lost during use.
+The unit of analysis is a current and historical requirement exercised together on an actual repair.
 
 \section{Using history to complete the repair requirements}
 \label{sec:method}
 
 \paragraph{Supply the requirement during generation.}
-The repair writer receives the target issue and retrieved repair memory before editing.
-Memory is retrieved from the source partition using frozen BM25 rankings or cosine similarity with Qwen3-Embedding-8B \citep{qwen3embedding2025}.
-The historical record describes an additional behavior for the new repair to preserve.
-We use either the stored distilled rule or its original source issue and patch as the memory input.
-We also test a generated behavioral requirement sentence without the source implementation.
-We study two writers: a method generator supplied with the initial implementation, and a complete SWE-agent that browses the repository, edits code, runs tools, and submits a patch.
-The method generator returns one repaired method while preserving its public signature and decorator; the repository agent controls its own sequence of actions.
+A complete SWE-agent receives the target issue and retrieved memory before browsing the repository, editing code, running tools, and submitting a patch.
+Historical records contain source-partition issues and their reference patches.
+Frozen BM25 rankings or cosine similarity with Qwen3-Embedding-8B select the sources \citep{qwen3embedding2025}.
+We supply the stored rule, original issue and patch, or source-generated behavioral and implementation components.
+The complete-agent comparisons use DeepSeek V4 Pro0423 through OpenRouter, temperature 0, with the same tools and budget within each comparison.
 
 \paragraph{Measure the requirements together.}
-We immediately evaluate every generated patch with the official SWE-bench verifier \citep{swebench2024}.
+We immediately evaluate every submitted repair with the official SWE-bench verifier \citep{swebench2024}.
 To measure the behavior contributed by the source repair, a separate writer generates a short check from its patch and relevant repaired code.
 A normal execution changing from false on the buggy source to true on the repaired source demonstrates the historical behavior on the supplied inputs.
 We then execute this check unchanged on the patched target.
 An issue check measures the reported requirement, and a joint input exercises it together with the historical requirement.
 
-\section{Evidence: a historical requirement completes the repair}
+\section{History supplies a missing repair requirement}
 \label{sec:evidence}
-We use the training side of a SWE-bench Verified split with 280 source tasks, 70 development tasks, and a separate 150-task evaluation partition unused by these experiments.
-The development comparison pairs source Django 16612 with target Django 14404.
-The target issue asks for support of \texttt{FORCE\_SCRIPT\_NAME} in administrative redirects; the source records query preservation in the same method.
-
-\paragraph{History supplies information that ordinary review misses.}
-DeepSeek V4 Pro receives the issue and initial implementation, including the available request-path APIs.
-Its first repair of \texttt{AdminSite.catch\_all\_view()} fixes the prefix but discards query strings.
-Two independent revisions start from this candidate: issue-based review retains it, while the historical issue and patch lead to \texttt{get\_full\_path(force\_append\_slash=True)}, preserving both requirements.
-These method-generation calls share the model, temperature 0.7, and a 16,384-token output allowance.
-
-\paragraph{The information can be supplied during generation.}
-Adding the identical history to the initial prompt, without a candidate or diagnostic feedback, produces the same method AST as historical revision (Table~\ref{tab:residual}).
-It uses 4,482 provider-reported tokens versus 13,601 for the initial call and historical revision combined.
-On this case, supplying history initially reaches the same measured behavior without a separate revision stage.
+We use a SWE-bench Verified split with 280 source tasks, 70 development tasks, and a separate 150-task evaluation partition unused by these experiments.
+Table~\ref{tab:historicalrequirements} shows three development comparisons in which memory changes whether the repair meets a requirement absent from the current issue.
+Django14404 receives the first-ranked source issue and patch.
+Django12708 and Django11138 come from a fixed six-task cohort selected by high Qwen similarity; its memory arm receives three unchanged Flat rules per task.
+Both arms resolve all six cohort tasks under official verification.
+The two displayed cases distinguish additional historical behaviors, rather than increasing that official score.
 
 \begin{table}[t]
 \centering
-\caption{Django 14404 development comparison. Every row passes official verification: 2 fail-to-pass and 323 pass-to-pass tests. Calls include the initial generation when a revision is used.}
-\label{tab:residual}
-\begin{tabular}{lcccc}
+\caption{Joint current/historical behavior in complete-agent comparisons.
+Each displayed repair passes official verification. The columns compare the actual repairs with and without memory; the rows retain their distinct task requirements.}
+\label{tab:historicalrequirements}
+\begin{tabular}{llcc}
 \toprule
-Procedure & Calls & Prefix & Query & Joint \\
+Target & Historical addition & No memory & Memory \\
 \midrule
-Issue only & 1 & Pass & Fail & Fail \\
-Issue + ordinary review & 2 & Pass & Fail & Fail \\
-History in revision & 2 & Pass & Pass & Pass \\
-History in first call & 1 & Pass & Pass & Pass \\
+Django14404 & Preserve query string & Fail & Pass \\
+Django12708 & Delete redundant uniqueness & Fail & Pass \\
+Django11138 & Honor destination timezone & Fail & Pass \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\paragraph{Both requirements hold on a joint input.}
-An independently prepared check combines the deployment prefix with repeated query parameters and percent-encoded values:
-\texttt{keep=a\%2Fb}\allowbreak\texttt{\&keep=c\%20d}.
-The input is withheld from all writers and executed after their official verifications.
-The history-guided revision and the direct history generation preserve the exact prefix and query string; the initial and issue-reviewed candidates lose the query string.
+\paragraph{An omitted behavior of the same API.}
+Django14404 reports that administrative redirects lose a deployment prefix.
+Both agents fix the prefix and pass official verification, but only the repair informed by source16612 also preserves the query string.
+The ordinary agent's actual observations include the implementation that retains \texttt{QUERY\_STRING}; seeing an available implementation does not by itself make query preservation part of its repair.
+A joint input combines the prefix with repeated and percent-encoded query values, \texttt{keep=a\%2Fb}\allowbreak\texttt{\&keep=c\%20d}.
+Only the history-informed repair preserves both.
 
-\paragraph{A second application avoids a failed initial repair.}
-The public issue in Pytest 7236 concerns a skipped test method whose \texttt{tearDown()} still runs under \texttt{-{}-pdb}.
-Source 10081 records the corresponding class-level skip requirement.
-One call supplied with this history adapts the source helper to the target's existing \texttt{\_\_unittest\_skip\_\_} flags and checks both the method and its containing class.
-It passes official verification (1 fail-to-pass and 51 pass-to-pass tests), both skip checks, and a joint session that also checks a normal test's lifecycle.
-The earlier ordinary initial call fails; one issue-only diagnostic revision then repairs both skip conditions using the runtime skip state.
-Direct history reaches these measured behaviors in the first repair call, using 8,346 provider-reported tokens compared with 25,883 for that observed two-call sequence.
+\paragraph{A neighboring operation.}
+Django12708 reports ambiguous deletion of an ordinary index when a unique constraint uses the same columns.
+The first retrieved source, 15732, instead concerns deletion of a unique constraint sharing its column with a primary key.
+Both repairs fix ordinary-index selection; only the memory-informed repair also excludes primary keys when deleting unique constraints.
+The source-generated PostgreSQL check runs unchanged on both target repairs.
+A separate combined input creates an ordinary index, redundant uniqueness, and a primary key on the same column.
+Ordinary-index deletion already succeeds on this target-base input; both repairs retain it, but only the memory-informed repair also deletes redundant uniqueness while retaining the primary key and data.
+History supplies a requirement for the neighboring operation.
 
-\paragraph{The gap also occurs in a complete repository agent.}
-We run a fresh pair of SWE-agent attempts on Django 14404, supplying either no memory or the same first-ranked source issue and patch before the agent begins.
-These runs use DeepSeek V4 Pro0423 through OpenRouter, temperature 0, and a 32,768-token output allowance per call; the preceding method-generation comparisons use the 0813 snapshot.
-Both agents browse the repository, execute tests, and submit normally.
-Both pass all 2 fail-to-pass and 323 pass-to-pass tests, but only the history-informed repair preserves the query and passes the joint check.
-The ordinary agent's actual observations include both the existing redirect helper and the implementation that retains \texttt{QUERY\_STRING}, before it edits the method.
-With history, the agent preserves a behavior whose implementation was already visible to the ordinary agent.
+\paragraph{An independent argument of the same operation.}
+Django11138 requires date conversions to respect the database's source timezone.
+Source13363 requires \texttt{TruncDate} and \texttt{TruncTime} to honor an expression's explicit destination timezone.
+Both agents repair the source timezone, but only the memory-informed repair also honors the destination.
+A source-generated check distinguishes the historical versions and runs unchanged on the target repairs.
+On an independent SQLite input combining a UTC+1 database with an explicit New York destination, only the memory-informed repair returns the correct date and time.
+The issue and history constrain different ends of the conversion.
 
-\paragraph{The requirement survives distillation.}
-The existing first-ranked Flat rule explicitly describes query loss and supplies \texttt{get\_full\_path(force\_append\_slash=True)}.
-We run a second fixed pair of complete-agent attempts: one receives the unchanged three-entry Flat packet, while the other receives the same packet with only its first entry replaced by the original source issue and patch.
-The remaining entries and the delivery point are identical.
-Both repairs pass official verification and all three behavior checks, and their submitted patches are byte-identical.
-In this development comparison, either representation supplies enough information to preserve the current and historical requirements together.
+\paragraph{The addition can guide further repair.}
+Two fresh agents start from the same completed ordinary timezone patch.
+Issue-based additional review returns it unchanged; supplying a generated historical check and its failed observations leads the other agent to use \texttt{self.get\_tzname()} in both truncation methods.
+Both revisions pass official verification, but only the latter passes the historical and joint inputs.
+The intervention supplies corrective information that further issue-based review does not recover in this comparison.
 
-\paragraph{The requirement need not prescribe the implementation.}
-The distilled redirect rule includes the repair API, so we further compare two fresh agents starting from the same completed ordinary Django 14404 patch.
+\section{What information makes memory usable?}
+\label{sec:content}
+
+\paragraph{A requirement can suffice without the source implementation.}
+On the redirect task, replacing the first entry of the existing Flat packet with its original issue and patch yields a byte-identical repair; both forms preserve the joint behavior.
+A separate comparison starts two new agents from the completed ordinary patch.
 Both receive the source-generated sentence, ``The redirect location from AdminSite.catch\_all\_view includes the original query string.''
-One receives this sentence alone; the other also receives the unchanged generated check and its failed observations on the candidate.
-The agents submit byte-identical patches after 27 and 28 calls, respectively, and both pass official verification and all three behavior checks.
-The sentence-only agent locates \texttt{get\_full\_path()} in the current repository and uses it to repair the redirect.
-In this case, memory supplies the desired behavior while the agent finds its implementation; providing the executable feedback adds no observed behavior.
-
-\paragraph{A historical requirement can extend to a neighboring operation.}
-We run a fixed cohort of six development tasks selected for high Qwen retrieval similarity.
-The issue-only and Qwen Flat agents both resolve all six tasks under official verification.
-The following two cases identify additional historical behaviors that distinguish their repairs despite this identical official score.
-In Django 12708, the issue reports ambiguous deletion of an ordinary index when a unique constraint uses the same columns.
-The memory packet contains three unchanged Flat rules, with source 15732 ranked first.
-That source concerns deletion of a unique constraint sharing its column with a primary key.
-Both agents fix ordinary-index selection and pass official verification.
-The memory-informed agent also excludes primary keys when deleting unique constraints.
-A PostgreSQL check generated from source evidence covers redundant uniqueness beside a primary key or a field-level unique constraint.
-Both inputs distinguish the source versions; the unchanged check fails on the ordinary target repair and passes on the memory-informed repair, with original constraints retained.
-A combined input creates an ordinary index, redundant uniqueness, and a primary key on the same column.
-On this PostgreSQL input, ordinary-index deletion already succeeds on the target base.
-Both repairs retain that behavior, but only the memory-informed repair also deletes the redundant uniqueness, retaining the primary key and original data.
-The useful historical information here supplies an additional operation's requirement, beyond the operation singled out by the current failure.
-
-\paragraph{History can complete a different argument of the same operation.}
-Django 11138 asks date conversions to respect the database's configured source timezone.
-Source 13363 instead requires \texttt{TruncDate} and \texttt{TruncTime} to honor an expression's explicit destination timezone.
-Both complete-agent repairs pass official verification and correctly interpret a database configured as UTC+1.
-Only the Qwen Flat repair also honors the explicit destination.
-A check generated from source evidence distinguishes both source versions using a New York date aggregation and a Tokyo time aggregation; it runs unchanged on the target, failing on the ordinary repair and passing on the memory-informed repair.
-An independent SQLite input combines a UTC+1 database with an explicit New York destination.
-Only the memory-informed repair returns the correct date and time.
-The current issue and the retrieved history supply independent requirements for the two ends of the conversion.
-
-\paragraph{Executing the historical requirement can guide a further repair.}
-We start two fresh agents from the identical completed ordinary Django 11138 patch, with equal model, tools, and budget.
-One receives the issue and candidate for additional review; the other also receives the generated source check and its two failed observations, without the historical patch or the separate joint input.
-The ordinary review uses 47 calls and returns the original patch unchanged.
-The feedback-guided agent reproduces both failures, changes the two truncation methods to use \texttt{self.get\_tzname()}, and submits after 43 calls.
-Both final patches pass official verification (1 fail-to-pass and 73 pass-to-pass tests), but only the feedback-guided revision passes both historical checks and the joint timezone input.
-Thus, in this intervention on a known development omission, an executed historical requirement supplies corrective information that further issue-based review does not recover.
+One also receives the generated check and its failed observations.
+Both submit byte-identical repairs that pass official and joint checks.
+The sentence-only agent finds \texttt{get\_full\_path()} in the current repository: memory communicates the desired behavior while the agent locates its implementation.
+Executable feedback adds no observed behavior in this pair.
 
 \paragraph{Which information makes the requirement usable?}
-We select the two preceding benefit cases and run four fresh complete agents per task, fixing the single historical source and its delivery before editing.
+We select the constraint and timezone benefit cases and run four fresh complete agents per task, fixing the single historical source and its delivery before editing.
 Two source-only constructions separate a behavioral requirement from an implementation reference; the combined input concatenates them unchanged.
 The reference also conveys behavior, so the comparison concerns these actual inputs rather than disjoint information categories.
 All eight repairs pass official verification (Table~\ref{tab:memorycontent}).
