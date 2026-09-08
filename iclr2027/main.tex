@@ -14,8 +14,8 @@ We study a repair procedure that retrieves this experience before editing and us
 In complete-agent comparisons on three Django development tasks, repairs pass official verification with or without memory, but only the history-informed repairs satisfy additional historical requirements together with the current repair.
 The added behavior preserves query parameters, removes redundant uniqueness, or honors an explicit destination timezone.
 A fresh four-way comparison on two known benefit cases holds the historical source fixed and supplies no memory, a behavioral requirement, an implementation reference, or both.
-The requirement alone suffices for the observed timezone repair; the constraint repair preserves the historical behavior only with an implementation reference.
-Its requirement-only agent attempts a historical test but changes the same-column trigger to constraints on different column sets.
+The requirement alone suffices for the observed timezone repair.
+On the constraint task, one requirement-only agent changes the same-column trigger to constraints on different column sets and misses the historical behavior; a later fixed attempt with the identical input preserves that trigger and the behavior.
 Further development cases expose incorrect applicability and excessive preservation under both requirements and edit advice.
 The useful memory must supply the missing behavior and enough information to apply it under the right conditions; a plausible requirement sentence alone does not ensure that these conditions survive use.
 \end{abstract}
@@ -191,6 +191,10 @@ The timezone repairs also differ on further conditions.
 Both still generates an unnecessary MySQL conversion between identical zones; Implementation instead misinterprets a named Paris source timezone, producing New York time \texttt{19:21} instead of \texttt{17:30} on a summer input.
 Requirement passes both additional diagnostics.
 These concrete omissions distinguish carrying a requirement, applying its triggering condition, and implementing the resulting behavior correctly.
+A subsequent fixed comparison starts two new agents from the original constraint-task base: the unchanged Requirement input, or that input plus a concrete example previously validated on the two historical source versions.
+The new Requirement agent reproduces the same-column conflict, observes two matching constraints, and adds generated-name disambiguation.
+Both submissions pass official verification and the independent joint check; adding the example yields no observed behavior gain in this pair.
+Thus the earlier failure does not establish that an implementation reference is necessary: the same requirement can yield different repairs depending on how its trigger is reconstructed.
 
 \section{Applicability is part of repair memory}
 We compare historical requirements with concrete edit advice on three further development tasks, holding the three retrieved sources per task fixed.
