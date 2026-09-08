@@ -22,6 +22,14 @@ both forms produce the same semantic regression: replacing a
 same-name index with different columns is incorrectly optimized away, despite
 official success. The draft now includes this concrete limit of the procedure.
 
+The completed two-task, four-input content study adds eight fresh agents. All
+eight officially resolve their tasks. Requirement text preserves the historical
+timezone behavior, but its constraint-task agent loses the same-column trigger
+in its own test. Implementation and Both preserve that constraint behavior.
+Additional timezone conditions distinguish further omissions among the repairs;
+the draft includes the complete condition table. The subsequent source-example
+intervention is running and has no result claimed in this draft.
+
 Implementation and evidence in the parent repository:
 
 - `scripts/analysis/run_direct_history_pilot_v1.py`
@@ -34,6 +42,7 @@ Implementation and evidence in the parent repository:
 - `docs/reports/index-reduction-semantics-20260908.md`
 - `docs/reports/requirement-transfer-three-20260908.md`
 - `docs/reports/memory-first-research-20260908.md`
+- `docs/reports/memory-information-two-20260908.md`
 
 Build:
 

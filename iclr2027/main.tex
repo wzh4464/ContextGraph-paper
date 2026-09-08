@@ -10,14 +10,14 @@
 
 \begin{abstract}
 Past repairs record requirements that a new issue may leave unstated.
-We study a simple repair procedure: retrieve this experience before editing and use it to complete the repair requirements.
-In three Django development tasks, complete repository agents produce repairs that pass official verification with or without memory, but only the history-informed repairs satisfy additional historical requirements.
-The added behavior preserves query parameters, removes redundant uniqueness, or honors an explicit destination timezone alongside the reported repair.
-Independent checks that distinguish buggy and repaired source versions expose these additional behaviors on the target repairs.
-On the redirect task, a generated requirement sentence alone guides a complete agent to the same repair as the sentence accompanied by an executable check and failed observations.
-Method-generation comparisons in Django and pytest further show that supplying history in the first call can reach behaviors that the observed ordinary sequences obtain only after revision, or leave unsatisfied.
-These cases show how repair memory can improve behavioral completeness beyond the requirements measured by the current task's official tests.
-A further three-task comparison resolves the same two tasks with either historical requirements or edit advice; both forms also produce an officially passing repair with the same database-semantic error.
+We study a repair procedure that retrieves this experience before editing and uses it to complete the repair requirements.
+In complete-agent comparisons on three Django development tasks, repairs pass official verification with or without memory, but only the history-informed repairs satisfy additional historical requirements together with the current repair.
+The added behavior preserves query parameters, removes redundant uniqueness, or honors an explicit destination timezone.
+A fresh four-way comparison on two known benefit cases holds the historical source fixed and supplies no memory, a behavioral requirement, an implementation reference, or both.
+The requirement alone suffices for the observed timezone repair; the constraint repair preserves the historical behavior only with an implementation reference.
+Its requirement-only agent attempts a historical test but changes the same-column trigger to constraints on different column sets.
+Further development cases expose incorrect applicability and excessive preservation under both requirements and edit advice.
+The useful memory must supply the missing behavior and enough information to apply it under the right conditions; a plausible requirement sentence alone does not ensure that these conditions survive use.
 \end{abstract}
 
 \section{Introduction}
@@ -157,6 +157,40 @@ The ordinary review uses 47 calls and returns the original patch unchanged.
 The feedback-guided agent reproduces both failures, changes the two truncation methods to use \texttt{self.get\_tzname()}, and submits after 43 calls.
 Both final patches pass official verification (1 fail-to-pass and 73 pass-to-pass tests), but only the feedback-guided revision passes both historical checks and the joint timezone input.
 Thus, in this intervention on a known development omission, an executed historical requirement supplies corrective information that further issue-based review does not recover.
+
+\paragraph{Which information makes the requirement usable?}
+We select the two preceding benefit cases and run four fresh complete agents per task, fixing the single historical source and its delivery before editing.
+Two source-only constructions separate a behavioral requirement from an implementation reference; the combined input concatenates them unchanged.
+The reference also conveys behavior, so the comparison concerns these actual inputs rather than disjoint information categories.
+All eight repairs pass official verification (Table~\ref{tab:memorycontent}).
+On Django12708, only Implementation and Both also remove redundant uniqueness while preserving the primary key.
+The Requirement agent tests a field with \texttt{unique=True}, but places \texttt{unique\_together} on a different, two-column set.
+This nearby passing test loses the same-column condition stated in memory.
+On Django11138, all three memory inputs preserve the explicit destination timezone, while the fresh no-memory repair omits it.
+The Requirement agent finds \texttt{self.get\_tzname()} in the target implementation without being given that helper in memory.
+
+\begin{table}[t]
+\centering
+\caption{One fresh complete-agent attempt per input and known development task.
+All eight pass official verification. The two joint columns measure the original current/historical combinations.
+The MySQL SQL-generation and named-zone ORM cases are additional conditions specified after inspecting completed timezone repairs and then executed on every timezone submission.}
+\label{tab:memorycontent}
+\begin{tabular}{lcccc}
+\toprule
+Memory input & Constraint joint & Timezone joint & MySQL cases & Named-zone cases \\
+\midrule
+None & Fail & Fail & Pass & Fail \\
+Requirement & Fail & Pass & Pass & Pass \\
+Implementation & Pass & Pass & Pass & Fail \\
+Both & Pass & Pass & Fail & Pass \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The timezone repairs also differ on further conditions.
+Both still generates an unnecessary MySQL conversion between identical zones; Implementation instead misinterprets a named Paris source timezone, producing New York time \texttt{19:21} instead of \texttt{17:30} on a summer input.
+Requirement passes both additional diagnostics.
+These concrete omissions distinguish carrying a requirement, applying its triggering condition, and implementing the resulting behavior correctly.
 
 \section{Applicability is part of repair memory}
 We compare historical requirements with concrete edit advice on three further development tasks, holding the three retrieved sources per task fixed.
