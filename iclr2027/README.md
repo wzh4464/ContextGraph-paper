@@ -9,6 +9,11 @@ pass official verification. Content comparisons examine which information
 communicates the required behavior and when its triggering condition is lost.
 Execution feedback can make a failed condition concrete; applicability and
 combined inputs determine what the resulting repair actually achieves.
+The Django12663 content matrix in `figures/memory_content_scope.pdf` shows how
+feedback can recover named tuples while breaking ordinary sequence subclasses.
+Its parent-repository generator, `scripts/analysis/plot_memory_content_scope_v1.py`,
+reads the closed prediction, official verification and raw behavior receipts;
+`figures/memory_content_scope.json` records the plotted observations and inputs.
 
 The experiments in this draft use the Verified source280/dev70 development
 track. The separate formal150 partition remains unused. Current graph retrieval

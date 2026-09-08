@@ -172,12 +172,20 @@ The useful feedback identifies which stated condition the candidate still fails 
 \paragraph{Recovering an example can overgeneralize its rule.}
 On Django12663, both a three-source packet selected through code connections and a ten-source similarity packet contain source13590, yet neither repair recovers its named-tuple range behavior.
 Three subsequent fresh revisions hold that source and the initial candidate fixed.
-The original issue and patch, or the requirement plus its executable failures, each restore both historical cases and the withheld named-tuple/lazy-User combination; the requirement sentence alone does not.
-All three repairs pass official verification.
-A subsequent review with the same budget and an empty reference returns the initial candidate unchanged: it passes official verification but still fails both historical cases and the named-tuple combination.
-However, additional inputs chosen after inspecting the feedback repair expose its overgeneralization: it expands every non-builtin sequence into positional constructor arguments, breaking ordinary tuple and list subclasses.
-Both subclasses work on the original-history repair, sentence-only repair, shared initial candidate and unmodified target.
-The source example identifies a missing behavior, but recovering that example does not establish the boundary of the implementation rule.
+Figure~\ref{fig:memory-content-scope} separates official success from recovery of the historical requirement and preservation of related inputs.
+Original history and execution feedback recover the named-tuple behavior, including its withheld combination with a lazy User; the requirement sentence alone does not.
+A subsequent review with the same budget and an empty reference returns the initial candidate unchanged and still fails these behaviors.
+The feedback repair, however, expands every non-builtin sequence into positional constructor arguments.
+This recovers named tuples but breaks ordinary tuple and list subclasses, which still work on the original-history repair, shared initial candidate and unmodified target.
+The missing distinction is the constructor's calling convention: accepting a named tuple does not justify expanding every sequence subclass.
+Useful repair memory must retain the condition under which its example supports the implementation rule.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/memory_content_scope.pdf}
+\caption{Memory content changes which behaviors a repair preserves. One revision per input starts from the same Django12663 candidate and source13590. Parentheses give case counts; each cell reports all cases in its group. The ordinary-subclass inputs were chosen after inspecting the feedback repair. All three repairs pass official verification, while only original history passes every displayed behavior.}
+\label{fig:memory-content-scope}
+\end{figure}
 
 \paragraph{Relevant history need not add a missing requirement.}
 A further fixed cohort takes the first four distinct repositories in the development ranking after recorded local-path exclusions, without filtering again for expected memory benefit.
