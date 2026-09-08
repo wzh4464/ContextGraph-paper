@@ -222,6 +222,21 @@ the previously diagnosed constructor boundary without another writer or solver
 call. A source-valid neighbor can be too weak; varying the input's type relation
 exposes a preservation condition that ordinary values miss.
 
+\paragraph{Compose requirements beyond the corrected source examples.}
+A fixed timezone adapter extracts three zone values from the historical witness,
+varies their database, ambient and destination roles, and adds a 182-day input shift.
+Across 72 combinations, the historical repair improves 20, preserves 20, and
+leaves 32 incorrect; every operation executes normally.
+We apply the unchanged family to all four earlier timezone content-comparison
+repairs. Requirement, Implementation and Both each pass the 40 combinations
+supported by the repaired source. Yet Implementation fails all 32 remaining
+combinations, including 16 that the no-memory repair passes; Requirement and
+Both pass all 72.
+This known-case construction exposes a limit of selecting conditions solely by
+success on the repaired source. Completing the current repair requires combining
+source-timezone interpretation with the historical destination requirement,
+including configurations that neither historical version handles correctly.
+
 \paragraph{Relevant history need not add a missing requirement.}
 In a fixed four-repository development cohort, sixteen original-base attempts compare no memory, Requirement, Implementation, and Both using the same top-ranked source per task.
 The first two inputs each resolve four of four tasks; the latter two each resolve three, omitting Xarray4687's public \texttt{keep\_attrs} argument.
@@ -260,6 +275,7 @@ ExpeRepair uses historical test demonstrations and reflective insights to genera
 MIRA separates SQL corrections into reusable requirements and uses database checks to guide their activation and adaptation \citep{mira2026}.
 BUGSTONE-E2E extracts scan anchors and vulnerability conditions from fixing commits, then applies semantic and runtime checks to matching target sites \citep{bugstone2026}.
 TRACE compiles user corrections into atomic rules and runtime checks for later coding-agent tasks \citep{trace2026}.
+TDAD uses code--test dependencies to select existing checks \citep{tdad2026}; Agent-CoEvo jointly evolves code and behavioral tests within an issue \citep{agentcoevo2026}.
 \citet{coupled2026} combine task-derived dependency graphs and structured execution feedback for coupled code synthesis; their ablation separates feedback from the graph contribution.
 These methods establish historical examples, requirements and executable checks as tools for agent learning.
 Our content and refinement interventions isolate how an agent can receive the relevant requirement yet lose one of its conditions when implementing it.
