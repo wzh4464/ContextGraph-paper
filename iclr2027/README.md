@@ -15,6 +15,11 @@ Complete-agent comparisons additionally examine query preservation, redundant
 uniqueness, and source/destination timezone requirements. A further redirect
 comparison finds that one generated requirement sentence elicits the same patch
 as the sentence plus its executable check and failed observations.
+The six-task Qwen cohort has identical official success in both arms; two cases
+show added historical behavior. A newer matched-representation pair on Django
+16819 instead produces the same semantic regression in both arms: replacing a
+same-name index with different columns is incorrectly optimized away, despite
+official success. The draft now includes this concrete limit of the procedure.
 
 Implementation and evidence in the parent repository:
 
@@ -25,6 +30,7 @@ Implementation and evidence in the parent repository:
 - `docs/reports/direct-history-pytest-v1.md`
 - `docs/reports/qwen-close-history-pairs-launch-20260908.md`
 - `docs/reports/requirement-representation-redirect-20260908.md`
+- `docs/reports/index-reduction-semantics-20260908.md`
 
 Build:
 
