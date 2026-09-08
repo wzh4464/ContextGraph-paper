@@ -17,7 +17,7 @@ Independent checks that distinguish buggy and repaired source versions expose th
 On the redirect task, a generated requirement sentence alone guides a complete agent to the same repair as the sentence accompanied by an executable check and failed observations.
 Method-generation comparisons in Django and pytest further show that supplying history in the first call can reach behaviors that the observed ordinary sequences obtain only after revision, or leave unsatisfied.
 These cases show how repair memory can improve behavioral completeness beyond the requirements measured by the current task's official tests.
-A further pair comparing historical requirements with edit advice produces two officially passing repairs that introduce the same database-semantic error; changing the representation alone does not ensure behavioral completeness.
+A further three-task comparison resolves the same two tasks with either historical requirements or edit advice; both forms also produce an officially passing repair with the same database-semantic error.
 \end{abstract}
 
 \section{Introduction}
@@ -167,8 +167,9 @@ Both final patches pass official verification (1 fail-to-pass and 73 pass-to-pas
 Thus, in this intervention on a known development omission, an executed historical requirement supplies corrective information that further issue-based review does not recover.
 
 \section{Applicability is part of repair memory}
-On development task Django 16819, two further complete agents receive the same three Qwen-retrieved repairs as either behavioral requirements or concrete edit advice.
-Both pass official verification, but both incorrectly cancel \texttt{RemoveIndex} followed by \texttt{AddIndex} whenever the name is unchanged.
+We compare historical requirements with concrete edit advice on three further development tasks, holding the three retrieved sources per task fixed.
+Both forms resolve Django 16819 and Django 12858, and fail Xarray 7229: two of three official successes per arm.
+On Django 16819, both repairs incorrectly cancel \texttt{RemoveIndex} followed by \texttt{AddIndex} whenever the name is unchanged.
 A SQLite diagnostic, motivated by the first agent's intermediate actions, exposes the lost effect: removing an index on \texttt{pink} and adding the same name on \texttt{weight} should change the indexed column.
 Both submitted repairs reduce this sequence to no operations, leaving \texttt{pink} indexed.
 The original version preserves the replacement; both repairs also preserve the add-then-remove and unchanged-definition comparison cases.
@@ -191,6 +192,7 @@ ExpeL distills reusable insights from experience, and Getafix learns applicable 
 ExpeRepair uses historical test demonstrations and reflective insights to generate reproduction and boundary tests \citep{experepair2026}.
 STAIR abstracts trajectories into hierarchical plans supplied before repair, including guidance that completes partial fixes \citep{stair2026}.
 MIRA separates SQL corrections into reusable requirements and uses database checks to guide their activation and adaptation \citep{mira2026}.
+TRACE compiles user corrections into atomic rules and runtime checks for later coding-agent tasks \citep{trace2026}.
 MR-Coupler derives tests from relationships between methods and validates candidate relations through amplification and mutation analysis \citep{mrcoupler2026}.
 \citet{laterequirements2026} study late requirement disclosure in coding-agent sessions and controlled tasks.
 Our development comparison examines when a retrieved historical requirement helps preserve current and historical behaviors together, including behavior absent from the official target tests.

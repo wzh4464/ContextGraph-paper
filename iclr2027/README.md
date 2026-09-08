@@ -16,8 +16,9 @@ uniqueness, and source/destination timezone requirements. A further redirect
 comparison finds that one generated requirement sentence elicits the same patch
 as the sentence plus its executable check and failed observations.
 The six-task Qwen cohort has identical official success in both arms; two cases
-show added historical behavior. A newer matched-representation pair on Django
-16819 instead produces the same semantic regression in both arms: replacing a
+show added historical behavior. A newer three-task matched-representation study
+resolves the same two tasks with requirements or edit advice. On Django 16819,
+both forms produce the same semantic regression: replacing a
 same-name index with different columns is incorrectly optimized away, despite
 official success. The draft now includes this concrete limit of the procedure.
 
@@ -31,6 +32,8 @@ Implementation and evidence in the parent repository:
 - `docs/reports/qwen-close-history-pairs-launch-20260908.md`
 - `docs/reports/requirement-representation-redirect-20260908.md`
 - `docs/reports/index-reduction-semantics-20260908.md`
+- `docs/reports/requirement-transfer-three-20260908.md`
+- `docs/reports/memory-first-research-20260908.md`
 
 Build:
 
