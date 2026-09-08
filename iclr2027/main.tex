@@ -166,22 +166,25 @@ The feedback-guided agent reproduces both failures, changes the two truncation m
 Both final patches pass official verification (1 fail-to-pass and 73 pass-to-pass tests), but only the feedback-guided revision passes both historical checks and the joint timezone input.
 Thus, in this intervention on a known development omission, an executed historical requirement supplies corrective information that further issue-based review does not recover.
 
-\section{What the memory representations leave unresolved}
-We compare two further complete agents on development task Django 16819, which requests reduction of \texttt{AddIndex}/\texttt{RemoveIndex} migration operations.
-Both receive the same three Qwen-retrieved source repairs, represented either as behavioral requirements or as concrete edit advice generated from the same historical issues and patches.
-Both submit normally and pass the official target test and all 38 pass-to-pass tests.
-Both also cancel the reverse sequence, \texttt{RemoveIndex} followed by \texttt{AddIndex}, whenever the index name is unchanged.
+\section{Applicability is part of repair memory}
+On development task Django 16819, two further complete agents receive the same three Qwen-retrieved repairs as either behavioral requirements or concrete edit advice.
+Both pass official verification, but both incorrectly cancel \texttt{RemoveIndex} followed by \texttt{AddIndex} whenever the name is unchanged.
+A SQLite diagnostic, motivated by the first agent's intermediate actions, exposes the lost effect: removing an index on \texttt{pink} and adding the same name on \texttt{weight} should change the indexed column.
+Both submitted repairs reduce this sequence to no operations, leaving \texttt{pink} indexed.
+The original version preserves the replacement; both repairs also preserve the add-then-remove and unchanged-definition comparison cases.
 
-This cancellation is invalid when the replacement index uses different columns.
-After both official verifications, we execute each literal submitted patch in isolated SQLite databases and compare the original migration sequence with its optimized sequence.
-Starting with an index on \texttt{pink}, removing it and adding the same name on \texttt{weight} correctly changes the indexed column when executed directly.
-Both repairs optimize this sequence to no operations, leaving \texttt{pink} indexed.
-The original target version preserves the replacement, and both repairs preserve the two comparison cases: add-then-remove, and remove-then-add with an unchanged definition.
-We designed this development check after observing the cancellation assumption in the first agent's intermediate actions.
+The matched comparison on Xarray 7229 illustrates excessive preservation.
+Both agents repair the common coordinate-attribute reproduction and pass all 280 official pass-to-pass tests, but fail the official target test.
+The edit-advice repair retains the condition array's coordinate attributes when both value arguments to \texttt{where} are scalars; the requirements repair already does so when only the first is scalar.
+Neither memory form establishes the boundary between required preservation and required change in these repairs.
 
-The desired reduction is conditional on the sequence's initial state and final effect.
-A requirement statement and an edit prescription both leave this condition unresolved in the observed repairs.
-This pair shows why the representation comparison must assess the behavior produced by the agent, beyond whether the memory text states a desirable outcome.
+That boundary can already be wrong in the historical memory.
+We generate source-only contracts with applicability, intended-change and preservation fields.
+For Xarray 4094, the contract claims a stack/unstack roundtrip preserves sample coordinates when variables have only sample dimensions.
+The literal official source patch restores the reported three-element dataset, but a manually chosen one-element input loses the sample dimension and coordinate.
+The original source raises a merge error on both inputs.
+The singleton satisfies the generated condition, so this package is rejected before target use.
+Explicit contract fields alone do not establish the scope supported by the repaired source.
 
 \section{Related work}
 ExpeL distills reusable insights from experience, and Getafix learns applicable edit patterns from human repairs \citep{expel2024,getafix2019}.
