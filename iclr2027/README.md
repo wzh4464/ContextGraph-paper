@@ -11,6 +11,11 @@ of two. A second pytest case uses the same upfront-history procedure to repair
 both skip levels in one call; the observed ordinary sequence needed a diagnostic
 revision. These development comparisons motivate the simpler procedure in the paper.
 
+Complete-agent comparisons additionally examine query preservation, redundant
+uniqueness, and source/destination timezone requirements. A further redirect
+comparison finds that one generated requirement sentence elicits the same patch
+as the sentence plus its executable check and failed observations.
+
 Implementation and evidence in the parent repository:
 
 - `scripts/analysis/run_direct_history_pilot_v1.py`
@@ -18,6 +23,8 @@ Implementation and evidence in the parent repository:
 - `results/verified_train_test_v1/direct-history-v1/evidence.json`
 - `docs/reports/repair-residual-v1.md`
 - `docs/reports/direct-history-pytest-v1.md`
+- `docs/reports/qwen-close-history-pairs-launch-20260908.md`
+- `docs/reports/requirement-representation-redirect-20260908.md`
 
 Build:
 

@@ -14,7 +14,7 @@ We study a simple repair procedure: retrieve this experience before editing and 
 In three Django development tasks, complete repository agents produce repairs that pass official verification with or without memory, but only the history-informed repairs satisfy additional historical requirements.
 The added behavior preserves query parameters, removes redundant uniqueness, or honors an explicit destination timezone alongside the reported repair.
 Independent checks that distinguish buggy and repaired source versions expose these additional behaviors on the target repairs.
-In a paired refinement of the timezone repair, supplying a generated historical check and its failed observations repairs the omission that ordinary additional review leaves intact.
+On the redirect task, a generated requirement sentence alone guides a complete agent to the same repair as the sentence accompanied by an executable check and failed observations.
 Method-generation comparisons in Django and pytest further show that supplying history in the first call can reach behaviors that the observed ordinary sequences obtain only after revision, or leave unsatisfied.
 These cases show how repair memory can improve behavioral completeness beyond the requirements measured by the current task's official tests.
 \end{abstract}
@@ -42,6 +42,7 @@ The repair writer receives the target issue and retrieved repair memory before e
 Memory is retrieved from the source partition using frozen BM25 rankings or cosine similarity with Qwen3-Embedding-8B \citep{qwen3embedding2025}.
 The historical record describes an additional behavior for the new repair to preserve.
 We use either the stored distilled rule or its original source issue and patch as the memory input.
+We also test a generated behavioral requirement sentence without the source implementation.
 We study two writers: a method generator supplied with the initial implementation, and a complete SWE-agent that browses the repository, edits code, runs tools, and submits a patch.
 The method generator returns one repaired method while preserving its public signature and decorator; the repository agent controls its own sequence of actions.
 
@@ -51,11 +52,6 @@ To measure the behavior contributed by the source repair, a separate writer gene
 A normal execution changing from false on the buggy source to true on the repaired source demonstrates the historical behavior on the supplied inputs.
 We then execute this check unchanged on the patched target.
 An issue check measures the reported requirement, and a joint input exercises it together with the historical requirement.
-
-\paragraph{Use an executed requirement as repair feedback.}
-For a candidate that fails a transported check, we also study supplying the generated program and its actual observations to a fresh repository agent.
-The agent inspects and revises the candidate against the current issue.
-This variant makes the historical requirement available through executable evidence; the separate joint input measures whether the revision retains both requirements.
 
 \section{Evidence: a historical requirement completes the repair}
 \label{sec:evidence}
@@ -126,6 +122,14 @@ We run a second fixed pair of complete-agent attempts: one receives the unchange
 The remaining entries and the delivery point are identical.
 Both repairs pass official verification and all three behavior checks, and their submitted patches are byte-identical.
 In this development comparison, either representation supplies enough information to preserve the current and historical requirements together.
+
+\paragraph{The requirement need not prescribe the implementation.}
+The distilled redirect rule includes the repair API, so we further compare two fresh agents starting from the same completed ordinary Django 14404 patch.
+Both receive the source-generated sentence, ``The redirect location from AdminSite.catch\_all\_view includes the original query string.''
+One receives this sentence alone; the other also receives the unchanged generated check and its failed observations on the candidate.
+The agents submit byte-identical patches after 27 and 28 calls, respectively, and both pass official verification and all three behavior checks.
+The sentence-only agent locates \texttt{get\_full\_path()} in the current repository and uses it to repair the redirect.
+In this case, memory supplies the desired behavior while the agent finds its implementation; providing the executable feedback adds no observed behavior.
 
 \paragraph{A historical requirement can extend to a neighboring operation.}
 In a further complete-agent pair on Django 12708, the issue reports ambiguous deletion of an ordinary index when a unique constraint uses the same columns.
