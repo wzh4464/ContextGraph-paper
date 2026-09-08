@@ -197,8 +197,30 @@ One history revision restores the standalone historical cases, yet fails their
 lazy-User combination: it reconstructs the named tuple correctly in
 \texttt{resolve\_lookup\_value}, then loses its calling convention at the next
 reconstruction in \texttt{build\_filter}.
-The condition must become a checked operation and hold across that operation's
-successive transformations; stating its scope does not accomplish either step.
+Four subsequent revisions fix that scoped content and compare ordinary review
+with an explicit instruction to instantiate and execute relevant historical
+conditions, twice each.
+All four pass official verification and all seven behavior checks.
+Both ordinary-review attempts now construct the named-tuple input; the second
+also discovers and corrects an ordinary-subclass regression through execution.
+The added instruction yields no observed behavioral gain in this comparison.
+Together, these trajectories locate the useful distinction in reconstructing
+the condition and preserving it across successive transformations, rather than
+in the presence of a scope field or an execution instruction alone.
+
+\paragraph{Construct a boundary that separates the repairs.}
+On this known range-query case, a source-only writer reuses the executed query
+and row observer, generating a named-tuple trigger and an ordinary-tuple neighbor.
+The trigger distinguishes the historical source versions, and the neighbor
+passes on both. Yet that neighbor passes on all five previously measured target
+versions, including the overgeneralized feedback repair.
+We extend the generated input with a subclass that inherits its container's
+behavior without overriding any method, keeping the same bounds.
+Both historical source versions return the expected rows for this derived input.
+On the five target versions, it fails only on the feedback repair, recovering
+the previously diagnosed constructor boundary without another writer or solver
+call. A source-valid neighbor can be too weak; varying the input's type relation
+exposes a preservation condition that ordinary values miss.
 
 \paragraph{Relevant history need not add a missing requirement.}
 In a fixed four-repository development cohort, sixteen original-base attempts compare no memory, Requirement, Implementation, and Both using the same top-ranked source per task.
