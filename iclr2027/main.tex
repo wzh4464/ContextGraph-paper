@@ -54,7 +54,8 @@ An issue check measures the reported requirement, and a joint input exercises it
 
 \paragraph{Return a failed condition for refinement.}
 When a source-validated check executes normally and fails on a candidate, the memory interface can return its unchanged program and actual failed observations for a further repair.
-Passing sampled conditions produce no failure feedback; an execution error produces no behavioral judgment.
+The observer judges failures of the checked operation against the stated requirement.
+Passing conditions produce no failure feedback; failures in fixture preparation or observation remain unassessed.
 We compare this revision with reviewing the same requirement again.
 
 \section{History supplies a missing repair requirement}
