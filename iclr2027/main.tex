@@ -60,24 +60,16 @@ We use the training side of a SWE-bench Verified split with 280 source tasks, 70
 The development comparison pairs source Django 16612 with target Django 14404.
 The target issue asks for support of \texttt{FORCE\_SCRIPT\_NAME} in administrative redirects; the source records query preservation in the same method.
 
-\paragraph{An ordinary repair omits the query.}
-DeepSeek V4 Pro generates one initial repair from the issue and relevant initial code, including the available request-path APIs.
-The writer may replace \texttt{AdminSite.catch\_all\_view()} while preserving its signature and decorator.
-Its repair keeps URL resolution based on \texttt{path\_info} and constructs the redirect from \texttt{request.path}.
-Official verification passes, and the issue check confirms that the deployment prefix is retained.
-The source check executes normally on this candidate and observes that both query strings are discarded.
+\paragraph{History supplies information that ordinary review misses.}
+DeepSeek V4 Pro receives the issue and initial implementation, including the available request-path APIs.
+Its first repair of \texttt{AdminSite.catch\_all\_view()} fixes the prefix but discards query strings.
+Two independent revisions start from this candidate: issue-based review retains it, while the historical issue and patch lead to \texttt{get\_full\_path(force\_append\_slash=True)}, preserving both requirements.
+These method-generation calls share the model, temperature 0.7, and a 16,384-token output allowance.
 
-\paragraph{History supplies the corrective information.}
-Two independent revision calls start from this candidate and receive either the issue-based evidence alone or the historical issue and patch.
-The issue-based review retains the initial patch.
-The historical issue and patch lead to a replacement of path concatenation with \texttt{get\_full\_path(force\_append\_slash=True)}, preserving the prefix and query.
-These method-generation calls use the same model, temperature 0.7, and a 16,384-token output allowance.
-
-\paragraph{The information can be supplied in the first call.}
-We then append the identical historical issue and patch to the original initial-generation prompt, without supplying a candidate or diagnostic feedback.
-This one-call procedure produces a method with the same AST as the history-guided revision and passes the same checks (Table~\ref{tab:residual}).
-The observed generation uses 4,482 provider-reported tokens, compared with 13,601 for the original initial call and historical-patch revision combined.
-For this development case, the additional revision stage contributes no behavioral improvement over supplying history initially.
+\paragraph{The information can be supplied during generation.}
+Adding the identical history to the initial prompt, without a candidate or diagnostic feedback, produces the same method AST as historical revision (Table~\ref{tab:residual}).
+It uses 4,482 provider-reported tokens versus 13,601 for the initial call and historical revision combined.
+On this case, supplying history initially reaches the same measured behavior without a separate revision stage.
 
 \begin{table}[t]
 \centering
@@ -136,8 +128,8 @@ In this case, memory supplies the desired behavior while the agent finds its imp
 We run a fixed cohort of six development tasks selected for high Qwen retrieval similarity.
 The issue-only and Qwen Flat agents both resolve all six tasks under official verification.
 The following two cases identify additional historical behaviors that distinguish their repairs despite this identical official score.
-In a further complete-agent pair on Django 12708, the issue reports ambiguous deletion of an ordinary index when a unique constraint uses the same columns.
-Qwen retrieval supplies three unchanged Flat rules, with source 15732 ranked first, from a development cohort selected for high retrieval similarity.
+In Django 12708, the issue reports ambiguous deletion of an ordinary index when a unique constraint uses the same columns.
+The memory packet contains three unchanged Flat rules, with source 15732 ranked first.
 That source concerns deletion of a unique constraint sharing its column with a primary key.
 Both agents fix ordinary-index selection and pass official verification.
 The memory-informed agent also excludes primary keys when deleting unique constraints.
@@ -189,6 +181,7 @@ Explicit contract fields alone do not establish the scope supported by the repai
 
 \section{Related work}
 ExpeL distills reusable insights from experience, and Getafix learns applicable edit patterns from human repairs \citep{expel2024,getafix2019}.
+Memory Transfer Learning compares memory abstraction across coding domains and identifies procedural knowledge as a major source of transfer \citep{transfer2026}.
 ExpeRepair uses historical test demonstrations and reflective insights to generate reproduction and boundary tests \citep{experepair2026}.
 STAIR abstracts trajectories into hierarchical plans supplied before repair, including guidance that completes partial fixes \citep{stair2026}.
 MIRA separates SQL corrections into reusable requirements and uses database checks to guide their activation and adaptation \citep{mira2026}.
