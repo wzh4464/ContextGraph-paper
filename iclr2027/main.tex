@@ -23,6 +23,8 @@ These findings motivate memory that communicates the missing behavior together w
 The issue description tells a coding agent what is currently reported as broken.
 It need not enumerate every behavior a complete repair should preserve.
 A past repair can supply a requirement absent from the new issue, allowing memory to improve a repair that already passes the target's tests.
+The target's success score can then remain unchanged while the repair gains a required behavior.
+This motivates measuring memory's contribution at the level of the requirement it supplies.
 
 Consider an administrative redirect that must preserve a deployment prefix.
 Changing its destination from \texttt{request.path\_info} to \texttt{request.path} fixes that reported fault.
@@ -198,6 +200,8 @@ The singleton satisfies the generated condition, so this package is rejected bef
 Explicit contract fields alone do not establish the scope supported by the repaired source.
 
 \section{Related work}
+ExpGraph learns graph retrieval from task scores with and without a retrieved experience packet \citep{expgraph2026}.
+Our interventions measure source-specific behaviors that can differ while the official target score stays unchanged.
 ExpeL distills reusable insights from experience \citep{expel2024}.
 ExpeRepair uses historical test demonstrations and reflective insights to generate reproduction and boundary tests \citep{experepair2026}.
 MIRA separates SQL corrections into reusable requirements and uses database checks to guide their activation and adaptation \citep{mira2026}.

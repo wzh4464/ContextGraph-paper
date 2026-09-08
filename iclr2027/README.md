@@ -2,47 +2,27 @@
 
 Read [main.pdf](main.pdf) or edit [main.tex](main.tex).
 
-The paper studies history as a source of requirements missing from the current
-issue. On Django 14404, ordinary repairs pass official verification but discard
-query parameters. Supplying the same historical repair in the first call
-preserves the required deployment prefix and query together, producing the same
-method AST as a later history-guided revision with one generation call instead
-of two. A second pytest case uses the same upfront-history procedure to repair
-both skip levels in one call; the observed ordinary sequence needed a diagnostic
-revision. These development comparisons motivate the simpler procedure in the paper.
+The draft studies how history supplies requirements omitted from a current
+issue. Complete-agent interventions distinguish query preservation, redundant
+uniqueness and destination-timezone behavior even when both compared repairs
+pass official verification. Content comparisons examine which information
+communicates the required behavior and when its triggering condition is lost.
+Execution feedback can make a failed condition concrete; applicability and
+combined inputs determine what the resulting repair actually achieves.
 
-Complete-agent comparisons additionally examine query preservation, redundant
-uniqueness, and source/destination timezone requirements. A further redirect
-comparison finds that one generated requirement sentence elicits the same patch
-as the sentence plus its executable check and failed observations.
-The six-task Qwen cohort has identical official success in both arms; two cases
-show added historical behavior. A newer three-task matched-representation study
-resolves the same two tasks with requirements or edit advice. On Django 16819,
-both forms produce the same semantic regression: replacing a
-same-name index with different columns is incorrectly optimized away, despite
-official success. The draft now includes this concrete limit of the procedure.
+The experiments in this draft use the Verified source280/dev70 development
+track. The separate formal150 partition remains unused. Current graph retrieval
+and source-presentation development is tracked in the parent repository; its
+running outcomes are not included as completed results in the paper.
 
-The completed two-task, four-input content study adds eight fresh agents. All
-eight officially resolve their tasks. Requirement text preserves the historical
-timezone behavior, but its constraint-task agent loses the same-column trigger
-in its own test. Implementation and Both preserve that constraint behavior.
-Additional timezone conditions distinguish further omissions among the repairs;
-the draft includes the complete condition table. The subsequent source-example
-intervention is running and has no result claimed in this draft.
+Implementation and evidence:
 
-Implementation and evidence in the parent repository:
-
-- `scripts/analysis/run_direct_history_pilot_v1.py`
-- `docs/reports/direct-history-v1.md`
-- `results/verified_train_test_v1/direct-history-v1/evidence.json`
-- `docs/reports/repair-residual-v1.md`
-- `docs/reports/direct-history-pytest-v1.md`
-- `docs/reports/qwen-close-history-pairs-launch-20260908.md`
-- `docs/reports/requirement-representation-redirect-20260908.md`
-- `docs/reports/index-reduction-semantics-20260908.md`
-- `docs/reports/requirement-transfer-three-20260908.md`
 - `docs/reports/memory-first-research-20260908.md`
 - `docs/reports/memory-information-two-20260908.md`
+- `docs/reports/requirement-feedback-constraint-20260908.md`
+- `docs/reports/memory-content-four-20260908.md`
+- `docs/reports/memory-to-graph-design-20260908.md`
+- `docs/literature/2026-09-08/utility-rewards-and-missing-requirements.md`
 
 Build:
 
