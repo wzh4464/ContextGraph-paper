@@ -50,6 +50,11 @@ A normal execution changing from false on the buggy source to true on the repair
 We then execute this check unchanged on the patched target.
 An issue check measures the reported requirement, and a joint input exercises it together with the historical requirement.
 
+\paragraph{Return a failed condition for refinement.}
+When a source-validated check executes normally and fails on a candidate, the memory interface can return its unchanged program and actual failed observations for a further repair.
+Passing sampled conditions produce no failure feedback; an execution error produces no behavioral judgment.
+We compare this revision with reviewing the same requirement again.
+
 \section{History supplies a missing repair requirement}
 \label{sec:evidence}
 We use a SWE-bench Verified split with 280 source tasks, 70 development tasks, and a separate 150-task evaluation partition unused by these experiments.
@@ -150,10 +155,16 @@ The timezone repairs also differ on further conditions.
 Both still generates an unnecessary MySQL conversion between identical zones; Implementation instead misinterprets a named Paris source timezone, producing New York time \texttt{19:21} instead of \texttt{17:30} on a summer input.
 Requirement passes both additional diagnostics.
 These concrete omissions distinguish carrying a requirement, applying its triggering condition, and implementing the resulting behavior correctly.
-A subsequent fixed comparison starts two new agents from the original constraint-task base: the unchanged Requirement input, or that input plus a concrete example previously validated on the two historical source versions.
-The new Requirement agent reproduces the same-column conflict, observes two matching constraints, and adds generated-name disambiguation.
-Both submissions pass official verification and the independent joint check; adding the example yields no observed behavior gain in this pair.
+Two subsequent original-base agents receive the unchanged constraint Requirement, with or without a source-validated example; both pass official and joint checks.
 Thus the earlier failure does not establish that an implementation reference is necessary: the same requirement can yield different repairs depending on how its trigger is reconstructed.
+
+\paragraph{Execution feedback makes an omitted condition concrete.}
+Two fresh agents refine the same original failed Requirement candidate, both receiving its requirement again.
+One also receives the unchanged source-generated check and its actual failures for a field with a primary key or \texttt{unique=True}.
+Requirement-only review excludes the primary key but still fails the ordinary unique-field condition.
+Feedback adds generated-name disambiguation and passes both conditions.
+Both revisions pass official verification and the withheld joint sequence, so the added behavior is recovery of the supplied condition, not an independent joint gain.
+The useful feedback identifies which stated condition the candidate still fails to implement.
 
 \section{Applicability is part of repair memory}
 \paragraph{Relevant history need not add a missing requirement.}
@@ -187,16 +198,15 @@ The singleton satisfies the generated condition, so this package is rejected bef
 Explicit contract fields alone do not establish the scope supported by the repaired source.
 
 \section{Related work}
-ExpeL distills reusable insights from experience, and Getafix learns applicable edit patterns from human repairs \citep{expel2024,getafix2019}.
-Memory Transfer Learning compares memory abstraction across coding domains and identifies procedural knowledge as a major source of transfer \citep{transfer2026}.
+ExpeL distills reusable insights from experience \citep{expel2024}.
 ExpeRepair uses historical test demonstrations and reflective insights to generate reproduction and boundary tests \citep{experepair2026}.
-STAIR abstracts trajectories into hierarchical plans supplied before repair, including guidance that completes partial fixes \citep{stair2026}.
 MIRA separates SQL corrections into reusable requirements and uses database checks to guide their activation and adaptation \citep{mira2026}.
 TRACE compiles user corrections into atomic rules and runtime checks for later coding-agent tasks \citep{trace2026}.
-CICL packs context into cards with triggers and scope using estimated decision utility, while MOOSEDev represents constraints and supersession relations for structured project queries \citep{cicl2026,moosedev2026}.
+\citet{coupled2026} combine task-derived dependency graphs and structured execution feedback for coupled code synthesis; their ablation separates feedback from the graph contribution.
+These methods establish historical examples, requirements and executable checks as tools for agent learning.
+Our content and refinement interventions isolate how an agent can receive the relevant requirement yet lose one of its conditions when implementing it.
 Working-set interventions study how supplying required facts supports code generation and how written conventions can override working code \citep{workingset2026}.
 SWE-RPG supplies requirement and planning references for retrospective diagnosis of complete coding-agent trajectories \citep{swerpg2026}.
-\citet{laterequirements2026} study late requirement disclosure in coding-agent sessions and controlled tasks.
 Our development comparison examines when a retrieved historical requirement helps preserve current and historical behaviors together, including behavior absent from the official target tests.
 
 \section*{AI use statement}
