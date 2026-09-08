@@ -189,14 +189,18 @@ Useful repair memory must retain the condition under which its example supports 
 \end{figure}
 
 \paragraph{Relevant history need not add a missing requirement.}
-A further fixed cohort takes the first four distinct repositories in the development ranking after recorded local-path exclusions, without filtering again for expected memory benefit.
-Holding each top-ranked source fixed, sixteen original-base attempts compare no memory, Requirement, Implementation, and Both.
-The first two inputs each resolve four of four tasks; the latter two each resolve three.
-Both failures occur on Xarray4687: the repairs change internal attribute handling but omit the public \texttt{keep\_attrs} argument, which the official target test calls.
-The other inputs add that argument and pass.
-All four Django15499 repairs are byte-identical.
-Moreover, the unmodified Django15499 and Xarray4687 targets already pass the selected source examples for operation reduction and independent attribute mappings.
-Similarity retrieves related history, but these executions distinguish that relation from an unmet requirement.
+In a fixed four-repository development cohort, sixteen original-base attempts compare no memory, Requirement, Implementation, and Both using the same top-ranked source per task.
+The first two inputs each resolve four of four tasks; the latter two each resolve three, omitting Xarray4687's public \texttt{keep\_attrs} argument.
+The unmodified Django15499 and Xarray4687 targets already pass their selected source examples for operation reduction and independent attribute mappings.
+These memories concern behavior already satisfied on the observed inputs.
+
+\paragraph{Connect the historical condition to the current repair.}
+A historical behavior missing from the target also need not improve its repair.
+We select two further development cases whose source-validated examples fail on their target versions, then compare no memory, original history, and a requirement with its source examples.
+All six repairs pass official verification; neither memory input improves the measured historical behavior on Sympy21379 or Astropy13236.
+Execution tracing separates the conditions: the Sympy history exercises \texttt{PolyElement.as\_expr()}, while the public issue enters \texttt{\_parallel\_poly\_from\_expr()}.
+In Astropy, both enter \texttt{\_convert\_data\_to\_col()}, but only the public structured-array input takes its \texttt{NdarrayMixin} conversion branch.
+These observations motivate selecting memory by the condition it contributes to the current repair; a shared function alone does not establish that connection.
 
 We compare historical requirements with concrete edit advice on three further development tasks, holding the three retrieved sources per task fixed.
 Both forms resolve Django 16819 and Django 12858, and fail Xarray 7229: two of three official successes per arm.

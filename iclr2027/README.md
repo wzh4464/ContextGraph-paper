@@ -11,6 +11,9 @@ Execution feedback can make a failed condition concrete; applicability and
 combined inputs determine what the resulting repair actually achieves.
 The Django12663 content matrix in `figures/memory_content_scope.pdf` shows how
 feedback can recover named tuples while breaking ordinary sequence subclasses.
+Two further development cases show that a failing historical example can
+exercise a different function or branch from the current issue; neither memory
+input improved that historical behavior in the six complete-agent attempts.
 Its parent-repository generator, `scripts/analysis/plot_memory_content_scope_v1.py`,
 reads the closed prediction, official verification and raw behavior receipts;
 `figures/memory_content_scope.json` records the plotted observations and inputs.
@@ -27,6 +30,8 @@ Implementation and evidence:
 - `docs/reports/requirement-feedback-constraint-20260908.md`
 - `docs/reports/memory-content-four-20260908.md`
 - `docs/reports/memory-to-graph-design-20260908.md`
+- `data/verified_train_test_v1/source-requirement-agents-v1/final-assessment.json`
+- `data/verified_train_test_v1/source-requirement-gap-contact-v2/assessment.json`
 - `docs/literature/2026-09-08/utility-rewards-and-missing-requirements.md`
 
 Build:
