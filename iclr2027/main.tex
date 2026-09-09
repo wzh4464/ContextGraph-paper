@@ -38,6 +38,12 @@ The unit of analysis is a current and historical requirement exercised together 
 \section{Using history to complete the repair requirements}
 \label{sec:method}
 
+Memory's usefulness depends on the current repair.
+A historical condition can supply a missing requirement, already hold on the
+current workflow, or conflict with a change the issue requires.
+Our comparisons distinguish these cases by executing the current and historical
+requirements together on repairs produced with and without memory.
+
 \paragraph{Represent the condition and its evidence.}
 In the graph implementation, a memory links a historical requirement and its
 executable witness to the source repair and the functions reached during execution.
@@ -199,8 +205,6 @@ Useful repair memory must retain the condition under which its example supports 
 \end{figure}
 
 \paragraph{A written condition need not become an executed check.}
-The same supplied condition can lead to different repairs depending on the
-input an agent reconstructs.
 In six revisions comparing history, a requirement sentence, and that sentence
 with a manually source-validated trigger and boundary (twice each), all pass
 official verification but none passes all seven behavior checks.
@@ -210,9 +214,8 @@ One history repair handles standalone named tuples in
 the next reconstruction in \texttt{build\_filter}, failing the lazy-User combination.
 Four further revisions with the same scoped content all execute the trigger
 and pass every check, with or without an added execution instruction.
-One also finds and corrects an ordinary-subclass regression by execution.
 The mechanism to recover is the condition across successive transformations;
-adding a scope field or an instruction alone does not establish that recovery.
+the written condition can be lost when the agent reconstructs its input.
 Execution can also stop short of adoption.
 In a selected SQLite refinement pair, both agents receive the same candidate
 fixing qualified columns in CHECK expressions, together with a source-generated
@@ -223,27 +226,22 @@ agent changes identifier quoting; historical review returns the candidate unchan
 Both pass official verification, while only the feedback repair also completes
 CHECK migration followed by an explicit named-table integrity check on a
 reserved-name table.
-An additional pair supplies this same candidate and historical text, with a
-tool for executing the unchanged examples available to one agent.
-Both repairs pass official and joint verification.
-The tool-enabled agent calls both examples after adopting identifier quoting;
-the text-only agent reproduces and repairs the condition itself.
-Tool availability adds no observed behavior in this pair: its actual calls
-confirm a repair made before their results were available.
+In another pair using the same candidate and historical text, a tool for executing
+the examples adds no observed benefit: both repairs pass official and joint
+verification. Its calls occur after the tool-enabled agent adopts identifier
+quoting; the text-only agent reproduces and repairs the condition itself.
 
 \paragraph{Construct a boundary that separates the repairs.}
-On this known range-query case, a source-only writer reuses the executed query
-and row observer, generating a named-tuple trigger and an ordinary-tuple neighbor.
-The trigger distinguishes the historical source versions, and the neighbor
-passes on both. Yet that neighbor passes on all five previously measured target
-versions, including the overgeneralized feedback repair.
-We extend the generated input with a subclass that inherits its container's
-behavior without overriding any method, keeping the same bounds.
-Both historical source versions return the expected rows for this derived input.
-On the five target versions, it fails only on the feedback repair, recovering
-the previously diagnosed constructor boundary without another writer or solver
-call. A source-valid neighbor can be too weak; varying the input's type relation
-exposes a preservation condition that ordinary values miss.
+A source-only writer constructs a named-tuple trigger and an ordinary-tuple
+neighbor using the same executed query and row observer.
+The trigger distinguishes the historical versions, but the neighbor passes on
+both source versions and all five measured target versions, including the
+overgeneralized feedback repair.
+Replacing that neighbor with a subclass inheriting its container's behavior,
+while keeping the bounds unchanged, passes on both source versions and fails
+only on the feedback repair among the five targets.
+Varying the input's type relation exposes a preservation condition that ordinary
+values miss.
 
 \paragraph{Compose requirements beyond the corrected source examples.}
 A fixed timezone adapter extracts three zone values from the historical witness,
@@ -263,10 +261,9 @@ including configurations that neither historical version handles correctly.
 \paragraph{Reconstruct the missing combination.}
 In a further construction study on the known range-query case, a writer receives
 the public issue and historical source witness, with candidate repairs withheld.
-Its first program substitutes lazy integers for the issue's lazy User instances;
-semantic feedback grounded in the public example restores that input type.
-The resulting program combines lazy Users with named-tuple bounds in one nested
-subquery, and its historical case distinguishes the source versions.
+After a public-example correction from lazy integers to lazy Users, its program
+combines lazy Users with named-tuple bounds in one nested subquery; the historical
+case distinguishes the source versions.
 On the earlier partial history repair, its current and historical cases each
 pass while its joint case fails.
 The constructed condition detects a gap that replaying the historical example
