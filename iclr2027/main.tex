@@ -188,25 +188,20 @@ Useful repair memory must retain the condition under which its example supports 
 \end{figure}
 
 \paragraph{A written condition need not become an executed check.}
-Six further revisions compare original history, the requirement sentence, and
-that sentence plus a manually source-validated trigger and ordinary-subclass
-boundary, twice each from the same candidate.
-All pass official verification, but none satisfies all seven behavior checks.
-Neither scoped revision constructs the supplied named-tuple input.
-One history revision restores the standalone historical cases, yet fails their
-lazy-User combination: it reconstructs the named tuple correctly in
-\texttt{resolve\_lookup\_value}, then loses its calling convention at the next
-reconstruction in \texttt{build\_filter}.
-Four subsequent revisions fix that scoped content and compare ordinary review
-with an explicit instruction to instantiate and execute relevant historical
-conditions, twice each.
-All four pass official verification and all seven behavior checks.
-Both ordinary-review attempts now construct the named-tuple input; the second
-also discovers and corrects an ordinary-subclass regression through execution.
-The added instruction yields no observed behavioral gain in this comparison.
-Together, these trajectories locate the useful distinction in reconstructing
-the condition and preserving it across successive transformations, rather than
-in the presence of a scope field or an execution instruction alone.
+The same supplied condition can lead to different repairs depending on the
+input an agent reconstructs.
+In six revisions comparing history, a requirement sentence, and that sentence
+with a manually source-validated trigger and boundary (twice each), all pass
+official verification but none passes all seven behavior checks.
+Neither scoped revision executes its supplied named-tuple trigger.
+One history repair handles standalone named tuples in
+\texttt{resolve\_lookup\_value}, yet loses their calling convention during
+the next reconstruction in \texttt{build\_filter}, failing the lazy-User combination.
+Four further revisions with the same scoped content all execute the trigger
+and pass every check, with or without an added execution instruction.
+One also finds and corrects an ordinary-subclass regression by execution.
+The mechanism to recover is the condition across successive transformations;
+adding a scope field or an instruction alone does not establish that recovery.
 
 \paragraph{Construct a boundary that separates the repairs.}
 On this known range-query case, a source-only writer reuses the executed query
