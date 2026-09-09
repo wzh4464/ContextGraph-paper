@@ -63,6 +63,8 @@ from the historical witness. It retains the public construction of \texttt{x}
 and its annotated query; an ordinary tuple point range supplies a neighboring
 input. The historical repair establishes the source condition, while the new
 combination may require a further repair.
+This separates two reusable parts of memory: the historical input relation
+and the current operation through which that relation must remain valid.
 
 \paragraph{Supply the requirement during generation.}
 A complete SWE-agent receives the target issue and retrieved memory before browsing the repository, editing code, running tools, and submitting a patch.
@@ -80,6 +82,8 @@ An issue check measures the reported requirement, and a joint input exercises it
 
 \paragraph{Return a failed condition for refinement.}
 When a source-validated check executes normally and fails on a candidate, the memory interface can return its unchanged program and actual failed observations for a further repair.
+The callable interface also executes supplied conditions on the agent's current
+working tree, retaining their original inputs and observers across edits.
 The failure must be interpreted in the current operation: an isolated historical example can fail while the workflow being repaired already satisfies that condition.
 The observer judges failures of the checked operation against the stated requirement.
 Passing conditions produce no failure feedback; failures in fixture preparation or observation remain unassessed.
@@ -214,19 +218,7 @@ Useful repair memory must retain the condition under which its example supports 
 \label{fig:memory-content-scope}
 \end{figure}
 
-\paragraph{A written condition need not become an executed check.}
-In six revisions comparing history, a requirement sentence, and that sentence
-with a manually source-validated trigger and boundary (twice each), all pass
-official verification but none passes all seven behavior checks.
-Neither scoped revision executes its supplied named-tuple trigger.
-One history repair handles standalone named tuples in
-\texttt{resolve\_lookup\_value}, yet loses their calling convention during
-the next reconstruction in \texttt{build\_filter}, failing the lazy-User combination.
-Four further revisions with the same scoped content all execute the trigger
-and pass every check, with or without an added execution instruction.
-The mechanism to recover is the condition across successive transformations;
-the written condition can be lost when the agent reconstructs its input.
-Execution can also stop short of adoption.
+\paragraph{Execution can stop short of adoption.}
 In a selected SQLite refinement pair, both agents receive the same candidate
 fixing qualified columns in CHECK expressions, together with a source-generated
 table-name requirement and its executable examples.
@@ -297,6 +289,22 @@ Both repairs fail official verification and all three nested-query conditions.
 The augmented agent never executes the supplied joint input and counts the
 continued User type error in its own public-example check as an expected result.
 The input and its observer must both survive use for the condition to guide repair.
+
+\paragraph{Fix the current feedback to test the added condition.}
+A new original-base pair receives the same history, public scalar program,
+its actual failure, a callable execution interface, and instructions to run
+supplied conditions before editing and submission.
+Only the augmented input adds the composed named-tuple and ordinary-tuple
+programs with their original-code failures.
+Both repairs pass official verification.
+The current-only repair fails both historical examples and the withheld
+named-tuple/lazy-User query; the augmented repair passes these and the other
+four withheld joint and subclass checks.
+The augmented agent executes the joint input before editing, then uses it
+again after removing a global field conversion that broke an existing test.
+The input exposes a remaining omission in range-endpoint preparation, which
+the agent repairs. In this pair, composition makes the historical condition
+concrete along the current operation while the current feedback is held fixed.
 
 \paragraph{Relevant history need not add a missing requirement.}
 In a fixed four-repository development cohort, sixteen original-base attempts compare no memory, Requirement, Implementation, and Both using the same top-ranked source per task.
