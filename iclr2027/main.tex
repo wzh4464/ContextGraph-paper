@@ -54,6 +54,16 @@ The retrieved condition is then examined in the current workflow.
 Its contribution is the behavior it adds when the current and historical
 requirements must hold together.
 
+\paragraph{Compose inputs while retaining the current operation.}
+When an issue provides an executable example, a composition operator can retain
+its object construction and operation sequence while changing one input shape.
+Our Django ORM adapter lifts a scalar lookup \texttt{field=x} to
+\texttt{field\_\_range=R(x,x)}, where \texttt{R} is the two-endpoint named tuple
+from the historical witness. It retains the public construction of \texttt{x}
+and its annotated query; an ordinary tuple point range supplies a neighboring
+input. The historical repair establishes the source condition, while the new
+combination may require a further repair.
+
 \paragraph{Supply the requirement during generation.}
 A complete SWE-agent receives the target issue and retrieved memory before browsing the repository, editing code, running tools, and submitting a patch.
 Historical records contain source-partition issues and their reference patches.
@@ -274,6 +284,12 @@ the constructed program and its failing observation yields two of two.
 All four pass official verification. Both augmented attempts execute the joint
 input and repair its second container reconstruction; the unsuccessful historical
 attempt checks ordinary named-tuple ranges and submits the initial patch unchanged.
+The deterministic point-range adapter reaches the same omission while retaining
+the original public query's construction: on that partial repair, the scalar
+and ordinary-tuple queries are accepted, but the named-tuple query raises a
+missing-endpoint constructor error. This construction checks query acceptance
+on an empty fixture, preserving the lazy User and nested annotation that a
+regenerated example had replaced.
 
 \paragraph{Relevant history need not add a missing requirement.}
 In a fixed four-repository development cohort, sixteen original-base attempts compare no memory, Requirement, Implementation, and Both using the same top-ranked source per task.
@@ -309,6 +325,7 @@ MemOp trains memory writing from measured gains in task success, localization an
 Our interventions identify source-specific behaviors that can differ while the official target score stays unchanged.
 ExpeL distills reusable insights from experience \citep{expel2024}.
 ExpeRepair uses historical test demonstrations and reflective insights to generate reproduction and boundary tests \citep{experepair2026}.
+RETester transforms historical bug templates while retaining the applicability of the original refactoring operation \citep{retester2025}.
 MIRA separates SQL corrections into reusable requirements and uses database checks to guide their activation and adaptation \citep{mira2026}.
 BUGSTONE-E2E extracts scan anchors and vulnerability conditions from fixing commits, then applies semantic and runtime checks to matching target sites \citep{bugstone2026}.
 TRACE compiles user corrections into atomic rules and runtime checks for later coding-agent tasks \citep{trace2026}.
