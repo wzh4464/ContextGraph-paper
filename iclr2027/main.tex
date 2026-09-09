@@ -279,7 +279,7 @@ pass while its joint case fails.
 The constructed condition detects a gap that replaying the historical example
 alone would miss.
 Starting four fresh refinements from that partial repair, the historical packet
-alone yields one of two repairs passing all seven withheld conditions; appending
+alone yields one of two repairs passing all seven measured conditions; appending
 the constructed program and its failing observation yields two of two.
 All four pass official verification. Both augmented attempts execute the joint
 input and repair its second container reconstruction; the unsuccessful historical
@@ -290,6 +290,13 @@ and ordinary-tuple queries are accepted, but the named-tuple query raises a
 missing-endpoint constructor error. This construction checks query acceptance
 on an empty fixture, preserving the lazy User and nested annotation that a
 regenerated example had replaced.
+Delivering that program does not ensure its use. In a separate pair of repairs
+starting from the original code, appending it to the historical packet recovers
+both standalone source examples; the historical-only repair retains neither.
+Both repairs fail official verification and all three nested-query conditions.
+The augmented agent never executes the supplied joint input and counts the
+continued User type error in its own public-example check as an expected result.
+The input and its observer must both survive use for the condition to guide repair.
 
 \paragraph{Relevant history need not add a missing requirement.}
 In a fixed four-repository development cohort, sixteen original-base attempts compare no memory, Requirement, Implementation, and Both using the same top-ranked source per task.
