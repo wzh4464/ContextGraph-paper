@@ -2,6 +2,12 @@
 
 Read [main.pdf](main.pdf) or edit [main.tex](main.tex).
 
+The 2026-09-09 revision has **eight pages of main text**, followed by one
+reference page (nine PDF pages). It uses the unchanged ICLR template, fonts
+and margins. Figure 1 connects FAISS candidate selection, the source witness
+graph and composition along the current operation. Table 3 presents the
+matched-current-feedback comparison that motivates executable joint conditions.
+
 The draft studies how history supplies requirements omitted from a current
 issue. Complete-agent interventions distinguish query preservation, redundant
 uniqueness and destination-timezone behavior even when both compared repairs
@@ -9,6 +15,10 @@ pass official verification. Content comparisons examine which information
 communicates the required behavior and when its triggering condition is lost.
 Execution feedback can make a failed condition concrete; applicability and
 combined inputs determine what the resulting repair actually achieves.
+The method section defines the executable memory unit, explains the graph's
+input and operation relations, and describes the finite point-range adapter.
+`figures/draw_memory_method.py` produces the vector method figure using the
+parent project's existing matplotlib environment.
 The Django12663 content matrix in `figures/memory_content_scope.pdf` shows how
 feedback can recover named tuples while breaking ordinary sequence subclasses.
 Two further development cases show that a failing historical example can
