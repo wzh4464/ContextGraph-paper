@@ -82,7 +82,7 @@ therefore belongs in memory alongside its concrete values.
 \includegraphics[width=\linewidth]{figures/memory_method.pdf}
 \caption{ContextGraph separates candidate selection from condition construction.
 FAISS returns source identities; the graph returns their complete witnesses and
-input/operation relations. Supported composition retains the public workflow
+input/operation relations. Public-example composition retains the workflow
 while introducing a historical input condition. Execution makes its result
 available during repair. Source evidence is reusable; the composed check and
 its result belong to the current task.}
@@ -98,14 +98,15 @@ serve distinct roles: the source edge identifies the supporting experience,
 the operation edge supplies a possible connection to current code, and the
 input edge tells a composition operator which construction to carry forward.
 
-For supported standalone range programs, assignment and branch analysis follows
-named-tuple factories to the lookup argument they supply. Consider a program
-that defines multiple factories but passes only one to
-\texttt{filter(value\_\_range=bounds)}. Selecting any named tuple mentioned in
-the program can change its fields or calling convention. Following the binding
-of \texttt{bounds} instead returns the constructor used by the executed lookup.
-An overwritten or unresolved binding supplies no such input relation; the
-original witness remains available.
+For standalone range programs, assignment and branch analysis identifies the
+named-tuple constructor actually passed to
+\texttt{filter(value\_\_range=bounds)}. Unrelated factories and overwritten
+bindings supply no relation. For timezone witnesses, it binds the stored
+instant and active timezone to the explicit \texttt{tzinfo} arguments of
+observed \texttt{TruncDate}/\texttt{TruncTime} calls. These relations preserve
+both a value and its role. A timezone adapter can reuse the values in database,
+ambient and destination positions while keeping expanded inputs separate from
+the original source evidence.
 
 At retrieval time, a reader inspects the public issue and original repository
 to identify current functions. Qwen/FAISS similarity selects distinct historical
