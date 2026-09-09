@@ -48,6 +48,10 @@ requirements together on repairs produced with and without memory.
 In the graph implementation, a memory links a historical requirement and its
 executable witness to the source repair and the functions reached during execution.
 The witness retains its triggering inputs, operation, observer, and source outcomes.
+For supported standalone range programs, assignment and branch analysis links
+each named-tuple construction to the lookup argument it supplies and its
+observed source bounds. Retrieval returns this input relation with the witness,
+so composition selects the constructor that reaches the operation.
 A public-issue reader identifies current functions; operation links nominate
 historical witnesses and Qwen/FAISS similarity orders eligible sources.
 The retrieved condition is then examined in the current workflow.
