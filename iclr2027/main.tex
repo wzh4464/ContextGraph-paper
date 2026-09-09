@@ -38,6 +38,16 @@ The unit of analysis is a current and historical requirement exercised together 
 \section{Using history to complete the repair requirements}
 \label{sec:method}
 
+\paragraph{Represent the condition and its evidence.}
+In the graph implementation, a memory links a historical requirement and its
+executable witness to the source repair and the functions reached during execution.
+The witness retains its triggering inputs, operation, observer, and source outcomes.
+A public-issue reader identifies current functions; operation links nominate
+historical witnesses and Qwen/FAISS similarity orders eligible sources.
+The retrieved condition is then examined in the current workflow.
+Its contribution is the behavior it adds when the current and historical
+requirements must hold together.
+
 \paragraph{Supply the requirement during generation.}
 A complete SWE-agent receives the target issue and retrieved memory before browsing the repository, editing code, running tools, and submitting a patch.
 Historical records contain source-partition issues and their reference patches.
