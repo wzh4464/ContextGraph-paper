@@ -43,7 +43,7 @@ A complete SWE-agent receives the target issue and retrieved memory before brows
 Historical records contain source-partition issues and their reference patches.
 Frozen BM25 rankings or cosine similarity with Qwen3-Embedding-8B select the sources \citep{qwen3embedding2025}.
 We supply the stored rule, original issue and patch, or source-generated behavioral and implementation components.
-The complete-agent comparisons use DeepSeek V4 Pro0423 through OpenRouter, temperature 0, with the same tools and budget within each comparison.
+The complete-agent comparisons use DeepSeek V4 Pro0423 through OpenRouter, temperature 0, with budgets matched within each comparison.
 
 \paragraph{Measure the requirements together.}
 We immediately evaluate every submitted repair with the official SWE-bench verifier \citep{swebench2024}.
@@ -213,6 +213,13 @@ agent changes identifier quoting; historical review returns the candidate unchan
 Both pass official verification, while only the feedback repair also completes
 CHECK migration followed by an explicit named-table integrity check on a
 reserved-name table.
+An additional pair supplies this same candidate and historical text, with a
+tool for executing the unchanged examples available to one agent.
+Both repairs pass official and joint verification.
+The tool-enabled agent calls both examples after adopting identifier quoting;
+the text-only agent reproduces and repairs the condition itself.
+Tool availability adds no observed behavior in this pair: its actual calls
+confirm a repair made before their results were available.
 
 \paragraph{Construct a boundary that separates the repairs.}
 On this known range-query case, a source-only writer reuses the executed query
