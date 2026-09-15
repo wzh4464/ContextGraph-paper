@@ -2,80 +2,93 @@
 \usepackage[T1]{fontenc}
 \usepackage{iclr2027_conference,times}
 \usepackage{amsmath,amssymb,booktabs,graphicx,hyperref,url}
-\title{ContextGraph: Repair Memory for Missing Requirements}
+\title{ContextGraph: From Past Repairs\\to Executable Requirements}
 \author{Anonymous authors}
 \newcommand{\cg}{ContextGraph}
 \begin{document}
 \maketitle
 
 \begin{abstract}
-Past repairs record requirements that a new issue may leave unstated.
-We study how retrieving these requirements before editing changes a complete coding agent's repair.
-In paired comparisons on three Django development tasks, repairs pass official verification with or without memory, but only the history-informed repairs satisfy the historical requirement together with the current one.
-The added behavior preserves query parameters, removes redundant uniqueness, or honors an explicit destination timezone.
-Content interventions show that a behavioral requirement can suffice without its historical implementation.
-They also expose loss of triggering conditions during use: the same requirement produces different repairs when agents reconstruct different inputs.
-Further executions identify incorrect applicability and excessive preservation.
-We organize this evidence in ContextGraph: historical witnesses retain their
-input constructions and observed operations, and retrieved input relations
-support checks composed along the current workflow.
-The resulting method communicates the missing behavior together with the
-conditions under which it is required.
+A coding agent can fix the reported bug while missing a requirement already
+learned in an earlier repair. ContextGraph turns this experience into reusable
+repair memory: a requirement, the input that triggers it, and an executable
+observation of the desired behavior. FAISS selects candidate experiences;
+graph relations connect their inputs and operations so that historical
+conditions can be composed with the current workflow.
+Earlier ContextGraph retrieval experiments show the value of experience:
+on SWEContextBench Related-Lite, curated memory raises first-pass resolution
+from 14/99 to 21/99 and reaches 25 resolved tasks in two passes, which the
+no-memory agent reaches in three.
+Our executable-memory development experiments explain how history improves
+the repair itself. In three paired Django cases, memory adds query preservation,
+constraint handling, or destination-timezone behavior beyond the reported bug.
+A further comparison shows that composing a historical input with the current
+query recovers a behavior that checking the two separately misses.
+The central idea is to retrieve a condition the next repair should satisfy,
+and make that condition available to execution and refinement.
 \end{abstract}
 
 \section{Introduction}
-The issue description tells a coding agent what is currently reported as broken.
-It need not enumerate every behavior a complete repair should preserve.
-A past repair can supply a requirement absent from the new issue, allowing memory to improve a repair that already passes the target's tests.
-The target's success score can then remain unchanged while the repair gains a required behavior.
-This motivates measuring memory's contribution at the level of the requirement it supplies.
+Coding agents repeatedly encounter related bugs, yet each new issue describes
+only part of what a complete repair should accomplish. Past fixes contain
+knowledge that the new issue leaves implicit: which argument takes precedence,
+which constructor convention matters, and which neighboring operation must
+continue to work. Long-term memory offers a way to carry these requirements
+from one repair to the next.
 
-Consider an administrative redirect that must preserve a deployment prefix.
-Changing its destination from \texttt{request.path\_info} to \texttt{request.path} fixes that reported fault.
-However, appending a slash to the resulting path still discards query parameters.
-A different repair of the same API records this omitted behavior and replaces path concatenation with \texttt{request.get\_full\_path(force\_append\_slash=True)}.
-The useful information in this experience is the requirement to retain the query, which must hold together with the deployment-prefix requirement.
+Consider an administrative redirect that loses a deployment prefix. An agent
+can repair the prefix by using the full request path, yet still discard query
+parameters when appending a slash. A historical fix of the same API records
+the missing requirement: retain the query string. The history-informed agent
+uses \texttt{get\_full\_path()} with slash appending enabled, preserving both
+the prefix and the query. Memory contributes a behavior that the current issue
+did not ask the agent to rediscover.
 
-We investigate three questions: what a historical repair adds to the current issue, what information suffices to communicate that addition, and how its conditions can be lost during use.
-The unit of analysis is a current and historical requirement exercised together on an actual repair.
-This order determines the memory architecture. We first identify information
-that changes a repair's behavior, then represent the relations needed to
-construct that information, and finally examine how candidate selection can
-retain it. A retrieved rule becomes useful when its requirement survives
-adaptation to the current operation and enters the agent's implementation.
+This example suggests a useful unit of experience: a requirement together with
+the conditions that make it matter. A patch shows one implementation of that
+requirement. A sentence makes it portable. An executable witness supplies the
+input and observation needed to apply it accurately. ContextGraph combines
+these forms by storing the requirement with its triggering input and observed
+operation, then composing those relations with the current program.
+
+Our investigation follows three questions: \emph{which memory is useful, how
+should it be represented, and how should it be retrieved?} Historical benchmark
+results establish where experience helps: earlier ContextGraph systems improve
+single-pass resolution across several backbones and reach useful solutions
+with fewer retry rounds. Development interventions then identify the information
+responsible for a better repair. This leads to a graph whose role goes beyond
+ranking similar text: it supplies the relations needed to construct a relevant
+check from the retrieved experience.
+
+We contribute an executable requirement representation; a retrieval interface
+combining FAISS candidates with graph-based input and operation composition;
+and empirical evidence connecting memory content to both task resolution and
+the behaviors preserved by the resulting repair. The resulting design principle
+is simple: \emph{remember what a repair must accomplish, and retain enough of
+its conditions to exercise that requirement in the next task.}
 
 \section{ContextGraph: memory as executable requirements}
 \label{sec:method}
-
-Memory's usefulness depends on the current repair.
-A historical condition can supply a missing requirement, already hold on the
-current workflow, or conflict with a change the issue requires.
-Our comparisons distinguish these cases by executing the current and historical
-requirements together on repairs produced with and without memory.
-
-\subsection{Store a requirement with the input that supports it}
-For a historical repair, let $V^{-}$ and $V^{+}$ denote the original and repaired
-versions. We represent its memory as
+\subsection{Represent the behavior learned from a repair}
+For a historical repair, let $V^{-}$ and $V^{+}$ be the original and repaired
+versions. We store
 \begin{equation}
- m = (r, W, E^{-}, E^{+}), \qquad W=(I,A,O),
+ m=(r,W,E^{-},E^{+}),\qquad W=(I,A,O),
  \label{eq:witness}
 \end{equation}
-where $r$ states a behavioral requirement, $I$ constructs an input, $A$ performs
-the relevant operation, and $O$ observes whether its outcome meets $r$.
-$E^{-}$ and $E^{+}$ record executions of this same witness on the two source
-versions. This separation keeps an exception in the checked operation available
-to the observer while distinguishing it from failure to prepare the fixture.
-It also allows the agent to reuse the requirement without copying an obsolete
-implementation.
+where $r$ states a requirement, $I$ constructs an input, $A$ performs the
+operation, and $O$ observes whether its outcome meets $r$. The two executions
+$E^{-}$ and $E^{+}$ apply the same witness to the source versions. A false-to-true
+change identifies a behavior learned from the repair. Neighboring inputs that
+pass on both versions describe behavior to preserve around that trigger.
 
-A source writer receives the historical issue, patch and relevant code to
-construct the requirement and witness. Normal executions changing from false
-on $V^{-}$ to true on $V^{+}$ identify an input that exhibits the source repair.
-Inputs passing on both versions can provide neighboring preservation conditions.
-They answer a different question: which behavior remains valid around the
-trigger? A passing ordinary tuple and a passing tuple subclass, for example,
-constrain different constructor rules. The input's relation to the operation
-therefore belongs in memory alongside its concrete values.
+A source writer receives the historical issue, patch, and relevant code, then
+constructs the requirement and witness. Separating input, operation, and
+observer makes the experience reusable. The agent can locate a new
+implementation of $r$ while retaining the input condition that justified it.
+For example, named tuples and ordinary tuple subclasses can hold the same
+values but require different constructor calls. Their type relation is part
+of the requirement's usable context.
 
 \begin{figure}[t]
 \centering
@@ -89,112 +102,207 @@ its result belong to the current task.}
 \label{fig:method}
 \end{figure}
 
-\subsection{Use graph relations to construct the retrieved condition}
-The graph links a source repair to its requirement, witness and before/after
-executions. Executions connect the witness to the functions it actually reaches.
-An input relation connects a constructor to the argument supplied to an
-operation and to the values observed in that source execution. These edges
-serve distinct roles: the source edge identifies the supporting experience,
-the operation edge supplies a possible connection to current code, and the
-input edge tells a composition operator which construction to carry forward.
+\subsection{Retrieve candidates, then recover their relations}
+The graph links a historical repair to its requirement, witness, and executions.
+Execution edges identify the functions reached by the witness. Input edges
+bind a constructor and its values to an argument of the observed operation.
+These relations let the retriever return a complete condition and let a
+composition operator determine which construction to carry into a new program.
 
-For standalone range programs, assignment and branch analysis identifies the
-named-tuple constructor actually passed to
-\texttt{filter(value\_\_range=bounds)}. Unrelated factories and overwritten
-bindings supply no relation. For timezone witnesses, it binds the stored
-instant and active timezone to the explicit \texttt{tzinfo} arguments of
-observed \texttt{TruncDate}/\texttt{TruncTime} calls. These relations preserve
-both a value and its role. A timezone adapter can reuse the values in database,
-ambient and destination positions while keeping expanded inputs separate from
-the original source evidence.
+A reader uses the public issue and original repository to identify the current
+operation. Qwen3-Embedding-8B/FAISS similarity selects historical sources from
+the same repository \citep{qwen3embedding2025}. The current implementation keeps
+the top three distinct witnessed sources. Graph joins then return their
+requirements, complete programs, observations, and input relations.
+Operation connections accompany these candidates: a repair may need to preserve
+behavior outside the initially localized function, so an early function match
+does not veto a high-ranked source.
 
-At retrieval time, a reader inspects the public issue and original repository
-to identify current functions. Qwen/FAISS similarity selects distinct historical
-sources from the same repository, and a graph join returns each source's
-requirement, complete program, execution observations and available relations.
-The current implementation retains the top three witnessed sources in similarity
-order. Operation connections accompany them rather than acting as a hard
-filter: early localization of the reported fault can omit another operation
-whose behavior the repair must preserve. Figure~\ref{fig:method} makes this
-division explicit. Similarity proposes a source; the graph supplies the
-information needed to examine its condition in the current workflow.
+For range queries, assignment and branch analysis identifies the named-tuple
+constructor actually supplied to \texttt{filter(value\_\_range=bounds)}.
+For timezone witnesses, the graph binds the stored instant and active timezone
+to the explicit \texttt{tzinfo} arguments of observed
+\texttt{TruncDate}/\texttt{TruncTime} calls. The relation retains both a value
+and its role, allowing later checks to combine database, ambient, and
+destination timezones correctly.
 
-\subsection{Compose inputs while retaining the current operation}
-When an issue provides an executable example, a composition operator can retain
-its object construction and operation sequence while changing one input shape.
-Our Django ORM adapter lifts a scalar lookup \texttt{field=x} to
-\texttt{field\_\_range=R(x,x)}, where \texttt{R} is the two-endpoint named tuple
-from the historical witness. It retains the public construction of \texttt{x}
-and its annotated query; an ordinary tuple point range supplies a neighboring
-input. The historical repair establishes the source condition, while the new
-combination may require a further repair.
-This separates two reusable parts of memory: the historical input relation
-and the current operation through which that relation must remain valid.
-
-Writing the public example as $P_q(x)$, the supported transformation is
+\subsection{Compose history with the current workflow}
+A historical example and a current example may each pass while their
+combination fails. We therefore compose the historical input condition along
+the current operation. Our ORM adapter lifts a scalar lookup
+\texttt{field=x} into a point-range lookup
+\texttt{field\_\_range=R(x,x)}, using the historical two-endpoint named tuple
+\texttt{R}. Writing the public example as $P_q(x)$ gives
 \begin{equation}
- P_q(x)\;\longmapsto\;P_q^{\mathrm{range}}(R(x,x)).
+ P_q(x)\longmapsto P_q^{\mathrm{range}}(R(x,x)).
  \label{eq:composition}
 \end{equation}
-The superscript changes the lookup to a range; the public object's construction
-and surrounding query remain in place. For a lazy User inside an annotated
-subquery, replacing the object with a lazy integer would remove the interaction
-that makes the combined condition informative. Likewise, replaying the
-historical named-tuple query alone would omit the current subquery path.
-The point range preserves the scalar endpoint while adding the historical
-constructor constraint. The ordinary-tuple point range helps distinguish a
-failure shared by iterable endpoints from one specific to named tuples.
+The adapter retains the construction of $x$ and the surrounding query. An
+ordinary-tuple point range supplies a neighboring check. When $x$ is a lazy
+User inside an annotated subquery, retaining that object and operation sequence
+is essential: a lazy integer or a standalone named-tuple query exercises a
+different interaction.
 
-We implement this transformation over the public program's syntax tree and
-the retrieved source input relation. It is a finite adapter for this operation;
-other operations require a transformation that preserves their own semantics.
-The resulting check retains an explicit observer. Query acceptance on an empty
-fixture tests whether preparation succeeds, while a separate nonempty fixture
-tests which rows are selected. These observations express different requirements
-and can guide different parts of the repair.
+The implementation transforms the public program's syntax tree using the
+retrieved input relation. Each adapter specifies the operation it supports.
+The composed program retains an explicit observer: an empty fixture can test
+query acceptance, while a nonempty fixture tests the selected rows. This
+makes both preparation and semantic omissions available to the agent.
 
-\subsection{Deliver conditions and use their execution results}
-A complete SWE-agent receives the target issue and retrieved memory before browsing the repository, editing code, running tools, and submitting a patch.
-Historical records contain source-partition issues and their reference patches.
-Frozen BM25 rankings or cosine similarity with Qwen3-Embedding-8B select the sources \citep{qwen3embedding2025}.
-We supply the stored rule, original issue and patch, or source-generated behavioral and implementation components.
-The complete-agent comparisons use DeepSeek V4 Pro0423 through OpenRouter, temperature 0, with budgets matched within each comparison.
+\subsection{Use the condition during repair}
+A complete SWE-agent receives the issue and memory, then browses, edits, runs
+tools, and submits a patch. Memory can supply a requirement sentence, historical
+implementation, or executable witness. When a witness fails on the current
+candidate, the interface returns its unchanged program and failed observations
+for refinement. A callable tool executes the supplied conditions on the working
+tree, keeping their inputs and observers consistent across edits.
 
-\paragraph{Measure the requirements together.}
-We immediately evaluate every submitted repair with the official SWE-bench verifier \citep{swebench2024}.
-We execute the source witness unchanged on the patched target.
-An issue check measures the reported requirement, and a joint input exercises it together with the historical requirement.
-The joint input is essential when the requirements interact. Passing the current
-scalar query and the historical named-tuple query separately does not imply
-that a named-tuple bound works in the current nested query. Conversely, failure
-of an isolated historical input does not establish a defect in a workflow that
-transforms or removes that input before the checked operation.
+We immediately grade submitted repairs with the benchmark's official verifier
+and execute historical, current, and joint requirements on the repair.
+Joint checks measure the additional behavior supplied by memory; neighboring
+checks measure the behavior preserved while adding it. Fixture failures are
+recorded separately from observed violations of the checked requirement.
+This interface connects three stages: selecting an experience, exercising its
+condition, and incorporating that behavior into the submitted implementation.
 
-\paragraph{Return a failed condition for refinement.}
-When a source-validated check executes normally and fails on a candidate, the memory interface can return its unchanged program and actual failed observations for a further repair.
-The callable interface also executes supplied conditions on the agent's current
-working tree, retaining their original inputs and observers across edits.
-The failure must be interpreted in the current operation: an isolated historical example can fail while the workflow being repaired already satisfies that condition.
-The observer judges failures of the checked operation against the stated requirement.
-Passing conditions produce no failure feedback; failures in fixture preparation or observation remain unassessed.
-We compare this revision with reviewing the same requirement again.
+\section{Experience improves resolution and reduces retry rounds}
+\label{sec:benchmark}
+\paragraph{Experimental setting.}
+We report two stages of ContextGraph. The historical retrieval systems store
+rules or repair episodes and expose them through a memory tool. Their results
+on SWE-bench Verified and SWEContextBench \citep{swebench2024,swecontext2026}
+are restored from the project's recorded experiment tables. The executable
+requirement method in Section~\ref{sec:method} is evaluated through the development
+interventions in Sections~\ref{sec:evidence}--\ref{sec:composition-results}.
+The historical tables retain their original task sets, backbones, and attempt
+regimes; they measure those earlier systems. Appendix~\ref{sec:historical}
+collects the remaining tables and protocol details.
 
-This interface gives three observable stages of use: the condition is delivered,
-the agent executes it, and the repair incorporates the behavior it specifies.
-We inspect the actual trajectory to distinguish them. A tool call can reveal a
-failure that the final patch leaves unchanged; a textual requirement can also
-lead the agent to construct its own successful check. The method therefore
-evaluates the submitted implementation, including joint and neighboring inputs,
-instead of treating retrieval or execution alone as successful memory use.
+\paragraph{Useful experience transfers across backbones.}
+Table~\ref{tab:swectx-crossmodel} compares six memory conditions on the historical
+Related-Lite98 single-shot protocol. ContextGraph has the highest resolution
+rate among the learned retrieval conditions on all four backbones. With GPT-5.4,
+it resolves 34/98 tasks against 21/98 without memory; with Kimi K2.6, it resolves
+28/98 against 18/97. The oracle-summary condition supplies the benchmark's
+paired experience directly. ContextGraph's 34/98 on GPT-5.4 is close to its
+35/98, showing the value of finding useful experience without being given that
+pairing at query time.
+
+\begin{table}[t]
+\centering
+\caption{Historical Related-Lite98, one attempt per task ($V_1$).
+Cells show resolved/completed; bold marks the best non-oracle condition by rate.
+All methods use the same 300-summary pool within each backbone.}
+\label{tab:swectx-crossmodel}
+\begin{tabular}{lcccc}
+\toprule
+Memory & GPT-5.4 & DeepSeek V4 Pro & Kimi K2.6 & MiniMax M2.7 \\
+\midrule
+None & 21/98 & 30/98 & 18/97 & 19/98 \\
+Random summaries & 19/97 & 26/96 & 25/98 & 19/97 \\
+Mem0 & 19/98 & 26/97 & 25/98 & 18/98 \\
+LangMem & 24/98 & 33/97 & 24/98 & 21/98 \\
+Oracle summary & 35/98 & 27/97 & 24/98 & 15/95 \\
+ContextGraph & \textbf{34/98} & \textbf{34/97} & \textbf{28/98} & \textbf{27/98} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Memory gets to useful solutions earlier.}
+A separate Related-Lite99 campaign uses DeepSeek V4 Pro with a 500-call and
+\$30 per-task budget in both arms. Its curated episodic memory retrieves
+reference fixes, verification hints, and pre-base repository history at two
+moments: before choosing an approach and after an error. The served pool
+contains 291 static episodes. Each later pass retries only that arm's unresolved
+tasks. Table~\ref{tab:swectx-stream} shows the practical benefit: memory reaches
+25 resolved tasks after two passes, while the control reaches 25 after three.
+The first two passes add seven and nine resolutions respectively, with no
+control-only successes. By the third pass the gap narrows to two tasks.
+This pattern locates the strongest observed advantage in earlier successful
+repair. Excluding ten targets with near-duplicate source fixes retains a
+first-pass gain of 19/89 versus 13/89 ($p=.031$). A separate replication across three additional backbones also raises
+first-pass resolution (Appendix Table~\ref{tab:swectx-xmodel}).
+
+\begin{table}[t]
+\centering
+\caption{Historical Related-Lite99 with curated episodic memory.
+Resolved counts are cumulative. Wins/losses compare ContextGraph with control;
+$p$ is the paired exact McNemar test.}
+\label{tab:swectx-stream}
+\begin{tabular}{lcccc}
+\toprule
+Retry budget & No memory & ContextGraph & Wins/losses & $p$ \\
+\midrule
+1 pass & 14/99 & \textbf{21/99} & 7/0 & .016 \\
+2 passes & 16/99 & \textbf{25/99} & 9/0 & .0039 \\
+3 passes & 25/99 & 27/99 & 6/4 & .75 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Available experience matters.}
+The pool-size experiment holds the historical GPT-5.4 agent and retrieval
+procedure fixed while sampling 50, 100, 200, or 300 summaries
+(Table~\ref{tab:swectx-poolsize}). The full pool gives the best observed result,
+34/98; the smaller pools yield 21--27 resolutions. The pattern motivates a
+coverage-first construction strategy: establish that useful source experience
+exists before optimizing its ranking. Our executable memory applies this
+principle at the level of a supported behavioral condition.
+
+\begin{table}[t]
+\centering
+\caption{Historical Related-Lite98 memory-pool ablation, GPT-5.4, single-shot
+$V_1$. The separate best-of-two $V_2$ result is in Appendix Table~\ref{tab:swectx-v2}.}
+\label{tab:swectx-poolsize}
+\begin{tabular}{lrrrr}
+\toprule
+Number of summaries & 50 & 100 & 200 & 300 \\
+\midrule
+Resolved/completed & 21/96 & 27/98 & 26/97 & \textbf{34/98} \\
+Resolution rate & 21.88\% & 27.55\% & 26.80\% & \textbf{34.69\%} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{From retrieval gains to a better memory unit.}
+On the historical full Verified500 evaluation, all three memory methods improve
+the point estimate over no memory, with FAISS leading this comparison
+(Table~\ref{tab:verified500}). These outcomes make FAISS a natural component of
+ContextGraph: dense similarity efficiently proposes useful sources. The next
+question is what the retrieved source contributes to the actual repair.
+Our development experiments address that question by identifying requirements
+that memory adds, then representing the relations needed to apply them.
+
+\begin{table}[t]
+\centering
+\caption{Historical SWE-bench Verified500, GPT-5.4, 75 steps and uncapped
+per-task cost. Rates use all 500 tasks, including unfinished attempts.
+Wins/losses and exact McNemar $p$ compare each method with no memory.}
+\label{tab:verified500}
+\begin{tabular}{lrrrrr}
+\toprule
+Method & Resolved & Rate & Gain (pp) & Wins/losses & $p$ \\
+\midrule
+No memory & 309 & 61.80\% & --- & --- & --- \\
+ExpeL & 312 & 62.40\% & +0.6 & 43/40 & .826 \\
+FAISS & \textbf{327} & \textbf{65.40\%} & +3.6 & 49/31 & .057 \\
+ContextGraph & 318 & 63.60\% & +1.8 & 50/41 & .402 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \section{History supplies a missing repair requirement}
 \label{sec:evidence}
-We use a SWE-bench Verified split with 280 source tasks, 70 development tasks, and a separate 150-task evaluation partition unused by these experiments.
-Table~\ref{tab:historicalrequirements} shows three development comparisons in which memory changes whether the repair meets a requirement absent from the current issue.
-Django14404 receives the first-ranked source issue and patch.
-Django12708 and Django11138 come from a fixed six-task cohort selected by high Qwen similarity; its memory arm receives three unchanged Flat rules per task.
-Both arms resolve all six cohort tasks under official verification.
-The two displayed cases distinguish additional historical behaviors, rather than increasing that official score.
+The executable-memory experiments use a Verified split of 280 source tasks,
+70 development tasks, and 150 held-out evaluation tasks. The cases below are
+development interventions with DeepSeek V4 Pro through OpenRouter,
+temperature zero and matched budgets within each comparison. They measure
+whether history adds a required behavior to the submitted repair.
+Table~\ref{tab:historicalrequirements} presents three such additions.
+Django14404 uses the first-ranked source issue and patch; Django12708 and
+Django11138 come from a fixed six-task cohort receiving three unchanged Flat
+rules per task. Both arms pass official verification on all six cohort tasks.
+The historical requirements distinguish the completeness of those repairs.
 
 \begin{table}[t]
 \centering
@@ -215,7 +323,6 @@ Django11138 & Honor destination timezone & Fail & Pass \\
 \paragraph{An omitted behavior of the same API.}
 Django14404 reports that administrative redirects lose a deployment prefix.
 Both agents fix the prefix and pass official verification, but only the repair informed by source16612 also preserves the query string.
-The ordinary agent's actual observations include the implementation that retains \texttt{QUERY\_STRING}; seeing an available implementation does not by itself make query preservation part of its repair.
 A joint input combines the prefix with repeated and percent-encoded query values, \texttt{keep=a\%2Fb}\allowbreak\texttt{\&keep=c\%20d}.
 Only the history-informed repair preserves both.
 
@@ -225,7 +332,7 @@ The first retrieved source, 15732, instead concerns deletion of a unique constra
 Both repairs fix ordinary-index selection; only the memory-informed repair also excludes primary keys when deleting unique constraints.
 The source-generated PostgreSQL check runs unchanged on both target repairs.
 A separate combined input creates an ordinary index, redundant uniqueness, and a primary key on the same column.
-Ordinary-index deletion already succeeds on this target-base input; both repairs retain it, but only the memory-informed repair also deletes redundant uniqueness while retaining the primary key and data.
+Both repairs preserve ordinary-index deletion, but only the memory-informed repair also deletes redundant uniqueness while retaining the primary key and data.
 History supplies a requirement for the neighboring operation.
 
 \paragraph{An independent argument of the same operation.}
@@ -247,12 +354,12 @@ The intervention supplies corrective information that further issue-based review
 
 \paragraph{A requirement can suffice without the source implementation.}
 On the redirect task, replacing the first entry of the existing Flat packet with its original issue and patch yields a byte-identical repair; both forms preserve the joint behavior.
-A separate comparison starts two new agents from the completed ordinary patch.
+Two new agents then revise the completed ordinary patch.
 Both receive the source-generated sentence, ``The redirect location from AdminSite.catch\_all\_view includes the original query string.''
 One also receives the generated check and its failed observations.
 Both submit byte-identical repairs that pass official and joint checks.
 The sentence-only agent finds \texttt{get\_full\_path()} in the current repository: memory communicates the desired behavior while the agent locates its implementation.
-Executable feedback adds no observed behavior in this pair.
+Here the portable requirement is enough for the agent to find and use the right implementation.
 
 \paragraph{Which information makes the requirement usable?}
 We select the constraint and timezone benefit cases and run four fresh complete agents per task, fixing the single historical source and its delivery before editing.
@@ -266,10 +373,11 @@ The Requirement agent finds \texttt{self.get\_tzname()} in the target implementa
 
 \begin{table}[t]
 \centering
-\caption{One fresh complete-agent attempt per input and known development task.
-All eight pass official verification. The two joint columns measure the original current/historical combinations.
-The MySQL SQL-generation and named-zone ORM cases are additional conditions specified after inspecting completed timezone repairs and then executed on every timezone submission.}
+\caption{Memory-content interventions: one fresh attempt per input and development task.
+All eight pass official verification. MySQL and named-zone checks were constructed
+after inspecting the timezone repairs and applied to all four submissions.}
 \label{tab:memorycontent}
+\small
 \begin{tabular}{lcccc}
 \toprule
 Memory input & Constraint joint & Timezone joint & MySQL cases & Named-zone cases \\
@@ -287,7 +395,7 @@ Both still generates an unnecessary MySQL conversion between identical zones; Im
 Requirement passes both additional diagnostics.
 These concrete omissions distinguish carrying a requirement, applying its triggering condition, and implementing the resulting behavior correctly.
 Two subsequent original-base agents receive the unchanged constraint Requirement, with or without a source-validated example; both pass official and joint checks.
-Thus the earlier failure does not establish that an implementation reference is necessary: the same requirement can yield different repairs depending on how its trigger is reconstructed.
+The same requirement succeeds when its trigger is reconstructed correctly; preserving that input construction is a useful role for the graph.
 
 \paragraph{Execution feedback makes an omitted condition concrete.}
 Two fresh agents refine the same original failed Requirement candidate, both receiving its requirement again.
@@ -297,17 +405,19 @@ Feedback adds generated-name disambiguation and passes both conditions.
 Both revisions pass official verification and the withheld joint sequence.
 The added behavior is recovery of the ordinary unique-field condition identified by feedback.
 
-\section{Applicability is part of repair memory}
-\paragraph{Recovering an example can overgeneralize its rule.}
-On Django12663, both a three-source packet selected through code connections and a ten-source similarity packet contain source13590, yet neither repair recovers its named-tuple range behavior.
-Three subsequent fresh revisions hold that source and the initial candidate fixed.
-Figure~\ref{fig:memory-content-scope} separates official success from recovery of the historical requirement and preservation of related inputs.
-Original history and execution feedback recover the named-tuple behavior, including its withheld combination with a lazy User; the requirement sentence alone does not.
-A subsequent review with the same budget and an empty reference returns the initial candidate unchanged and still fails these behaviors.
-The feedback repair, however, expands every non-builtin sequence into positional constructor arguments.
-This recovers named tuples but breaks ordinary tuple and list subclasses, which still work on the original-history repair, shared initial candidate and unmodified target.
-The missing distinction is the constructor's calling convention: accepting a named tuple does not justify expanding every sequence subclass.
-Useful repair memory must retain the condition under which its example supports the implementation rule.
+\section{Graph composition makes experience actionable}
+\label{sec:composition-results}
+\paragraph{Preserve the input relation, not just its values.}
+On Django12663, both a three-source code-connected packet and a ten-source
+similarity packet contain the historical named-tuple repair, source13590,
+yet neither initial repair recovers its behavior. Three fresh revisions start
+from the same candidate and source (Figure~\ref{fig:memory-content-scope}).
+Original history and execution feedback recover named tuples; the requirement
+sentence alone does not. The feedback repair expands every non-builtin
+sequence into positional arguments, which also breaks ordinary tuple and list
+subclasses. Original history retains the constructor distinction and passes
+all displayed behaviors. This is precisely the relation the graph should carry:
+the argument convention of the input's type, alongside its endpoint values.
 
 \begin{figure}[t]
 \centering
@@ -316,87 +426,35 @@ Useful repair memory must retain the condition under which its example supports 
 \label{fig:memory-content-scope}
 \end{figure}
 
-\paragraph{Execution can stop short of adoption.}
-In a selected SQLite refinement pair, both agents receive the same candidate
-fixing qualified columns in CHECK expressions, together with a source-generated
-table-name requirement and its executable examples.
-One also receives the examples' actual failures on that candidate.
-Both agents reproduce the reserved-name table failure, but only the feedback
-agent changes identifier quoting; historical review returns the candidate unchanged.
-Both pass official verification, while only the feedback repair also completes
-CHECK migration followed by an explicit named-table integrity check on a
-reserved-name table.
+\paragraph{Join the historical input to the current operation.}
+The current issue involves a lazy User in a nested query; history contributes
+a named-tuple range. On an earlier partial repair, the current scalar query and
+the historical range query each pass, while a query combining them fails.
+The composed condition reveals an omission in the second container
+reconstruction. Four fresh refinements of that candidate illustrate its use:
+history alone yields one of two repairs passing all seven measured conditions;
+adding the constructed joint program and its failed observation yields two of
+two. All four pass official verification. Both augmented agents execute the
+joint input and repair the second reconstruction.
 
-\paragraph{Construct a boundary that separates the repairs.}
-A source-only writer constructs a named-tuple trigger and an ordinary-tuple
-neighbor using the same executed query and row observer.
-The trigger distinguishes the historical versions, but the neighbor passes on
-both source versions and all five measured target versions, including the
-overgeneralized feedback repair.
-Replacing that neighbor with a subclass inheriting its container's behavior,
-while keeping the bounds unchanged, passes on both source versions and fails
-only on the feedback repair among the five targets.
-Varying the input's type relation exposes a preservation condition that ordinary
-values miss.
+The deterministic adapter in Equation~\ref{eq:composition} reaches the same
+omission while retaining the public program's lazy User and nested annotation.
+It produces a named-tuple point range and an ordinary-tuple neighbor.
+This is the graph's constructive contribution: an input relation from a past
+repair becomes a concrete check along the current query.
 
-\paragraph{Compose requirements beyond the corrected source examples.}
-A fixed timezone adapter extracts three zone values from the historical witness,
-varies their database, ambient and destination roles, and adds a 182-day input shift.
-Across 72 combinations, the historical repair improves 20, preserves 20, and
-leaves 32 incorrect; every operation executes normally.
-We apply the unchanged family to all four earlier timezone content-comparison
-repairs. Requirement, Implementation and Both each pass the 40 combinations
-supported by the repaired source. Yet Implementation fails all 32 remaining
-combinations, including 16 that the no-memory repair passes; Requirement and
-Both pass all 72.
-This known-case construction exposes a limit of selecting conditions solely by
-success on the repaired source. Completing the current repair requires combining
-source-timezone interpretation with the historical destination requirement,
-including configurations that neither historical version handles correctly.
-
-\paragraph{Reconstruct the missing combination.}
-In a further construction study on the known range-query case, a writer receives
-the public issue and historical source witness, with candidate repairs withheld.
-After a public-example correction from lazy integers to lazy Users, its program
-combines lazy Users with named-tuple bounds in one nested subquery; the historical
-case distinguishes the source versions.
-On the earlier partial history repair, its current and historical cases each
-pass while its joint case fails.
-The constructed condition detects a gap that replaying the historical example
-alone would miss.
-Starting four fresh refinements from that partial repair, the historical packet
-alone yields one of two repairs passing all seven measured conditions; appending
-the constructed program and its failing observation yields two of two.
-All four pass official verification. Both augmented attempts execute the joint
-input and repair its second container reconstruction; the unsuccessful historical
-attempt checks ordinary named-tuple ranges and submits the initial patch unchanged.
-The deterministic point-range adapter reaches the same omission while retaining
-the original public query's construction: on that partial repair, the scalar
-and ordinary-tuple queries are accepted, but the named-tuple query raises a
-missing-endpoint constructor error. This construction checks query acceptance
-on an empty fixture, preserving the lazy User and nested annotation that a
-regenerated example had replaced.
-Delivery alone does not ensure use: in a separate original-base pair, both
-repairs fail official and nested-query verification. The augmented agent
-recovers the standalone history but never executes the joint input, accepting
-the continued User type error in its own check. Both input and observer must
-survive use to guide repair.
-
-\paragraph{Fix the current feedback to test the added condition.}
-A new original-base pair receives the same history, public scalar program,
-its actual failure, a callable execution interface, and instructions to run
-supplied conditions before editing and submission.
-Only the augmented input adds the composed named-tuple and ordinary-tuple
-programs with their original-code failures.
+\paragraph{A matched comparison isolates the added condition.}
+A new original-base pair receives identical history, public scalar program,
+its observed failure, a callable execution tool, and instructions to run the
+supplied conditions before editing and submission. The augmented arm also
+receives the two composed programs and their failures.
 Both repairs pass official verification (Table~\ref{tab:composedconditions}).
-The current-only repair fails both historical examples and the withheld
-named-tuple/lazy-User query; the augmented repair passes these and the other
-four withheld joint and subclass checks.
-The augmented agent executes the joint input before editing, then uses it
-again after removing a global field conversion that broke an existing test.
-The input exposes a remaining omission in range-endpoint preparation, which
-the agent repairs. In this pair, composition makes the historical condition
-concrete along the current operation while the current feedback is held fixed.
+The current-feedback repair fails both historical examples and the withheld
+named-tuple/lazy-User query; the augmented repair passes those behaviors and
+preserves the ordinary subclasses.
+The augmented agent runs the joint input before editing and again after
+removing a global conversion that broke an existing test. Its remaining
+range-endpoint failure directs the final correction.
 
 \begin{table}[t]
 \centering
@@ -418,62 +476,73 @@ Mechanical scalar / named tuple / tuple & 2/3 & 3/3 \\
 \end{tabular}
 \end{table}
 
-\paragraph{Initial localization can omit behavior the repair must preserve.}
-On this same known case, requiring a recorded operation connection from a
-pre-repair public-code localization excludes source13590, which FAISS ranks
-first. Retaining the similarity candidate lets its graph input relation
-construct the exact joint program used above. This result motivates retaining
-similarity candidates while using graph relations to construct their conditions
-along the current operation.
+\paragraph{Retain candidates that can supply an omitted condition.}
+In this same case, demanding an operation match from the initial public-code
+localization excludes source13590, which FAISS ranks first. Keeping the
+similarity candidate lets the graph return its input relation and construct
+the joint program above. This motivates the division in Figure~\ref{fig:method}:
+FAISS proposes sources; graph relations support their adaptation to the current
+operation. The usefulness of a candidate is established by what its condition
+adds to the repair.
 
-\paragraph{Relevant history need not add a missing requirement.}
-In a fixed four-repository development cohort, sixteen original-base attempts compare no memory, Requirement, Implementation, and Both using the same top-ranked source per task.
-The first two inputs each resolve four of four tasks; the latter two each resolve three, omitting Xarray4687's public \texttt{keep\_attrs} argument.
-The unmodified Django15499 and Xarray4687 targets already pass their selected source examples for operation reduction and independent attribute mappings.
-These memories concern behavior already satisfied on the observed inputs.
+\paragraph{Compose roles to expose a broader requirement.}
+The timezone relation provides another example. A fixed adapter varies the
+historical witness's three zones across database, ambient, and destination
+roles and shifts the input by 182 days. Of 72 combinations, the historical
+patch improves 20, preserves 20, and leaves 32 incorrect. Applying the same
+family to the four timezone content interventions shows that Requirement and
+Both pass all 72. Implementation passes the 40 source-supported combinations
+but fails the remaining 32, including 16 passed without memory.
+Role composition exposes how the current source-timezone requirement interacts
+with the historical destination requirement. A complete repair can therefore
+satisfy combinations beyond those corrected by the historical implementation.
 
-\paragraph{The current operation changes the historical condition's role.}
-Matplotlib20826 reports lost tick visibility after clearing shared axes.
-The second-ranked historical source concerns finite data bounds after plotting on a twin axis.
-Its two source-validated examples fail unchanged on the target and enter the current clearing function.
-Yet a paired execution with the same shared plots shows that clearing and replotting restores finite bounds, while losing tick visibility; retaining the plots preserves visibility but loses finite bounds after twin plotting.
-A complete no-memory repair then restores tick visibility and preserves finite bounds in the clear/replot workflow, passing official verification.
-The isolated historical examples still fail.
-Thus a historical failure and a shared call path do not identify what this repair lacks: the operation sequence determines whether the condition needs recovery or preservation.
-
-\paragraph{Preservation must allow the required change.}
-A further three-task development comparison holds the retrieved sources fixed and supplies historical requirements or concrete edit advice.
-Both Django16819 repairs cancel a same-name \texttt{RemoveIndex}/\texttt{AddIndex} sequence, although changing its indexed column must take effect; a subsequent SQLite diagnostic exposes the lost replacement.
-Both Xarray7229 repairs instead preserve coordinate attributes in scalar \texttt{where} cases that require dropping them, failing official target verification.
-The useful boundary must specify both what remains valid and when the current operation requires change.
-
-Historical memory can already overstate that boundary. A source-only Xarray4094
-contract claims a stack/unstack roundtrip preserves sample coordinates when
-variables have only sample dimensions. The source patch repairs the reported
-three-element dataset, but a one-element input satisfying the same condition
-loses its sample dimension and coordinate. This package is rejected before
-target use: explicit applicability fields do not establish the repaired source's
-supported scope.
+\paragraph{Design implication.}
+A useful memory communicates three things together: the behavior to achieve,
+the input relation under which it matters, and an observation that can guide
+an edit. A concise sentence sometimes supplies all the agent needs. When
+adaptation loses a condition, the graph reconstructs it as an executable input;
+feedback then turns the remaining violation into a concrete repair objective.
+This progression explains why storing more related text alone can leave the
+same bug unresolved, and why preserving a small but decisive relation can
+improve the resulting implementation.
 
 \section{Related work}
-MemOp trains memory writing from measured gains in task success, localization and efficiency \citep{memop2026}; ExpGraph learns graph retrieval from task scores with and without a retrieved experience packet \citep{expgraph2026}.
-Our interventions identify source-specific behaviors that can differ while the official target score stays unchanged.
-ExpeL distills reusable insights from experience \citep{expel2024}.
-ExpeRepair uses historical test demonstrations and reflective insights to generate reproduction and boundary tests \citep{experepair2026}.
-RETester transforms historical bug templates while retaining the applicability of the original refactoring operation \citep{retester2025}.
-MIRA separates SQL corrections into reusable requirements and uses database checks to guide their activation and adaptation \citep{mira2026}.
-BUGSTONE-E2E extracts scan anchors and vulnerability conditions from fixing commits, then applies semantic and runtime checks to matching target sites \citep{bugstone2026}.
-TRACE compiles user corrections into atomic rules and runtime checks for later coding-agent tasks \citep{trace2026}.
-TDAD selects checks through code--test dependencies \citep{tdad2026}; Agent-CoEvo
-evolves code and tests within an issue \citep{agentcoevo2026}; coupled synthesis
-combines dependency graphs and execution feedback \citep{coupled2026}.
-Our interventions isolate how historical conditions survive adaptation to the
-current operation and enter its repair.
+Graph memory supports associative retrieval through links between experiences
+and concepts, as in HippoRAG \citep{hipporag2024}; ExpeL extracts reusable
+insights from success and failure \citep{expel2024}. MemOp optimizes memory
+writing from downstream success, localization, and efficiency
+\citep{memop2026}, while ExpGraph learns retrieval from task scores with and
+without experience \citep{expgraph2026}. Our requirement-level interventions
+identify what useful memory contributes to the implementation, including
+behaviors that differ between repairs with the same official target score.
+
+ExpeRepair generates reproduction and boundary tests from historical
+demonstrations \citep{experepair2026}; RETester transforms historical bug
+templates while preserving the relevant operation \citep{retester2025}.
+MIRA separates SQL corrections into reusable requirements and uses execution
+to guide adaptation \citep{mira2026}. TRACE compiles user corrections into rules
+and runtime checks \citep{trace2026}. ContextGraph connects the historical
+input relation to the current operation, allowing a joint condition to expose
+an omission that replaying either example separately misses.
+
+\section{Conclusion}
+ContextGraph treats past repairs as reusable requirements for future work.
+Historical retrieval results show that experience can improve first-pass
+resolution and reduce the retry rounds needed to reach useful solutions.
+The executable-memory experiments identify a complementary advantage:
+recovering omitted behaviors and preserving them through adaptation.
+Combining FAISS candidate selection with graph-based condition construction
+provides a concrete path from a relevant past repair to a better current one.
 
 \section*{AI use statement}
-Generative AI assisted literature review, method development, implementation, experiments, analysis, and writing.
+Generative AI assisted literature review, method development, implementation,
+experiments, analysis, and writing.
 
 \clearpage
 \bibliography{references}
 \bibliographystyle{iclr2027_conference}
+\clearpage
+\appendix
+\input{historical-tables/supplement}
 \end{document}

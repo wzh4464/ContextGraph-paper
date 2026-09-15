@@ -1,0 +1,170 @@
+% Verbatim historical table blocks; source main.tex at 3e51135.
+% This archival file is not compiled; captions contain historical interpretations.
+
+\begin{table}[t]
+\centering
+\caption{ContextGraph schema. All embeddings are \texttt{text-embedding-3-large} (3072 dim).}
+\label{tab:schema}
+\small
+\begin{tabular}{lrl}
+\toprule
+\textbf{Node label} & \textbf{Count} & \textbf{Role} \\
+\midrule
+\textsc{Trajectory} & 1{,}795 & one solved/unsolved task; root of an episode \\
+\textsc{Fragment} & 13{,}813 & action$+$observation slice within a trajectory \\
+\textsc{ErrorPattern} & 586 & canonicalized error type/keyword set \\
+\textsc{Strategy} & 9{,}600 & LLM-extracted natural-language rule \\
+\textsc{CanonicalRule} & 7{,}835 & deduplicated cluster head over \textsc{Strategy}s \\
+\textsc{PlaybookEntry} & 8{,}910 & retrieval-ready surface form of a rule \\
+\textsc{Community} & 781 & graph-walk cluster summary \\
+\textsc{ProblemSummary} & 1{,}795 & LLM problem-statement abstractions \\
+\midrule
+\textbf{Total nodes} & 45{,}115 & \\
+\textbf{Total edges} & 73{,}975 & 7 typed relations (\textsc{HAS\_FRAGMENT}, \textsc{CAUSED\_ERROR}, \\
+& & \textsc{ADDRESSES\_ERROR}, \textsc{DERIVED\_FROM}, \textsc{MERGED\_INTO}, \\
+& & \textsc{IN\_COMMUNITY}, \textsc{SUMMARIZES}) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{Resolved rate on the 50-problem SWE-bench-Verified development subset (dev signal; the load-bearing full-set numbers appear in Table~\ref{tab:verified500} and shrink the gap considerably). \texttt{contextgraph} (this work) outperforms the no-memory baseline by $+8.6$~pp on this subset and exceeds the next-best memory method (\texttt{expel}) by $+2.6$~pp. ``Eval'' is the number of problems for which evaluation completed; ``Resolved'' is the count of problems whose patches passed the official tests; ``Rate'' is Resolved$/$Eval; ``vs no\_memory'' is the percentage-point delta over the no-memory baseline.}
+\label{tab:dev50}
+\small
+\begin{tabular}{lrrrr}
+\toprule
+\textbf{Method} & \textbf{Eval} & \textbf{Resolved} & \textbf{Rate} & \textbf{vs no\_memory} \\
+\midrule
+\texttt{contextgraph} (ours) & 48/50 & \textbf{32} & \textbf{66.6\%} & \textbf{+8.6 pp} \\
+\texttt{expel}~\cite{zhao2024expel} & 50/50 & 32 & 64.0\% & +6.0 pp \\
+\texttt{faiss} & 49/50 & 30 & 61.2\% & +3.2 pp \\
+\texttt{no\_memory} & 50/50 & 29 & 58.0\% & baseline \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{Resolved rate on the full SWE-bench-Verified set ($n{=}500$, gpt-5.4 backbone, uncapped per-instance cost). \emph{wins} and \emph{losses} are the discordant counts in the paired comparison against \texttt{no\_memory}: ``wins'' = method resolves the instance, \texttt{no\_memory} does not; ``losses'' = the reverse. $p$-values are exact-binomial McNemar tests on the discordant pairs.}
+\label{tab:verified500}
+\small
+\begin{tabular}{lrrrrrr}
+\toprule
+\textbf{Method} & \textbf{Resolved} & \textbf{Rate} & \textbf{vs no\_mem.} & \textbf{wins} & \textbf{losses} & \textbf{$p$} \\
+\midrule
+\texttt{faiss} & 327 & 65.40\% & $+3.6$ pp & 49 & 31 & 0.057 \\
+\texttt{contextgraph} (ours) & 318 & 63.60\% & $+1.8$ pp & 50 & 41 & 0.402 \\
+\texttt{expel}~\cite{zhao2024expel} & 312 & 62.40\% & $+0.6$ pp & 43 & 40 & 0.826 \\
+\texttt{no\_memory} & 309 & 61.80\% & baseline & --- & --- & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{Resolved rate on the 50-problem SWE-bench-Pro test subset. Both memory methods share an identical $3{,}183$-strategy corpus extracted from Pro's $681$-instance training split; they differ only in the retrieval mechanism. ContextGraph more than doubles flat FAISS and reaches $5.4\times$ the no-memory rate. $p$-values are exact-binomial McNemar paired tests against \texttt{no\_memory}. \emph{Budgets are asymmetric}: the two memory conditions use $\textsc{cost\_limit}=\$10$ per instance, the no-memory baseline is uncapped (see Section~4); cost is the total USD spent per condition across the $50$ instances and reflects this asymmetry.}
+\label{tab:pro50}
+\small
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Method} & \textbf{Eval} & \textbf{Resolved} & \textbf{Rate} & \textbf{vs no\_mem.} & \textbf{Cost (\$)} \\
+\midrule
+\texttt{contextgraph\_pro} (ours) & 47/50 & \textbf{11} & \textbf{23.40\%} & \textbf{$+19.05$ pp} ($p{=}0.012$) & \textbf{41} \\
+\texttt{faiss\_pro} & 47/50 & 5 & 10.64\% & $+6.29$ pp ($p{=}0.38$) & 68 \\
+\texttt{no\_memory} & 46/50 & 2 & 4.35\% & baseline & 1{,}686 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{SWE-ContextBench Lite (Related, $n{=}98$). All six conditions use the same \texttt{gpt-5.4} backbone, the same 300-summary pool, and the paper-provided \texttt{evaluation.sh} harness. Paper-reported Claude-Sonnet-4.5 figures from~\cite{swecontextbench2026} are shown for absolute orientation but are \emph{not} matched-condition comparisons (different model, different memory content). All $p$-values are paired exact-binomial McNemar tests against the column-labeled reference.}
+\label{tab:swectx}
+\small
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Method} & \textbf{Resolved} & \textbf{Rate} & \textbf{$\Delta$ vs no\_ctx} & \textbf{vs ContextGraph} & \textbf{Paper (Sonnet 4.5)} \\
+\midrule
+\textsc{free\_summary}   & 19/97 & $19.59\%$ & $-5.92$ ($p{=}0.07$)   & $-22.25$ ($p{<}10^{-4}$, $\star\!\star\!\star$) & $22.22\%$ \\
+\textsc{mem0}            & 19/98 & $19.39\%$ & $-6.12$ ($p{=}0.21$)   & $-22.45$ ($p{<}10^{-4}$, $\star\!\star\!\star$, \emph{strict}) & $24.24\%$ \\
+\textsc{langmem}         & 24/98 & $24.49\%$ & $-1.02$ ($p{=}1.00$)   & $-17.35$ ($p{=}0.0001$, $\star\!\star\!\star$) & $29.30\%$ \\
+\textsc{no\_context}     & 25/98 & $25.51\%$ & baseline               & $-16.33$ ($p{=}0.0004$, $\star\!\star\!\star$) & $26.26\%$ \\
+\textsc{oracle\_summary} & 35/98 & $35.71\%$ & $+10.20$ ($p{=}0.041$, $\star$) & $-6.12$ ($p{=}0.18$, n.s.) & $34.34\%$ \\
+\midrule
+\textsc{contextgraph} (ours) & \textbf{41/98} & $\mathbf{41.84\%}$ & \textbf{$+16.33$} ($p{=}0.0004$, $\star\!\star\!\star$) & --- & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{Cross-model generalization on SWE-ContextBench Lite ($n{=}98$, single-shot $V_1$ for all four backbones). Each cell is resolved/completed and the resolved rate. \textbf{Bold} marks the top condition per model. The \texttt{gpt-5.4} column is the $V_1$ regime ($34.69\%$ ContextGraph), matching the cross-model protocol rather than the $V_2$ headline of Table~\ref{tab:swectx}. \textsc{contextgraph} is the strongest retrieval method on all four backbones and beats the Oracle ceiling on deepseek, kimi, and MiniMax. \texttt{MiniMax-M2.7} is run through a gateway-compatibility shim (see text) and loops pathologically on $\sim$23\% of instances, depressing every condition's absolute rate.}
+\label{tab:swectx-crossmodel}
+\small
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Condition} & \texttt{gpt-5.4} & \texttt{deepseek-v4-pro} & \texttt{kimi-k2.6} & \texttt{MiniMax-M2.7} \\
+\midrule
+\textsc{no\_context}     & $21/98$ ($21.4\%$) & $30/98$ ($30.6\%$) & $18/97$ ($18.6\%$) & $19/98$ ($19.4\%$) \\
+\textsc{free\_summary}   & $19/97$ ($19.6\%$) & $26/96$ ($27.1\%$) & $25/98$ ($25.5\%$) & $19/97$ ($19.6\%$) \\
+\textsc{mem0}            & $19/98$ ($19.4\%$) & $26/97$ ($26.8\%$) & $25/98$ ($25.5\%$) & $18/98$ ($18.4\%$) \\
+\textsc{langmem}         & $24/98$ ($24.5\%$) & $33/97$ ($34.0\%$) & $24/98$ ($24.5\%$) & $21/98$ ($21.4\%$) \\
+\textsc{oracle\_summary} & $\mathbf{35/98}$ $\mathbf{(35.7\%)}$ & $27/97$ ($27.8\%$) & $24/98$ ($24.5\%$) & $15/95$ ($15.8\%$) \\
+\textsc{contextgraph} (ours) & $34/98$ ($34.7\%$) & $\mathbf{34/97}$ $\mathbf{(35.0\%)}$ & $\mathbf{28/98}$ $\mathbf{(28.6\%)}$ & $\mathbf{27/98}$ $\mathbf{(27.6\%)}$ \\
+\midrule
+$\Delta$ vs \textsc{no\_context} & $+13.3$ ($p{=}.007$) & $+4.4$ ($p{=}.23$) & $+10.1$ ($p{=}.023$) & $+8.2$ ($p{=}.057$) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{Memory pool-size ablation. ContextGraph V$_1$ single-shot resolve rate as a function of pool size $K$. The 300-summary pool is the same one used in Table~\ref{tab:swectx}. The $V_2$ rerun row repeats the $K{=}300$ condition with best-of-two attempts on failures.}
+\label{tab:swectx-poolsize}
+\small
+\begin{tabular}{lrrr}
+\toprule
+\textbf{Pool size} & \textbf{Resolved} & \textbf{Rate} & \textbf{$\Delta$ vs no\_context ($25.51\%$)} \\
+\midrule
+$K{=}50$  & 21/96 & $21.88\%$ & $-3.63$ \\
+$K{=}100$ & 27/98 & $27.55\%$ & $+2.04$ \\
+$K{=}200$ & 26/97 & $26.80\%$ & $+1.29$ \\
+$K{=}300$ ($V_1$, headline single-shot) & 34/98 & $34.69\%$ & $+9.18$ \\
+$K{=}300$ ($V_2$, headline best-of-two) & 41/98 & $\mathbf{41.84\%}$ & $\mathbf{+16.33}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{Pass@$k$ on Related-Lite ($n{=}99$, \texttt{deepseek-v4-pro}, frozen verifier). Cumulative resolved after each pass; discordant pairs and exact McNemar $p$. Through passes 1--2 the treatment never loses an instance the control resolves ($a$-only${}={}0$); four control-only wins appear only in pass~3 (retry stochasticity, audited clean).}
+\label{tab:swectx-stream}
+\small
+\begin{tabular}{lccccc}
+\toprule
+ & \textbf{Control} & \textbf{ContextGraph} & \textbf{Discordant} & \textbf{McNemar $p$} \\
+\midrule
+pass@1 & $14/99$ & $\mathbf{21/99}$ & $+7/-0$ & $0.016$ \\
+pass@2 (cumulative) & $16/99$ & $\mathbf{25/99}$ & $+9/-0$ & $0.0039$ \\
+pass@3 (cumulative) & $25/99$ & $27/99$ & $+6/-4$ & $0.75$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{Cross-model replication of the pass@1 effect on Related-Lite ($99$ tasks, single pass, frozen verifier). Every model is paired against its own no-memory control; the memory configuration is a mechanically generated superset of that control. The pool is static and identical across backbones. \texttt{deepseek-v4-pro} is the original campaign of Table~\ref{tab:swectx-stream}.}
+\label{tab:swectx-xmodel}
+\small
+\begin{tabular}{lccccc}
+\toprule
+\textbf{Backbone} & \textbf{Control} & \textbf{Memory} & \textbf{ctl-only/mem-only} & \textbf{McNemar $p$} & \textbf{Dedup-clean} \\
+\midrule
+\texttt{deepseek-v4-pro} & $14/99$ & $\mathbf{21/99}$ & $0/7$ & $\mathbf{0.016}$ & $13$ vs.\ $19$ ($p{=}0.031$) \\
+\texttt{deepseek-v3.2-exp} & $16/98$ & $\mathbf{20/99}$ & $4/8$ & $0.39$ & $15$ vs.\ $18$ ($p{=}0.55$) \\
+\texttt{glm-5.2} & $17/99$ & $\mathbf{24/99}$ & $1/8$ & $\mathbf{0.039}$ & $15$ vs.\ $21$ ($p{=}0.070$) \\
+\texttt{kimi-k3} & $29/99$ & $\mathbf{31/99}$ & $3/5$ & $0.73$ & $26$ vs.\ $28$ ($p{=}0.73$) \\
+\bottomrule
+\end{tabular}
+\end{table}

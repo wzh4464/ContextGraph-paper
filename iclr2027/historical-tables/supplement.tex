@@ -1,0 +1,206 @@
+\section{Historical benchmark tables and protocols}
+\label{sec:historical}
+The benchmark tables recover the project's historical aggregate records from
+\texttt{main.tex} (paper revision \texttt{3e51135}) and earlier ICLR drafts.
+This revision restores the reported data; it adds no solver execution or new
+verification of those historical patches. Verbatim source tables and a
+source map accompany the paper.
+
+\paragraph{Memory configurations.}
+The Verified500 system indexes trajectory fragments, rules, and communities
+with dense, lexical, and graph retrieval. The Related-Lite98 system indexes
+300 Experience summaries with repository-filtered lookup and a memory tool;
+its production repository-filtered route differs from generic channel fusion.
+The Related-Lite99 episodic system serves reference fixes, verification hints,
+and pre-base history from 291 episodes at pre-plan and post-error query points.
+These configurations precede the Qwen executable-witness graph.
+
+\paragraph{Task counts and attempts.}
+Verified500 uses a fixed 500-task denominator; completed counts were 486 for
+no memory, 488 for ExpeL, 490 for FAISS, and 484 for ContextGraph.
+Related-Lite98 excludes one shared image-build failure from the original
+99-task manifest and reports resolved/completed in each arm. Its $V_1$ regime
+uses one attempt; the historical $V_2$ aggregate includes failure reruns.
+The main-text pool-size table uses $V_1$ only: the old delta column used the
+$V_2$ control rate and is omitted. The MiniMax M2.7 campaign used a
+gateway-compatibility shim.
+
+\paragraph{Related-Lite99 source content.}
+The episodic campaign served static source episodes: its original online deposit
+path omitted fields needed for retrieval. The historical overlap analysis
+identified ten targets with near-duplicate source fixes (token-Jaccard at least
+0.85); removing them gives an 89-task frame. DeepSeek V4 Pro retains a
+first-pass gain of 19/89 versus 13/89 ($p=.031$). The full-set cumulative
+two-pass gain of nine exceeds the campaign's preregistered threshold of eight.
+
+\begin{table}[htbp]
+\centering
+\caption{Historical curated-episode Related-Lite99 replication, one pass per
+backbone. Last column gives recorded control/memory counts and paired $p$
+after removing ten near-duplicate targets; arm-specific completed denominators
+for that subset are not provided in the original table.}
+\label{tab:swectx-xmodel}
+\small
+\begin{tabular}{lccccc}
+\toprule
+Backbone & Control & Memory & C/M only & $p$ & Reduced set \\
+\midrule
+DeepSeek V4 Pro & 14/99 & 21/99 & 0/7 & .016 & 13/19 ($p=.031$) \\
+DeepSeek V3.2 exp & 16/98 & 20/99 & 4/8 & .39 & 15/18 ($p=.55$) \\
+GLM 5.2 & 17/99 & 24/99 & 1/8 & .039 & 15/21 ($p=.070$) \\
+Kimi K3 & 29/99 & 31/99 & 3/5 & .73 & 26/28 ($p=.73$) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Historical Related-Lite98 GPT-5.4 aggregate with failure reruns
+($V_2$ reporting regime). The historical table alone does not supply uniform
+per-arm retry accounting; Table~\ref{tab:swectx-crossmodel} gives the separate
+single-shot $V_1$ comparison.}
+\label{tab:swectx-v2}
+\begin{tabular}{lrr}
+\toprule
+Memory & Resolved/completed & Rate \\
+\midrule
+Random summaries & 19/97 & 19.59\% \\
+Mem0 & 19/98 & 19.39\% \\
+LangMem & 24/98 & 24.49\% \\
+No memory & 25/98 & 25.51\% \\
+Oracle summary & 35/98 & 35.71\% \\
+ContextGraph & 41/98 & 41.84\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Historical Verified development subset. Rates use completed
+evaluations. The preprint transcribed this table from an experiment screenshot;
+66.6\% retains the recorded display precision.}
+\label{tab:dev50}
+\begin{tabular}{lrrr}
+\toprule
+Method & Completed/planned & Resolved & Recorded rate \\
+\midrule
+ContextGraph & 48/50 & 32 & 66.6\% \\
+ExpeL & 50/50 & 32 & 64.0\% \\
+FAISS & 49/50 & 30 & 61.2\% \\
+No memory & 50/50 & 29 & 58.0\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Historical SWE-bench-Pro50, recovered from a disabled preprint
+section. Memory arms share a 3,183-strategy pool and a \$10 per-task cap;
+no memory is uncapped. Rates use completed evaluations; costs are recorded
+totals under these different budgets.}
+\label{tab:pro50}
+\begin{tabular}{lrrrr}
+\toprule
+Method & Completed/planned & Resolved & Rate & Cost (\$) \\
+\midrule
+ContextGraph & 47/50 & 11 & 23.40\% & 41 \\
+FAISS & 47/50 & 5 & 10.64\% & 68 \\
+No memory & 46/50 & 2 & 4.35\% & 1,686 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Historical trajectory-graph snapshot, using text-embedding-3-large
+vectors with 3,072 dimensions. The new executable-witness graph
+uses a separate Qwen embedding space.}
+\label{tab:schema}
+\begin{tabular}{lrl}
+\toprule
+Node label & Count & Role \\
+\midrule
+Trajectory & 1,795 & Source episode \\
+Fragment & 13,813 & Action and observation slice \\
+ErrorPattern & 586 & Error type and keywords \\
+Strategy & 9,600 & Extracted rule \\
+CanonicalRule & 7,835 & Consolidated rule \\
+PlaybookEntry & 8,910 & Retrieval-ready entry \\
+Community & 781 & Linked-fragment summary \\
+ProblemSummary & 1,795 & Episode problem abstraction \\
+\midrule
+Total nodes & 45,115 & \\
+Total edges & 73,975 & Seven typed relations \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\clearpage
+\section{Earlier interfaces and development comparisons}
+\label{sec:additional}
+Table~\ref{tab:interfaces} restores the earlier ICLR draft's six-interface
+Related-Lite99 experiment: a separate DeepSeek V4 Pro campaign with 500 calls
+and the last five observations retained. Its frozen verdict requires
+fail-to-pass success and does not veto every pass-to-pass regression. The
+88-task frame belongs to this campaign's source-overlap analysis.
+
+\begin{table}[htbp]
+\centering
+\caption{Earlier Related-Lite99 memory interfaces and their original 88-task
+sensitivity frame. Gains and paired exact tests use the full 99-task frame.}
+\label{tab:interfaces}
+\begin{tabular}{lrrrr}
+\toprule
+Memory & Resolved/99 & Resolved/88 & Gain (pp) & $p$ \\
+\midrule
+No memory & 17 & 16 & --- & --- \\
+Flat patches & 18 & 18 & +1.01 & 1.000 \\
+Patches + procedure card & 18 & 15 & +1.01 & 1.000 \\
+Graph & 12 & 12 & -5.05 & .227 \\
+Rules & 13 & 12 & -4.04 & .424 \\
+File list & 9 & 8 & -8.08 & .057 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Restored Django14404 development comparison. All candidates pass
+the official 2 fail-to-pass and 323 pass-to-pass tests.}
+\label{tab:residual}
+\begin{tabular}{lccc}
+\toprule
+Candidate & Prefix & Query & Prefix + query \\
+\midrule
+Initial repair & Pass & Fail & Fail \\
+Issue-based revision & Pass & Fail & Fail \\
+Historical patch revision & Pass & Pass & Pass \\
+Executed relation revision & Pass & Pass & Pass \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Intervention scope.}
+Content comparisons start fresh agents from the original development target;
+refinement comparisons start from a common completed candidate. Additional
+MySQL, named-zone, and ordinary-subclass checks were constructed after
+inspecting the corresponding repairs, then applied across their comparison
+group. The composition pair holds history, current example and failure, and
+the execution interface fixed; the added input is the composed condition.
+
+\paragraph{Operation-dependent preservation.}
+In Matplotlib20826, clearing and replotting twin axes restores finite data
+bounds, so failure of an isolated historical plotting example does not describe
+the state after that workflow. In Django16819, canceling a same-name index
+remove/add pair loses a required change of indexed column. These observations
+motivate applying memory conditions along the current operation sequence.
+
+\paragraph{Four-benchmark extension.}
+The new matched no-memory, FAISS, and Graph evaluation targets Verified150,
+Related-Lite99, LoLBench/CAPBench100, and Datacurve DeepSWE113. These four
+new-method result sets are incomplete. The closed DeepSWE Kea development
+baseline passes 9/12 fail-to-pass and 139/139 pass-to-pass tests (binary reward 0).
+The closed JDK5 LoLBench baseline originally submitted no artifact; a separate
+no-inference recovery of its recorded patch passes 0/5 fail-to-pass and 51/51
+pass-to-pass tests (binary reward 0). These are development outcomes. The
+historical Verified500 table is a different evaluation from Verified150.

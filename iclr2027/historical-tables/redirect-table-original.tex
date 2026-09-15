@@ -1,0 +1,15 @@
+\begin{table}[t]
+\centering
+\caption{Django 14404 development repair. Every row passes official verification: 2 fail-to-pass and 323 pass-to-pass tests. Behavioral checks distinguish the omitted requirement.}
+\label{tab:residual}
+\begin{tabular}{lccc}
+\toprule
+Candidate & Prefix & Query & Prefix + query \\
+\midrule
+Initial repair & Pass & Fail & Fail \\
+Issue-based revision & Pass & Fail & Fail \\
+Historical patch revision & Pass & Pass & Pass \\
+Executed relation revision & Pass & Pass & Pass \\
+\bottomrule
+\end{tabular}
+\end{table}
