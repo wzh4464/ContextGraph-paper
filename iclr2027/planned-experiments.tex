@@ -1,0 +1,316 @@
+% Proposed experiments only. Existing manuscript and recorded tables are unchanged.
+\begingroup
+\newcommand{\pending}{\textit{TBD}}
+
+\section{Planned experiments: resolution and efficiency}
+\label{sec:planned-outcomes}
+These tables specify the experiments needed to extend the paper's argument.
+\textit{TBD} denotes an unmeasured result, not a projected score. Sample sizes
+are proposed allocations. All new solver experiments use the authorized
+DeepSeek V4 Pro OpenRouter route; new embeddings use the pinned Qwen3-Embedding-8B
+space. Each submission is verified immediately with its benchmark's verifier;
+independent semantic trajectory reviews occur at most ten minutes apart.
+
+\begin{table}[htbp]
+\centering
+\caption{\textbf{Does the complete method improve repair success?}
+Planned matched comparison on the four fixed manifests. Each cell will report
+resolved/planned and assessed/planned for one full first pass. Every arm uses
+the same agent, model, tools, per-task budget, and task order. Flat and Graph
+use the same frozen source bank. Flat returns complete memory records by FAISS
+similarity; Graph adds the method's relations and condition composition.
+Graph-minus-Flat is the primary method comparison; the final row reports its
+paired task difference and 95\% interval separately for each benchmark.}
+\label{tab:planned-fourbench}
+\small
+\begin{tabular}{lcccc}
+\toprule
+Method & Verified & Related-Lite & LoLBench & DeepSWE \\
+Planned tasks & 150 & 99 & 100 & 113 \\
+\midrule
+No memory & \pending & \pending & \pending & \pending \\
+FAISS Flat & \pending & \pending & \pending & \pending \\
+ContextGraph & \pending & \pending & \pending & \pending \\
+\midrule
+Graph $-$ Flat (pp, CI) & \pending & \pending & \pending & \pending \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{\textbf{Does memory reach useful solutions with less computation?}
+Extend the same frozen comparison to three real passes, retrying each arm's
+own unresolved tasks. Produce this panel separately for each benchmark.
+Report cumulative resolved/planned, all-attempt tokens and USD per resolved
+task after three passes, and aggregate active seconds to resolve 10\% of the
+fixed manifest. Active time includes model, tool, and verification execution;
+worker allocation and task order are matched. A threshold never reached is
+reported as such. Construction cost is added through
+Table~\ref{tab:planned-amortization}. The comparison tests the early-resolution
+pattern in Table~\ref{tab:swectx-stream} using measured time and cost.}
+\label{tab:planned-efficiency}
+\small
+\begin{tabular}{lcccccc}
+\toprule
+Method & Pass@1 & Pass@2 & Pass@3 & Tokens/solve & USD/solve & Time to 10\% \\
+\midrule
+No memory & \pending & \pending & \pending & \pending & \pending & \pending \\
+FAISS Flat & \pending & \pending & \pending & \pending & \pending & \pending \\
+ContextGraph & \pending & \pending & \pending & \pending & \pending & \pending \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{\textbf{Order the work around the scientific argument.}
+The experiment sequence uses development tasks to determine useful content and
+fix the method before the four-manifest comparison. Each later stage answers
+a distinct question; numerical gains are measured rather than assumed.}
+\label{tab:planned-sequence}
+\small
+\begin{tabular}{lp{0.40\linewidth}p{0.40\linewidth}}
+\toprule
+Stage & Question & Experiment and evidence \\
+\midrule
+1 & What should memory communicate? & Content and source-utility interventions
+in Tables~\ref{tab:planned-content}--\ref{tab:planned-utility}. \\
+2 & What must the graph preserve? & Relation and composition ablations in
+Table~\ref{tab:planned-graph}. \\
+3 & Can retrieval find useful conditions? & Ranking and source coverage in
+Tables~\ref{tab:planned-retrieval}--\ref{tab:planned-pool}. \\
+4 & Does the fixed method help in practice? & Four-benchmark resolution,
+retry efficiency, and amortized cost in Tables~\ref{tab:planned-fourbench},
+\ref{tab:planned-efficiency}, and~\ref{tab:planned-amortization}. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\clearpage
+\section{Planned experiments: which memory is effective?}
+\label{sec:planned-content}
+Use 24 distinct development targets from the existing dev70 partition, spanning
+at least four repositories and four operation families. Select task/source
+pairs from public issues and source evidence before observing the new repairs.
+Use three independent repetitions per arm, with common target and source IDs.
+The proposed allocation is 72 attempts per arm; repetitions remain clustered
+by target in effect estimates. The examples motivating Tables~\ref{tab:memorycontent}
+and~\ref{tab:composedconditions} are a development starting point for this expansion.
+
+\begin{table}[htbp]
+\centering
+\caption{\textbf{Which representation transfers the missing requirement?}
+Each target uses the same single historical source and the same solve budget.
+The rows vary only the delivered content: requirement $r$, historical patch
+$H$, witness $W=(I,A,O)$, and source executions $E^{-},E^{+}$.
+All rows receive the same execution tool and current-task instructions.
+Official is benchmark resolution; Joint requires all predeclared combined
+current/historical checks; Preserve requires the neighboring input checks;
+Complete requires all three on the same submitted repair. Additional joint
+and neighboring evaluation inputs and observers are fixed before these runs
+and withheld from the solver; delivered source witnesses remain visible.
+Report mean task success across repetitions and paired intervals.}
+\label{tab:planned-content}
+\small
+\begin{tabular}{lcccc}
+\toprule
+Delivered memory & Official $\uparrow$ & Joint $\uparrow$ & Preserve $\uparrow$ & Complete $\uparrow$ \\
+\midrule
+None & \pending & \pending & \pending & \pending \\
+Requirement $r$ & \pending & \pending & \pending & \pending \\
+Historical implementation $H$ & \pending & \pending & \pending & \pending \\
+$r+H$ & \pending & \pending & \pending & \pending \\
+$r+W$ & \pending & \pending & \pending & \pending \\
+$r+W+E^{-}+E^{+}$ & \pending & \pending & \pending & \pending \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{\textbf{What makes one source experience useful?}
+On a 12-target subset chosen before candidate outcomes, form a pool of four
+distinct sources per target using dense, lexical, operation-connected, and
+same-repository random selection, filling duplicates from the same policy.
+Deliver each source individually in the complete-witness format for three
+repetitions: 144 source-conditioned attempts, plus the matched no-memory
+controls from Table~\ref{tab:planned-content}. Classify source/current relations
+from their original programs before inspecting solver repairs. Report the
+source-pair count and the paired change from no memory in Complete success and
+preservation failures. All sources share one target-level evaluator containing
+the applicable current and historical requirements. These per-source effects supply development
+utility labels for Table~\ref{tab:planned-retrieval}.}
+\label{tab:planned-utility}
+\small
+\begin{tabular}{p{0.44\linewidth}ccc}
+\toprule
+Source/current relation & Source pairs & $\Delta$ Complete & $\Delta$ regressions \\
+\midrule
+Adds an omitted requirement & \pending & \pending & \pending \\
+Preserves already-satisfied behavior & \pending & \pending & \pending \\
+Shares operation, changes input relation & \pending & \pending & \pending \\
+Different operation or conflicting requirement & \pending & \pending & \pending \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\clearpage
+\section{Planned experiments: graph relations and retrieval}
+\label{sec:planned-graph}
+
+\begin{table}[htbp]
+\centering
+\caption{\textbf{Which graph operation improves the submitted repair?}
+Use the same 24 development targets and three repetitions, fixing the FAISS
+top-three source IDs, complete source content, memory token allowance, current
+feedback, and callable tool. A delivers the source witnesses. B asks a writer
+to generate joint checks from the same text records and public example;
+C composes checks using the graph's explicit input and operation bindings.
+Match the total generation-plus-solver budget. D and E remove one relation
+family from C while retaining nodes, text, and source IDs; a missing binding
+suppresses its composed check while leaving the source witness available.
+F adds failed execution observations to C. Compare B--A for generated joint
+checks, C--B for graph-bound construction, C--D/E for relation types,
+and F--C for execution feedback. All arms have the same tool budget.
+Alongside Complete success, count repair incorporation only when the submitted
+implementation passes the relevant joint checks.}
+\label{tab:planned-graph}
+\small
+\begin{tabular}{p{0.48\linewidth}ccc}
+\toprule
+Variant & Joint $\uparrow$ & Complete $\uparrow$ & Regressions $\downarrow$ \\
+\midrule
+A. Flat complete witnesses; no composition & \pending & \pending & \pending \\
+B. A + text-based joint-check generation & \pending & \pending & \pending \\
+C. A + graph-bound condition composition & \pending & \pending & \pending \\
+D. C without input-role relations & \pending & \pending & \pending \\
+E. C without operation/argument bindings & \pending & \pending & \pending \\
+F. C + executed-condition feedback & \pending & \pending & \pending \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{\textbf{Can a retriever find behaviorally useful memory?}
+Panel A ranks the four-source pools from Table~\ref{tab:planned-utility};
+panel B ranks the entire frozen source bank on all 24 development targets.
+For B, measure standalone source utility on the union of all policies' top-three
+sources, using the same intervention as Table~\ref{tab:planned-utility}.
+Hold the complete-witness payload and $k=3$ fixed. Utility@3 is the mean
+measured standalone $\Delta$ Complete of the selected sources; report it with
+uncertainty across targets. A full graph policy is then fixed on development
+data for Table~\ref{tab:planned-fourbench}. As an end-to-end development check,
+run each top-three packet with three repetitions and the
+same composer; the Complete column measures the packet's actual combined
+effect. Composable@3 is the fraction of targets with at least one retrieved
+condition that composes with the current workflow and executes with its observer.
+The operation-reranking row is a proposed policy; the current implementation
+retains FAISS order and supplies operation links without a hard veto.}
+\label{tab:planned-retrieval}
+\small
+\begin{tabular}{p{0.40\linewidth}cccc}
+\toprule
+Candidate ranking & Utility@3 & Composable@3 & Complete & Retrieval ms \\
+\midrule
+\multicolumn{5}{l}{A. Controlled four-source pools; 12 development targets} \\
+\midrule
+FAISS dense similarity & \pending & \pending & \pending & \pending \\
+BM25 & \pending & \pending & \pending & \pending \\
+Dense + BM25 reciprocal-rank fusion & \pending & \pending & \pending & \pending \\
+Dense + soft operation reranking & \pending & \pending & \pending & \pending \\
+Dense with a required operation match & \pending & \pending & \pending & \pending \\
+\midrule
+\multicolumn{5}{l}{B. Full source bank; 24 development targets} \\
+\midrule
+FAISS dense similarity & \pending & \pending & \pending & \pending \\
+BM25 & \pending & \pending & \pending & \pending \\
+Dense + BM25 reciprocal-rank fusion & \pending & \pending & \pending & \pending \\
+Dense + soft operation reranking & \pending & \pending & \pending & \pending \\
+Dense with a required operation match & \pending & \pending & \pending & \pending \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\clearpage
+\section{Planned experiments: coverage, scale, and reuse}
+\label{sec:planned-coverage}
+
+\begin{table}[htbp]
+\centering
+\caption{\textbf{Can the bank supply usable experience across the four benchmarks?}
+The source273 column is an existing measured same-repository witness-coverage
+count. Expand sources using official training data and commits preceding each
+pinned target base; construct source witnesses before freezing the bank shared
+by Flat and Graph. Planned columns measure source-level false-to-true witnesses,
+coverage after expansion, and the fraction of attempted source/current
+compositions that execute normally with their observer. Coverage is source
+availability, while repair benefit is measured in Table~\ref{tab:planned-fourbench}.
+This experiment develops the source bank needed for LoLBench and DeepSWE.}
+\label{tab:planned-coverage}
+\small
+\begin{tabular}{lcccc}
+\toprule
+Benchmark & Source273 coverage & New witnesses & Expanded coverage & Executable joins \\
+\midrule
+Verified150 & 133/150 & \pending & \pending & \pending \\
+Related-Lite99 & 91/99 & \pending & \pending & \pending \\
+LoLBench100 & 2/100 & \pending & \pending & \pending \\
+DeepSWE113 & 0/113 & \pending & \pending & \pending \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{\textbf{Does scale help through useful-source coverage or ranking?}
+Use the 12-target source-utility study with a fixed delivered $k=3$.
+First add 0, 4, or 16 same-repository distractors per target while retaining
+its original four-source pool; measure selection stability and Complete
+success for FAISS and the chosen graph policy. Then replace the source with
+the highest measured standalone utility with an additional distractor,
+keeping the pool size fixed. Freeze these manipulations before new packet
+outcomes and run three repetitions per cell. Distractors have complete witnesses
+for other operations, selected from public source bindings. This development
+experiment uses measured utility labels and precedes the fixed-manifest comparison.}
+\label{tab:planned-pool}
+\small
+\begin{tabular}{lcccc}
+\toprule
+Pool condition & Size & Best source in top3 & Flat Complete & Graph Complete \\
+\midrule
+Original candidate pool & 4 & \pending & \pending & \pending \\
+Add 4 distractors & 8 & \pending & \pending & \pending \\
+Add 16 distractors & 20 & \pending & \pending & \pending \\
+Replace best source, fixed size & 20 & n/a & \pending & \pending \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{\textbf{When does executable memory repay its construction cost?}
+Measure actual source construction, before/after execution, embedding, and
+indexing charges separately from solve-time retrieval and condition execution.
+For each benchmark and method, report the amortized cost
+$[C_{\mathrm{build}}+C_{\mathrm{solve}}(N)]/R(N)$ at the listed cumulative task
+counts, using one fixed task order. $R(N)$ counts official resolutions and
+solve cost includes failed attempts. Prefixes beyond a benchmark's manifest,
+or with $R(N)=0$, are n/a. For each memory method, report the first observed
+prefix with at least the control's resolutions and lower total cost per
+resolution, or ``not reached.''
+Use measured costs at these prefixes rather than projecting a success rate.}
+\label{tab:planned-amortization}
+\small
+\begin{tabular}{lccccc}
+\toprule
+Method & Build USD & USD/solve at 25 & At 50 & At 100 & Break-even tasks \\
+\midrule
+No memory & n/a & \pending & \pending & \pending & Reference \\
+FAISS Flat & \pending & \pending & \pending & \pending & \pending \\
+ContextGraph & \pending & \pending & \pending & \pending & \pending \\
+\bottomrule
+\end{tabular}
+\end{table}
+\endgroup
