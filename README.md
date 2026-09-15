@@ -6,7 +6,7 @@ build instructions in [iclr2027/README.md](iclr2027/README.md).
 The September 15 revision restores historical benchmark tables and centers the
 argument on the advantages of repair memory and executable requirement
 composition. It has eight main-text pages, one reference page, and three
-appendix pages.
+historical appendix pages, followed by four pages of planned experiment tables.
 
 `main.tex` in this directory is the preserved historical preprint. Its tables
 are mapped to the current paper in

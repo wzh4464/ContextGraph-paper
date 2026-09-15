@@ -7,13 +7,21 @@ the paper around the method's advantages: experience improves resolution and
 reduces retry rounds; executable requirements add omitted behaviors; graph
 relations compose historical conditions with the current workflow.
 
-The PDF has **eight main-text pages, one reference page, and three appendix
-pages**. ICLR fonts and margins are unchanged. The main text contains seven
+The PDF has **eight main-text pages, one reference page, three historical
+appendix pages, and four planned-experiment pages** (16 pages total).
+ICLR fonts and margins are unchanged. The main text contains seven
 tables and two figures. Four restored historical tables cover Verified500,
 Related-Lite98 cross-model results, Related-Lite99 cumulative pass@k, and memory
 pool size. The appendix restores seven further tables: cross-model episodic
 replication, the older V2 aggregate, Verified dev50, Pro50, graph schema, the
 six-interface comparison, and redirect refinement.
+
+[planned-experiments.tex](planned-experiments.tex) contains ten additional
+tables with explicit TBD cells. The logical review separates historical system
+results, content interventions, and graph delivery; specifies the range
+transformation's semantics; and defines shared outcome suites, missing-result
+handling, relation-reconstruction ablations, and cost accounting for the plans.
+All fourteen recorded result tables retain their original data.
 
 Historical results retain their original model, source pool, task denominator,
 and attempt regime. This editing pass restores reported aggregate data;
