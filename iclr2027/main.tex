@@ -15,8 +15,8 @@ repair memory: a requirement, the input that triggers it, and an executable
 observation of the desired behavior. FAISS selects candidate experiences;
 graph relations connect their inputs and operations so that historical
 conditions can be composed with the current workflow.
-Earlier ContextGraph retrieval experiments show the value of experience:
-on SWEContextBench Related-Lite, curated memory raises first-pass resolution
+On SWE-bench Verified, ContextGraph resolves 346/500 tasks against 309/500
+without memory. Earlier SWEContextBench curated memory raises first-pass resolution
 from 14/99 to 21/99 and reaches 25 resolved tasks in two passes, which the
 no-memory agent reaches in three.
 Our executable-memory development experiments explain how history improves
@@ -50,9 +50,9 @@ an executable witness supplies its input and observation. ContextGraph stores
 these relations and composes them with the current program.
 
 Our investigation follows three questions: \emph{which memory is useful, how
-should it be represented, and how should it be retrieved?} Historical benchmark
-comparisons record higher single-pass resolution across several backbones
-for earlier ContextGraph systems, which also reach a given resolution count
+should it be represented, and how should it be retrieved?} Benchmark
+comparisons record higher resolution across several backbones;
+earlier retrieval systems also reach a given resolution count
 with fewer retry rounds. Development interventions then identify the information
 responsible for a better repair. This leads to a graph whose role goes beyond
 ranking similar text: it supplies the relations needed to construct a relevant
@@ -114,13 +114,19 @@ Operation connections accompany these candidates: a repair may need to preserve
 behavior outside the initially localized function, so an early function match
 does not veto a high-ranked source.
 
-For range queries, assignment and branch analysis identifies the named-tuple
-constructor actually supplied to \texttt{filter(value\_\_range=bounds)}.
-For timezone witnesses, the graph binds the stored instant and active timezone
-to the explicit \texttt{tzinfo} arguments of observed
-\texttt{TruncDate}/\texttt{TruncTime} calls. The relation retains both a value
-and its role, allowing later checks to combine database, ambient, and
-destination timezones correctly.
+Range relations bind the named-tuple constructor to the actual lookup argument;
+timezone relations bind the stored instant and active timezone to an explicit
+destination. Retaining values and their roles supports condition construction.
+
+\paragraph{Full-context agentic retrieval.}
+We extend this interface with a code-agent selection design. Given the current
+issue, conversation, inspected code, evolving diff, and execution observations,
+the agent searches the experience pool, reads complete records, follows graph
+relations, and compares their applicability. FAISS becomes a callable search
+tool; the agent can expand its search as it learns what the repair needs.
+It returns selected experiences with their expected contribution and supporting
+requirements or witnesses. Appendix~\ref{sec:agentic-retrieval} specifies the
+extension and comparison with the implemented fixed-candidate path.
 
 \subsection{Compose history with the current workflow}
 A historical example and a current example may each pass while their
@@ -167,16 +173,16 @@ condition, and incorporating that behavior into the submitted implementation.
 \section{Experience improves resolution and reduces retry rounds}
 \label{sec:benchmark}
 \paragraph{Experimental setting.}
-We report two stages of ContextGraph. The historical retrieval systems store
-rules or repair episodes and expose them through a memory tool. Their results
-on SWE-bench Verified and SWEContextBench \citep{swebench2024,swecontext2026}
-are restored from the project's recorded experiment tables. The executable
-requirement design is developed through content and check-delivery interventions
-in Sections~\ref{sec:evidence}--\ref{sec:composition-results}; graph delivery then
-reconstructs the effective inputs. The historical tables retain their original
-task sets, backbones, and attempt regimes. Appendix~\ref{sec:historical} gives
-their protocols; Table~\ref{tab:planned-fourbench} specifies the planned
-end-to-end evaluation of the new method.
+We report the latest GPT-5.4/mini-SWE-agent result on SWE-bench Verified,
+alongside earlier retrieval experiments on SWEContextBench
+\citep{swebench2024,swecontext2026}. These systems expose rules or repair episodes
+through memory tools. Content and check-delivery interventions in
+Sections~\ref{sec:evidence}--\ref{sec:composition-results} develop executable
+requirements; graph delivery reconstructs the effective inputs. Earlier tables
+retain their original task sets and attempt regimes
+(Appendix~\ref{sec:historical}). Appendix~\ref{sec:new-results} adds the other
+new experiment summaries; Table~\ref{tab:planned-fourbench} specifies the
+four-benchmark evaluation of the executable-memory method.
 
 \paragraph{Useful experience transfers across backbones.}
 Table~\ref{tab:swectx-crossmodel} compares six memory conditions on the historical
@@ -264,29 +270,29 @@ Resolution rate & 21.88\% & 27.55\% & 26.80\% & \textbf{34.69\%} \\
 \end{tabular}
 \end{table}
 
-\paragraph{From retrieval gains to a better memory unit.}
-On the historical full Verified500 evaluation, all three memory methods improve
-the point estimate over no memory, with FAISS leading this comparison
-(Table~\ref{tab:verified500}). These outcomes make FAISS a natural component of
-ContextGraph: dense retrieval is a strong candidate-selection baseline. The next
-question is what the retrieved source contributes to the actual repair.
-Our development experiments address that question by identifying requirements
-that memory adds, then representing the relations needed to apply them.
+\paragraph{ContextGraph improves full-benchmark resolution.}
+The latest Verified500 experiment resolves 346 tasks with ContextGraph versus
+309 without memory: a 7.4 percentage-point gain (Table~\ref{tab:verified500}).
+It also resolves 19 more tasks than FAISS and 26 more than Agent KB.
+FAISS remains a strong component for finding candidate experience. Our next
+question is what a retrieved source contributes to the repair: development
+interventions identify the added requirements and the relations needed to
+apply them.
 
 \begin{table}[t]
 \centering
-\caption{Historical SWE-bench Verified500, GPT-5.4, 75 steps and uncapped
-per-task cost. Rates use all 500 tasks, including unfinished attempts.
-Wins/losses and exact McNemar $p$ compare each method with no memory.}
+\caption{New SWE-bench Verified500 results with GPT-5.4 and mini-SWE-agent.
+Rates use 500 tasks; gains are percentage points over no memory.}
 \label{tab:verified500}
-\begin{tabular}{lrrrrr}
+\begin{tabular}{lrrr}
 \toprule
-Method & Resolved & Rate & Gain (pp) & Wins/losses & $p$ \\
+Method & Resolved & Rate & Gain (pp) \\
 \midrule
-No memory & 309 & 61.80\% & --- & --- & --- \\
-ExpeL & 312 & 62.40\% & +0.6 & 43/40 & .826 \\
-FAISS & \textbf{327} & \textbf{65.40\%} & +3.6 & 49/31 & .057 \\
-ContextGraph & 318 & 63.60\% & +1.8 & 50/41 & .402 \\
+No memory & 309 & 61.8\% & --- \\
+ExpeL & 312 & 62.4\% & +0.6 \\
+Agent KB & 320 & 64.0\% & +2.2 \\
+FAISS & 327 & 65.4\% & +3.6 \\
+ContextGraph & \textbf{346} & \textbf{69.2\%} & \textbf{+7.4} \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -527,15 +533,11 @@ input relation to the current operation, allowing a joint condition to expose
 an omission that replaying either example separately misses.
 
 \section{Conclusion}
-ContextGraph turns past repairs into reusable requirements. Historical retrieval
-results show earlier resolution; development interventions identify omitted
+ContextGraph turns past repairs into reusable requirements. Benchmark comparisons
+show higher resolution; development interventions identify omitted
 behaviors that memory recovers. FAISS candidate selection and graph-based
 condition construction connect that experience to a concrete repair objective:
 satisfy the historical requirement along the current workflow.
-
-\section*{AI use statement}
-Generative AI assisted literature review, method development, implementation,
-experiments, analysis, and writing.
 
 \clearpage
 \bibliography{references}
@@ -544,5 +546,10 @@ experiments, analysis, and writing.
 \appendix
 \input{historical-tables/supplement}
 \clearpage
+\input{new-results-20260916}
+\clearpage
 \input{planned-experiments}
+\section*{AI use statement}
+Generative AI assisted literature review, method development, implementation,
+experiments, analysis, and writing.
 \end{document}

@@ -1,0 +1,128 @@
+\section{Additional new experiment results}
+\label{sec:new-results}
+These experiments extend the Verified500 comparison in
+Table~\ref{tab:verified500} across agent backbones and measure both task
+resolution and token use. Earlier campaigns appear in
+Appendix~\ref{sec:historical}.
+
+\begin{table}[htbp]
+\centering
+\caption{New SWE-Context comparison. Entries reproduce the reported
+resolved/total counts. The run configuration and benchmark manifest are TBD.}
+\label{tab:new-swectx}
+\begin{tabular}{lr}
+\toprule
+Method & Resolved/total \\
+\midrule
+No memory & 21/98 \\
+Free summaries & 19/98 \\
+Mem0 & 19/98 \\
+LangMem & 24/98 \\
+ContextGraph & \textbf{35/98} \\
+\bottomrule
+\end{tabular}
+\end{table}
+% Author query: the supplied slide lists35/98 alongside34.69% (+13.26pp).
+% These are inconsistent;34.69% corresponds to34/98. Keep the explicitly
+% supplied count here until clarified; do not derive a conflicting rate.
+
+\begin{table}[htbp]
+\centering
+\caption{New Gemini 3.1 Pro/live-SWE-agent comparison. Benchmark identity
+and sample count are TBD. The gain column reports relative improvements
+from the supplied rates.}
+\label{tab:new-gemini}
+\begin{tabular}{lrrr}
+\toprule
+Metric & No memory & ContextGraph & Relative gain \\
+\midrule
+pass@1 & 82.3\% & \textbf{88.9\%} & +8.0\% \\
+pass@3 & 82.6\% & \textbf{90.4\%} & +9.4\% \\
+pass@5 & 82.8\% & \textbf{91.7\%} & +10.7\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Token efficiency.}
+The new summary reports 236K tokens per task without memory and 201K with
+ContextGraph, a 14.8\% reduction (approximately 15\%). The benchmark, sample
+count, and accounting boundary for these token totals remain TBD; the source
+summary does not identify a specific table as their measurement population.
+
+\begin{table}[htbp]
+\centering
+\caption{New Codex/GPT-5.5 comparison, preserving the supplied counts and
+denominators. Benchmark identity and the pass@3 sampling unit are TBD.}
+\label{tab:new-codex55}
+\begin{tabular}{lrr}
+\toprule
+Reported metric & Codex + GPT-5.5 & With ContextGraph \\
+\midrule
+pass@1 & 1/20 & 3/20 \\
+pass@3 & 1/20 & 5/30 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\clearpage
+\section{Full-context code-agent retrieval}
+\label{sec:agentic-retrieval}
+The retrieval problem is to find experience that advances the current repair.
+A short issue embedding can omit the information that makes a memory useful:
+the code already inspected, a failed approach, an observed exception, or a
+condition that a partial repair has broken. We therefore propose giving the
+selector the coding agent's complete current-task context and tools for
+exploring the experience pool.
+
+Let $C_t$ contain the task and conversation, inspected code, edits, actions,
+and observations available at step $t$. The selector operates on $C_t$ and
+a frozen experience pool $\mathcal{M}$. It can search with FAISS or lexical
+queries, open complete source records, follow operation and input relations,
+and compare the requirements supplied by different experiences. Its output
+is a set of source IDs, their expected contribution to the repair, and the
+records or executable conditions supporting that choice. Selection can recur
+when new execution feedback changes what the repair needs.
+
+Full context describes the selector's access to the current task; it does
+not require placing every experience into one prompt. Search and record
+reading make the whole admitted pool accessible. The returned material
+retains the source identity and can use the same condition-composition and
+execution interface as fixed-candidate retrieval.
+
+\paragraph{Implementation boundary.}
+The repository already provides context-aware candidate reranking and a
+selector over all 300 compact experience cards. These prototypes cap task
+or working-state text at 4,000 characters and limit candidate content.
+They provide starting points for the proposed full-context, iterative
+code-agent search; the implemented source-witness path currently uses
+the FAISS candidate policy described in Section~\ref{sec:method}.
+
+\begin{table}[htbp]
+\centering
+\caption{\textbf{Does full-context agentic search find more useful experience?}
+Planned comparison on the same 24 development tasks, three repetitions per
+arm. Freeze a common solver-state snapshot before selection on each task;
+keep the model, source pool, delivered memory format, maximum three sources,
+composer, and total selection-plus-repair budget fixed. B, D, and E use the
+same search-agent controller. B and D can open only the same FAISS ten
+candidates; E can search the complete admitted pool. Thus D--B measures
+the contribution of full context, and E--D measures iterative pool access.
+C compares the existing all-card selector strategy. Evaluate with the common
+Combined suite and source-utility protocol of
+Tables~\ref{tab:planned-content} and~\ref{tab:planned-utility}; rankings and
+selections are frozen before obtaining utility labels. Combined measures
+the actual repaired program. Search cost includes all selector calls.}
+\label{tab:planned-agentic}
+\small
+\begin{tabular}{p{0.49\linewidth}ccc}
+\toprule
+Selection policy & Utility@3 & Combined & Search cost (\$) \\
+\midrule
+A. FAISS top-three & TBD & TBD & TBD \\
+B. Task-only agent; fixed candidates & TBD & TBD & TBD \\
+C. Task-only selector; all experience cards & TBD & TBD & TBD \\
+D. Full-context agent; fixed candidates & TBD & TBD & TBD \\
+E. Full-context agent; iterative pool search & TBD & TBD & TBD \\
+\bottomrule
+\end{tabular}
+\end{table}

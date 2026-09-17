@@ -6,6 +6,24 @@ This revision restores the reported data; it adds no solver execution or new
 verification of those historical patches. Verbatim source tables and a
 source map accompany the paper.
 
+\begin{table}[htbp]
+\centering
+\caption{Historical SWE-bench Verified500, GPT-5.4, 75 steps and uncapped
+per-task cost. Rates use all 500 tasks, including unfinished attempts.
+Wins/losses and exact McNemar $p$ compare each method with no memory.}
+\label{tab:verified500-historical}
+\begin{tabular}{lrrrrr}
+\toprule
+Method & Resolved & Rate & Gain (pp) & Wins/losses & $p$ \\
+\midrule
+No memory & 309 & 61.80\% & --- & --- & --- \\
+ExpeL & 312 & 62.40\% & +0.6 & 43/40 & .826 \\
+FAISS & \textbf{327} & \textbf{65.40\%} & +3.6 & 49/31 & .057 \\
+ContextGraph & 318 & 63.60\% & +1.8 & 50/41 & .402 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \paragraph{Memory configurations.}
 The Verified500 system indexes trajectory fragments, rules, and communities
 with dense, lexical, and graph retrieval. The Related-Lite98 system indexes

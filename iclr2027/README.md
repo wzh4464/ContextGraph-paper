@@ -2,17 +2,20 @@
 
 Read [main.pdf](main.pdf) or edit [main.tex](main.tex).
 
-The 2026-09-15 revision restores the historical benchmark tables and organizes
+The September 15--16 revisions restore the historical benchmark tables and organize
 the paper around the method's advantages: experience improves resolution and
 reduces retry rounds; executable requirements add omitted behaviors; graph
 relations compose historical conditions with the current workflow.
 
 The PDF has **eight main-text pages, one reference page, three historical
-appendix pages, and four planned-experiment pages** (16 pages total).
+appendix pages, two new-result/agentic-retrieval pages, and four planned-experiment
+pages** (18 pages total).
 ICLR fonts and margins are unchanged. The main text contains seven
-tables and two figures. Four restored historical tables cover Verified500,
+tables and two figures. Main Table 4 reports the user-supplied Verified500 result,
+346/500 versus 309/500 without memory. Three restored main-text tables cover
 Related-Lite98 cross-model results, Related-Lite99 cumulative pass@k, and memory
-pool size. The appendix restores seven further tables: cross-model episodic
+pool size. The historical appendix preserves the earlier Verified500 result
+(318/500) and seven further tables: cross-model episodic
 replication, the older V2 aggregate, Verified dev50, Pro50, graph schema, the
 six-interface comparison, and redirect refinement.
 
@@ -21,7 +24,14 @@ tables with explicit TBD cells. The logical review separates historical system
 results, content interventions, and graph delivery; specifies the range
 transformation's semantics; and defines shared outcome suites, missing-result
 handling, relation-reconstruction ablations, and cost accounting for the plans.
-All fourteen recorded result tables retain their original data.
+All fourteen earlier result tables retain their original data.
+
+[new-results-20260916.tex](new-results-20260916.tex) adds the other supplied
+experiment summaries and the full-context code-agent retrieval design, including
+one planned comparison. Together with the new main Table 4, this brings the
+paper to eighteen result tables and eleven planned tables. Missing experiment
+settings remain TBD; the outstanding count and denominator questions are
+recorded in the parent repository's September 16 update report.
 
 Historical results retain their original model, source pool, task denominator,
 and attempt regime. This editing pass restores reported aggregate data;
@@ -50,6 +60,8 @@ Supporting development reports in the parent repository:
 - `docs/reports/memory-content-four-20260908.md`
 - `docs/reports/memory-to-graph-design-20260908.md`
 - `docs/reports/paper-table-restoration-20260915.md`
+- `docs/reports/paper-logic-review-20260915.md`
+- `docs/reports/ppt-code-update-20260916.md`
 
 Build:
 
