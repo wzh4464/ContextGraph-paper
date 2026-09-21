@@ -48,6 +48,21 @@ The useful unit of experience is a requirement with its triggering conditions.
 A patch supplies an implementation; a sentence makes the requirement portable;
 an executable witness supplies its input and observation. ContextGraph stores
 these relations and composes them with the current program.
+Figure~\ref{fig:concept} contrasts this interface with retrieving the lesson as text.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/contextgraph-design/fig1-concept.pdf}
+\caption{From retrieved advice to executable requirements. (a) A retrieval-as-text
+interface returns the historical requirement $r$ as a sentence; its input,
+operation, and observer are not retained. (b) \cg{} links $r$ to its witness
+$(I,A,O)$, recovers the historical input and observer, and composes them with
+the current operation: \texttt{filter(field=x)} becomes
+\texttt{filter(field\_\_range=R(x,x))}. Observations return to the agent, and the
+condition reruns after each edit. The comparison concerns the memory interface;
+agents in both settings may run task tests.}
+\label{fig:concept}
+\end{figure}
 
 Our investigation follows three questions: \emph{which memory is useful, how
 should it be represented, and how should it be retrieved?} Benchmark
@@ -89,13 +104,16 @@ of the requirement's usable context.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\linewidth]{figures/memory_method.pdf}
-\caption{ContextGraph separates candidate selection from condition construction.
-FAISS returns source identities; the graph returns their complete witnesses and
-input/operation relations. The illustrated range adapter retains the public workflow
-while introducing a historical input condition. Execution makes its result
-available during repair. Source evidence is reusable; the composed check and
-its result belong to the current task.}
+\includegraphics[width=\linewidth]{figures/contextgraph-design/fig2-overview.pdf}
+\caption{\cg{} overview. (A) A source writer turns a past repair into a
+requirement $r$ and witness $W=(I,A,O)$. An accepted witness fails on the
+original version $V^{-}$ and passes on the repaired $V^{+}$; the experience is
+then linked into memory. (B) FAISS over Qwen3-Embedding-8B returns the top three
+source identities from the same repository, and graph joins recover their
+witnesses and relations. The historical input is composed with the current
+operation and executed on the working tree; observations guide edits, and
+submitted patches go to the official verifier. Source evidence is reusable;
+the composed check and its result belong to the current task.}
 \label{fig:method}
 \end{figure}
 
