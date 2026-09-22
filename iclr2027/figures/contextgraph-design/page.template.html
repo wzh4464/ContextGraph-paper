@@ -1,0 +1,286 @@
+<title>ContextGraph Figures</title>
+<meta name="description" content="Redesigned ICLR 2027 Figure 1 (concept comparison) and Figure 2 (method overview) for ContextGraph.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=STIX+Two+Text:ital,wght@0,400;0,600;1,400;1,600&display=swap">
+<style>
+  :root {
+    --ground: #E7EAEE;
+    --ink: #1C232D;
+    --muted: #5A6472;
+    --rule: #CBD1D9;
+    --accent: #94540B;
+    --control: #FFFFFF;
+    --control-on: #1C232D;
+    --control-on-ink: #FFFFFF;
+    --code-bg: #F2F4F6;
+    --code-ink: #1C232D;
+    --shadow: 0 1px 2px rgba(22, 30, 42, .07), 0 10px 28px rgba(22, 30, 42, .08);
+    /* the sheet is paper: it stays white in both themes */
+    --sheet: #FFFFFF;
+    --sheet-ink: #1E2632;
+    --sheet-muted: #4B5667;
+    --sans: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+    --mono: 'IBM Plex Mono', Menlo, Consolas, monospace;
+    --serif: 'STIX Two Text', 'Times New Roman', Times, serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #121519;
+      --ink: #E3E7EC;
+      --muted: #9AA3AF;
+      --rule: #2C323B;
+      --accent: #E2A254;
+      --control: #1B2026;
+      --control-on: #E3E7EC;
+      --control-on-ink: #121519;
+      --code-bg: #1A1F25;
+      --code-ink: #E3E7EC;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 12px 32px rgba(0, 0, 0, .38);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #121519;
+    --ink: #E3E7EC;
+    --muted: #9AA3AF;
+    --rule: #2C323B;
+    --accent: #E2A254;
+    --control: #1B2026;
+    --control-on: #E3E7EC;
+    --control-on-ink: #121519;
+    --code-bg: #1A1F25;
+    --code-ink: #E3E7EC;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 12px 32px rgba(0, 0, 0, .38);
+  }
+
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font: 15px/1.55 var(--sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding-inline: 20px;
+    padding-block: 44px 72px;
+    display: grid;
+    gap: 44px;
+  }
+
+  header { display: grid; gap: 14px; max-width: 68ch; }
+  .eyebrow {
+    margin: 0;
+    font: 500 12px/1.4 var(--mono);
+    letter-spacing: .04em;
+    color: var(--muted);
+  }
+  h1 {
+    margin: 0;
+    font: 600 clamp(30px, 4.4vw, 42px)/1.08 var(--serif);
+    letter-spacing: -.01em;
+    text-wrap: balance;
+  }
+  .lede { margin: 0; color: var(--muted); font-size: 16px; }
+  .lede code, .key code, .changes code { font: 13px var(--mono); color: var(--ink); }
+
+  .scale {
+    display: inline-flex;
+    justify-self: start;
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    background: var(--control);
+    padding: 3px;
+    gap: 3px;
+  }
+  .scale button {
+    font: 500 13px/1 var(--sans);
+    color: var(--muted);
+    background: transparent;
+    border: 0;
+    border-radius: 6px;
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+  .scale button[aria-pressed="true"] { background: var(--control-on); color: var(--control-on-ink); }
+  .scale button:focus-visible, .copy:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .plate { display: grid; gap: 12px; }
+  .plate-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 6px 14px;
+  }
+  .plate-head h2 { margin: 0; font: 600 20px/1.2 var(--serif); }
+  .plate-head span { font: 12px/1.4 var(--mono); color: var(--muted); }
+
+  .sheet {
+    margin: 0;
+    background: var(--sheet);
+    color: var(--sheet-ink);
+    border-radius: 4px;
+    box-shadow: var(--shadow);
+    padding: clamp(14px, 3vw, 32px);
+    display: grid;
+    gap: 18px;
+    justify-self: stretch;
+    max-width: 100%;
+  }
+  .art { overflow-x: auto; }
+  .art svg { display: block; width: 100%; height: auto; min-width: 620px; }
+  figcaption {
+    font: 16px/1.5 var(--serif);
+    color: var(--sheet-ink);
+    max-width: 78ch;
+  }
+  figcaption code { font: .88em var(--mono); color: var(--sheet-ink); }
+  figcaption i { font-style: italic; }
+  .meta {
+    margin: 0;
+    font: 12px/1.5 var(--mono);
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Print size: the sheet becomes one ICLR text column (\linewidth = 5.5 in, 10 pt caption) */
+  :root[data-scale="print"] .sheet {
+    justify-self: center;
+    padding: .45in .5in;
+    width: calc(5.5in + 1in);
+    max-width: 100%;
+    overflow-x: auto;
+  }
+  :root[data-scale="print"] .art svg { width: 5.5in; min-width: 5.5in; }
+  :root[data-scale="print"] figcaption { font-size: 10pt; line-height: 1.32; width: 5.5in; max-width: none; }
+
+  .notes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: 28px 44px;
+    border-top: 1px solid var(--rule);
+    padding-top: 28px;
+  }
+  .notes h3 {
+    margin: 0 0 12px;
+    font: 600 12px/1.3 var(--sans);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .key { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .key li { display: grid; grid-template-columns: 44px 1fr; gap: 12px; align-items: center; }
+  .key svg { display: block; }
+  .changes { margin: 0; padding-left: 18px; display: grid; gap: 8px; }
+  .changes li::marker { color: var(--muted); }
+  pre {
+    margin: 0;
+    background: var(--code-bg);
+    color: var(--code-ink);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 12px 14px;
+    font: 12.5px/1.6 var(--mono);
+    overflow-x: auto;
+  }
+  .usage { display: grid; gap: 10px; }
+  .usage p { margin: 0; color: var(--muted); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .scale button { transition: background-color .15s, color .15s; }
+  }
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">ICLR 2027 · paper/iclr2027/figures/contextgraph-design</p>
+    <h1>ContextGraph figures</h1>
+    <p class="lede">The concept comparison and the method overview, redrawn to share one visual language. Each witness role has its own colour, amber marks memory traffic, violet marks execution feedback, and the paper's range adapter <code>field=x</code> → <code>field__range=R(x,x)</code> replaces placeholder code.</p>
+    <div class="scale" role="group" aria-label="Figure scale">
+      <button type="button" id="scale-fit" aria-pressed="true">Fit to window</button>
+      <button type="button" id="scale-print" aria-pressed="false">Print size · 5.5 in</button>
+    </div>
+  </header>
+
+  <section class="plate" aria-labelledby="h-fig1">
+    <div class="plate-head"><h2 id="h-fig1">Figure 1 · Concept</h2><span>for the introduction</span></div>
+    <figure class="sheet">
+      <div class="art">{{FIG1}}</div>
+      <figcaption><b>Figure 1:</b> From retrieved advice to executable requirements. (a) A retrieval-as-text interface returns the historical requirement <i>r</i> as a sentence; its input, operation, and observer are not retained. (b) ContextGraph links <i>r</i> to its witness (<i>I</i>, <i>A</i>, <i>O</i>), recovers the historical input and observer, and composes them with the current operation: <code>filter(field=x)</code> becomes <code>filter(field__range=R(x,x))</code>. Observations return to the agent, and the condition reruns after each edit. The comparison concerns the memory interface; agents in both settings may run task tests.</figcaption>
+    </figure>
+    <p class="meta">fig1-concept.svg / .pdf / .png · 800 × 362 units · at \linewidth: labels 6.4 pt, smallest text 5.2 pt</p>
+  </section>
+
+  <section class="plate" aria-labelledby="h-fig2">
+    <div class="plate-head"><h2 id="h-fig2">Figure 2 · Overview</h2><span>for Section 2, method</span></div>
+    <figure class="sheet">
+      <div class="art">{{FIG2}}</div>
+      <figcaption><b>Figure 2:</b> ContextGraph overview. (A) A source writer turns a past repair into a requirement <i>r</i> and witness <i>W</i> = (<i>I</i>, <i>A</i>, <i>O</i>). An accepted witness fails on the original version <i>V</i><sup>−</sup> and passes on the repaired <i>V</i><sup>+</sup>; the experience is then linked into memory. (B) FAISS over Qwen3-Embedding-8B returns the top three source identities from the same repository, and graph joins recover their witnesses and relations. The historical input is composed with the current operation and executed on the working tree; observations guide edits, and submitted patches go to the official verifier.</figcaption>
+    </figure>
+    <p class="meta">fig2-overview.svg / .pdf / .png · 800 × 386 units · at \linewidth: labels 6.4 pt, smallest text 5.2 pt</p>
+  </section>
+
+  <section class="notes" aria-label="Notes">
+    <div>
+      <h3>Visual encoding</h3>
+      <ul class="key">
+        <li>
+          <svg width="44" height="20" viewBox="0 0 44 20" aria-hidden="true"><circle cx="10" cy="10" r="8.5" fill="#DCE6F4" stroke="#3D649C" stroke-width="1.3"/><circle cx="32" cy="10" r="8.5" fill="#FBE6C1" stroke="#B5670F" stroke-width="1.3"/></svg>
+          <span><i>r</i> requirement, stated from the intended source behaviour · <i>I</i> input, the constructed value</span>
+        </li>
+        <li>
+          <svg width="44" height="20" viewBox="0 0 44 20" aria-hidden="true"><circle cx="10" cy="10" r="8.5" fill="#D2EAE2" stroke="#2C7A64" stroke-width="1.3"/><circle cx="32" cy="10" r="8.5" fill="#E6DFF4" stroke="#6650A6" stroke-width="1.3"/></svg>
+          <span><i>A</i> operation, the call exercised · <i>O</i> observer, checks the outcome against <i>r</i></span>
+        </li>
+        <li>
+          <svg width="44" height="12" viewBox="0 0 44 12" aria-hidden="true"><line x1="2" y1="6" x2="34" y2="6" stroke="#B5670F" stroke-width="1.8" stroke-linecap="round"/><path d="M33,1.8 L42,6 L33,10.2 L35.4,6 Z" fill="#B5670F"/></svg>
+          <span>Memory traffic: store, link, top-3 IDs, recover</span>
+        </li>
+        <li>
+          <svg width="44" height="12" viewBox="0 0 44 12" aria-hidden="true"><line x1="2" y1="6" x2="34" y2="6" stroke="#6650A6" stroke-width="1.8" stroke-dasharray="4 3" stroke-linecap="round"/><path d="M33,1.8 L42,6 L33,10.2 L35.4,6 Z" fill="#6650A6"/></svg>
+          <span>Execution: observations and reruns after edits</span>
+        </li>
+        <li>
+          <svg width="44" height="16" viewBox="0 0 44 16" aria-hidden="true"><path d="M6.7,4.7 L13.3,11.3 M13.3,4.7 L6.7,11.3" stroke="#C4462A" stroke-width="1.9" stroke-linecap="round"/><path d="M25.8,8.3 L28.8,11.4 L34.6,4.4" fill="none" stroke="#2E8150" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Source-check outcome on <i>V</i><sup>−</sup> / <i>V</i><sup>+</sup>. It shows how a witness is accepted and is not an experimental result.</span>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h3>Changes from the icon version</h3>
+      <ul class="changes">
+        <li>Figure 1 stacks (a) over (b) with the same past repair, issue, agent and patch columns, so only the memory interface differs.</li>
+        <li>Row (a) shows the three witness slots as empty, so the missing information is visible in the drawing and not left to the caption.</li>
+        <li>Figure 2 puts memory in a strip between the two stages. Build writes down into it and Apply reads up from it, so no evidence line crosses a stage.</li>
+        <li>Cropped MemCo bitmaps are replaced by drawn vector icons, so the figure needs no third-party image credit.</li>
+        <li>Concrete code from Section 2.3 replaces the <code>code{ return … }</code> placeholders.</li>
+      </ul>
+    </div>
+    <div class="usage">
+      <h3>Use in the paper</h3>
+      <pre>\includegraphics[width=\linewidth]{figures/contextgraph-design/fig1-concept.pdf}
+\includegraphics[width=\linewidth]{figures/contextgraph-design/fig2-overview.pdf}</pre>
+      <p>Rebuild SVG, PDF, PNG and this page:</p>
+      <pre>uv run --no-project python paper/iclr2027/figures/contextgraph-design/draw.py</pre>
+    </div>
+  </section>
+</div>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    var fit = document.getElementById('scale-fit');
+    var print = document.getElementById('scale-print');
+    function set(mode) {
+      root.setAttribute('data-scale', mode);
+      fit.setAttribute('aria-pressed', String(mode === 'fit'));
+      print.setAttribute('aria-pressed', String(mode === 'print'));
+      try { localStorage.setItem('cg-figure-scale', mode); } catch (e) {}
+    }
+    var saved = 'fit';
+    try { saved = localStorage.getItem('cg-figure-scale') || 'fit'; } catch (e) {}
+    set(saved === 'print' ? 'print' : 'fit');
+    fit.addEventListener('click', function () { set('fit'); });
+    print.addEventListener('click', function () { set('print'); });
+  })();
+</script>

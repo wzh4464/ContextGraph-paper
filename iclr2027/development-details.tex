@@ -1,0 +1,162 @@
+\section{Development cases and input constructions}
+\label{sec:development-details}
+This appendix gives the inputs, source requirements, and repair observations
+for the three design studies in Sections~\ref{sec:evidence}--\ref{sec:feedback-results}.
+\subsection{Requirement memory: preserving triggering conditions}
+\label{sec:details-evidence}
+\label{sec:details-content}
+The executable-memory experiments use a Verified split of 280 source tasks,
+70 development tasks, and 150 held-out evaluation tasks. The cases below are
+development interventions with DeepSeek V4 Pro through OpenRouter,
+temperature zero and matched budgets within each comparison. They measure
+whether history adds a required behavior to the submitted repair.
+Table~\ref{tab:historicalrequirements} presents three such additions.
+Django14404 uses the first-ranked source issue and patch; Django12708 and
+Django11138 come from a fixed six-task cohort receiving three unchanged Flat
+rules per task. Both arms pass official verification on all six cohort tasks.
+The historical requirements distinguish the completeness of those repairs.
+
+\paragraph{An omitted behavior of the same API.}
+Django14404 reports that administrative redirects lose a deployment prefix.
+Both agents fix the prefix and pass official verification, but only the repair informed by source16612 also preserves the query string.
+A joint input combines the prefix with repeated and percent-encoded query values, \texttt{keep=a\%2Fb}\allowbreak\texttt{\&keep=c\%20d}.
+Only the history-informed repair preserves both.
+
+\paragraph{A neighboring operation.}
+Django12708 reports ambiguous deletion of an ordinary index when a unique constraint uses the same columns.
+The first retrieved source, 15732, instead concerns deletion of a unique constraint sharing its column with a primary key.
+Both repairs fix ordinary-index selection; only the memory-informed repair also excludes primary keys when deleting unique constraints.
+The source-generated PostgreSQL check runs unchanged on both target repairs.
+A separate combined input creates an ordinary index, redundant uniqueness, and a primary key on the same column.
+Both repairs preserve ordinary-index deletion, but only the memory-informed repair also deletes redundant uniqueness while retaining the primary key and data.
+History supplies a requirement for the neighboring operation.
+
+\paragraph{An independent argument of the same operation.}
+Django11138 requires date conversions to respect the database's source timezone.
+Source13363 requires \texttt{TruncDate} and \texttt{TruncTime} to honor an expression's explicit destination timezone.
+Both agents repair the source timezone, but only the memory-informed repair also honors the destination.
+A source-generated check distinguishes the historical versions and runs unchanged on the target repairs.
+On an independent SQLite input combining a UTC+1 database with an explicit New York destination, only the memory-informed repair returns the correct date and time.
+The issue and history constrain different ends of the conversion.
+
+\paragraph{A requirement can suffice without the source implementation.}
+On the redirect task, Flat memory and its original issue/patch replacement
+produce identical repairs preserving the joint behavior. Two new agents then
+revise the ordinary patch with a source-generated requirement: the redirect
+must include the original query string. One also receives the check and its
+failed observations. Both submit identical repairs passing official and joint
+checks. The sentence-only agent finds \texttt{get\_full\_path()} in the current
+repository: memory supplies the behavior, and the agent locates its implementation.
+
+\paragraph{Which information makes the requirement usable?}
+We select the constraint and timezone benefit cases and run four fresh complete agents per task, fixing the single historical source and its delivery before editing.
+Two source-only constructions produce a behavioral requirement and an implementation reference; the combined input concatenates them unchanged.
+All eight repairs pass official verification (Table~\ref{tab:memorycontent}).
+On Django12708, only Implementation and Both also remove redundant uniqueness while preserving the primary key.
+The Requirement agent tests a field with \texttt{unique=True}, but places \texttt{unique\_together} on a different, two-column set.
+This nearby passing test loses the same-column condition stated in memory.
+On Django11138, all three memory inputs preserve the explicit destination timezone, while the fresh no-memory repair omits it.
+The Requirement agent finds \texttt{self.get\_tzname()} in the target implementation without being given that helper in memory.
+
+
+
+The timezone repairs also differ on further conditions.
+Both still generates an unnecessary MySQL conversion between identical zones; Implementation instead misinterprets a named Paris source timezone, producing New York time \texttt{19:21} instead of \texttt{17:30} on a summer input.
+Requirement passes both additional diagnostics.
+These concrete omissions distinguish carrying a requirement, applying its triggering condition, and implementing the resulting behavior correctly.
+Two subsequent original-base agents receive the unchanged constraint Requirement, with or without a source-validated example; both pass official and joint checks.
+The same requirement succeeds when its trigger is reconstructed correctly; preserving that input construction is a useful role for the graph.
+
+\paragraph{Preserve the input relation.}
+On Django12663, both a three-source code-connected packet and a ten-source
+similarity packet contain the historical named-tuple repair, source13590,
+yet neither initial repair recovers its behavior. Three fresh revisions start
+from the same candidate and source (Figure~\ref{fig:memory-content-scope}).
+Original history and execution feedback recover named tuples; the requirement
+sentence alone does not. The feedback repair expands every non-builtin
+sequence into positional arguments, which also breaks ordinary tuple and list
+subclasses. Original history retains the constructor distinction and passes
+all displayed behaviors. This is precisely the relation the graph should carry:
+the argument convention of the input's type, alongside its endpoint values.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/memory_content_scope.pdf}
+\caption{Memory content changes which behaviors a repair preserves. One revision per input starts from the same Django12663 candidate and source13590. Parentheses give case counts; each cell reports all cases in its group. The ordinary-subclass inputs were chosen after inspecting the feedback repair. All three repairs pass official verification, while only original history passes every displayed behavior.}
+\label{fig:memory-content-scope}
+\end{figure}
+
+\paragraph{Retain candidates that can supply an omitted condition.}
+In this same case, demanding an operation match from the initial public-code
+localization excludes source13590, which FAISS ranks first. Keeping the
+similarity candidate lets the graph return its input relation and construct
+the joint program described next. This motivates the division in Figure~\ref{fig:method}:
+FAISS proposes sources; graph relations support their adaptation to the current
+operation. The usefulness of a candidate is established by what its condition
+adds to the repair.
+
+\subsection{Condition composition: checking interactions}
+\label{sec:details-composition-results}
+
+\paragraph{Join the historical input to the current operation.}
+The current issue involves a lazy User in a nested query; history contributes
+a named-tuple range. On a separate history-informed repair, the current scalar query and
+the historical range query each pass, while a query combining them fails.
+The composed condition reveals an omission in the second container
+reconstruction.
+
+The deterministic adapter in Equation~\ref{eq:composition} reaches the same
+omission while retaining the public program's lazy User and nested annotation.
+It produces a named-tuple point range and an ordinary-tuple neighbor.
+Graph delivery subsequently reconstructs this same program from the retrieved
+input relation. It operationalizes the condition tested in the repair comparison.
+
+\paragraph{A matched comparison tests the added condition and feedback.}
+A new original-base pair receives identical history, public scalar program,
+its observed failure, a callable execution tool, and instructions to run the
+supplied conditions before editing and submission. The augmented arm also
+receives the two composed programs and their failures.
+Both repairs pass official verification (Table~\ref{tab:composedconditions}).
+The current-feedback repair fails both historical examples and the withheld
+named-tuple/lazy-User query; the augmented repair passes those behaviors and
+preserves the ordinary subclasses.
+The augmented agent runs the joint input before editing and again after
+removing a global conversion that broke an existing test. Its remaining
+range-endpoint failure directs the final correction.
+
+\paragraph{Compose roles to expose a broader requirement.}
+The timezone relation provides another example. A fixed adapter varies the
+historical witness's three zones across database, ambient, and destination
+roles and shifts the input by 182 days. Of 72 combinations, the source patch
+changes 20 from fail to pass; 20 pass on both versions and 32 fail on both.
+Applying the family to the four timezone content interventions shows that Requirement and
+Both pass all 72. Implementation passes the 40 source-supported combinations
+but fails the remaining 32, including 16 passed without memory.
+Role composition exposes how the current source-timezone requirement interacts
+with the historical destination requirement. A complete repair can therefore
+satisfy combinations beyond those corrected by the historical implementation.
+
+\subsection{Execution feedback: guiding requirement-based repair}
+\label{sec:details-feedback}
+
+\paragraph{The addition can guide further repair.}
+Two fresh agents start from the same completed ordinary timezone patch.
+Issue-based additional review returns it unchanged; supplying a generated historical check and its failed observations leads the other agent to use \texttt{self.get\_tzname()} in both truncation methods.
+Both revisions pass official verification, but only the latter passes the historical and joint inputs.
+The intervention supplies corrective information that further issue-based review does not recover in this comparison.
+
+\paragraph{Execution feedback makes an omitted condition concrete.}
+Two fresh agents refine the same original failed Requirement candidate, both receiving its requirement again.
+One also receives the unchanged source-generated check and its actual failures for a field with a primary key or \texttt{unique=True}.
+Requirement-only review excludes the primary key but still fails the ordinary unique-field condition.
+Feedback adds generated-name disambiguation and passes both conditions.
+Both revisions pass official verification and the withheld joint sequence.
+The added behavior is recovery of the ordinary unique-field condition identified by feedback.
+
+\paragraph{Feedback from the composed query.}
+The Django12663 example also provides a refinement comparison.
+Four fresh refinements of its history-informed candidate illustrate the use of feedback:
+history alone yields one of two repairs passing all seven measured conditions;
+adding the constructed joint program and its failed observation yields two of
+two. All four pass official verification. Both augmented agents execute the
+joint input and repair the second reconstruction.

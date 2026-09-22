@@ -1,130 +1,102 @@
 % Proposed experiments only; TBD cells are not measured outcomes.
 \begingroup
-\newcommand{\pending}{\textit{TBD}}
+\raggedbottom
+\expcolor
+% Keep planning tables with their protocol instead of floating past headings.
+\makeatletter
+\renewenvironment{table}[1][]{%
+  \par\addvspace{\intextsep}\noindent
+  \begin{minipage}{\linewidth}\def\@captype{table}%
+}{%
+  \end{minipage}\par\addvspace{\intextsep}%
+}
+\makeatother
 
-\section{Planned experiments: resolution and efficiency}
+\section{Experiment 1 plan: matched repair effectiveness}
 \label{sec:planned-outcomes}
-These tables specify the experiments needed to extend the paper's argument.
-\textit{TBD} denotes an unmeasured result, not a projected score. Sample sizes
-are proposed allocations. All new solver experiments use the authorized
-DeepSeek V4 Pro OpenRouter route; new embeddings use the pinned Qwen3-Embedding-8B
-space. Each submission is verified immediately with its benchmark's verifier;
-independent semantic trajectory reviews occur at most ten minutes apart.
-Intervals resample paired targets, retaining each target's repetitions together.
-Infrastructure failures remain unassessed; paired effects state the number of
-jointly assessed targets. USD denotes metered API charges; local CPU/GPU time
-is measured separately.
+These planned experiments use a common agent and DeepSeek V4 Pro backbone,
+with Qwen3-Embedding-8B for new embeddings. Red TBD cells mark results still
+to collect; black coverage counts are existing measurements. Each patch is
+graded by its benchmark's verifier. Paired intervals resample targets while
+keeping repeated attempts together. Report assessed and planned counts;
+infrastructure failures remain unassessed. Cost includes preparation,
+selection, checks, repair, and verification.
 
-\begin{table}[htbp]
+\paragraph{Memory settings.}
+The primary comparison fixes each method's memory before target evaluation.
+All methods use the same historical sources, with their own memory construction
+adapted to the common agent. The same backbone performs extraction, selection,
+composition, and repair. The sequential-update comparison starts from these
+banks, then permits updates after submission under the same feedback and
+at least three fixed task orders. Table~\ref{tab:planned-fourbench} reports
+the four-benchmark comparison; Appendix~\ref{sec:public-program} describes
+the shared program-preparation step.
+
+\begin{table}[!htbp]
 \centering
-\caption{\textbf{Does the complete method improve repair success?}
-Planned matched comparison on the four fixed manifests. Each cell will report
-resolved/planned and assessed/planned for one full first pass. Every arm uses
-the same agent, model, tools, task order, and total per-task budget, including
-memory composition and execution. Flat and Graph share the frozen bank built
-from source273 plus the admitted expansion in Table~\ref{tab:planned-coverage}.
-Flat returns complete records by FAISS; Graph uses the selected ranking,
-relations, composition, and feedback. The final row reports their resolution
-difference on jointly assessed pairs, its 95\% interval, and paired coverage.
-Table~\ref{tab:planned-graph} separates the components of this system comparison.}
-\label{tab:planned-fourbench}
+\caption{Questions addressed by the additional experiments. \tableadd{Green additions: Appendix~\ref{sec:table-additions}.}}
+\label{tab:planned-sequence}
+\small
+\begin{tabular}{p{0.05\linewidth}p{0.23\linewidth}p{0.39\linewidth}p{0.19\linewidth}}
+\toprule
+Stage & Question & Experiment and evidence  & \tableadd{Primary outcome} \\
+\midrule
+1 & Which details must memory preserve? & Content and source-utility interventions
+in Tables~\ref{tab:planned-content}--\ref{tab:planned-utility}.  & \tableadd{Joint; Combined} \\
+2 & What does condition composition add? & Separate versus joint checks (H/I),
+supplied relations (B/C), and composer choice (C/G) in Table~\ref{tab:planned-graph}.  & \tableadd{Joint; Combined} \\
+3 & How does execution feedback help? & Source observations in
+Table~\ref{tab:planned-content}; supplied check observations (C/F) in
+Table~\ref{tab:planned-graph}.  & \tableadd{Combined; regressions} \\
+4 & Does the method improve repair? & Four-benchmark resolution (E07),
+independent behavioral completeness (E15), and applicability (E16).  & \tableadd{Official; Combined; omissions} \\
+5 & When is experience reuse effective? & Retrieval and source coverage,
+second-backbone results, retries, and amortized cost (E08/E09).  & \tableadd{Utility@3; USD/solution; time} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Experiment 2 plan: content and mechanism ablations}
+\label{sec:planned-content}
+The development panel uses 24 targets from the 70-task development partition,
+covering at least four repositories and four operation families. Task/source
+pairs are selected from public evidence before the new repairs are observed.
+Each arm has three fresh repetitions (72 attempts), with common source IDs,
+matched budgets, and balanced arm order. The evaluation suite is fixed in
+advance and includes joint requirements and originally passing neighbors.
+A regression means failing at least one of these neighboring checks.
+All arms share program preparation; preparation and delivery failures stay
+in the assigned panel. Experiments using researcher-prepared programs are
+reported separately from automatic preparation.
+
+The seven-method panel first measures Official, Joint, Preserve, and Combined
+on this suite. The content, relation, composition, and retrieval studies then
+vary one part of the memory interface at a time.
+
+\begin{table}[!htbp]
+\centering
+\caption{Seven-method behavioral comparison. Entries report mean task success and sample SD across three repetitions. Paired intervals resample targets. Repeat the panel on the second backbone.}
+\label{tab:planned-method-behavior}
 \small
 \begin{tabular}{lcccc}
 \toprule
-Method & Verified & Related-Lite & LoLBench & DeepSWE \\
-Planned tasks & 150 & 99 & 100 & 113 \\
+Method & Official & Joint & Preserve & Combined \\
 \midrule
 No memory & \pending & \pending & \pending & \pending \\
 FAISS Flat & \pending & \pending & \pending & \pending \\
+ExpeL & \pending & \pending & \pending & \pending \\
+ExpeRepair & \pending & \pending & \pending & \pending \\
+ReasoningBank & \pending & \pending & \pending & \pending \\
+ACE & \pending & \pending & \pending & \pending \\
 ContextGraph & \pending & \pending & \pending & \pending \\
-\midrule
-Graph $-$ Flat (pp, CI) & \pending & \pending & \pending & \pending \\
 \bottomrule
 \end{tabular}
+\expcriterion{E12 (P0): +8--17 pp Combined over Flat corresponds to about two to four additional targets per 24-task repetition. Preserve of 95--100\% is only a descriptive goal. Claims of no material Official/Preserve degradation need a prespecified margin (e.g., -5 pp) and interval evidence.}
 \end{table}
 
-\begin{table}[htbp]
+\begin{table}[!htbp]
 \centering
-\caption{\textbf{Does memory reach useful solutions with less computation?}
-Extend the same frozen comparison to three real passes, retrying each arm's
-own validly unresolved tasks. Produce this panel separately for each benchmark.
-Freeze memory across passes and retain each arm's own prior-attempt feedback
-under the same policy. Report cumulative resolved/planned, all-attempt tokens
-and USD per resolved task after three passes, and active seconds to resolve 10\% of the
-fixed manifest. Active time includes model, tool, and verification execution;
-worker allocation and task order are matched. A threshold never reached is
-reported as such. The 10\% threshold is rounded up to a whole task. Count
-target-time composition, failed attempts, and verification in active time;
-zero resolutions give undefined cost per solve. Add the one-time build cost
-from Table~\ref{tab:planned-amortization} to the three-pass API total. This tests the early-resolution
-pattern in Table~\ref{tab:swectx-stream} using measured time and cost.}
-\label{tab:planned-efficiency}
-\small
-\begin{tabular}{lcccccc}
-\toprule
-Method & Pass@1 & Pass@2 & Pass@3 & Tokens/solve & USD/solve & Time to 10\% \\
-\midrule
-No memory & \pending & \pending & \pending & \pending & \pending & \pending \\
-FAISS Flat & \pending & \pending & \pending & \pending & \pending & \pending \\
-ContextGraph & \pending & \pending & \pending & \pending & \pending & \pending \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{table}[htbp]
-\centering
-\caption{\textbf{Order the work around the scientific argument.}
-The experiment sequence uses development tasks to determine useful content and
-fix the method before the four-manifest comparison. Each later stage answers
-a distinct question; numerical gains are measured rather than assumed.}
-\label{tab:planned-sequence}
-\small
-\begin{tabular}{lp{0.40\linewidth}p{0.40\linewidth}}
-\toprule
-Stage & Question & Experiment and evidence \\
-\midrule
-1 & What should memory communicate? & Content and source-utility interventions
-in Tables~\ref{tab:planned-content}--\ref{tab:planned-utility}. \\
-2 & What must the graph preserve? & Relation and composition ablations in
-Table~\ref{tab:planned-graph}. \\
-3 & Can retrieval find useful conditions? & Ranking and source coverage in
-Tables~\ref{tab:planned-retrieval}--\ref{tab:planned-pool}. \\
-4 & Does the fixed method help in practice? & Four-benchmark resolution,
-retry efficiency, and amortized cost in Tables~\ref{tab:planned-fourbench},
-\ref{tab:planned-efficiency}, and~\ref{tab:planned-amortization}. \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\clearpage
-\section{Planned experiments: which memory is effective?}
-\label{sec:planned-content}
-Use 24 distinct development targets from the existing dev70 partition, spanning
-at least four repositories and four operation families. Select task/source
-pairs from public issues and source evidence before observing the new repairs.
-Use three fresh repetitions per arm, with common target and source IDs, and
-counterbalance arm order within targets. The proposed allocation is 72 attempts
-per arm. Fix a common target-level evaluation suite before candidate outcomes:
-each target has applicable joint checks and neighboring behaviors that pass
-on its original base. These tests define the outcomes across content, source,
-graph, and retrieval interventions. A regression is an attempt failing at
-least one of these originally passing preservation checks.
-
-\begin{table}[htbp]
-\centering
-\caption{\textbf{Which representation transfers the missing requirement?}
-Each target uses the same single historical source and the same solve budget.
-The rows vary only the delivered content: requirement $r$, historical patch
-$H$, witness $W=(I,A,O)$, and source executions $E^{-},E^{+}$.
-All rows receive the same execution tool and current-task instructions.
-Official is benchmark resolution; Joint requires all predeclared combined
-current/historical checks; Preserve requires the neighboring input checks;
-Combined requires all three on the same repair in this fixed suite. Additional joint
-and neighboring evaluation inputs and observers are fixed before these runs
-and withheld from the solver; delivered source witnesses remain visible.
-Report mean task success across repetitions and paired intervals. The
-$r+W$ versus $r+H$ contrast compares executable examples with a patch reference;
-the last two rows isolate supplying the source execution observations.}
+\caption{Which representation carries the missing requirement? Each task uses the same source, tools, and budget. Inputs are the requirement $r$, historical implementation $H$, witness $W$, and source observations $E^{-},E^{+}$. All repairs receive the same private joint and preservation checks. The last two rows isolate supplying source observations.}
 \label{tab:planned-content}
 \small
 \begin{tabular}{lcccc}
@@ -139,23 +111,12 @@ $r+W$ & \pending & \pending & \pending & \pending \\
 $r+W+E^{-}+E^{+}$ & \pending & \pending & \pending & \pending \\
 \bottomrule
 \end{tabular}
+\expcriterion{E02 (P0): illustrative practical effects are +8--17 pp Combined for $r+W$ versus $r+H$, and +4--12 pp for adding $E^{-},E^{+}$. Test each paired contrast separately; use the preservation/Official guardrails in the decision guide.}
 \end{table}
 
-\begin{table}[htbp]
+\begin{table}[!htbp]
 \centering
-\caption{\textbf{What makes one source experience useful?}
-On a 12-target subset chosen before candidate outcomes, form a pool of four
-distinct sources per target using dense, lexical, operation-connected, and
-same-repository random selection, filling duplicates from the same policy.
-Deliver each source individually in the complete-witness format for three
-repetitions: 144 source-conditioned attempts, plus the matched no-memory
-controls from Table~\ref{tab:planned-content}, evaluated with the same fixed suite.
-First separate sources without an established operation connection. Classify
-connected sources by compatibility with the current requirement, then by whether
-the behavior holds on the original workflow. Report source-pair
-counts, change in Combined success, and new failures of the originally passing
-preservation checks. These per-source effects supply development
-utility labels for Table~\ref{tab:planned-retrieval}.}
+\caption{Which sources help? On 12 development targets, select four distinct sources using dense, lexical, operation-connected, and random same-repository retrieval. Test each source alone for three repetitions (144 attempts), against matched no-memory controls. Group sources by their relation to the current requirement; report pair counts, changes in Combined, and regressions.}
 \label{tab:planned-utility}
 \small
 \begin{tabular}{p{0.44\linewidth}ccc}
@@ -168,64 +129,36 @@ Conflicts with the current requirement & \pending & \pending & \pending \\
 No established operation connection & \pending & \pending & \pending \\
 \bottomrule
 \end{tabular}
+\expcriterion{E04 (P1): an omitted-requirement group gain of +8--17 pp is a practical example; within $\pm5$ pp illustrates a near-zero effect for other groups. These are not required category rankings. Report group counts and uncertainty; conflicting history need not always harm a competent agent.}
 \end{table}
 
-\clearpage
-\section{Planned experiments: graph relations and retrieval}
+\subsection{Graph relations and retrieval}
 \label{sec:planned-graph}
 
-\begin{table}[htbp]
-\centering
-\caption{\textbf{Which graph operation improves the submitted repair?}
-Use the same 24 development targets and three repetitions, fixing the FAISS
-top-three source IDs, complete source content, memory token allowance, current
-feedback, and callable tool. A delivers the source witnesses. B asks a writer
-to generate joint checks from the same text records and public example;
-C uses explicit input and operation bindings with the supported adapters.
-D and E mask one binding family while preserving source text and values;
-the same bounded writer reconstructs the missing bindings before the same
-adapter runs. Thus they test supplying versus reconstructing a relation.
-B--E request the same number of checks. F adds their actual failed observations
-to C. Compare B--A for generated checks, C--B for graph-bound construction,
-C--D/E for supplied relations, and F--C for feedback. Match the full generation,
-execution, and solver budget. Failed construction remains in the target
-denominator; report valid joint-check delivery as well as repair outcomes.}
-\label{tab:planned-graph}
-\small
-\begin{tabular}{p{0.38\linewidth}cccc}
-\toprule
-Variant & Joint delivery & Joint & Combined & Regressions \\
-\midrule
-A. Flat witnesses; no composition & \pending & \pending & \pending & \pending \\
-B. A + text-based joint checks & \pending & \pending & \pending & \pending \\
-C. A + graph-bound composition & \pending & \pending & \pending & \pending \\
-D. Reconstruct C's input-role bindings & \pending & \pending & \pending & \pending \\
-E. Reconstruct C's operation bindings & \pending & \pending & \pending & \pending \\
-F. C + executed-condition feedback & \pending & \pending & \pending & \pending \\
-\bottomrule
-\end{tabular}
-\end{table}
+\paragraph{Relations and composition.}
+Table~\ref{tab:planned-graph} uses the same 24 tasks, three repetitions, source
+records, applicability decisions, check count, validator, and total budget.
+B reconstructs all bindings from text; C receives the stored bindings.
+D/E reconstruct only one withheld binding family. B--F share the same adapter.
+G receives C's bindings but constructs a check with free-form generation.
+F additionally receives execution observations before editing. All arms
+retain ordinary execution tools. Explanations and tool outputs respect the
+same withheld-binding masks as the memory input.
 
-\begin{table}[htbp]
+\paragraph{Separate and joint checks.}
+H runs the current program plus a standalone historical check; I runs the
+same current program plus a joint check. Both receive identical history,
+bindings, environment, starting state, and remaining budget. Each has two
+check slots, matched execution limits, feedback rounds, and observation
+format. Both historical and joint checks use requirements applicable to the
+current version. The independent evaluator tests both kinds of behavior on
+every repair. Report Combined and the rate of repairs for which separate
+checks pass but the joint check fails, using the assigned targets and their
+assessment counts. This directly tests the value of combining conditions.
+
+\begin{table}[!htbp]
 \centering
-\caption{\textbf{Can a retriever find behaviorally useful memory?}
-Panel A ranks the four-source pools from Table~\ref{tab:planned-utility};
-panel B ranks the entire frozen source bank on all 24 development targets.
-For B, measure standalone source utility on the union of all policies' top-three
-sources, using the same intervention as Table~\ref{tab:planned-utility}.
-Freeze rankings and the evaluation suite before obtaining these utility labels.
-Hold the payload format and maximum $k=3$ fixed. Utility@3 is the sum of
-standalone $\Delta$ Combined over delivered sources divided by three; empty
-slots contribute zero, the no-memory utility. Report uncertainty across targets.
-A full graph policy is then fixed on development
-data for Table~\ref{tab:planned-fourbench}. As an end-to-end development check,
-run each top-three packet with three repetitions and the
-same composer; the Combined column measures the packet's actual combined
-effect. Composable@3 is the fraction of targets with at least one retrieved
-condition that retains the current and historical triggers and executes with
-its observer. A target with no delivered condition remains in this denominator.
-The operation-reranking row is a proposed policy; the current implementation
-retains FAISS order and supplies operation links without a hard veto.}
+\caption{Can retrieval find useful experience? Panel A uses the four-source pools; Panel B uses the full bank on 24 targets. Rankings are fixed before measuring standalone utility on the union of the selected sources. Utility@3 sums standalone changes in Combined and divides by three; empty slots contribute zero. Composable@3 counts targets with at least one executable joint condition. Packet Combined uses three fresh repetitions with the same composer and budget; selection cost includes every retrieval call.}
 \label{tab:planned-retrieval}
 \small
 \begin{tabular}{p{0.40\linewidth}cccc}
@@ -249,52 +182,62 @@ Dense + soft operation reranking & \pending & \pending & \pending & \pending \\
 Dense with a required operation match & \pending & \pending & \pending & \pending \\
 \bottomrule
 \end{tabular}
+\expcriterion{E05 (P1): example improvements over FAISS are Utility@3 +0.05--0.15 (fraction units), Composable@3 +10--20 pp, and Combined +4--12 pp. A retrieval gain without a repair gain supports retrieval quality only; include selection cost.}
 \end{table}
 
-\clearpage
-\section{Planned experiments: coverage, scale, and reuse}
+\section{Experiment 3 plan: generalization, robustness, and cost}
 \label{sec:planned-coverage}
 
-\begin{table}[htbp]
+Repeat the seven-method behavioral panel on a second backbone, fixing its
+budget before execution and reporting each model separately. For sensitivity,
+vary retrieval count $k\in\{1,3,5\}$ and record-token allowance
+$B\in\{B_0/2,B_0,2B_0\}$ one at a time for ContextGraph and Flat. Keep the
+total selection-plus-repair budget fixed. Report delivered sources, tokens,
+joint delivery, Combined success, and cost. A complete record that exceeds
+the allowance is rejected rather than truncated.
+
+\begin{table}[!htbp]
 \centering
-\caption{\textbf{Can the bank supply usable experience across the four benchmarks?}
-The source273 column is an existing measured same-repository witness-coverage
-count, meaning at least one witnessed source from the repository. Expand the
-bank from official training data and pre-base commits, and develop the operation
-adapters needed beyond Django before the method freeze. New witnesses count
-source false-to-true contrasts. Expanded coverage and valid joint delivery use
-all planned targets as their denominator; the latter also requires both triggers
-and a working observer. An unsupported composition falls back to the stored
-witness and is counted separately. Freeze this delivery policy with the common
-bank before the four-benchmark comparison.}
+\caption{Retry efficiency, reported separately for each benchmark. Retry each method\textquotesingle{}s unresolved tasks for three passes with memory fixed and the same feedback policy. Report cumulative resolutions, total tokens and USD per solution, and active time to resolve 10\% of the task list (rounded up). Include all attempts, preparation, checks, verification, and one-time construction. An unreached threshold or cost per solution with no solutions is reported as n/a.}
+\label{tab:planned-efficiency}
+\small
+\begin{tabular}{lcccccc}
+\toprule
+Method & Pass@1 & Pass@2 & Pass@3 & Tokens/solve & USD/solve & Time to 10\% \\
+\midrule
+No memory & \pending & \pending & \pending & \pending & \pending & \pending \\
+FAISS Flat & \pending & \pending & \pending & \pending & \pending & \pending \\
+ExpeL & \pending & \pending & \pending & \pending & \pending & \pending \\
+ExpeRepair & \pending & \pending & \pending & \pending & \pending & \pending \\
+ReasoningBank & \pending & \pending & \pending & \pending & \pending & \pending \\
+ACE & \pending & \pending & \pending & \pending & \pending & \pending \\
+ContextGraph & \pending & \pending & \pending & \pending & \pending & \pending \\
+\bottomrule
+\end{tabular}
+\expcriterion{E08 (P1): ratios CG/control of 0.70--0.90 for matched-resolution time and 0.75--0.90 for tokens or USD per solve illustrate useful savings. Require compatible quality and a ratio interval below 1. An unreached time threshold is censored, not a finite speedup.}
+\end{table}
+
+\begin{table}[!htbp]
+\centering
+\caption{Experience coverage across benchmarks. The existing-bank column counts targets with at least one witnessed source from the same repository. Expand the bank from training data and pre-base history and develop adapters before evaluation. New witnesses require a source fail-to-pass contrast. Expanded coverage and joint delivery use all planned targets; delivery also requires a working observer. Count text fallback, rejected requirements, and uncertain cases separately.}
 \label{tab:planned-coverage}
 \small
 \begin{tabular}{lcccc}
 \toprule
-Benchmark & Source273 coverage & New witnesses & Expanded coverage & Joint delivery \\
+Benchmark & Existing bank & New witnesses & Expanded coverage & Joint delivery \\
 \midrule
-Verified150 & 133/150 & \pending & \pending & \pending \\
-Related-Lite99 & 91/99 & \pending & \pending & \pending \\
-LoLBench100 & 2/100 & \pending & \pending & \pending \\
-DeepSWE113 & 0/113 & \pending & \pending & \pending \\
+Verified150 & \knownresult{133/150} & \pending & \pending & \pending \\
+Related-Lite99 & \knownresult{91/99} & \pending & \pending & \pending \\
+LoLBench100 & \knownresult{2/100} & \pending & \pending & \pending \\
+DeepSWE113 & \knownresult{0/113} & \pending & \pending & \pending \\
 \bottomrule
 \end{tabular}
+\expcriterion{E01 (P0): operational planning bands are 80--95\% witnessed repository coverage and 50--80\% valid joint delivery, not expected repair scores. Coverage alone cannot support effectiveness; retain failures, fallbacks, and human interventions in the denominators.}
 \end{table}
 
-\begin{table}[htbp]
+\begin{table}[!htbp]
 \centering
-\caption{\textbf{Does scale help through useful-source coverage or ranking?}
-Use the 12-target source-utility study with a fixed delivered $k=3$.
-First add 0, 4, or 16 same-repository distractors per target while retaining
-its original four-source pool; measure selection stability and Combined
-success for FAISS and the chosen graph policy. Then replace the source with
-the highest measured standalone utility with an additional distractor,
-keeping the pool size fixed. Freeze these manipulations before new packet
-outcomes and run three repetitions per cell. Distractors have complete witnesses
-for other operations, selected from public source bindings. This development
-experiment uses earlier standalone utility labels and fresh packet trials.
-Retention is reported separately for Flat and Graph (F/G); choosing a source
-by measured utility does not imply its effect is positive.}
+\caption{Useful coverage versus ranking competition. With $k=3$, add 0, 4, or 16 same-repository distractors to each four-source pool. Then replace the source with the highest measured standalone utility, retaining 20 sources. Fix the pools before three fresh repetitions per cell. Report retention for Flat/Graph (F/G) and Combined. Compare source removal with the 20-source distractor condition.}
 \label{tab:planned-pool}
 \small
 \begin{tabular}{lcccc}
@@ -307,22 +250,12 @@ Add 16 distractors & 20 & \pending/\pending & \pending & \pending \\
 Replace best source, fixed size & 20 & n/a & \pending & \pending \\
 \bottomrule
 \end{tabular}
+\expcriterion{E06 (P1): a loss no larger than 5 pp under distractors is a practical robustness margin; compare the drop against Flat. A 4--12 pp loss after source removal illustrates dependence. Compare removal to the 20-source distractor arm, not the original four-source pool.}
 \end{table}
 
-\begin{table}[htbp]
+\begin{table}[!htbp]
 \centering
-\caption{\textbf{When does executable memory repay its construction cost?}
-Measure actual source construction, before/after execution, embedding, and
-indexing charges separately from solve-time retrieval and condition execution.
-For each benchmark and method, use only first-pass trajectories to report
-$[C_{\mathrm{build}}+C_{\mathrm{solve}}(N)]/R(N)$ at the listed cumulative task
-counts in the fixed task order. $R(N)$ counts first-pass official resolutions;
-solve cost includes target-time construction and failed attempts. Prefixes beyond the manifest,
-or with $R(N)=0$, are n/a. For each memory method, report the first observed
-prefix with at least the control's resolutions and lower total cost per
-resolution, or ``not reached.'' This is the first observed cost crossover,
-not a prediction that the advantage persists at every larger prefix.
-Use measured costs at these prefixes rather than projecting a success rate.}
+\caption{Construction cost as memory is reused. For each benchmark and method, report $[C_{\mathrm{build}}+C_{\mathrm{solve}}(N)]/R(N)$ at the listed first-pass prefixes. Build cost includes source construction, execution, embedding, and indexing; solve cost includes preparation and unsuccessful attempts. $R(N)$ counts official resolutions. The crossover is the first measured prefix with at least as many solutions as control and lower cost per solution. Unavailable prefixes and zero-solution cells are n/a.}
 \label{tab:planned-amortization}
 \small
 \begin{tabular}{lccccc}
@@ -331,8 +264,116 @@ Method & Build USD & USD/solve at 25 & At 50 & At 100 & First crossover \\
 \midrule
 No memory & n/a & \pending & \pending & \pending & Reference \\
 FAISS Flat & \pending & \pending & \pending & \pending & \pending \\
+ExpeL & \pending & \pending & \pending & \pending & \pending \\
+ExpeRepair & \pending & \pending & \pending & \pending & \pending \\
+ReasoningBank & \pending & \pending & \pending & \pending & \pending \\
+ACE & \pending & \pending & \pending & \pending & \pending \\
 ContextGraph & \pending & \pending & \pending & \pending & \pending \\
 \bottomrule
 \end{tabular}
+\expcriterion{E09 (P1): an all-in cost/solve ratio of 0.75--0.90 at an observed valid prefix (50 or 100) illustrates practical amortization, with competitive resolution. Report the first observed crossover; do not project one. $N=100$ is unavailable for Related-Lite99.}
+\end{table}
+
+\clearpage
+\section{Independent confirmation: completeness and applicability}
+\label{sec:planned-independent}
+The development panels select the method; the following tests establish its
+scope. Their manifests, annotation rules, and endpoints are sealed before
+new solver outcomes are visible. They do not reuse the 24 development tasks.
+
+\subsection{Independent held-out behavioral completeness}
+\label{sec:heldout-protocol}
+After fixing the method, sample up to 40 untouched tasks per benchmark,
+using a fixed seed and public repository/operation groups. Exclude tasks
+previously used to develop prompts, adapters, or the method. Report the
+available sample and each benchmark's number of behaviorally eligible tasks.
+
+Two independent annotators specify requirements from the current issue,
+version-matched documentation and tests, and pre-base history. They identify
+current behavior, applicable historical requirements, combined triggers, and
+originally passing neighbors. A third reviewer resolves disagreements;
+uncertain requirements remain unassessed. The suite is sealed before new
+patches are seen and kept private from the solver. Targets and expected
+outcomes are selected independently of ContextGraph's retrieved or generated
+checks. Programs observe meaningful behavior, such as selected rows or a
+converted time.
+
+A task is behaviorally eligible when at least one additional historical
+requirement can be assessed. Combined requires official success and all
+applicable joint and preservation checks on the same patch. Omission burden
+counts official successes that fail an applicable requirement, divided by
+eligible tasks. Report Official, Joint, Preserve, Combined, and omission
+burden together, with sampled, eligible, assessed, and paired counts.
+Results are separated by benchmark and repository group. First-pass patches
+from the main comparison can be reused when the private suite was sealed
+before those outputs and the experiment settings match.
+
+\begin{table}[!htbp]
+\centering
+\caption{Independent held-out behavioral evaluation. Repeat for each benchmark with up to 40 untouched tasks. Cells give count/eligible and rate; state sampled, eligible, assessed, and jointly assessed counts. Omission counts official successes failing an applicable requirement, divided by eligible tasks. Table~\ref{tab:planned-heldout} summarizes Combined.}
+\label{tab:planned-heldout-detail}
+\small
+\begin{tabular}{lccccc}
+\toprule
+Method & Official & Joint & Preserve & Combined & Omission \\
+\midrule
+No memory & \pending & \pending & \pending & \pending & \pending \\
+FAISS Flat & \pending & \pending & \pending & \pending & \pending \\
+ExpeL & \pending & \pending & \pending & \pending & \pending \\
+ExpeRepair & \pending & \pending & \pending & \pending & \pending \\
+ReasoningBank & \pending & \pending & \pending & \pending & \pending \\
+ACE & \pending & \pending & \pending & \pending & \pending \\
+ContextGraph & \pending & \pending & \pending & \pending & \pending \\
+\bottomrule
+\end{tabular}
+\expcriterion{E15 (P0): +5--10 pp Combined over Flat is an illustrative useful magnitude, requiring independent checks, paired uncertainty, and compatible Official performance. A 2--5 pp reduction in omission burden is a secondary example, not a substitute for Combined. Wide intervals or a gain limited to some strata require narrower claims; this proposed sample is not a power analysis.}
+\end{table}
+
+\subsection{Applicability and harmful transfer}
+\label{sec:applicability-audit}
+Evaluate applicability decisions on all retrieved requirement/target pairs
+in the held-out sample, including accepted, rejected, and uncertain candidates.
+Independent annotators judge current validity without seeing the assessor's
+decision or repair outcome.
+
+A separate challenge set contains 60 applicable, 60 contradicted, and 30
+ambiguous pairs. It covers changed APIs, incompatible types or roles,
+superseded behavior, and insufficient specification. Report natural retrieval
+and challenge-set results separately. False acceptance is the fraction of
+contradicted requirements accepted; useful acceptance is the fraction of
+applicable requirements accepted. Also report uncertain requirements enforced
+and the fraction of accepted requirements that are wrong. Intervals preserve
+source and target clusters.
+
+For repair outcomes, compare applicability checking with bypassing that check
+on the same eligible tasks. Hold source IDs, records, composer, check budget,
+and total budget fixed. The private behavioral suite measures preservation,
+Combined success, and omissions for both arms. Record assessment cost and
+memory delivery alongside these outcomes.
+
+\begin{table}[!htbp]
+\centering
+\caption{Does checking applicability retain useful history and reject obsolete requirements? Panel A reports decisions on naturally retrieved and challenge-set pairs. Panel B compares the resulting repairs on the private behavioral suite, with assessment cost and memory delivery reported alongside the outcomes. \tableadd{Green additions: Appendix~\ref{sec:table-additions}.}}
+\label{tab:planned-applicability}
+\small
+\begin{tabular}{lcccc}
+\toprule
+Candidate population & Pairs & False accept & Useful accept & Uncertain enforced \\
+\midrule
+Natural retrieved pairs & \pending & \pending & \pending & \pending \\
+Separate challenge strata & \pending & \pending & \pending & \pending \\
+\tableadd{Challenge: applicable} & \addpending & \tableadd{n/a} & \addpending & \tableadd{n/a} \\
+\tableadd{Challenge: contradicted} & \addpending & \addpending & \tableadd{n/a} & \tableadd{n/a} \\
+\tableadd{Challenge: ambiguous} & \addpending & \tableadd{n/a} & \tableadd{n/a} & \addpending \\
+\midrule
+Repair policy & Official & Preserve & Combined & Omission \\
+\midrule
+ContextGraph with applicability check & \pending & \pending & \pending & \pending \\
+Without applicability check & \pending & \pending & \pending & \pending \\
+\tableadd{No memory} & \addpending & \addpending & \addpending & \addpending \\
+\tableadd{Text memory + applicability check} & \addpending & \addpending & \addpending & \addpending \\
+\bottomrule
+\end{tabular}
+\expcriterion{E16 (P0): a proposed false-acceptance tolerance is 5\%, judged with an upper interval bound and useful-acceptance coverage, not a point estimate alone. Zero errors need at least 59 independent contradicted pairs for a one-sided exact 95\% upper bound below 5\%; correlated pairs do not satisfy this calculation. Report natural and challenge strata separately. Claim reduced harmful transfer only if held-out behavioral outcomes support it.}
 \end{table}
 \endgroup

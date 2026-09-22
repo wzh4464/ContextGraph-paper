@@ -1,71 +1,93 @@
-# ContextGraph ICLR working paper
+# ContextGraph ICLR 2027 manuscript
 
-Read [main.pdf](main.pdf) or edit [main.tex](main.tex).
+The current manuscript has **eight main-text pages**, references on pages 9–10,
+and 30 pages in total. It explains the problem, method, and observed results
+using concrete repair examples. The paper calls the method **ContextGraph**;
+retrieval and update choices are described directly instead of using internal
+release names.
 
-The September 15--16 revisions restore the historical benchmark tables and organize
-the paper around the method's advantages: experience improves resolution and
-reduces retry rounds; executable requirements add omitted behaviors; graph
-relations compose historical conditions with the current workflow.
+## Main text
 
-The PDF has **eight main-text pages, one reference page, three historical
-appendix pages, two new-result/agentic-retrieval pages, and four planned-experiment
-pages** (18 pages total).
-ICLR fonts and margins are unchanged. The main text contains seven
-tables and two figures. Main Table 4 reports the user-supplied Verified500 result,
-346/500 versus 309/500 without memory. Three restored main-text tables cover
-Related-Lite98 cross-model results, Related-Lite99 cumulative pass@k, and memory
-pool size. The historical appendix preserves the earlier Verified500 result
-(318/500) and seven further tables: cross-model episodic
-replication, the older V2 aggregate, Verified dev50, Pro50, graph schema, the
-six-interface comparison, and redirect refinement.
+1. Introduction: three challenges and three explicit contributions; each
+   contribution points to its method, experiment, and observed result.
+2. Background and motivation: concrete input roles and interactions that
+   explain the design.
+3. Method: requirement memory, condition composition, and execution feedback.
+   These names also identify the three contributions and mechanism studies.
+4. Experiments: repair success, three mechanism studies in that same order,
+   then models, retries, and pool size. Each group ends with an explicit finding.
+5. Discussion and related work: reusable design ideas and the current operation coverage.
+6. Conclusion.
 
-[planned-experiments.tex](planned-experiments.tex) contains ten additional
-tables with explicit TBD cells. The logical review separates historical system
-results, content interventions, and graph delivery; specifies the range
-transformation's semantics; and defines shared outcome suites, missing-result
-handling, relation-reconstruction ablations, and cost accounting for the plans.
-All fourteen earlier result tables retain their original data.
+The original three-panel results overview is restored as Figure 1.
+Seven completed result tables are restored to the main text, including
+Verified500 (346/500 versus 309/500), the three behavioral tables, cross-model
+Related-Lite98, cumulative Related-Lite99 results, and the pool-size comparison.
+All original cells in the **18 recorded tables** are preserved. Twelve tables
+now have green additions so every numbered table, and each comparison panel,
+has at least four data rows and four columns. Headers are excluded from the
+row count; the method/metric column is included. Each experiment retains its
+own model, memory pool, task counts, and attempt setting.
 
-[new-results-20260916.tex](new-results-20260916.tex) adds the other supplied
-experiment summaries and the full-context code-agent retrieval design, including
-one planned comparison. Together with the new main Table 4, this brings the
-paper to eighteen result tables and eleven planned tables. Missing experiment
-settings remain TBD; the outstanding count and denominator questions are
-recorded in the parent repository's September 16 update report.
+## Figures
 
-Historical results retain their original model, source pool, task denominator,
-and attempt regime. This editing pass restores reported aggregate data;
-it does not rerun or reverify their underlying patches. The current executable
-memory evidence comes from the Verified source280/dev70 development track.
-The new matched four-benchmark comparison remains incomplete.
+- `figures/paper_results_overview.pdf`: original three-panel numerical overview.
+- `figures/contextgraph-design/fig1-concept.pdf`: executable requirements,
+  main Figure 2.
+- `figures/contextgraph-design/fig2-overview.pdf`: memory construction and use,
+  main Figure 3.
+- `figures/memory_content_scope.pdf`: the detailed behavior comparison in the appendix.
 
-The argument proceeds from useful memory to its representation and retrieval:
+All four PDFs are byte-identical to the files before the writing revision.
+The two design PDFs also match paper commit `91aa76a`. The unused
+`paper_final_overview.*` placeholder files remain available but are not
+included in the manuscript.
 
-1. Earlier benchmark results show the utility of experience, including 25
-   Related-Lite resolutions in two passes versus three without memory.
-2. Paired interventions identify query preservation, redundant uniqueness,
-   and destination-timezone requirements supplied by history.
-3. Content comparisons explain why the triggering input matters.
-4. FAISS selects candidate sources; the graph supplies the input and operation
-   relations used to construct joint checks and guide refinement.
+## Experiments and author material
 
-[Historical table sources](historical-tables/README.md) records the restoration
-map. The original historical preprint remains unchanged at `../main.tex`.
+The **16 pending tables** remain in the appendices, with unmeasured cells
+marked red TBD. New rows and columns are green, with green TBD for results to
+collect. Existing coverage counts remain black. No new experimental result
+was added by this revision.
 
-Supporting development reports in the parent repository:
+- `additional-evaluation.tex`: four-benchmark, held-out behavior, mechanism,
+  and coverage/cost result panels formerly occupying the main text.
+- `planned-experiments.tex`: sampling, comparisons, outcomes, and remaining tables.
+- `method-contract.tex`: concise implementation and evaluation details.
+- `historical-tables/supplement.tex`: eight additional recorded tables.
+- `new-results-20260916.tex`: three supplied result tables and the full-context
+  search design.
+- `development-details.tex`: case inputs and observed repair behavior.
+- `table-additions.tex`: green definitions of the new conditions, measurements,
+  denominators, and matched-run settings, linked from each expanded table.
+- `绿色表格补充清单.md`: Chinese checklist distinguishing new runs from log recovery.
+- `recorded-results.tex`: archive of the former appendix organization of the
+  seven tables now restored to the main text; not compiled.
+- `author-experiment-protocol.md`: preserved detailed execution instructions;
+  not compiled into the paper.
+- `实验补齐与结论判读.md`: experiment priorities and practical-effect examples
+  for author use. Those examples are not measurements or expected scores.
+- `method-evaluation-contract.json`: internal run specification; unchanged by
+  this writing revision.
 
-- `docs/reports/memory-first-research-20260908.md`
-- `docs/reports/memory-information-two-20260908.md`
-- `docs/reports/requirement-feedback-constraint-20260908.md`
-- `docs/reports/memory-content-four-20260908.md`
-- `docs/reports/memory-to-graph-design-20260908.md`
-- `docs/reports/paper-table-restoration-20260915.md`
-- `docs/reports/paper-logic-review-20260915.md`
-- `docs/reports/ppt-code-update-20260916.md`
+Red experiment marking and green table additions are controlled by `experiment-review.tex`.
+`\expcriterion` notes and `experiment-decision-guide.tex` are no longer
+rendered in the manuscript; the source text and Chinese author guide retain
+the planning information. `\experimentreviewfalse` removes the red styling,
+without filling any missing result.
 
-Build:
+The automatic reproducer preparation, applicability assessor, and shared
+validator remain planned work. The paper describes the implemented retrieval
+and researcher-written adapters, and states this implementation status where
+it explains the input to composition.
+
+## Build
 
 ```bash
-cd paper/iclr2027
-~/.local/bin/tectonic main.tex --keep-logs
+latexmk -xelatex -interaction=nonstopmode -halt-on-error main.tex
 ```
+
+The challenge-to-contribution-to-evidence mapping is in
+`contribution-alignment-20260922.md`.
+Verification of this revision is under the main repository's
+`outputs/01a0af7d-50b6-7233-ba4f-cc18f3bdf1c4/green-table-extension/support/`.

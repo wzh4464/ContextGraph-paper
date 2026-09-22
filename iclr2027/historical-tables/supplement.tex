@@ -1,10 +1,9 @@
-\section{Historical benchmark tables and protocols}
+\section{Additional system comparisons}
 \label{sec:historical}
-The benchmark tables recover the project's historical aggregate records from
-\texttt{main.tex} (paper revision \texttt{3e51135}) and earlier ICLR drafts.
-This revision restores the reported data; it adds no solver execution or new
-verification of those historical patches. Verbatim source tables and a
-source map accompany the paper.
+These tables give additional system comparisons and their experiment settings.
+The earlier Verified500 run used 75 steps per task; the main text reports the
+later 346/500 comparison. Related-Lite results cover summary memory, episodic
+memory, and memory-interface comparisons.
 
 \begin{table}[htbp]
 \centering
@@ -76,18 +75,18 @@ Kimi K3 & 29/99 & 31/99 & 3/5 & .73 & 26/28 ($p=.73$) \\
 \caption{Historical Related-Lite98 GPT-5.4 aggregate with failure reruns
 ($V_2$ reporting regime). The historical table alone does not supply uniform
 per-arm retry accounting; Table~\ref{tab:swectx-crossmodel} gives the separate
-single-shot $V_1$ comparison.}
+single-shot $V_1$ comparison. \tableadd{Green additions: Appendix~\ref{sec:table-additions}.}}
 \label{tab:swectx-v2}
-\begin{tabular}{lrr}
+\begin{tabular}{lrrr}
 \toprule
-Memory & Resolved/completed & Rate \\
+Memory & Resolved/completed & Rate  & \tableadd{Attempts/task} \\
 \midrule
-Random summaries & 19/97 & 19.59\% \\
-Mem0 & 19/98 & 19.39\% \\
-LangMem & 24/98 & 24.49\% \\
-No memory & 25/98 & 25.51\% \\
-Oracle summary & 35/98 & 35.71\% \\
-ContextGraph & 41/98 & 41.84\% \\
+Random summaries & 19/97 & 19.59\%  & \addpending \\
+Mem0 & 19/98 & 19.39\%  & \addpending \\
+LangMem & 24/98 & 24.49\%  & \addpending \\
+No memory & 25/98 & 25.51\%  & \addpending \\
+Oracle summary & 35/98 & 35.71\%  & \addpending \\
+ContextGraph & 41/98 & 41.84\%  & \addpending \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -115,7 +114,7 @@ No memory & 50/50 & 29 & 58.0\% \\
 \caption{Historical SWE-bench-Pro50, recovered from a disabled preprint
 section. Memory arms share a 3,183-strategy pool and a \$10 per-task cap;
 no memory is uncapped. Rates use completed evaluations; costs are recorded
-totals under these different budgets.}
+totals under these different budgets. \tableadd{Green additions: Appendix~\ref{sec:table-additions}.}}
 \label{tab:pro50}
 \begin{tabular}{lrrrr}
 \toprule
@@ -124,6 +123,7 @@ Method & Completed/planned & Resolved & Rate & Cost (\$) \\
 ContextGraph & 47/50 & 11 & 23.40\% & 41 \\
 FAISS & 47/50 & 5 & 10.64\% & 68 \\
 No memory & 46/50 & 2 & 4.35\% & 1,686 \\
+\tableadd{Random strategies} & \addpending & \addpending & \addpending & \addpending \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -132,23 +132,23 @@ No memory & 46/50 & 2 & 4.35\% & 1,686 \\
 \centering
 \caption{Historical trajectory-graph snapshot, using text-embedding-3-large
 vectors with 3,072 dimensions. The new executable-witness graph
-uses a separate Qwen embedding space.}
+uses a separate Qwen embedding space. \tableadd{Green additions: Appendix~\ref{sec:table-additions}.}}
 \label{tab:schema}
-\begin{tabular}{lrl}
+\begin{tabular}{lrlr}
 \toprule
-Node label & Count & Role \\
+Node label & Count & Role  & \tableadd{With vector} \\
 \midrule
-Trajectory & 1,795 & Source episode \\
-Fragment & 13,813 & Action and observation slice \\
-ErrorPattern & 586 & Error type and keywords \\
-Strategy & 9,600 & Extracted rule \\
-CanonicalRule & 7,835 & Consolidated rule \\
-PlaybookEntry & 8,910 & Retrieval-ready entry \\
-Community & 781 & Linked-fragment summary \\
-ProblemSummary & 1,795 & Episode problem abstraction \\
+Trajectory & 1,795 & Source episode  & \addpending \\
+Fragment & 13,813 & Action and observation slice  & \addpending \\
+ErrorPattern & 586 & Error type and keywords  & \addpending \\
+Strategy & 9,600 & Extracted rule  & \addpending \\
+CanonicalRule & 7,835 & Consolidated rule  & \addpending \\
+PlaybookEntry & 8,910 & Retrieval-ready entry  & \addpending \\
+Community & 781 & Linked-fragment summary  & \addpending \\
+ProblemSummary & 1,795 & Episode problem abstraction  & \addpending \\
 \midrule
-Total nodes & 45,115 & \\
-Total edges & 73,975 & Seven typed relations \\
+Total nodes & 45,115 &  & \addpending \\
+Total edges & 73,975 & Seven typed relations  & \tableadd{n/a} \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -156,7 +156,7 @@ Total edges & 73,975 & Seven typed relations \\
 \clearpage
 \section{Earlier interfaces and development comparisons}
 \label{sec:additional}
-Table~\ref{tab:interfaces} restores the earlier ICLR draft's six-interface
+Table~\ref{tab:interfaces} compares six interfaces in a
 Related-Lite99 experiment: a separate DeepSeek V4 Pro campaign with 500 calls
 and the last five observations retained. Its frozen verdict requires
 fail-to-pass success and does not veto every pass-to-pass regression. The
@@ -183,7 +183,7 @@ File list & 9 & 8 & -8.08 & .057 \\
 
 \begin{table}[htbp]
 \centering
-\caption{Restored Django14404 development comparison. All candidates pass
+\caption{Django14404 development comparison. All candidates pass
 the official 2 fail-to-pass and 323 pass-to-pass tests.}
 \label{tab:residual}
 \begin{tabular}{lccc}

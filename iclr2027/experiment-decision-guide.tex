@@ -1,0 +1,174 @@
+% Internal review appendix only; numeric bands are not experimental results.
+\begingroup
+\expcolor
+\raggedbottom
+\section{Internal experiment decision guide}
+\label{sec:experiment-decisions}
+\textbf{Read red text as work to complete, not a result.}
+All result cells remain TBD. The bands below are proposed practical-effect
+examples for planning and interpretation. They are not predictions, confidence
+intervals, normality limits, or power calculations. Smaller precise effects
+can be useful; larger verified effects are not invalid. Actual data determine
+both the claim and its scope. Do not stop or select runs because a band is reached.
+
+\paragraph{Completion map.}
+E01--E11 retain the earlier handoff IDs. E12--E14 identify the development
+behavioral panel, sensitivity, and updating comparisons. E15 adds independent
+held-out behavior; E16 audits current applicability. P0 supports the central method
+argument; P1 supports scope and efficiency; P2 is needed if claiming the
+corresponding extension's empirical benefit. Table~\ref{tab:planned-sequence}
+is a work-order guide, not another experiment.
+
+{\small
+\begin{tabular}{@{}p{0.13\linewidth}p{0.19\linewidth}p{0.60\linewidth}@{}}
+\toprule
+ID & Where to fill & Illustrative practical effect, not a forecast \\
+\midrule
+E01 (P0) & Table~\ref{tab:planned-coverage} & Coverage 80--95\%; valid joint delivery 50--80\% (engineering goals only). \\ [4pt]
+E02 (P0) & Table~\ref{tab:planned-content} & $r+W$ vs. $r+H$: Combined +8--17 pp; source observations +4--12 pp. \\ [4pt]
+E03 (P0) & Table~\ref{tab:planned-graph} & I--H: +4--12 pp for joint vs. separate checks. C--B: +8--17 pp with the same composer; C--G tests composer choice. \\ [4pt]
+E04 (P1) & Table~\ref{tab:planned-utility} & Omitted-requirement utility +8--17 pp; near-zero example $\pm5$ pp. \\ [4pt]
+E05 (P1) & Table~\ref{tab:planned-retrieval} & Utility@3 +0.05--0.15; Composable@3 +10--20 pp; Combined +4--12 pp. \\ [4pt]
+E06 (P1) & Table~\ref{tab:planned-pool} & Distractor loss at most 5 pp; matched-size source removal is a separate contrast. \\ [4pt]
+E07 (P0) & Table~\ref{tab:planned-fourbench} & Graph--Flat +3--8 pp; Graph--No memory +5--12 pp, per benchmark. \\ [4pt]
+E08 (P1) & Table~\ref{tab:planned-efficiency} & Time ratio 0.70--0.90; tokens/USD per solve ratio 0.75--0.90 at compatible quality. \\ [4pt]
+E09 (P1) & Table~\ref{tab:planned-amortization} & All-in USD/solve ratio 0.75--0.90 at observed valid prefixes; report crossover. \\ [4pt]
+E10 (P2) & Table~\ref{tab:planned-agentic} & D--B and E--D +4--12 pp Combined; E--A +8--17 pp as an overall example. \\ [4pt]
+E11 (P1) & Table~\ref{tab:planned-method-behavior} & Second-backbone Combined gain +8--17 pp over Flat; evaluate each model separately. \\ [4pt]
+E12 (P0) & Table~\ref{tab:planned-method-behavior} & Seven-method Combined gain +8--17 pp; high Preserve alone is not a guarantee. \\ [4pt]
+E13 (P1) & Sec.~\ref{sec:planned-coverage} & Vary $k$ and memory budget separately; assess a -5 pp loss margin versus default. \\ [4pt]
+E14 (P2) & Sec.~\ref{sec:planned-outcomes} & Updating--frozen +3--8 pp resolution or +4--12 pp Combined; test task-order dependence. \\ [4pt]
+E15 (P0) & Table~\ref{tab:planned-heldout} & Independent held-out Combined +5--10 pp; omission burden -2--5 pp with compatible Official. \\ [4pt]
+E16 (P0) & Table~\ref{tab:planned-applicability} & False acceptance: proposed 5\% upper-bound tolerance; report useful acceptance and repair effects. \\ [4pt]
+\bottomrule
+\end{tabular}}
+
+\paragraph{Additional settings without separate result tables.}
+Main Table~\ref{tab:planned-main-coverage} summarizes E01/E08/E09; the detailed
+E15 diagnostic panel is Table~\ref{tab:planned-heldout-detail}.
+E11 repeats all seven E12 arms on the second model. E13 uses five unique
+single-factor settings per method (three $k$ values and three token allowances,
+sharing the default), comparing CG and Flat with the same total budget.
+E14 compares frozen and updating memory within each method under at least
+three prespecified task orders, with independent memory stores and permitted
+feedback only. These settings require their own result panels before making
+the corresponding robustness or adaptation claim.
+
+\clearpage
+\subsection{When the observations justify a claim}
+\paragraph{Use contrasts, intervals, and compatible quality.}
+For a larger-is-better outcome, write $\Delta=\mathrm{CG}-\mathrm{control}$ in
+percentage points. A positive estimate with a paired interval clearly above
+zero supports an improvement under that protocol. A useful positive estimate
+whose interval crosses zero remains uncertain; it does not establish either
+superiority or equivalence. For lower-is-better cost use
+$\rho=\mathrm{CG}/\mathrm{control}$ and examine whether its interval is below
+one while resolution and behavioral quality remain compatible.
+Do not infer economic importance from a $p$-value alone.
+
+To claim ``no material degradation,'' choose the tolerance before the new
+outcomes. A -5 pp margin is an illustrative design choice here, not a universal
+standard: the lower bound of the difference interval must exceed it.
+Descriptive Preserve of 95--100\% cannot establish such a bound on its own.
+For example, zero failures among 24 independent targets has an exact one-sided
+95\% upper failure bound of 11.7\%; repeated attempts on these same targets do
+not create 72 independent targets. Boundary cases need appropriate exact or
+score intervals, not a degenerate zero-width bootstrap interval.
+
+\paragraph{Respect tasks, repetitions, and missing outcomes.}
+For the development panels, report the mean and sample standard deviation of
+the three task-level success rates. Estimate the paired uncertainty by
+resampling target IDs, keeping all methods and repetitions for each target
+together. There are 24 target units, not 72; tests inside a target are
+not additional independent observations. One run has no between-run standard
+deviation. Do not prescribe or fill an expected standard deviation.
+One additional success changes a 24-target repetition by 4.17 pp; the
+three-repetition mean changes in steps of 1.39 pp. At the proposed +8--17 pp
+scale, the difference is about two to four targets per repetition, so intervals
+may still be wide. Set sample size and stopping rules before the runs.
+
+Report resolved/planned, assessed/planned, and jointly assessed pairs.
+Use the jointly assessed denominator for paired effects and also disclose
+missingness by arm. If $n$ of $N$ planned targets are jointly assessed and their
+net paired wins are $d$, a conservative planned-population difference bound is
+$[(d-(N-n))/N,\,(d+(N-n))/N]$. Do not silently convert unassessed targets to
+failures or remove them from the planned denominator.
+
+\paragraph{The same gain can carry different evidence.}
+The following are mathematical examples, not simulated or measured repairs.
+With 150 assessed pairs, both 6 wins/0 losses and 10 wins/4 losses give +4.0 pp.
+Their two-sided exact McNemar $p$-values are 0.03125 and 0.17957 respectively.
+Thus a point estimate inside a proposed band does not guarantee clear evidence.
+Prespecify Graph--Flat for the four-benchmark family and apply a correction
+such as Holm if making a joint superiority claim; report raw and adjusted
+values. A selected best competitor or a list of ablations is not a single
+prespecified test. Correct the claimed comparison family or call secondary
+comparisons exploratory.
+
+\paragraph{Match the claim to the result.}
+A gain over No memory alone supports experience reuse, not graph superiority.
+If only F--C improves, the result supports feedback rather than explicit graph
+relations. C--B uses the same composer; C--G tests composer choice separately.
+The 24-target panels are developmental: E15, with independently authored and
+sealed current-contract checks, is needed for the held-out completeness claim.
+E03's I--H keeps two check slots and the feedback policy fixed. Its mechanism
+claims remain within the development panel, even if E07/E15 also improve.
+Group formal outcomes by preregistered adapter support, not successful delivery.
+The supported behavioral claim is fewer omissions measured by independent
+checks, not satisfaction of every possible requirement. Count preparation
+failures and attribute all public-program construction costs to each method.
+E16 must test stale requirements, abstention, and the gate's effect on repair.
+Better delivery without better Combined supports construction only.
+One favorable backbone does not establish model independence. Faster early
+resolution with equal final resolution supports speed, not a higher final
+success rate. A cost advantage excluding construction supports operating cost,
+not amortized cost. Formal cross-benchmark claims require benchmark-specific
+results; neither averaging nor source coverage fills a missing benchmark.
+
+\clearpage
+\subsection{Existing results that need records, not automatically new runs}
+The following are provenance tasks R01--R06 from the earlier handoff. Existing
+numeric cells remain black. Recover the original manifests, predictions,
+verdicts, configurations, and costs first; a fresh run cannot supply provenance
+for an older aggregate.
+\begin{itemize}
+\item R01: Verify the campaign binding and paired per-task verdicts for
+Table~\ref{tab:verified500}; distinguish the current executable method from
+historical system versions.
+\item R02: Resolve the 35/98 versus 34.69\% discrepancy in
+Table~\ref{tab:new-swectx}, and identify the 98/99 task manifest and exclusions.
+\item R03: Bind Table~\ref{tab:new-gemini} to its benchmark, sample count,
+per-attempt results, and exact pass@k definition.
+\item R04: Bind the 236K versus 201K token summary to the same task population
+and accounting scope, including failures, retrieval, and construction.
+\item R05: Resolve the task-versus-attempt denominators 20 and 30 in
+Table~\ref{tab:new-codex55}; compare only matching task sets and definitions.
+\item R06: Retain each historical campaign's original denominator, pool,
+backbone, budget, and verifier; do not combine them into a new matched panel.
+\end{itemize}
+
+\paragraph{Planning rationale and sources.}
+The new effect bands are analyst-proposed reference magnitudes. The paper's
+existing Verified500 aggregates (+7.4 pp over No memory and +3.8 pp over FAISS)
+are a scale reference only; their different protocol does not predict the
+new four-benchmark effect. The development bands reflect the coarse resolution
+of a 24-target panel. The cost and coverage bands are operational goals rather
+than estimates from literature.
+
+Statistical interpretation follows the
+\href{https://www.amstat.org/asa/files/pdfs/p-valuestatement.pdf}{ASA statement on $p$-values};
+the exact paired examples use the binomial definition documented by
+\href{https://www.statsmodels.org/stable/generated/statsmodels.stats.contingency_tables.mcnemar.html}{statsmodels' McNemar reference}.
+The importance of interval estimates with few evaluation runs is also discussed
+by \href{https://proceedings.neurips.cc/paper/2021/hash/f514cec81cb148559cf475e7426eed5e-Abstract.html}{Agarwal et al. (NeurIPS 2021)}.
+None of these sources prescribes the numerical effect bands above.
+
+\paragraph{Reading and exporting this draft.}
+The red annotations and this appendix are internal author-review material.
+Set \texttt{\string\experimentreviewfalse} in \texttt{experiment-review.tex}
+to suppress the extra decision notes and use ordinary text color. This removes
+annotations, not the need to complete, qualify, or omit an unfinished empirical
+claim. Figure 1 reserves three panels for final-system evidence and remains TBD;
+the unchanged historical overview is in Appendix Figure~\ref{fig:historical-overview}.
+The two user-supplied design figures and all recorded numerical results are preserved.
+\endgroup
