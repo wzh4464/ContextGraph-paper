@@ -5,7 +5,7 @@
 \usetikzlibrary{arrows.meta,positioning}
 \usepackage{xcolor}
 \hypersetup{hidelinks}
-\title{ContextGraph: Remember the Condition,\\Not the Code}
+\title{ContextGraph: Condition-Matched Experience\\Memory for Coding Agents}
 \author{Anonymous authors}
 \newcommand{\cg}{ContextGraph}
 % Values the authors must supply before submission render in red.
@@ -23,8 +23,8 @@ together with their applicability conditions and intended outcomes, retaining
 links to the source experience. The agent selects guidance using its full
 context before planning and searches again after errors to revise its
 diagnosis. After each task, successful and failed trajectories contribute new
-experience that subsequent tasks can immediately retrieve. We test the
-title's claim with two contrasts: storing raw trajectory excerpts instead of
+experience that subsequent tasks can immediately retrieve. Two contrasts
+test whether lessons help because they are abstracted and condition-matched: storing raw trajectory excerpts instead of
 condition-structured lessons, and applying the most frequently selected
 lessons to every task regardless of their conditions. Neither improves on no
 memory on SWE-ContextBench Related-Lite (20.5\% and 20.8\% versus 21.4\%),
@@ -290,7 +290,7 @@ places the most frequently selected lessons in the system prompt of every
 task without memory access, testing whether the gain comes from generic
 advice. Each variant keeps the remaining components unchanged.
 
-Two variants test the title's claim. \emph{Raw trajectories} keeps the code
+Two variants test this central claim. \emph{Raw trajectories} keeps the code
 and drops the abstraction; the \emph{static playbook} keeps the most useful
 lessons but applies them to every task regardless of their conditions.
 Neither improves on no memory (20.5 and 20.8 versus 21.4), whereas
@@ -358,8 +358,7 @@ holds the pool's content, including its reference fixes, fixed. In the first
 third of the stream, online updates match the static pool (5.4 versus 5.6 of
 33); in the last third they resolve 8.6 against 5.6, while no memory stays
 flat (4.6, 4.8, 4.8). With 33 tasks per third, a three-task difference is
-within sampling uncertainty, so this trend is suggestive rather than
-conclusive. Excluding ten targets with near-duplicate source fixes, the
+within sampling uncertainty, so this trend is suggestive. Excluding ten targets with near-duplicate source fixes, the
 first-pass gain over no memory remains, 19/89 versus 13/89 ($p=.031$).
 
 \paragraph{Retry passes.}
@@ -405,9 +404,7 @@ Related-Lite99, and 64.1\% on DeepSWE113 come from other repositories. These
 shares largely reflect how the pools were built rather than a preference of
 the agent. The DeepSWE113 initial pool contains no DeepSWE113 repository
 (Appendix~\ref{sec:overlap-audit}), so every same-repository lesson there was
-added online by an earlier DeepSWE task, and the Verified500 pool is drawn
-from a different task collection. The shares therefore show that selected
-guidance is mostly cross-repository, not that the agent favors it.
+added online by an earlier DeepSWE task.
 % AUTHOR: report the cross-repository share of each initial pool, and of the
 % pool available at selection time, so the selected shares can be compared
 % with their base rates.
@@ -495,18 +492,13 @@ main comparison).
 Transfer Learning also reports for coding memories \citep{transfer2026}.
 
 \section{Conclusion}
-ContextGraph remembers when a lesson applies and what behavior it should
-preserve, linking transferable strategies and warnings to their source
-experience. Agents select guidance before planning and after errors and
-contribute new experience after each task. In repository-level repair,
-neither unabstracted traces nor lessons applied without regard to their
-conditions improve on no memory, whereas condition-matched lessons improve on it
-by 13.7 points on Related-Lite99. With DeepSeek V4 Pro, ContextGraph improves
-over no memory on Verified500, Related-Lite99, and DeepSWE113 and is at least
-on par with the strongest memory baselines; Gemini 3.1 Pro reaches 88.9\%
-pass@1 on Verified500. Isolating the condition field, paired significance
-tests, and a within-task-reflection control are the next steps toward
-attributing these gains more precisely.
+ContextGraph links transferable strategies and warnings to the conditions
+under which they apply and to their source experience; agents select this
+guidance before planning and after errors and add new experience after each
+task. Neither unabstracted traces nor lessons applied regardless of their
+conditions improve on no memory, whereas condition-matched lessons add 13.7
+points on Related-Lite99. ContextGraph improves over no memory on all three
+benchmarks and is at least on par with the strongest memory baselines.
 
 \clearpage
 \bibliography{references}
@@ -525,8 +517,9 @@ attributing these gains more precisely.
 \clearpage
 \input{published-swectx-results}
 \section*{Limitations}
-The main comparisons measure full memory systems. The title's claim is tested
-through two ablations that remove abstraction and condition matching; neither
+The main comparisons measure full memory systems. The claim that lessons help
+when abstracted and matched to their conditions is tested through two
+ablations that remove abstraction and condition matching; neither
 removes the applicability condition alone. With 99 to 500 tasks per
 benchmark, margins over the strongest baselines and the smaller ablation
 differences are within sampling uncertainty, and the intervals we report are
