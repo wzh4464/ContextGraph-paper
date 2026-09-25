@@ -29,8 +29,8 @@ expected behaviors, and control conditions are given in
 Appendix~\ref{sec:development-details}.
 
 \subsection{Composition interface}
-The composer is the procedure that builds a combined check. It takes the
-current program $P_q$, memory $m$, input bindings, and available adapters.
+The composer implements Equation~\ref{eq:condition-composition}. It takes the
+current program $P_q$, memory $m$, input bindings $b$, and available adapters.
 A binding identifies which object plays each role, together with its type,
 constructor, argument position, and code location. The composer returns the
 check, code that inspects its outcome (the observer), the mapping used, and

@@ -74,8 +74,9 @@ On Django12663, both retrieved memory sets contain the relevant named-tuple
 source, yet both initial repairs miss its behavior. Preserving its constructor
 convention fixes named tuples while keeping ordinary subclasses working;
 passing every sequence's elements as separate arguments breaks the latter
-(Appendix Figure~\ref{fig:memory-content-scope}). An exact operation filter
-also discards this useful source, despite its first-place similarity rank.
+(Appendix Figure~\ref{fig:memory-content-scope}). A candidate-selection
+diagnostic also shows that an exact operation filter discards this useful source
+(Appendix~\ref{sec:details-evidence}).
 \textbf{Finding:} advice needs its applicability context: shared columns
 and constructor conventions determine how these lessons transfer.
 
@@ -133,4 +134,3 @@ simpler redirect task, a requirement sentence already yields the same correct
 implementation as requirement-plus-feedback.
 \textbf{Finding:} targeted failure feedback helps agents act on a known
 requirement when textual review alone leaves the defect unresolved.
-
