@@ -1,5 +1,5 @@
 {
-  "provenance": "Author-supplied measurements, September 24, 2026; transcribed from the former main-text Tables 1 and 7.",
+  "provenance": "Data behind the benchmark-comparison figure (Appendix Table A, main comparison) and the pool-size table in the main text.",
   "benchmarks": {
     "model": "DeepSeek V4 Pro 0813",
     "agent": "mini-SWE-agent",
