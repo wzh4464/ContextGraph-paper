@@ -37,11 +37,9 @@ missed by separate checks.
 \setlength{\parindent}{1em}
 \setlength{\parskip}{0pt}
 Each repair produces experience in locating faults, revising code, and
-checking behavior. Memory makes that experience useful on later tasks,
-offering a practical route toward recursive self-improvement (RSI): agents
-use past repairs to improve how they solve new problems
-\citep{godelagent2025,dgm2026}. Both successful and failed attempts can
-contribute to this growing body of experience.
+checking behavior. Memory reuses this experience on later tasks, offering a
+practical route toward recursive self-improvement (RSI)
+\citep{godelagent2025,dgm2026}. Both successful and failed attempts contribute.
 
 \begin{figure}[htbp]
 \centering
@@ -56,15 +54,13 @@ ContextGraph.}
 
 Recent agent-memory methods retain reflections and repair lessons
 \citep{reflexion2023,expel2024} and organize this experience for reuse
-\citep{reasoningbank2026,ace2026}. However, experience from another repository
-must guide decisions in unfamiliar code. A useful lesson explains how to
-investigate a problem and which approaches to avoid, while the agent works
-out the change in the current repository. The Django example in
-Section~\ref{sec:motivation} illustrates this transfer from an earlier
-setup failure and a successful debugging attempt.
+\citep{reasoningbank2026,ace2026}. To transfer across repositories, a lesson
+must guide investigation in unfamiliar code and identify approaches to avoid.
+The agent then determines the local change. Section~\ref{sec:motivation}
+illustrates this transfer to Django from an earlier setup failure and a
+successful debugging attempt.
 
-These observations motivate organizing experience around the decisions it
-can inform. We ask: \emph{Can a memory graph turn experience from different
+We therefore ask: \emph{Can a memory graph turn experience from different
 repositories into useful guidance for planning repairs and recovering from
 errors on new tasks?}
 
@@ -75,30 +71,24 @@ Removing too little detail ties it to the source repository; removing too
 much leaves generic advice. Second, related experiences are scattered across
 tasks and repositories. Similar words can describe different problems, while
 different errors can call for the same debugging strategy. Retrieval needs
-the connections between problems, failed approaches, and useful actions.
-Third, the guidance an agent needs changes during repair. Before planning,
-it needs direction for investigation and warnings about costly approaches.
-After an error, it has new evidence that can change the diagnosis. Memory
-must inform both decisions using the information available at each point,
-then turn the completed attempt into guidance for later tasks.
+these connections. Third, guidance must change during repair: planning needs
+direction for investigation, while errors bring evidence that can change the
+diagnosis. Memory must inform both decisions, then retain the completed
+attempt for later tasks.
 
 To address these challenges, we propose \textbf{ContextGraph}, a memory graph
 that turns experience across repositories into guidance for new repairs
-(Figure~\ref{fig:experience-memory}). To support transfer, \emph{experience
-abstraction} extracts strategies and warnings from past trajectories,
-recording what to do, what to avoid, and when each lesson applies. The graph
-links these lessons to their source experiences, problem descriptions, and
-error patterns. To find useful guidance, \emph{graph retrieval} combines
-semantic relevance with these connections, allowing the agent to recover
-related strategies across different repository contexts. To make guidance
-available when it can change a decision, \emph{memory access} emphasizes two
-points: before generating a plan and after encountering an error. The first
-query uses the task description to guide investigation and approach
-selection. The second adds the observed error and recent attempt to guide
-diagnosis and revision. The agent interprets these lessons in the current
-codebase and carries out the edits and tests. At the end of every task,
-ContextGraph distills the successful or failed trajectory and updates the
-graph, making the new experience immediately available to subsequent tasks.
+(Figure~\ref{fig:experience-memory}). \emph{Experience abstraction} extracts
+strategies and warnings: what to do, what to avoid, and when each lesson
+applies. The graph links them to source experiences, problems, and errors.
+\emph{Graph retrieval} combines semantic relevance with these connections
+to recover related strategies across repositories. \emph{Memory access}
+emphasizes two points: before planning and after an error. The first query
+uses the task description; the second adds the error and recent attempt
+to guide diagnosis and revision. The agent applies these lessons through
+local edits and tests. After every task, ContextGraph distills the successful
+or failed trajectory and updates the graph, making new experience immediately
+available to subsequent tasks.
 
 ContextGraph reaches 69.2\% resolution on SWE-bench Verified and 72.1\% on
 DeepSWE113, exceeding the strongest evaluated memory baselines by 2.2 and
@@ -172,17 +162,14 @@ LoLBench Python & 20 & Other LoLBench Python tasks & pass@1, pass@3 \\
 \end{table}
 
 \paragraph{Agents and memory.}
-The three-benchmark comparison uses DeepSeek V4 Pro 0813 with
-mini-SWE-agent \citep{minisweagent2025,sweagent2024}. The initial Verified500
-memory comes from Nebius SWE-bench Verified trajectories; DeepSWE113 draws
-on trajectories from LoLBench repositories. For the LoLBench Python subset,
-the initial graph uses other Python tasks outside the selected 20.
-In these main comparisons, ContextGraph distills successful and failed
+The first three benchmarks use mini-SWE-agent
+\citep{minisweagent2025,sweagent2024}; Table~\ref{tab:evaluation-settings}
+gives the models and initial memory sources. LoLBench memory excludes the
+selected 20 targets. ContextGraph distills successful and failed
 trajectories after every task and makes the added experience immediately
 retrievable by subsequent tasks. Other memory methods follow the default
 update behavior of their open-source implementations. These comparisons
-therefore evaluate each method's memory construction, retrieval, and updating
-as a complete system.
+evaluate memory construction, retrieval, and updating as a complete system.
 
 \paragraph{Baselines.}
 We compare no memory, FAISS Flat, ExpeL, Agent KB, ExpeRepair, ReasoningBank,
@@ -309,22 +296,20 @@ Additional system results appear in Appendices~\ref{sec:historical} and
 
 \subsection{What should memory preserve and help the agent check?}
 \label{sec:behavior-analysis}
-The cross-repository example in Section~\ref{sec:motivation} shows how
-abstract experience guides investigation. We next study how an agent puts a
-remembered requirement into practice. A requirement describes the behavior
-to preserve; its applicability conditions explain when that behavior matters.
-Our behavioral studies pair requirements with executable checks and combine
-historical conditions with the current operation. Table~\ref{tab:condition-findings}
-summarizes two findings; Appendix~\ref{sec:evidence} gives the full studies.
+The example in Section~\ref{sec:motivation} shows how abstract experience
+guides investigation. Here we study how an agent applies a remembered
+requirement: pairing it with executable checks and combining historical
+conditions with the current operation (Figure~\ref{fig:concept}).
+Table~\ref{tab:condition-findings} summarizes two findings;
+Appendix~\ref{sec:evidence} gives the full studies.
+
 
 \paragraph{Preserve the requirement without inheriting an unsuitable implementation.}
 In the timezone study, requirement-level memory passes all 72 combinations
 of database, application, and output zones. Reusing the historical
 implementation passes 40 and breaks 16 combinations that pass without memory.
-The requirement directs the agent toward the behavior it must preserve,
-while the concrete implementation carries assumptions that fail in the new
-setting. This is an observed case of negative transfer from implementation
-reuse.
+The requirement identifies the behavior to preserve; the implementation
+carries assumptions that fail in the new setting, causing negative transfer.
 
 \paragraph{Check historical conditions together with the current operation.}
 For Django12663, three agents receive the same task, history, current program,
@@ -371,19 +356,16 @@ Both & \textbf{72/72} & 0 & 0 \\
 \end{table}
 
 \section{Conclusion}
-We propose ContextGraph, an experience-graph architecture for self-improving
-coding agents. It turns past trajectories into transferable strategies and
-warnings linked to their source context. Graph retrieval supplies this guidance
-before planning and after errors to help agents choose and revise their approach.
-Every completed task, successful or failed, adds experience that is immediately
-available to subsequent tasks, closing the loop between repair and learning.
-ContextGraph
+ContextGraph turns repair trajectories into transferable strategies and
+warnings linked to their source context. Retrieval guides planning and error
+recovery, while every successful or failed task adds experience for subsequent
+tasks. This loop lets coding agents learn through continuing use. ContextGraph
 achieves 69.2\% resolution on SWE-bench Verified and 72.1\% on DeepSWE113,
 exceeding the strongest evaluated memory baselines by 2.2 and 5.9 percentage
 points, respectively, and raises Related-Lite99 mean resolution from 21.4\%
 to 36.3\%. On the 20-task LoLBench Python subset, pass@1 is 15.0\% versus
-5.0\% for all baselines. These results establish ContextGraph as a strong starting point
-for coding-agent memory that learns from past repair experience.
+5.0\% for all baselines. These results establish an experience graph as a strong
+starting point for self-improving coding-agent memory.
 
 
 \paragraph{Limitations.}

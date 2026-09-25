@@ -14,10 +14,10 @@ context. It is retrieved before planning and after errors. After every task, bot
 successful and failed trajectories supply new lessons; the graph is updated and the
 new experience is immediately available to subsequent tasks.
 
-Figure 2 (previously Figure 3) preserves the supplied architecture artwork and adds a
+Figure 3 preserves the supplied architecture artwork and adds a
 vector strip for the task-completion/update/retrieval cycle. Algorithm 1 describes
 the complete process. The results overview, benchmark comparison, and cross-model
-comparison are Figures 1, 3, and 4; ContextGraph uses the same red highlight in the
+comparison are Figures 1, 4, and 5; ContextGraph uses the same red highlight in the
 result figures. No numerical figure data changed.
 
 The main comparisons use online-updating ContextGraph and the default memory-update
@@ -30,8 +30,10 @@ recovered by retrieval, not a resolution-rate ratio.
 Section 5.5 and main Table 4 now highlight the requirement/implementation
 comparison and the separate/composed-check comparison. The summary retains the
 72/72 vs 40/72 timezone outcomes (16 regressions) and the 1/3 vs 3/3 withheld
-joint-query outcomes. Detailed behavioral studies and their original figures
-remain in Appendix F.
+joint-query outcomes. The original retrieved-advice versus ContextGraph comparison
+appears as Figure 2 on main-text page 3, before the architecture overview
+(Figure 3 on page 4). Section 5.5 refers back to it when explaining the findings. The detailed
+workflow and full behavioral studies remain in Appendix F.
 Two historical comparison tables were excluded on September 25 after the author
 confirmed implementation defects in their ContextGraph runs: GPT-5.4 Verified500
 and the six-interface Related-Lite99 comparison. Other result tables are retained. The main numerical
@@ -42,6 +44,10 @@ roles. See `mulvul-online-revision-20260925.md` for changes and remaining author
 
 Build/render checks and the prior draft are under
 `/Users/zihanwu/Public/codes/ContextGraph/outputs/paper-mulvul-online-revision-20260925/`.
+The comparison-figure restoration and its checks are under
+`/Users/zihanwu/Public/codes/ContextGraph/outputs/paper-restore-comparison-20260925/`.
+The subsequent move before the architecture overview is checked under
+`/Users/zihanwu/Public/codes/ContextGraph/outputs/paper-comparison-before-overview-20260925/`.
 The following dated entries describe earlier revisions; figure/table numbers and
 placement in those entries belong to their recorded dates.
 

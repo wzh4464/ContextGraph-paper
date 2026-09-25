@@ -1,0 +1,14 @@
+{
+  "title": "ContextGraph: Turning Past Repairs into Executable Requirements for Coding Agents",
+  "abstract": "Coding agents can pass a benchmark's official tests while missing requirements established by earlier repairs. We present ContextGraph, a repair-memory prototype that represents past experience as a behavioral requirement, its triggering input, and an executable observation of the outcome. Source-version executions record behavior before and after the historical repair. Similarity retrieval selects candidate experiences, and graph relations connect their input conditions and operations to construct checks for the current workflow. In three selected Django development comparisons, each with one repair per arm, memory-informed repairs preserve query strings, remove redundant uniqueness constraints, or honor destination timezones that matched no-memory repairs omit, although both arms pass official verification. A further development case reveals that a repair can satisfy current and historical examples separately yet fail when their conditions are combined. In a matched pair of agent runs, only the agent given the composed checks and their execution feedback produces a repair satisfying the joint behavior. Memory content also affects correctness: concise requirements sometimes suffice, while historical implementations can introduce additional errors. These findings motivate carrying the conditions behind past repairs into new tasks, where execution can test candidate repairs against those requirements and expose interactions missed by separate checks.",
+  "tldr": "ContextGraph turns requirements from past repairs into executable checks that expose omitted behavior in the current workflow.",
+  "keywords": "coding agents, long-term memory, program repair, executable requirements, graph-based retrieval",
+  "pdf": null,
+  "status": "Submitted and verified on OpenReview",
+  "submission_id": "4HhoVdv5da",
+  "submission_number": 32193,
+  "url": "https://openreview.net/forum?id=4HhoVdv5da",
+  "reciprocal_reviewer": "~Zihan_Wu2",
+  "coauthor_declarations_confirmed": true,
+  "verified_at_utc": "2026-09-17T14:27:49.927Z"
+}

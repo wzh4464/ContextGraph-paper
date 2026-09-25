@@ -1,0 +1,52 @@
+{
+  "url": "https://openreview.net/forum?id=4HhoVdv5da&noteId=4HhoVdv5da",
+  "title": "ContextGraph: Turning Past Repairs into Executable Requirements for Coding Agents",
+  "abstract": "Coding agents can pass a benchmark's official tests while missing requirements established by earlier repairs. We present ContextGraph, a repair-memory prototype that represents past experience as a behavioral requirement, its triggering input, and an executable observation of the outcome. Source-version executions record behavior before and after the historical repair. Similarity retrieval selects candidate experiences, and graph relations connect their input conditions and operations to construct checks for the current workflow. In three selected Django development comparisons, each with one repair per arm, memory-informed repairs preserve query strings, remove redundant uniqueness constraints, or honor destination timezones that matched no-memory repairs omit, although both arms pass official verification. A further development case reveals that a repair can satisfy current and historical examples separately yet fail when their conditions are combined. In a matched pair of agent runs, only the agent given the composed checks and their execution feedback produces a repair satisfying the joint behavior. Memory content also affects correctness: concise requirements sometimes suffice, while historical implementations can introduce additional errors. These findings motivate carrying the conditions behind past repairs into new tasks, where execution can test candidate repairs against those requirements and expose interactions missed by separate checks.",
+  "authors": [
+    {
+      "name": "Zihan Wu",
+      "id": "~Zihan_Wu2"
+    },
+    {
+      "name": "Jie Xu",
+      "id": "~Jie_Xu21"
+    },
+    {
+      "name": "Yun Peng",
+      "id": "~Yun_Peng3"
+    },
+    {
+      "name": "Zeyang Zhuang",
+      "id": "~Zeyang_Zhuang1"
+    },
+    {
+      "name": "Chun Yong Chong",
+      "id": "~Chun_Yong_Chong1"
+    },
+    {
+      "name": "Xin Zhou",
+      "id": "~Xin_Zhou24"
+    },
+    {
+      "name": "Rui Shu",
+      "id": "~Rui_Shu2"
+    },
+    {
+      "name": "XU HAN",
+      "id": "~XU_HAN24"
+    },
+    {
+      "name": "Guowen Yuan",
+      "id": "~Guowen_Yuan1"
+    },
+    {
+      "name": "Wang Yuan",
+      "id": "~Wang_Yuan4"
+    }
+  ],
+  "reviewer": "Zihan Wu",
+  "exemption": "Reciprocal Reviewing Exemption: We do not need an exemption.",
+  "submission_number": "Submission Number: 32193",
+  "pdf_links": 0,
+  "checked_at_utc": "2026-09-17T14:27:49.927Z"
+}

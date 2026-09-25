@@ -1,0 +1,17 @@
+{
+  "requested_model": "Claude Code Fable 5.1",
+  "cli_version": "2.1.274",
+  "successful_rounds": 2,
+  "primary_review_model": "claude-fable-5-1",
+  "verification": "modelUsage contains nonzero outputTokens for claude-fable-5-1",
+  "round1_duration_ms": 182137,
+  "round1_error": false,
+  "proxy": "User-specified localhost proxy on port7897, process-local environment only",
+  "raw_round1": "claude-round1-proxy.json",
+  "round1_review": "claude-round1-review.md",
+  "note": "Initial unproxied attempts returned403 and produced no review. Only successful proxied model output is treated as consultation.",
+  "round2_duration_ms": 103655,
+  "round2_error": false,
+  "raw_round2": "claude-round2.json",
+  "round2_review": "claude-round2-review.md"
+}

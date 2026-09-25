@@ -43,3 +43,21 @@ LaTeX 错误或 overfull box。正文及附录已渲染检查。
 摘要及贡献段对应突出负迁移与条件组合。完整行为表和实现细节仍留附录。
 正文仍为 8 页、全文 26 页，未改变原有结果表。检查与前版快照位于
 `/Users/zihanwu/Public/codes/ContextGraph/outputs/paper-conditions-main-20260925/`。
+
+## 同日补充：恢复正文中的原始对比图
+
+将 `figures/contextgraph-design/fig1-concept.pdf` 从附录恢复至正文 5.5，
+作为第 7 页 Figure 5，直接展示文字建议与关联条件检查的区别。
+原始图文件未修改；其他图与结果表均保留。精简引言、方法和相关工作的
+重复表述，为原图腾出篇幅，保留三项设计理由与任务后经验更新闭环。
+正文仍为 8 页、全文 26 页。前版快照、编译和逐页渲染位于
+`/Users/zihanwu/Public/codes/ContextGraph/outputs/paper-restore-comparison-20260925/`。
+
+## 同日调整：对比图放在架构 overview 之前
+
+按作者要求，将原始对比图移至 Problem and Motivation 末尾，作为第 3 页
+Figure 2；第 4 页 Figure 3 接着介绍经验图架构。图前交代这是另一个 Django
+例子，caption 明确标注 Django12663，避免与前文 Django Trac #33018 混淆。
+正文 5.5 保留结果并引用前面的对比图。图文件与结果不变，正文仍为 8 页。
+检查和移动前快照位于
+`/Users/zihanwu/Public/codes/ContextGraph/outputs/paper-comparison-before-overview-20260925/`。

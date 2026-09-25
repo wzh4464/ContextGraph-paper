@@ -1,11 +1,10 @@
 \section{Problem and motivation}
 \label{sec:motivation}
-A coding agent receives an issue and a repository, investigates the failure,
-and produces a patch. Its trajectory records the task, actions, observations,
-and outcome. ContextGraph uses completed trajectories to build an experience
-graph $G$. For each new task, the graph supplies guidance for the agent's
-current decision; after the task, the trajectory updates $G$ for later tasks.
-The goal is to make repair experience accumulate across tasks and repositories.
+A coding agent receives an issue and a repository and produces a patch.
+Its trajectory records actions, observations, and the outcome. ContextGraph
+builds an experience graph $G$ from completed trajectories, retrieves guidance
+for each new task, and updates $G$ afterward. The goal is to accumulate useful
+repair experience across tasks and repositories.
 
 \paragraph{A debugging decision that transfers.}
 In Django Trac \#33018, empty query results are mishandled under negation.
@@ -18,12 +17,26 @@ handling, and added a regression test. The no-memory attempt made broad
 formatting changes without fixing the bug. The transferable content was the
 investigation strategy and warning; the agent derived the local implementation.
 
+\paragraph{From advice to a concrete check.}
+Remembered guidance also needs to be applied to the current operation.
+Figure~\ref{fig:concept} illustrates another Django case: a historical requirement
+becomes a check by combining its input condition with the current query.
+Section~\ref{sec:behavior-analysis} compares separate and composed checks.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/contextgraph-design/fig1-concept.pdf}
+\caption{Django12663 behavioral study comparing (a) a requirement supplied as text
+with (b) linked context used to combine a historical range type with the
+current query and obtain execution feedback for the next edit.}
+\label{fig:concept}
+\end{figure}
+
 \section{ContextGraph: memory for planning, recovery, and learning}
 \label{sec:method}
 ContextGraph connects experience abstraction, graph retrieval, and memory
-access during repair. The same abstraction process builds the initial graph
-and incorporates every completed task, creating the learning loop in
-Figure~\ref{fig:experience-memory}.
+access. The same process builds the initial graph and incorporates completed
+tasks (Figure~\ref{fig:experience-memory}).
 
 \begin{figure}[!htbp]
 \centering
@@ -50,36 +63,30 @@ available to subsequent tasks. Graph links illustrate the organization.}
 
 \subsection{Experience abstraction: retain the useful decision}
 \label{sec:experience-abstraction}
-From a trajectory's task description, actions, errors, and outcome, a language
-model extracts lessons about debugging, testing, navigation, and failed
-approaches. Each lesson records an action or warning, the situation in which
-it applies, and its source context. Abstraction removes repository-specific
-names while retaining the decision and its reason: the failed framework setup
-in our example becomes advice to isolate the bug first.
+A language model extracts lessons from the task, actions, errors, and outcome.
+Each lesson records an action or warning, its applicability conditions, and
+source context. Abstraction removes repository-specific names while retaining
+the decision and its reason: the failed framework setup becomes advice to
+isolate the bug first.
 
-The graph organizes these lessons around experiences, strategies, shared
-rules, and error patterns. A strategy links back to its source trajectory;
-similar strategies connect to a shared rule; rules and experiences connect
-to the errors they address or encounter. This structure preserves both the
-common lesson and the observations behind it. A warning from a failed attempt
-can therefore remain useful alongside a strategy from a successful repair.
+Strategies link to their source trajectories and shared rules; rules and
+experiences link to the errors they address or encounter. These connections
+preserve the common lesson and its supporting observations, including warnings
+from failures and strategies from successful repairs.
 
 \subsection{Graph retrieval: find relevant strategies and warnings}
 \label{sec:experience-retrieval}
-A query describes the task and the agent's current situation. Semantic search
-finds lessons with related meaning, while keyword search matches diagnostic
-terms. A graph walk follows links from error patterns through shared rules
-and source strategies to past trajectories. Different errors can thus lead
-to a common debugging strategy. The retriever merges candidates from these
-channels and selects a small, diverse set of lessons.
+A query describes the task and current situation. Semantic search finds
+related lessons; keyword search matches diagnostic terms. A graph walk follows
+error patterns through shared rules and strategies to source trajectories.
+Different errors can therefore lead to a common strategy. The retriever merges
+these candidates and selects a small, diverse set of lessons.
 
-The returned memory contains actions, warnings, applicability context, and
-source experience. The agent interprets them against the current code and
-constructs its own reproduction, patch, and tests. Figure~\ref{fig:experience-memory}
-illustrates why this organization is useful: both a setup failure and an
-incorrect output can point to the strategy of isolating the failing behavior.
-Appendix~\ref{sec:agentic-retrieval} describes full-context agent search as a
-further extension of this retrieval interface.
+Returned lessons include actions, warnings, applicability context, and source
+experience. The agent uses them to construct a local reproduction, patch, and
+tests. Figure~\ref{fig:experience-memory} shows how different errors lead to
+related guidance. Appendix~\ref{sec:agentic-retrieval} describes a full-context
+agent-search extension.
 
 \subsection{Memory access and updates: connect repair to learning}
 \label{sec:experience-access}
@@ -95,13 +102,10 @@ Retrieval now supports diagnosis and revision. The agent applies the guidance
 through its repository tools and uses the next observation to decide how to proceed.
 
 \paragraph{After each task.}
-ContextGraph applies the abstraction process to the completed trajectory,
-including both successful and failed attempts. It adds the resulting lessons,
-links them to source context and existing experience, and updates their
-retrieval entries. New experience is immediately available to subsequent
-tasks. The two within-task query points help the current repair; the update
-step turns that repair into memory for the next task.
-Algorithm~\ref{alg:contextgraph} summarizes the complete workflow.
+ContextGraph abstracts both successful and failed trajectories, links the
+new lessons to existing experience, and updates their retrieval entries.
+The added experience is immediately available to subsequent tasks, closing
+the learning loop in Algorithm~\ref{alg:contextgraph}.
 
 \begin{algorithm}[!htbp]
 \caption{ContextGraph across a stream of coding tasks}
