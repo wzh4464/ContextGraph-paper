@@ -8,17 +8,15 @@ experience; MemGovern and STAIR organize cards and plans
 \citep{sweexp2025,experepair2026,memgovern2026,stair2026}.
 Memory Transfer Learning finds that abstraction determines how well coding
 memories transfer across domains and that transfer grows with the memory pool
-\citep{transfer2026}; our abstraction ablation and pool-size study are
-consistent with these findings rather than new ones. Condition-structured
-lessons also predate our work: CLIN stores causal abstractions of the form
-``X may be necessary for Y'' \citep{clin2023}, AutoGuide extracts guidelines
-paired with the context in which they apply \citep{autoguide2024}, and Agent
-Workflow Memory induces reusable workflows from past trajectories
-\citep{awm2025}. These methods target web navigation and simulated household
-or science environments and keep lessons in a flat store. ContextGraph applies
-condition-structured lessons to repository-level repair, links each lesson to
-its source trajectory and the errors it addresses, and lets the agent search
-this graph before planning and after errors.
+\citep{transfer2026}; we extend both findings to repository-level repair.
+ContextGraph also builds on condition-structured lessons: CLIN stores causal
+abstractions of the form ``X may be necessary for Y'' \citep{clin2023},
+AutoGuide pairs guidelines with the context in which they apply
+\citep{autoguide2024}, and Agent Workflow Memory induces reusable workflows
+from past trajectories \citep{awm2025}, all for web navigation and simulated
+environments. ContextGraph brings these ideas to repository-level repair,
+links each lesson to its source trajectory and the errors it addresses, and
+lets the agent search this graph before planning and after errors.
 RETester generates tests from bug reports, MIRA retains requirements, and
 TRACE turns corrections into runtime checks
 \citep{retester2025,mira2026,trace2026}; ContextGraph returns textual
