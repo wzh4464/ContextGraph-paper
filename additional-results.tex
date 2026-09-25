@@ -3,7 +3,7 @@
 This appendix tabulates the DeepSeek V4 Pro column of
 Figure~\ref{fig:swectx-crossmodel} (Table~\ref{tab:new-swectx}) and gives
 the LoLBench comparison from
-Section~\ref{sec:benchmark}. Gemini results appear in Table~\ref{tab:new-gemini}.
+Section~\ref{sec:benchmark}, and the Gemini results (Table~\ref{tab:new-gemini}).
 The three-benchmark comparison is tabulated in
 Table~\ref{tab:main-results-overview}; additional comparisons appear in
 Appendix~\ref{sec:historical}.
@@ -29,6 +29,25 @@ Oracle summary & 27.8 \\
 \bottomrule
 \end{tabular}
 % Source: figures/scripts/crossmodel_data.json, DeepSeek V4 Pro column.
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{SWE-bench Verified500 with Gemini 3.1 Pro and live-SWE-agent
+(Section~\ref{sec:benchmark}). Both arms follow the data-separation protocol
+in Section~\ref{sec:setup}. Gains are relative improvements,
+$(\text{ContextGraph}-\text{No memory})/\text{No memory}$, in percent.}
+\label{tab:new-gemini}
+\small
+\begin{tabular}{lrrr}
+\toprule
+Metric & No memory & ContextGraph & Relative gain \\
+\midrule
+pass@1 & 82.3\% & \textbf{88.9\%} & +8.0\% \\
+pass@3 & 82.6\% & \textbf{90.4\%} & +9.4\% \\
+pass@5 & 82.8\% & \textbf{91.7\%} & +10.7\% \\
+\bottomrule
+\end{tabular}
 \end{table}
 
 \paragraph{LoLBench Python subset.}

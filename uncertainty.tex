@@ -1,0 +1,72 @@
+\section{Statistical uncertainty and evaluation denominators}
+\label{sec:uncertainty}
+Table~\ref{tab:uncertainty} gives 95\% intervals for the main-text
+comparisons. For a rate $p$ over $n$ tasks we use the binomial standard error
+$\sqrt{p(1-p)/n}$; for a difference between two methods we combine the two
+standard errors as if the rates were independent. Both methods run on the same
+tasks, so a paired test would give narrower intervals; the values below are
+therefore conservative. On Related-Lite99 and DeepSWE113 the rates are
+five-run means; averaging runs reduces run-to-run variance but not the
+variance from sampling the tasks, which the binomial bound captures.
+
+\begin{table}[htbp]
+\centering
+\caption{Differences in percentage points with conservative (unpaired)
+binomial 95\% half-widths. Bold marks differences that exceed their
+half-width. Ablation rows are on Related-Lite99 and measure the drop from the
+full system.}
+\label{tab:uncertainty}
+\small
+\begin{tabular}{llrr}
+\toprule
+Benchmark & Comparison & Difference & 95\% half-width \\
+\midrule
+Verified500 ($n{=}500$) & ContextGraph $-$ no memory & \textbf{7.6} & 5.9 \\
+ & ContextGraph $-$ ReasoningBank & 2.2 & 5.8 \\
+ & Other repositories only $-$ no memory & 1.4 & 6.0 \\
+ & Gemini 3.1 Pro pass@1: ContextGraph $-$ no memory & \textbf{6.6} & 4.3 \\
+\midrule
+Related-Lite99 ($n{=}99$) & ContextGraph $-$ no memory & \textbf{13.7} & 12.4 \\
+ & ContextGraph $-$ ExpeRepair & 3.8 & 13.1 \\
+ & Other repositories only $-$ no memory & 7.3 & 12.0 \\
+\midrule
+DeepSWE113 ($n{=}113$) & ContextGraph $-$ no memory & 11.3 & 12.2 \\
+ & ContextGraph $-$ Supermemory & 5.9 & 12.0 \\
+ & Other repositories only $-$ no memory & 6.7 & 12.5 \\
+\midrule
+Ablation (Related-Lite99) & Raw trajectories & \textbf{14.6} & 12.3 \\
+ & Static playbook & \textbf{14.3} & 12.3 \\
+ & Fixed top-$k$ retrieval & 10.8 & 12.6 \\
+ & Static pool & 6.4 & 13.0 \\
+ & No graph links & 4.0 & 13.1 \\
+ & Planning-time search only & 1.9 & 13.2 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Evaluation denominators.}
+Resolution uses completed evaluations as the denominator
+(Section~\ref{sec:setup}). Table~\ref{tab:denominator} reports, for each
+method, how many evaluations did not complete and the resolution rate when
+every task counts, with an incomplete evaluation scored as unresolved.
+
+\begin{table}[htbp]
+\centering
+\caption{Incomplete evaluations and all-task resolution rates in the main
+comparison. On the five-run benchmarks, counts are totals over five runs
+($5\times99$ and $5\times113$ evaluations).}
+\label{tab:denominator}
+\small
+\begin{tabular}{lcccccc}
+\toprule
+ & \multicolumn{2}{c}{Verified500} & \multicolumn{2}{c}{Related-Lite99} & \multicolumn{2}{c}{DeepSWE113} \\
+Method & Incomplete & All-task (\%) & Incomplete & All-task (\%) & Incomplete & All-task (\%) \\
+\midrule
+No memory & \authorfill{} & \authorfill{} & \authorfill{} & \authorfill{} & \authorfill{} & \authorfill{} \\
+Strongest baseline & \authorfill{} & \authorfill{} & \authorfill{} & \authorfill{} & \authorfill{} & \authorfill{} \\
+ContextGraph & \authorfill{} & \authorfill{} & \authorfill{} & \authorfill{} & \authorfill{} & \authorfill{} \\
+\bottomrule
+\end{tabular}
+% AUTHOR: fill from the run logs for all eight methods (or at least these
+% three), and add per-run standard deviations for the five-run benchmarks.
+\end{table}
