@@ -305,7 +305,7 @@ Because every completed task is distilled into memory
 lessons from earlier attempts in the same run. Under the main protocol,
 freezing the pool costs 6.4 points (Table~\ref{tab:ablation}). A retry
 experiment on Related-Lite99 shows how this benefit builds up along the
-stream. It uses DeepSeek V4 Pro with 500 calls and \$30 per task, a curated
+stream. It uses DeepSeek V4 Pro with the main-comparison budget, a curated
 pool of 291 repair records with reference fixes and verification hints, and
 three conditions: no memory, a static pool, and online updates
 (Table~\ref{tab:stream-position}; per-pass counts in
@@ -329,7 +329,7 @@ and across retries: memory that keeps learning outperforms a fixed pool.
 \begin{table}[!htbp]
 \centering
 \caption{Related-Lite99 retry experiment of Table~\ref{tab:swectx-stream}
-(curated episodic memory, DeepSeek V4 Pro, 500 calls and \$30 per task),
+(curated episodic memory, DeepSeek V4 Pro, 500 steps and \$20 per task),
 means over five runs in issue creation-time order. Left: tasks resolved in
 the first pass within each third of the stream (of 33). Right: cumulative
 tasks resolved (of 99) after one, two, and three passes.}
