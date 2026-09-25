@@ -1,36 +1,41 @@
-\section{Additional recorded experiment results}
+\section{Additional benchmark and agent results}
 \label{sec:new-results}
-These results complement the three-benchmark comparison in
-Figure~\ref{fig:benchmark-comparison}. The Related-Lite99 and Gemini summaries
-below retain their supplied aggregates; detailed run settings were not
-included. The LoLBench experiment uses the Python subset described below.
-Earlier campaigns appear in Appendix~\ref{sec:historical}.
+This appendix gives the GPT-5.4 results plotted in
+Figure~\ref{fig:swectx-crossmodel}, the LoLBench comparison from
+Section~\ref{sec:benchmark}, and additional Gemini and token measurements.
+The three-benchmark comparison is tabulated in
+Table~\ref{tab:main-results-overview}; earlier configurations appear in
+Appendix~\ref{sec:historical}.
 
 \begin{table}[htbp]
 \centering
-\caption{Additional Related-Lite99 comparison. Entries report
-resolved/completed counts.}
+\caption{Related-Lite99 with GPT-5.4, one attempt per task and a
+300-summary pool, matching Figure~\ref{fig:swectx-crossmodel}.
+Resolution rates use completed evaluations. Bold marks the best automatic
+memory result; the oracle receives a known related summary.}
 \label{tab:new-swectx}
 \begin{tabular}{lr}
 \toprule
-Method & Resolved/completed \\
+Method & Resolution rate (\%) \\
 \midrule
-No memory & 21/98 \\
-Free summaries & 19/98 \\
-Mem0 & 19/98 \\
-LangMem & 24/98 \\
-ContextGraph & \textbf{35/98} \\
+No memory & 21.43 \\
+Random summaries & 19.59 \\
+Mem0 & 19.39 \\
+LangMem & 24.49 \\
+ContextGraph & \textbf{34.69} \\
+\midrule
+Oracle summary & 35.71 \\
 \bottomrule
 \end{tabular}
 \end{table}
-% Author query: the supplied slide lists35/98 alongside34.69% (+13.26pp).
-% These are inconsistent;34.69% corresponds to34/98. Keep the explicitly
-% supplied count here until clarified; do not derive a conflicting rate.
+% Aligned with the main text on 2026-09-25 at the author's direction.
+% Source: figures/crossmodel_data.json, GPT-5.4 column. Counts are
+% 21/98, 19/97, 19/98, 24/98, 34/98, and 35/98 (oracle), respectively.
 
 \begin{table}[htbp]
 \centering
-\caption{New Gemini 3.1 Pro/live-SWE-agent comparison. The gain column reports relative improvements
-from the supplied rates.}
+\caption{SWE-bench Verified500 with Gemini 3.1 Pro and live-SWE-agent.
+The gain column reports relative improvements in success rate.}
 \label{tab:new-gemini}
 \begin{tabular}{lrrr}
 \toprule
@@ -44,8 +49,11 @@ pass@5 & 82.8\% & \textbf{91.7\%} & +10.7\% \\
 \end{table}
 
 \paragraph{Token efficiency.}
-The new summary reports 236K tokens per task without memory and 201K with
-ContextGraph, a 14.8\% reduction (approximately 15\%).
+On SWE-bench Verified500, the recorded comparison uses 236K tokens per task
+without memory and 201K with ContextGraph, a 14.8\% reduction
+(approximately 15\%).
+% The author confirmed the benchmark and task count for both the Gemini
+% and token comparisons on 2026-09-25: SWE-bench Verified, 500 tasks.
 
 \paragraph{LoLBench Python subset.}
 We select 20 Python tasks from LoLBench \citep{lolbench2026}, which evaluates
@@ -55,7 +63,8 @@ from other Python tasks, separate from the 20 evaluation tasks.
 
 \begin{table}[htbp]
 \centering
-\caption{Success rates on 20 LoLBench Python tasks with Codex and GPT-5.5.
+\caption{Success rates on 20 LoLBench Python tasks with Codex and GPT-5.5,
+as reported in Section~\ref{sec:benchmark}.
 pass@$k$ reports the fraction of tasks solved within $k$ attempts.}
 \label{tab:new-codex55}
 \begin{tabular}{llr}

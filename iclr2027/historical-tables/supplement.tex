@@ -1,9 +1,11 @@
 \section{Additional system comparisons}
 \label{sec:historical}
-These tables give additional system comparisons and their experiment settings.
-The earlier Verified500 run used 75 steps per task; the main text reports the
-later 346/500 comparison. Related-Lite results cover summary memory, episodic
-memory, and memory-interface comparisons.
+These tables report earlier configurations of the experience-memory
+architecture in Section~\ref{sec:method}. The GPT-5.4 Verified500 run uses
+75 steps per task; Figure~\ref{fig:benchmark-comparison} reports the later
+DeepSeek V4 Pro 0813 comparison. The Related-Lite99 studies examine summary
+memory, episodic memory, and memory interfaces. Resolution rates are
+reported as percentages throughout.
 
 \begin{table}[htbp]
 \centering
@@ -11,34 +13,35 @@ memory, and memory-interface comparisons.
 per-task cost. Rates use all 500 tasks, including unfinished attempts.
 Wins/losses and exact McNemar $p$ compare each method with no memory.}
 \label{tab:verified500-historical}
-\begin{tabular}{lrrrrr}
+\begin{tabular}{lrrrr}
 \toprule
-Method & Resolved & Rate & Gain (pp) & Wins/losses & $p$ \\
+Method & Resolution (\%) & Gain (pp) & Wins/losses & $p$ \\
 \midrule
-No memory & 309 & 61.80\% & --- & --- & --- \\
-ExpeL & 312 & 62.40\% & +0.6 & 43/40 & .826 \\
-FAISS & \textbf{327} & \textbf{65.40\%} & +3.6 & 49/31 & .057 \\
-ContextGraph & 318 & 63.60\% & +1.8 & 50/41 & .402 \\
+No memory & 61.80 & --- & --- & --- \\
+ExpeL & 62.40 & +0.6 & 43/40 & .826 \\
+FAISS Flat & \textbf{65.40} & +3.6 & 49/31 & .057 \\
+ContextGraph & 63.60 & +1.8 & 50/41 & .402 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \paragraph{Memory configurations.}
-The Verified500 system indexes trajectory fragments, rules, and communities
+The earlier Verified500 system indexes trajectory fragments, rules, and communities
 with dense, lexical, and graph retrieval. The Related-Lite99 system indexes
-300 Experience summaries with repository-filtered lookup and a memory tool;
-its production repository-filtered route differs from generic channel fusion.
+300 experience summaries with repository-filtered lookup and a memory tool.
 The Related-Lite99 episodic system serves reference fixes, verification hints,
-and pre-base history from 291 episodes at pre-plan and post-error query points.
-These configurations precede the Qwen executable-witness graph.
+and pre-base history from 291 episodes, queried before planning and after errors.
+The executable-example bank used for behavioral studies is described in
+Appendix~\ref{sec:method-contract}.
 
-\paragraph{Task counts and attempts.}
-Verified500 uses a fixed 500-task denominator; completed counts were 486 for
-no memory, 488 for ExpeL, 490 for FAISS, and 484 for ContextGraph.
-Related-Lite99 reports resolved/completed in each condition. The main-text
-comparison allows one attempt; a separate historical aggregate includes
-failure reruns. The pool-size table uses only the single-attempt results: 21/96, 27/98,
-26/97, and 34/98 for 50, 100, 200, and 300 summaries, respectively.
+\paragraph{Evaluation sets and attempts.}
+Verified500 uses all 500 tasks as its denominator. In the historical
+Related-Lite99 summary experiments, resolution rates use completed
+evaluations in each condition. Figure~\ref{fig:swectx-crossmodel} allows
+one attempt; Table~\ref{tab:swectx-v2} includes failure reruns.
+The single-attempt pool-size results in Table~\ref{tab:swectx-poolsize}
+are 21.88\%, 27.55\%, 26.80\%, and 34.69\% for 50, 100, 200, and
+300 summaries, respectively.
 The MiniMax M2.7 campaign used a
 gateway-compatibility shim.
 
@@ -47,25 +50,25 @@ The episodic campaign served static source episodes: its original online deposit
 path omitted fields needed for retrieval. The historical overlap analysis
 identified ten targets with near-duplicate source fixes (token-Jaccard at least
 0.85); removing them gives an 89-task frame. DeepSeek V4 Pro retains a
-first-pass gain of 19/89 versus 13/89 ($p=.031$). The full-set cumulative
-two-pass gain of nine exceeds the campaign's preregistered threshold of eight.
+first-pass gain of 21.35\% versus 14.61\% ($p=.031$).
 
 \begin{table}[htbp]
 \centering
 \caption{Historical curated-episode Related-Lite99 replication, one pass per
-backbone. Last column gives recorded control/memory counts and paired $p$
-after removing ten near-duplicate targets; arm-specific completed denominators
-for that subset are not provided in the original table.}
+backbone. Resolution rates are percentages. The last column gives
+no-memory/ContextGraph rates on the fixed 89-task subset after removing ten
+near-duplicate targets, followed by the paired $p$ value.
+N/C only counts tasks resolved exclusively by no memory/ContextGraph.}
 \label{tab:swectx-xmodel}
 \small
 \begin{tabular}{lccccc}
 \toprule
-Backbone & Control & Memory & C/M only & $p$ & Reduced set \\
+Backbone & No memory & ContextGraph & N/C only & $p$ & 89-task subset \\
 \midrule
-DeepSeek V4 Pro & 14/99 & 21/99 & 0/7 & .016 & 13/19 ($p=.031$) \\
-DeepSeek V3.2 exp & 16/98 & 20/99 & 4/8 & .39 & 15/18 ($p=.55$) \\
-GLM 5.2 & 17/99 & 24/99 & 1/8 & .039 & 15/21 ($p=.070$) \\
-Kimi K3 & 29/99 & 31/99 & 3/5 & .73 & 26/28 ($p=.73$) \\
+DeepSeek V4 Pro & 14.14 & 21.21 & 0/7 & .016 & 14.61/21.35 ($p=.031$) \\
+DeepSeek V3.2 exp & 16.33 & 20.20 & 4/8 & .39 & 16.85/20.22 ($p=.55$) \\
+GLM 5.2 & 17.17 & 24.24 & 1/8 & .039 & 16.85/23.60 ($p=.070$) \\
+Kimi K3 & 29.29 & 31.31 & 3/5 & .73 & 29.21/31.46 ($p=.73$) \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -76,16 +79,17 @@ Kimi K3 & 29/99 & 31/99 & 3/5 & .73 & 26/28 ($p=.73$) \\
 The original table does not report attempts per method;
 Figure~\ref{fig:swectx-crossmodel} gives the separate single-attempt comparison.}
 \label{tab:swectx-v2}
-\begin{tabular}{lrr}
+\begin{tabular}{lr}
 \toprule
-Memory & Resolved/completed & Rate \\
+Memory & Resolution rate (\%) \\
 \midrule
-Random summaries & 19/97 & 19.59\% \\
-Mem0 & 19/98 & 19.39\% \\
-LangMem & 24/98 & 24.49\% \\
-No memory & 25/98 & 25.51\% \\
-Oracle summary & 35/98 & 35.71\% \\
-ContextGraph & 41/98 & 41.84\% \\
+No memory & 25.51 \\
+Random summaries & 19.59 \\
+Mem0 & 19.39 \\
+LangMem & 24.49 \\
+ContextGraph & \textbf{41.84} \\
+\midrule
+Oracle summary & 35.71 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -96,14 +100,14 @@ ContextGraph & 41/98 & 41.84\% \\
 evaluations. The preprint transcribed this table from an experiment screenshot;
 66.6\% retains the recorded display precision.}
 \label{tab:dev50}
-\begin{tabular}{lrrr}
+\begin{tabular}{lrr}
 \toprule
-Method & Completed/planned & Resolved & Recorded rate \\
+Method & Completion (\%) & Resolution (\%) \\
 \midrule
-ContextGraph & 48/50 & 32 & 66.6\% \\
-ExpeL & 50/50 & 32 & 64.0\% \\
-FAISS & 49/50 & 30 & 61.2\% \\
-No memory & 50/50 & 29 & 58.0\% \\
+ContextGraph & 96.0 & 66.6 \\
+ExpeL & 100.0 & 64.0 \\
+FAISS Flat & 98.0 & 61.2 \\
+No memory & 100.0 & 58.0 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -115,22 +119,22 @@ section. Memory arms share a 3,183-strategy pool and a \$10 per-task cap;
 no memory is uncapped. Rates use completed evaluations; costs are recorded
 totals under these different budgets.}
 \label{tab:pro50}
-\begin{tabular}{lrrrr}
+\begin{tabular}{lrrr}
 \toprule
-Method & Completed/planned & Resolved & Rate & Cost (\$) \\
+Method & Completion (\%) & Resolution (\%) & Cost (\$) \\
 \midrule
-ContextGraph & 47/50 & 11 & 23.40\% & 41 \\
-FAISS & 47/50 & 5 & 10.64\% & 68 \\
-No memory & 46/50 & 2 & 4.35\% & 1,686 \\
+ContextGraph & 94.0 & 23.40 & 41 \\
+FAISS Flat & 94.0 & 10.64 & 68 \\
+No memory & 92.0 & 4.35 & 1,686 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{table}[htbp]
 \centering
-\caption{Historical trajectory-graph snapshot, using text-embedding-3-large
-vectors with 3,072 dimensions. The new executable-witness graph
-uses a separate Qwen embedding space.}
+\caption{Historical experience-graph snapshot, using text-embedding-3-large
+vectors with 3,072 dimensions. The executable-example bank for behavioral
+studies uses Qwen embeddings (Appendix~\ref{sec:method-contract}).}
 \label{tab:schema}
 \begin{tabular}{lrl}
 \toprule
@@ -163,19 +167,20 @@ fail-to-pass success and does not veto every pass-to-pass regression. The
 
 \begin{table}[htbp]
 \centering
-\caption{Earlier Related-Lite99 memory interfaces and their original 88-task
-sensitivity frame. Gains and paired exact tests use the full 99-task frame.}
+\caption{Earlier Related-Lite99 memory interfaces. Resolution rates (\%)
+use the full 99-task set or its 88-task sensitivity subset.
+Gains and paired exact tests use the full set.}
 \label{tab:interfaces}
 \begin{tabular}{lrrrr}
 \toprule
-Memory & Resolved/99 & Resolved/88 & Gain (pp) & $p$ \\
+Memory & Full set (\%) & Subset (\%) & Gain (pp) & $p$ \\
 \midrule
-No memory & 17 & 16 & --- & --- \\
-Flat patches & 18 & 18 & +1.01 & 1.000 \\
-Patches + procedure card & 18 & 15 & +1.01 & 1.000 \\
-Graph & 12 & 12 & -5.05 & .227 \\
-Rules & 13 & 12 & -4.04 & .424 \\
-File list & 9 & 8 & -8.08 & .057 \\
+No memory & 17.17 & 18.18 & --- & --- \\
+Flat patches & 18.18 & 20.45 & +1.01 & 1.000 \\
+Patches + procedure card & 18.18 & 17.05 & +1.01 & 1.000 \\
+Graph & 12.12 & 13.64 & -5.05 & .227 \\
+Rules & 13.13 & 13.64 & -4.04 & .424 \\
+File list & 9.09 & 9.09 & -8.08 & .057 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -202,8 +207,10 @@ Content comparisons start fresh agents from the original development target;
 refinement comparisons start from a common completed candidate. Additional
 MySQL, named-zone, and ordinary-subclass checks were constructed after
 inspecting the corresponding repairs, then applied across their comparison
-group. The composition pair holds history, current example and failure, and
-the execution interface fixed; the added input is the composed condition.
+group. The three-arm composition comparison holds history, the current
+example and failure, tools, and instructions fixed. Two arms additionally
+receive either composed checks or separate historical checks, as shown in
+Table~\ref{tab:composedconditions}.
 
 \paragraph{Operation-dependent preservation.}
 In Matplotlib20826, clearing and replotting twin axes restores finite data
@@ -218,7 +225,7 @@ baseline passes 9/12 fail-to-pass and 139/139 pass-to-pass tests (binary reward 
 The closed JDK5 LoLBench baseline originally submitted no artifact; a separate
 no-inference recovery of its recorded patch passes 0/5 fail-to-pass and 51/51
 pass-to-pass tests (binary reward 0). These are development outcomes. The
-historical Verified500 table is a different evaluation from Verified150.
+historical Verified500 table is separate from these development studies.
 
 \paragraph{Executable-witness bank coverage.}
 The archived 273-source bank provides at least one witnessed source from the

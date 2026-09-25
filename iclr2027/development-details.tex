@@ -2,7 +2,7 @@
 \label{sec:development-details}
 This appendix gives the inputs, source requirements, and repair observations
 for the behavioral studies in Section~\ref{sec:evidence}.
-\subsection{Requirement memory: preserving triggering conditions}
+\subsection{Retain the context that makes advice useful}
 \label{sec:details-evidence}
 \label{sec:details-content}
 The executable-analysis experiments use a Verified split of 280 source tasks,
@@ -85,8 +85,8 @@ Original history and execution feedback recover named tuples; the requirement
 sentence alone does not. The feedback repair expands every non-builtin
 sequence into positional arguments, which also breaks ordinary tuple and list
 subclasses. Original history retains the constructor distinction and passes
-all displayed behaviors. The graph therefore needs to store how the input type is constructed,
-alongside its endpoint values.
+all displayed behaviors. For this behavioral study, the useful context includes
+how the input type is constructed, alongside its endpoint values.
 
 \begin{figure}[t]
 \centering
@@ -104,7 +104,7 @@ FAISS proposes sources; graph relations support their adaptation to the current
 operation. The usefulness of a candidate is established by what its condition
 adds to the repair.
 
-\subsection{Condition composition: checking interactions}
+\subsection{Check a historical requirement in the current workflow}
 \label{sec:details-composition-results}
 
 \paragraph{Join the historical input to the current operation.}
@@ -120,12 +120,14 @@ It produces a named-tuple point range and an ordinary-tuple neighbor.
 Retrieving the input relation from the graph lets the adapter reconstruct
 the same check used in this repair comparison.
 
-\paragraph{A matched comparison tests the added condition and feedback.}
-Two new agents start from the original unrepaired code with identical history, current scalar program,
-its observed failure, a callable execution tool, and instructions to run the
-supplied conditions before editing and submission. The second agent also
-receives the two composed programs and their failures.
-Both repairs pass official verification (Table~\ref{tab:composedconditions}).
+\paragraph{Three matched agents compare current, composed, and separate checks.}
+Three agents start from the original unrepaired code with identical history,
+current scalar program and failure, tools, and instructions to run the
+supplied checks before editing and submission. The current-feedback arm
+receives this shared input. The composed arm additionally receives the two
+composed programs and their failures; the separate-history arm receives
+standalone historical checks. All three repairs pass official verification
+(Table~\ref{tab:composedconditions}).
 The repair given only current feedback fails both historical examples and the withheld
 named-tuple/lazy-User query; the repair given joint checks passes those behaviors and
 preserves the ordinary subclasses.
@@ -134,8 +136,8 @@ removing a global conversion that broke an existing test. Its remaining
 range-endpoint failure directs the final correction.
 
 \paragraph{Separate checks recover history but miss the interaction.}
-A third agent receives the same history and current-program feedback, plus
-standalone named-tuple and ordinary-tuple checks using their original objects.
+The separate-history arm uses standalone named-tuple and ordinary-tuple
+checks with their original objects.
 Check count, feedback rounds, execution instructions, and repair budget match
 the composed arm. This repair passes official verification, both historical
 examples, and both ordinary-subclass checks, but only 1/3 joint queries and
@@ -154,7 +156,7 @@ Role composition exposes how the current source-timezone requirement interacts
 with the historical destination requirement. A complete repair can therefore
 satisfy combinations beyond those corrected by the historical implementation.
 
-\subsection{Execution feedback: guiding requirement-based repair}
+\subsection{Use failure observations to guide the next edit}
 \label{sec:details-feedback}
 
 \paragraph{The addition can guide further repair.}

@@ -1,4 +1,4 @@
-\section{Executable-analysis implementation and evaluation details}
+\section{Behavioral-study implementation and evaluation details}
 \label{sec:method-contract}
 This appendix specifies the runnable-example and condition-composition
 extension used for behavioral analysis, introduced in
@@ -13,7 +13,7 @@ behavior. Accepted examples are stored with their requirement, input roles,
 program, and before/after execution results.
 
 \subsection{Retrieval and repair settings}
-The implemented retrieval path selects three historical repairs from the same
+The behavioral-study retrieval path selects three historical repairs from the same
 repository using Qwen3-Embedding-8B vectors and FAISS
 \citep{qwen3embedding2025}. Each has a validated example.
 It returns complete records and input relations, including types and argument
