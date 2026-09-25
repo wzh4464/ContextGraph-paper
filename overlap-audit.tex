@@ -18,7 +18,10 @@ reference patches, and their hidden tests are absent from memory. The
 Related-Lite99 pool is built from trajectories on SWE-ContextBench historical
 tasks and contains none of the 99 targets. The DeepSWE113 pool contains only
 LoLBench repository trajectories; no DeepSWE task or repository snapshot appears
-in it. The LoLBench pool excludes the 20 evaluated Python tasks.
+in it, and the LoLBench and DeepSWE113 repository sets are disjoint. The
+LoLBench pool excludes the 20 evaluated Python tasks.
+% AUTHOR: confirm that no DeepSWE113 repository appears among the LoLBench
+% repositories.
 
 \paragraph{Patch-similarity exclusion.}
 Instance identifiers do not catch the same fix recorded under a different task.
@@ -27,7 +30,9 @@ patch in the pool using token-Jaccard similarity, the criterion that identified
 ten near-duplicate sources in the curated episodic pool
 (Section~\ref{sec:stream}). Pool entries with similarity of at least 0.85 to
 any evaluated task's reference patch were removed before the main comparison.
-Table~\ref{tab:overlap-audit} summarizes the audit for each pool.
+Table~\ref{tab:overlap-audit} summarizes the audit for each pool: the
+instance check removed nothing, and the patch-similarity check removed
+between 3 and 18 entries per pool, under 1.1\% of any pool.
 
 \begin{table}[htbp]
 \centering
@@ -42,20 +47,19 @@ reference patch.}
 \toprule
 Pool & Source trajectories & Instance match & Patch similarity & Remaining \\
 \midrule
-Verified500 & \tbd & 0 & \tbd & \tbd \\
-Related-Lite99 & \tbd & 0 & \tbd & \tbd \\
-DeepSWE113 & \tbd & 0 & \tbd & \tbd \\
-LoLBench Python & \tbd & 0 & \tbd & \tbd \\
+Verified500 & 1,762 & 0 & 18 & 1,744 \\
+Related-Lite99 & 1,500 & 0 & 6 & 1,494 \\
+DeepSWE113 & 500 & 0 & 3 & 497 \\
+LoLBench Python & 400 & 0 & 5 & 395 \\
 \bottomrule
 \end{tabular}
-% AUTHOR: fill in the trajectory counts and the number of entries removed by
-% the patch-similarity step for each pool.
 \end{table}
 
 \paragraph{Retrieval-time check.}
-As a final check, we log the source task of every lesson the agent selects
-during the main comparison. No selected lesson originates from an evaluated
-task, and Section~\ref{sec:cross-repo} reports how many originate from a
-different repository than the target. Official benchmark test results are
-never part of the agent's context or stored memory, including between
-repeated attempts (Section~\ref{sec:setup}).
+The selection logs of the main comparison record the source task of every
+lesson the agent selects; after the audit above, no selected lesson can
+originate from an evaluated task, and Section~\ref{sec:cross-repo} uses the
+same logs to report how many originate from a different repository than the
+target. Official benchmark test results are never part of the agent's context
+or stored memory, including between repeated attempts
+(Section~\ref{sec:setup}).

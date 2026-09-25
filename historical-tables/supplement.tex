@@ -2,10 +2,13 @@
 \label{sec:historical}
 These comparisons examine summary and episodic memory across models and
 attempt budgets. Two configurations of ContextGraph appear in them and are
-named explicitly here. The \emph{summary-memory configuration} indexes 300
-experience summaries; Figure~\ref{fig:swectx-crossmodel} and
-Table~\ref{tab:swectx-poolsize} use it to examine the benefit of summary
-memory across backbones and pool sizes. The \emph{episodic-memory
+named explicitly here. The \emph{summary-memory configuration} is the
+Related-Lite99 configuration of the main comparison: an initial pool of 300
+experience summaries distilled from the audited Related-Lite99 trajectories
+(Appendix~\ref{sec:overlap-audit}), the mini-SWE-agent scaffold, and the
+main-comparison budget. Figure~\ref{fig:swectx-crossmodel} and
+Table~\ref{tab:swectx-poolsize} use it to examine other backbones and
+initial pool sizes. The \emph{episodic-memory
 configuration} serves 291 curated repair records with prior code history,
 reference fixes, and verification hints; Table~\ref{tab:swectx-stream} and
 Table~\ref{tab:swectx-xmodel} use it. The main comparison
@@ -16,10 +19,13 @@ percentages; gains marked pp are percentage-point differences from no memory.
 
 \paragraph{Memory access and evaluation.}
 The agent uses its full current context to search the experience pool,
-read records, and follow links to relevant strategies. The Related-Lite99
-summary comparison uses 300 summaries and one attempt per task. The pool-size
-study varies this initial pool from 50 to 300 summaries
-(Table~\ref{tab:swectx-poolsize}). MiniMax M2.7 uses an API compatibility layer.
+read records, and follow links to relevant strategies. In the backbone
+comparison, the Kimi K3 and MiniMax M2.7 runs use one attempt per task and
+report rates over completed evaluations; MiniMax M2.7 uses an API
+compatibility layer. The pool-size study varies the initial pool from 50 to
+300 summaries (Table~\ref{tab:swectx-poolsize}).
+% AUTHOR: confirm the single-attempt setting for the Kimi K3 and MiniMax M2.7
+% runs.
 In the curated-episode comparison, each pass adds the distilled lessons of its
 completed attempts to the pool before the next pass retries unresolved tasks
 (Section~\ref{sec:stream}). Official test results are withheld

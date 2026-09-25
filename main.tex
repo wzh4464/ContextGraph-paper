@@ -235,8 +235,9 @@ With Gemini 3.1 Pro and live-SWE-agent, ContextGraph raises Verified500
 pass@1 from 82.3\% to 88.9\%, an 8.0\% relative gain; pass@5 reaches 91.7\%
 (Table~\ref{tab:new-gemini}). Memory also benefits this stronger backbone
 and a different coding-agent implementation. Without memory, additional
-attempts add less than one point, because repeated attempts fail on the same
-tasks; with memory updated after every attempt, pass@$k$ keeps rising.
+attempts add less than one point; with memory the curve keeps rising, 2.8
+points from pass@1 to pass@5, consistent with later attempts drawing on
+lessons distilled from earlier ones.
 On Verified500 with DeepSeek V4 Pro, ContextGraph also uses fewer tokens per
 task, 201K versus 236K without memory, a 14.8\% reduction.
 % AUTHOR: confirm that memory was updated between attempts in the Gemini
@@ -337,11 +338,16 @@ resolved tasks after one, two, and three passes (21, 25, and 27 versus 14,
 the no-memory agent gains nothing from its third pass, whereas the agent with
 memory keeps converting earlier failures into repairs. Excluding ten targets
 with near-duplicate source fixes retains the first-pass gain, 19/89 versus
-13/89 ($p=.031$). Absolute rates are lower than in the main comparison because
-this experiment uses the curated episodic pool and a capped budget; the paired
-comparison within each row is the quantity of interest.
-\textbf{Finding:} the benefit of memory grows with each retry pass, because
-every pass adds the lessons of the previous one.
+13/89 ($p=.031$). Absolute rates differ from the main comparison because this
+experiment uses a different budget and a single run; the paired comparison
+within each row is the quantity of interest. Its curated records include
+reference fixes, so it tests the update loop rather than the abstraction; the
+static-pool ablation (Table~\ref{tab:ablation}) shows the same effect under
+the main protocol.
+\textbf{Finding:} the gap between the two agents widens with each pass, by
+7, 9, and 11 tasks; the static-pool control in
+Table~\ref{tab:stream-position} attributes the widening to the lessons
+added between passes.
 
 \begin{table}[t]
 \centering
@@ -411,6 +417,7 @@ Table~\ref{tab:cross-repo} reports the share of selected lessons whose source
 repository differs from the target repository, and the resolution rate when
 lessons from the target repository are removed from the initial pool before
 evaluation. The DeepSWE113 initial pool contains only LoLBench repositories,
+none of which is a DeepSWE113 repository (Appendix~\ref{sec:overlap-audit}),
 so selection from the initial pool crosses repositories by construction;
 lessons added online during a run can come from DeepSWE repositories.
 % AUTHOR: fill in from the selection logs of the main comparison and the
@@ -438,40 +445,53 @@ DeepSWE113 & \tbd & 72.1 & \tbd & 60.8 \\
 \subsection{Performance across models and memory-pool sizes}
 \label{sec:generalization}
 \label{sec:recorded-generalization}
-The experiments in this section use the summary-memory configuration of
-ContextGraph with a pool of up to 300 experience summaries (300 unless
-stated otherwise) and one attempt per task (Appendix~\ref{sec:historical}).
+The experiments in this section keep the Related-Lite99 protocol of the main
+comparison and vary the backbone and the size of the initial pool, which
+holds 300 experience summaries distilled from the audited Related-Lite99
+trajectories of Table~\ref{tab:evaluation-settings} unless stated otherwise.
+The DeepSeek V4 Pro entries with 300 summaries are therefore the
+main-comparison values; Appendix~\ref{sec:historical} gives the remaining
+settings.
+% AUTHOR: confirm that the DeepSeek V4 Pro entries of Figure 5 and the
+% 300-summary column of the pool-size table are the main-comparison runs, and
+% that the Kimi K3 and MiniMax M2.7 runs are single attempts over completed
+% evaluations.
 
 \paragraph{Benefits across language models.}
-In the Related-Lite99 single-attempt comparison, memory methods draw from the
-same 300-summary pool within each model (Figure~\ref{fig:swectx-crossmodel}),
-including Mem0 \citep{mem02025} and LangMem \citep{langmem2025}.
-With DeepSeek V4 Pro, ContextGraph reaches 35.1\% resolution, compared with
-21.4\% without memory. The oracle is given one known related summary, bypassing
-retrieval; ContextGraph can retrieve several.
-\textbf{Finding:} memory reuse improves resolution with all three models, with the
-highest non-oracle resolution rate in each model comparison.
+Memory methods draw from the same 300-summary pool within each backbone
+(Figure~\ref{fig:swectx-crossmodel}), including Mem0 \citep{mem02025} and
+LangMem \citep{langmem2025}. With DeepSeek V4 Pro, ContextGraph reaches
+35.1\% resolution, compared with 21.4\% without memory; with Kimi K3 and
+MiniMax M2.7, 28.6\% and 27.6\% against 18.6\% and 19.4\%. The oracle is
+given one known related summary, bypassing retrieval; ContextGraph can
+retrieve several and exceeds the oracle on every backbone.
+\textbf{Finding:} ContextGraph improves resolution with all three backbones
+and reaches the highest rate in each comparison, whereas the other memory
+methods do not improve consistently (Mem0 falls below no memory on MiniMax
+M2.7).
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{figures/crossmodel_comparison.pdf}
-\caption{Related-Lite99 resolution (resolved/completed, \%), one attempt per
-task and 300 summaries per model. ContextGraph is red; the hatched oracle receives
-a known related summary.}
+\caption{Related-Lite99 resolution (\%) with the same 300-summary initial pool
+per backbone. DeepSeek V4 Pro values are those of the main comparison; Kimi K3
+and MiniMax M2.7 are single runs over completed evaluations. ContextGraph is
+red; the hatched oracle receives a known related summary.}
 \label{fig:swectx-crossmodel}
 \end{figure}
 
 \paragraph{Pool size.}
 With the DeepSeek V4 Pro agent and memory-selection procedure held fixed,
-resolution rises from 20.2\% to 35.1\% as the pool grows from 50 to 300
-summaries (Table~\ref{tab:swectx-poolsize}).
+resolution rises from 20.2\% to 35.1\% as the initial pool grows from 50 to
+300 summaries (Table~\ref{tab:swectx-poolsize}); the 300-summary column is
+the main-comparison configuration.
 \textbf{Finding:} resolution rises with pool size, and the largest tested
 pool yields the strongest repair result.
 
 \begin{table}[!htbp]
 \centering
-\caption{Related-Lite99 with different memory-pool sizes, DeepSeek V4 Pro, one attempt
-per task.}
+\caption{Related-Lite99 with different initial memory-pool sizes, DeepSeek V4
+Pro. The 300-summary column is the main comparison.}
 \label{tab:swectx-poolsize}
 \begin{tabular}{lrrrr}
 \toprule
@@ -514,8 +534,9 @@ self-improving coding-agent memory.
 \input{published-swectx-results}
 \section*{Limitations}
 The main comparisons measure full memory systems; the ablation in
-Section~\ref{sec:ablation} separates their components on one benchmark, and
-the stream and cross-repository analyses cover the main protocol only.
+Section~\ref{sec:ablation} separates their components on one benchmark, the
+task-stream study uses the retry protocol with a separate curated pool and
+budget, and the cross-repository analysis covers the main protocol only.
 The 20-task LoLBench study covers one language and a small part of that
 benchmark. Longer task streams and additional agent scaffolds would clarify
 when each design contributes most. Detailed settings and additional results
@@ -528,7 +549,8 @@ and the scripts and data that generate the figures
 (\texttt{figures/scripts}).
 The main text defines the memory workflow, benchmark settings, and reported
 metrics. The appendices provide the overlap audit of every initial memory
-pool, numerical comparisons, and supplementary implementation details.
+pool of the main comparison, numerical comparisons, and supplementary
+implementation details.
 ContextGraph's main comparisons include online experience updates; baseline
 updating follows the corresponding open-source implementation.
 \section*{Ethics statement}
