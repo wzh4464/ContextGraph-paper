@@ -61,7 +61,7 @@
         ]
       }
     ],
-    "provenance": "Author-supplied measurements (September 24-25, 2026). Agent KB removed from the comparison; Related-Lite99 no memory 21.4 (five-run mean) and ContextGraph 35.1 unified at the author's direction on September 25, 2026."
+    "provenance": "Main-comparison resolution rates (DeepSeek V4 Pro 0813, mini-SWE-agent); Related-Lite99 and DeepSWE113 are five-run means."
   },
   "pool_size": {
     "benchmark": "Related-Lite99",
@@ -79,6 +79,6 @@
       28.3,
       35.1
     ],
-    "note": "Values from the main-text pool-size table; the pool-size figure is not used in the paper."
+    "note": "Values from the main-text pool-size table (DeepSeek V4 Pro, one attempt per task)."
   }
 }

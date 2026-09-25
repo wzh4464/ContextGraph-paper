@@ -101,5 +101,5 @@
       ]
     ]
   ],
-  "provenance": "Resolved/completed counts, one attempt per task, 300 summaries per model; three backbones. DeepSeek V4 Pro no-memory count unified with the main comparison (21.4%) at the author's direction on September 25, 2026."
+  "provenance": "Resolved/completed counts on Related-Lite99, one attempt per task, 300 summaries per model, three backbones."
 }

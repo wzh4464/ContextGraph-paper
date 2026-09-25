@@ -73,28 +73,21 @@ def benchmarks():
 
 
 def pool_size():
+    """Optional pool-size curve (resolution only); not used in the paper."""
     data = DATA["pool_size"]
     fig, ax = plt.subplots(figsize=(6.6, 1.95))
     fig.subplots_adjust(left=0.09, right=0.98, bottom=0.25, top=0.97)
     x = data["summaries"]
     ax.plot(x, data["resolution_rate"], "o-", color=RED, linewidth=1.8,
             markersize=5.5, label="Resolution rate")
-    ax.plot(x, data["source_coverage"], "s-", color=BLUE, linewidth=1.8,
-            markersize=5.5, label="Source coverage")
     for xx, yy in zip(x, data["resolution_rate"]):
-        ax.annotate(f"{yy:.2f}", (xx, yy), xytext=(0, -13),
-                    textcoords="offset points", ha="center", fontsize=10)
-    for xx, yy in zip(x, data["source_coverage"]):
         ax.annotate(f"{yy:.1f}", (xx, yy), xytext=(0, 7),
                     textcoords="offset points", ha="center", fontsize=10)
-    ax.set(xlim=(35, 315), ylim=(0, 75), xticks=x, yticks=[0, 20, 40, 60],
-           xlabel="Number of summaries", ylabel="Rate (%)")
+    ax.set(xlim=(35, 315), ylim=(0, 45), xticks=x, yticks=[0, 10, 20, 30, 40],
+           xlabel="Number of summaries", ylabel="Resolution rate (%)")
     ax.grid()
-    ax.legend(loc="upper left", frameon=False, ncol=2, fontsize=10,
-              handlelength=2, columnspacing=1.3)
-    save(fig, "pool_size_coverage")
+    save(fig, "pool_size_resolution")
 
 
 if __name__ == "__main__":
     benchmarks()
-    pool_size()
