@@ -1,5 +1,7 @@
 """Cross-model comparison from the per-model rates in crossmodel_data.json.
 
+Run: python figures/scripts/draw_crossmodel.py -> figures/crossmodel_comparison.pdf
+
 Uses the MulVul-inspired serif typography and red/blue/green/purple palette
 shared by the benchmark figure. Oracle access has a distinct hatched bar.
 """

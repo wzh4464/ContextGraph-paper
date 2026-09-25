@@ -1,4 +1,6 @@
-"""Render measured benchmark and pool-size results in MulVul's figure style.
+"""Render the benchmark-comparison figure (and an optional pool-size curve).
+
+Run: python figures/scripts/draw_benchmark_pool.py -> figures/benchmark_comparison.pdf
 
 Style reference: MulVul fig/longtail_f1.png: serif type, white background,
 light gray grid, red circles and blue squares. No inferred error bars.
@@ -12,7 +14,8 @@ matplotlib.use("Agg")
 from matplotlib import font_manager
 import matplotlib.pyplot as plt
 
-OUT = Path(__file__).resolve().parent
+OUT = Path(__file__).resolve().parent          # data files live here
+FIG_DIR = OUT.parent                            # PDFs are written to figures/, where main.tex includes them
 DATA = json.loads((OUT / "benchmark_pool_data.json").read_text())
 RED, BLUE, GRAY = "#C73527", "#2984B9", "#858585"
 TIMES = Path("/System/Library/Fonts/Supplemental/Times New Roman.ttf")
@@ -37,9 +40,7 @@ plt.rcParams.update({
 
 
 def save(fig, stem):
-    for ext in ("pdf", "png", "svg"):
-        fig.savefig(OUT / f"{stem}.{ext}", dpi=240,
-                    bbox_inches="tight", pad_inches=0.025)
+    fig.savefig(FIG_DIR / f"{stem}.pdf", bbox_inches="tight", pad_inches=0.025)
     plt.close(fig)
 
 

@@ -3,17 +3,17 @@
 These comparisons examine summary and episodic memory across models and
 attempt budgets. Two configurations of ContextGraph appear in them and are
 named explicitly here. The \emph{summary-memory configuration} is the
-Related-Lite99 configuration of the main comparison: an initial pool of 300
-experience summaries distilled from the audited SWE-bench cold-start pool
-(Appendix~\ref{sec:overlap-audit}), the mini-SWE-agent scaffold, and the
-main-comparison budget. Figure~\ref{fig:swectx-crossmodel} and
-Table~\ref{tab:swectx-poolsize} use it to examine other backbones and
-initial pool sizes. The \emph{episodic-memory
-configuration} serves 291 curated repair records with prior code history,
-reference fixes, and verification hints; Table~\ref{tab:swectx-stream} and
-Table~\ref{tab:swectx-xmodel} use it. The main comparison
-(Section~\ref{sec:benchmark}) uses the experience-graph configuration of
-Section~\ref{sec:method}. Table~\ref{tab:dev50} gives an early 50-task
+experience graph of Section~\ref{sec:method} built from an initial pool of
+300 experience summaries distilled from the audited SWE-bench cold-start pool
+(Appendix~\ref{sec:overlap-audit}), with the mini-SWE-agent scaffold and the
+main-comparison budget; it is the Related-Lite99 run of the main comparison,
+which uses the experience graph on all three benchmarks.
+Figure~\ref{fig:swectx-crossmodel} and Table~\ref{tab:swectx-poolsize} use
+it to examine other backbones and initial pool sizes. The
+\emph{episodic-memory configuration} serves 291 curated repair records with
+prior code history, reference fixes, and verification hints;
+Table~\ref{tab:swectx-stream} and Table~\ref{tab:swectx-xmodel} use it.
+Table~\ref{tab:dev50} gives an early 50-task
 development comparison on SWE-bench Verified. Resolution rates are
 percentages; gains marked pp are percentage-point differences from no memory.
 
