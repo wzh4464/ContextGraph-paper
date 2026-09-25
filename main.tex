@@ -6,7 +6,7 @@
 \usepackage{xcolor,placeins}
 \definecolor{cgred}{HTML}{C73527}\definecolor{cgblue}{HTML}{2984B9}
 \hypersetup{hidelinks}
-\title{ContextGraph: Improving Coding Agents with\\Condition-Matched Experience Memory}
+\title{ContextGraph: Improving Coding Agents with\\Agent-Selected Lessons from Experience}
 \author{Anonymous authors}
 \newcommand{\cg}{ContextGraph}
 \begin{document}
@@ -127,10 +127,11 @@ before planning and again after an error.}
 \end{figure}
 
 These findings extend the abstraction and pool-size effects of Memory
-Transfer Learning \citep{transfer2026} to repository-level repair, and bring
-condition-structured lessons \citep{clin2023,autoguide2024} to coding agents. We contribute ContextGraph, an experience graph that
-integrates memory into planning, error recovery, and learning after every
-task; the five takeaways, each backed by controlled ablations or analyses in
+Transfer Learning \citep{transfer2026} to repository-level repair. We
+contribute ContextGraph, an experience graph that brings condition-structured
+lessons \citep{clin2023,autoguide2024} to coding agents and integrates memory
+into planning, error recovery, and learning after every task; the five
+takeaways, each backed by controlled ablations or analyses in
 Section~\ref{sec:experiments}; and the code, prompts, and graph schema,
 released so that others can build on them.
 \endgroup
@@ -227,7 +228,9 @@ trajectory adds 1.01 points, whereas supplying a summary of it adds 8.08
 selects come from other repositories (Section~\ref{sec:cross-repo}). An
 excerpt from another repository carries that repository's code; an abstract
 lesson carries the decision and the condition under which it applies, and
-the agent writes the local change.
+the agent writes the local change. Raw trajectories drop the condition
+together with the rest of the lesson format, and none of our ablations
+isolates the condition's own contribution (see Limitations).
 
 \begin{table}[!htbp]
 \centering
@@ -400,12 +403,10 @@ tasks at pass@1 (15.0\%), while no memory and each of the six memory
 baselines solve 1 (5.0\%); with three attempts, it solves 5 (25.0\%; Appendix
 Table~\ref{tab:new-codex55}). The gain also holds across backbones on
 Related-Lite99, where the memory methods of
-Figure~\ref{fig:swectx-crossmodel}, including Mem0 \citep{mem02025} and
-LangMem \citep{langmem2025}, draw from the same 300-summary pool within each
-backbone: ContextGraph improves over no memory by 13.7, 10.0, and 8.2 points
-with DeepSeek V4 Pro, Kimi K3, and MiniMax M2.7 and has the highest rate with
-each; with DeepSeek V4 Pro, LangMem
-comes closest, 1.1 points behind. Memory also saves tokens: on
+Figure~\ref{fig:swectx-crossmodel}, including Mem0 \citep{mem02025}, draw
+from the same 300-summary pool within each backbone: ContextGraph improves
+over no memory by 13.7, 10.0, and 8.2 points with DeepSeek V4 Pro, Kimi K3,
+and MiniMax M2.7 and has the highest rate with each. Memory also saves tokens: on
 Verified500 with DeepSeek V4 Pro, ContextGraph uses 201K tokens per task
 against 236K without memory, 14.8\% fewer.
 
@@ -441,9 +442,12 @@ code, prompts, and graph schema so that others can build on these findings.
 \clearpage
 \input{published-swectx-results}
 \section*{Limitations}
-Our ablations remove abstraction together with the rest of the lesson format;
-a variant that keeps agent-directed selection but strips only the
-applicability condition would pin down the condition's share. A retry control in which a no-memory agent reflects on its own failures
+Our ablations do not isolate a lesson's applicability condition: the
+raw-trajectory variant removes abstraction together with the rest of the
+lesson format, so we identify abstraction and agent-directed selection, not
+condition matching itself, as the prerequisites for the gain. A variant that
+keeps both but strips only the condition would measure the condition's share.
+A retry control in which a no-memory agent reflects on its own failures
 \citep{reflexion2023}, longer task streams, and more languages and agent
 scaffolds are natural next steps.
 
