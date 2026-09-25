@@ -11,7 +11,7 @@ temperature zero and matched budgets within each comparison.
 They measure whether historical guidance helps preserve a required
 behavior in the submitted repair.
 Table~\ref{tab:historicalrequirements} presents four such additions.
-Django14404 uses the first-ranked source issue and patch; Django12708 and
+Django14404 uses the selected source issue and patch; Django12708 and
 Django11138 come from a fixed six-task group receiving selected rules
 as plain text per task. Both conditions pass official verification on all six tasks.
 The historical requirements distinguish the completeness of those repairs.
@@ -24,7 +24,7 @@ Only the history-informed repair preserves both.
 
 \paragraph{A neighboring operation.}
 Django12708 reports ambiguous deletion of an ordinary index when a unique constraint uses the same columns.
-The first retrieved source, 15732, instead concerns deletion of a unique constraint sharing its column with a primary key.
+The selected source, 15732, instead concerns deletion of a unique constraint sharing its column with a primary key.
 Both repairs fix ordinary-index selection; only the memory-informed repair also excludes primary keys when deleting unique constraints.
 The source-generated PostgreSQL check runs unchanged on both target repairs.
 A separate combined input creates an ordinary index, redundant uniqueness, and a primary key on the same column.
@@ -78,8 +78,9 @@ The same requirement succeeds when its trigger is reconstructed correctly.
 Preserving this input context helps explain when the advice is useful.
 
 \paragraph{Preserve the input relation.}
-On Django12663, both a set of three code-connected sources and the ten
-most similar sources contain the historical named-tuple repair, source13590,
+In a candidate-selection diagnostic on Django12663, both a set of three
+code-connected sources and the ten most similar sources contain the
+historical named-tuple repair, source13590,
 yet neither initial repair recovers its behavior. Three fresh revisions start
 from the same candidate and source (Figure~\ref{fig:memory-content-scope}).
 Original history and execution feedback recover named tuples; the requirement
@@ -97,13 +98,12 @@ how the input type is constructed, alongside its endpoint values.
 \end{figure}
 
 \paragraph{Retain candidates that can supply an omitted condition.}
-In this same case, demanding an operation match from the initial public-code
-localization excludes source13590, which FAISS ranks first. Keeping the
-similarity candidate lets the graph return its input relation and construct
-the joint program described next. This motivates the division in Figure~\ref{fig:behavior-workflow}:
-FAISS proposes sources, and the stored input relations let an adapter
-construct a check for the current operation. This case illustrates why
-retrieval should retain potentially useful conditions from related operations.
+In the candidate-selection diagnostic, an exact operation filter excludes
+source13590 despite its first-place FAISS similarity rank. Retaining this
+source allows its stored input relation to support the joint check described
+next. The diagnostic illustrates why useful guidance can come from a related
+operation. In the agent-directed workflow (Figure~\ref{fig:behavior-workflow}),
+the agent selects source records and their input relations support composition.
 
 \subsection{Check a historical requirement in the current workflow}
 \label{sec:details-composition-results}

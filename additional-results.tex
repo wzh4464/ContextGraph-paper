@@ -58,7 +58,6 @@ Method & Metric & Success rate (\%) \\
 No memory & pass@1 & 5.0 \\
 FAISS Flat & pass@1 & 5.0 \\
 ExpeL & pass@1 & 5.0 \\
-Agent KB & pass@1 & 5.0 \\
 ExpeRepair & pass@1 & 5.0 \\
 ReasoningBank & pass@1 & 5.0 \\
 ACE & pass@1 & 5.0 \\
@@ -77,7 +76,10 @@ At step $t$, the agent uses the complete context $C_t$: the issue and
 conversation, inspected code, edits, actions, and observed failures. It can
 search the whole experience pool, read source records, follow links between
 strategies and errors, and compare lessons across repositories. Its selection
-is not restricted to a fixed number of nearest neighbours.
+follows Equation~\ref{eq:agent-selection}: the agent decides which records
+to inspect and retain, without a fixed relevance score or number of nearest
+neighbours. Each search or read adds its results to $H_j$ before the next
+memory action; the selected lessons form $\mathcal M_t$.
 
 The selected memory contains strategies and warnings, their source context,
 and the conditions under which they are useful. Before planning, selection
@@ -86,3 +88,21 @@ helps revise the diagnosis and find additional guidance. After each completed
 task, the graph incorporates new experience for subsequent tasks.
 The pool therefore evolves along the issue-ordered task stream; official
 benchmark test results are never part of the agent's context or stored memory.
+
+\begin{algorithm}[!htbp]
+\caption{ContextGraph across a stream of coding tasks}
+\label{alg:contextgraph}
+\small
+\begin{tabular}{@{}p{0.96\linewidth}@{}}
+\textbf{Input:} initial trajectories $H$, coding tasks $q_1,\ldots,q_T$.\\
+\textbf{Output:} candidate patches and an updated experience graph $G$.\\
+1. Extract strategies and warnings from $H$; build $G$ and its retrieval entries.\\
+2. \textbf{For each} task $q_t$ in issue creation-time order:\\
+\quad a. Use the full task context to search $G$ and select guidance for planning.\\
+\quad b. Execute investigation, editing, and testing actions; record the trajectory.\\
+\quad c. After an error, search again with the updated full context; revise the plan.\\
+\quad d. Continue the repair loop until the task ends or its budget is exhausted.\\
+\quad e. Distill experience from the trajectory and agent-visible outcomes.\\
+\quad f. Update $G$ and retrieval entries; expose the new experience to later tasks.\\
+\end{tabular}
+\end{algorithm}

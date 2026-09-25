@@ -34,7 +34,7 @@ current query and obtain execution feedback for the next edit.}
 
 \section{ContextGraph: memory for planning, recovery, and learning}
 \label{sec:method}
-ContextGraph connects experience abstraction, graph retrieval, and memory
+ContextGraph connects experience abstraction, agent-directed selection, and memory
 access. The same process builds the initial graph and incorporates completed
 tasks (Figure~\ref{fig:experience-memory}).
 
@@ -69,60 +69,50 @@ source context. Abstraction removes repository-specific names while retaining
 the decision and its reason: the failed framework setup becomes advice to
 isolate the bug first.
 
-Strategies link to their source trajectories and shared rules; rules and
-experiences link to the errors they address or encounter. These connections
-preserve the common lesson and its supporting observations, including warnings
-from failures and strategies from successful repairs.
+We represent memory as a typed graph
+\begin{equation}
+ G=(V,E),\qquad E\subseteq V\times\mathcal R\times V,
+ \label{eq:experience-graph}
+\end{equation}
+where each edge has a relation type in $\mathcal R$. Nodes represent
+trajectories, fragments (action--observation segments), strategies, canonical
+rules (merged lessons), error patterns, problem summaries, playbook entries
+(retrieval-ready lessons), and communities of related fragments. The seven
+edge types connect a trajectory to its fragments, a strategy to its source
+trajectory, a fragment to an encountered error, a strategy to its canonical
+rule, a rule to an error it addresses, a summary to its trajectory, and a
+fragment to its community. These links retain both a reusable lesson and the
+observations that explain when it applies.
 
 \subsection{Agent-directed selection: find useful experience}
 \label{sec:experience-retrieval}
-The agent uses its full current context---the issue, inspected code, previous
-actions, and observed failures---to decide which memories can help. It can
-search the entire experience pool, open source records, follow links between
-errors and strategies, and refine its search as its diagnosis changes.
-Semantic and keyword search provide entry points; the agent selects the
-useful lessons rather than receiving a fixed top-$k$ list.
-
-The graph keeps each strategy connected to its applicability context and
-supporting experience. The agent uses these connections to judge relevance,
-then applies selected strategies and warnings through local reproductions,
-edits, and tests. Appendix~\ref{sec:agentic-retrieval} details the selection
-workflow.
+At repair step $t$, the agent uses its full context $C_t$: the issue, inspected
+code, actions, and failures. Memory selection is an agent decision process:
+\begin{equation}
+ a_j\sim\pi_\theta(\,\cdot\mid C_t,H_j),\qquad
+ \mathcal M_t=\operatorname{Select}_{\pi_\theta}(C_t,G_t),
+ \label{eq:agent-selection}
+\end{equation}
+where $\pi_\theta$ is the coding agent's model policy, $H_j$ records its
+preceding memory actions and their results, and $\mathcal M_t$ contains the
+selected lessons. Actions search the entire pool, read source records, follow
+graph links, select lessons, or stop. The agent judges relevance from the
+returned context; there is no fixed numerical relevance score or top-$k$
+cutoff. It applies the selected guidance through local reproductions, edits,
+and tests (Appendix~\ref{sec:agentic-retrieval}).
 
 \subsection{Memory access and updates: connect repair to learning}
 \label{sec:experience-access}
 \paragraph{Before planning.}
-The agent searches memory using the issue and its full available code context.
-Strategies guide where to investigate, how to reproduce the failure, and
-which checks to prioritize; warnings identify costly approaches to avoid.
+The full task context guides a search for investigation, reproduction, and
+testing strategies, together with warnings about costly approaches to avoid.
 
 \paragraph{After an error.}
-A failed command, reproduction, or test adds to the agent's current context:
-the observed error, recent action, relevant files, and current hypothesis.
-Retrieval now supports diagnosis and revision. The agent applies the guidance
-through its repository tools and uses the next observation to decide how to proceed.
+The failed action, observed error, relevant code, and current hypothesis
+update the context. The agent searches again to revise its diagnosis and
+uses repository tools to try the next step.
 
 \paragraph{After each task.}
-ContextGraph abstracts both successful and failed trajectories, links the
-new lessons to existing experience, and updates their retrieval entries.
-Outcomes here come from agent-visible observations, not official test feedback.
-The added experience is immediately available to subsequent tasks, closing
-the learning loop in Algorithm~\ref{alg:contextgraph}.
-
-\begin{algorithm}[!htbp]
-\caption{ContextGraph across a stream of coding tasks}
-\label{alg:contextgraph}
-\small
-\begin{tabular}{@{}p{0.96\linewidth}@{}}
-\textbf{Input:} initial trajectories $H$, coding tasks $q_1,\ldots,q_T$.\\
-\textbf{Output:} candidate patches and an updated experience graph $G$.\\
-1. Extract strategies and warnings from $H$; build $G$ and its retrieval entries.\\
-2. \textbf{For each} task $q_t$ in issue creation-time order:\\
-\quad a. Use the full task context to search $G$ and select guidance for planning.\\
-\quad b. Execute investigation, editing, and testing actions; record the trajectory.\\
-\quad c. After an error, search again with the updated full context; revise the plan.\\
-\quad d. Continue the repair loop until the task ends or its budget is exhausted.\\
-\quad e. Distill experience from the trajectory and agent-visible outcomes.\\
-\quad f. Update $G$ and retrieval entries; expose the new experience to later tasks.\\
-\end{tabular}
-\end{algorithm}
+ContextGraph distills successful and failed trajectories and links new
+lessons to existing experience. Updates use agent-visible observations and
+become immediately available to later tasks (Appendix Algorithm~\ref{alg:contextgraph}).

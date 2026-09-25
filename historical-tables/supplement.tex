@@ -63,26 +63,9 @@ No memory & 100.0 & 58.0 \\
 
 \begin{table}[htbp]
 \centering
-\caption{SWE-bench-Pro50. Memory arms share a 3,183-strategy pool. All
-methods, including no memory, have a \$200 per-task budget. Completion uses
-all 50 tasks; resolution uses completed evaluations. Costs are total spend.}
-\label{tab:pro50}
-\begin{tabular}{lrrr}
-\toprule
-Method & Completion (\%) & Resolution (\%) & Cost (\$) \\
-\midrule
-ContextGraph & 94.0 & 23.40 & 41 \\
-FAISS Flat & 94.0 & 10.64 & 68 \\
-No memory & 92.0 & 4.35 & 1,686 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{table}[htbp]
-\centering
 \caption{Experience-graph snapshot, using text-embedding-3-large
 vectors with 3,072 dimensions. The executable-example bank for behavioral
-studies uses Qwen embeddings (Appendix~\ref{sec:method-contract}).}
+studies uses Qwen embeddings.}
 \label{tab:schema}
 \begin{tabular}{lrl}
 \toprule
