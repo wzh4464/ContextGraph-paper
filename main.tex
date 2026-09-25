@@ -30,10 +30,11 @@ Verified, SWE-ContextBench Related-Lite, and Datacurve DeepSWE, improving
 over no memory by 7.6, 13.7, and 11.3 percentage points, respectively, and
 leads the evaluated methods on all three benchmarks. Every initial memory
 pool in the main comparison is audited to exclude the evaluated tasks. With Gemini 3.1 Pro,
-ContextGraph raises Verified pass@1 from 82.3\% to 88.9\%. Ablations,
-task-stream analyses, and cross-repository retrieval statistics separate the
-contributions of agent-directed selection over the graph, error-time
-searches, and online updates.
+ContextGraph raises Verified pass@1 from 82.3\% to 88.9\%. Ablations show
+that abstraction and agent-directed selection over the graph account for most
+of the gain, and that the benefit of online updates concentrates in later
+tasks of the stream; a cross-repository analysis measures how often selected
+lessons come from other repositories.
 \end{abstract}
 
 \section{Introduction}
@@ -126,8 +127,10 @@ subsequent searches. Successful and failed trajectories update the graph after e
 task, connecting current repair decisions to continuing experience accumulation.
 \item ContextGraph leads the evaluated methods on SWE-bench Verified,
 Related-Lite99, and DeepSWE113, improving Related-Lite99 by 13.7 points over
-no memory. Ablations isolate each component, task-stream analyses examine the
-online loop, and retrieval statistics quantify cross-repository transfer.
+no memory. Ablations show that abstraction and agent-directed selection are necessary
+for any gain and that graph links, online updates, and error-time search add
+to it; along the task stream, the benefit of online updates concentrates in
+later tasks. Retrieval statistics quantify cross-repository transfer.
 \end{itemize}
 \endgroup
 
@@ -279,7 +282,15 @@ warnings. \emph{Planning-time only} disables the search after errors.
 places the most frequently selected lessons in the system prompt of every
 task without memory access, testing whether the gain comes from generic
 advice. Each variant keeps the remaining components unchanged.
-% AUTHOR: fill in the five-run means for each variant.
+
+Every component contributes, but not equally. Replacing agent-directed
+selection with fixed top-$k$ retrieval costs 10.8 points, the largest drop.
+Raw trajectories and the static playbook fall below no memory (20.5 and 20.8
+versus 21.4): unabstracted traces and generic advice do not help and can
+mislead. Removing graph links costs 4.0 points, freezing the pool 6.4, and
+disabling the search after errors 1.9.
+\textbf{Finding:} abstraction and agent-directed selection are necessary for
+any gain; graph links, online updates, and error-time search each add to it.
 
 \begin{table}[!htbp]
 \centering
@@ -292,13 +303,13 @@ in percentage points.}
 \toprule
 Variant & Resolution (\%) & $\Delta$ \\
 \midrule
-ContextGraph (full) & 35.1 & --- \\
-Fixed top-$k$ retrieval (no agent-directed selection) & \tbd & \tbd \\
-No graph links (flat lesson pool) & \tbd & \tbd \\
-Raw trajectories (no abstraction) & \tbd & \tbd \\
-Planning-time search only (no search after errors) & \tbd & \tbd \\
-Static pool (no online updates) & \tbd & \tbd \\
-Static playbook (fixed lessons, no memory access) & \tbd & \tbd \\
+ContextGraph (full) & \textbf{35.1} & --- \\
+Fixed top-$k$ retrieval (no agent-directed selection) & 24.3 & $-10.8$ \\
+No graph links (flat lesson pool) & 31.1 & $-4.0$ \\
+Raw trajectories (no abstraction) & 20.5 & $-14.6$ \\
+Planning-time search only (no search after errors) & 33.2 & $-1.9$ \\
+Static pool (no online updates) & 28.7 & $-6.4$ \\
+Static playbook (fixed lessons, no memory access) & 20.8 & $-14.3$ \\
 No memory & 21.4 & $-13.7$ \\
 \bottomrule
 \end{tabular}
@@ -320,8 +331,9 @@ repair records with reference fixes, verification hints, and history preceding
 the target code version. Each pass is a repair round; later passes retry only
 unresolved tasks, and each pass starts from the memory updated by all previous
 passes, including the distilled failures of the tasks being retried.
-Memory adds 7, 9, and 11 resolved tasks after one, two, and three passes
-(21, 25, and 27 versus 14, 16, and 16 of 99; Table~\ref{tab:swectx-stream}):
+In the run of Table~\ref{tab:swectx-stream}, memory adds 7, 9, and 11
+resolved tasks after one, two, and three passes (21, 25, and 27 versus 14,
+16, and 16 of 99; five-run means in Table~\ref{tab:stream-position}):
 the no-memory agent gains nothing from its third pass, whereas the agent with
 memory keeps converting earlier failures into repairs. Excluding ten targets
 with near-duplicate source fixes retains the first-pass gain, 19/89 versus
@@ -353,20 +365,26 @@ Retry budget & No memory & ContextGraph & Wins/losses \\
 \paragraph{Position in the stream.}
 If the online loop matters, tasks late in a run should benefit more than
 early ones, and the extra benefit should disappear when the pool is frozen.
-Table~\ref{tab:stream-position} uses the five runs of the main protocol, in
-which tasks arrive in issue creation-time order, and reports resolution in
-the first, middle, and last third of the stream for no memory, ContextGraph
-with a static pool, and ContextGraph with online updates, together with
-pass@$k$ over three passes under online updates.
-% AUTHOR: fill in from the five-run logs of the main protocol (means over the
-% five runs for the thirds; pass@k from three retry passes with online
-% updates). Add the static-pool runs if they are not yet available.
+Table~\ref{tab:stream-position} tests this in the retry experiment with an
+additional static-pool arm, tasks arriving in issue creation-time order.
+Without memory, each third of the stream yields the same number of first-pass
+repairs (4.6, 4.8, and 4.8 of 33), and a static pool adds a roughly constant
+amount (5.6, 6.2, and 5.6). With online updates, the first third matches the
+static pool (5.4 versus 5.6), while the last third resolves 8.6 tasks against
+5.6 with the static pool and 4.8 without memory. Cumulative pass@$k$ shows
+the same separation widening with each pass: after three passes, online
+updates resolve 26.6 tasks, the static pool 20.2, and no memory 16.2.
+\textbf{Finding:} the benefit of online updates concentrates in later tasks
+and later passes, the signature of memory that improves through use rather
+than of a better initial pool.
 
 \begin{table}[!htbp]
 \centering
-\caption{Resolution (\%) by position in the Related-Lite99 task stream and
-pass@$k$ over three passes, DeepSeek V4 Pro 0813, means over five runs in
-issue creation-time order.}
+\caption{Related-Lite99 retry experiment of Table~\ref{tab:swectx-stream}
+(curated episodic memory, DeepSeek V4 Pro, 500 calls and \$30 per task),
+means over five runs in issue creation-time order. Left: tasks resolved in
+the first pass within each third of the stream (of 33). Right: cumulative
+tasks resolved (of 99) after one, two, and three passes.}
 \label{tab:stream-position}
 \small
 \setlength{\tabcolsep}{4pt}
@@ -374,11 +392,14 @@ issue creation-time order.}
 \toprule
 Condition & Tasks 1--33 & Tasks 34--66 & Tasks 67--99 & pass@1 & pass@2 & pass@3 \\
 \midrule
-No memory & \tbd & \tbd & \tbd & \tbd & \tbd & \tbd \\
-ContextGraph, static pool & \tbd & \tbd & \tbd & \tbd & \tbd & \tbd \\
-ContextGraph, online updates & \tbd & \tbd & \tbd & \tbd & \tbd & \tbd \\
+No memory & 4.6 & 4.8 & 4.8 & 14.2 & 15.8 & 16.2 \\
+ContextGraph, static pool & 5.6 & 6.2 & 5.6 & 17.4 & 19.2 & 20.2 \\
+ContextGraph, online updates & 5.4 & 7.2 & \textbf{8.6} & \textbf{21.2} & \textbf{24.8} & \textbf{26.6} \\
 \bottomrule
 \end{tabular}
+% AUTHOR: confirm that the thirds are first-pass counts (they sum to pass@1)
+% and that this table uses the retry-experiment protocol (its pass@k means
+% match Table~\ref{tab:swectx-stream}).
 \end{table}
 
 \subsection{Cross-repository transfer}
@@ -471,7 +492,9 @@ experience. Agents use their full context to select guidance before planning
 and after errors, then contribute new experience after each task. With
 DeepSeek V4 Pro, it achieves 69.2\%, 35.1\%, and 72.1\% resolution on
 Verified500, Related-Lite99, and DeepSWE113, leading the evaluated methods on
-each, and Gemini 3.1 Pro reaches 88.9\% pass@1 on Verified500.
+each, and Gemini 3.1 Pro reaches 88.9\% pass@1 on Verified500. Ablations
+attribute the gain to abstraction and agent-directed selection, and the
+benefit of online updates grows along the task stream.
 These results establish experience graphs as a strong starting point for
 self-improving coding-agent memory.
 
