@@ -1,0 +1,51 @@
+\section{Related Work}
+\label{sec:related-work}
+
+\paragraph{Abstracting experience for coding agents.}
+ExpeL and ReasoningBank extract reusable lessons from agent trajectories
+\citep{expel2024,reasoningbank2026}. SWE-Exp and ExpeRepair apply experience
+reuse to repository repair, while MemGovern and STAIR organize experience
+into cards and hierarchical plans
+\citep{sweexp2025,experepair2026,memgovern2026,stair2026}.
+Memory Transfer Learning shows that abstract insights transfer more readily
+across coding domains than detailed traces, which can carry inappropriate
+implementation assumptions \citep{transfer2026}. ContextGraph builds on this
+principle by retaining debugging strategies and warnings together with the
+errors and outcomes that explain their use. Related work also makes experience
+actionable through tests: RETester adapts bug reports into tests, MIRA retains
+reusable requirements, and TRACE turns corrections into runtime checks
+\citep{retester2025,mira2026,trace2026}. Our behavioral studies examine this
+connection between retrieved guidance and the checks an agent constructs.
+
+\paragraph{Retrieving related experience.}
+A-MEM links memory notes, Zep organizes temporal facts, and HippoRAG uses
+graph traversal for associative retrieval \citep{amem2025,zep2025,hipporag2024}.
+Agent KB is particularly close: it abstracts experience and retrieves guidance
+for both planning and feedback-driven refinement \citep{agentkb2025}.
+Its hierarchical graph organizes experience, while retrieval matches tasks
+and execution steps. ExpGraph combines experience graphs, personalized
+PageRank, utility ranking, and a trained retrieval controller
+\citep{expgraph2026}. ContextGraph connects repair strategies to recurring
+errors, shared rules, and source trajectories, using these relations alongside
+semantic and keyword search. Returned lessons retain the context needed to
+interpret them during repository investigation. Supermemory also combines
+relational updates with hybrid retrieval \citep{supermemoryreport2026};
+SWE-ContextBench evaluates such memory systems on context-dependent repairs
+\citep{swecontext2026}. Appendix~\ref{sec:published-swectx} separates those
+published comparisons from our experiments.
+
+\paragraph{Updating memory and improving agents.}
+MemGPT manages memory access and SWE-MeM manages long coding histories
+\citep{memgpt2023,swemem2026}. ACE evolves reusable context, MemOp optimizes
+memory utility, and AdaRepair-Mem selects experience for different repair
+stages \citep{ace2026,memop2026,adarepairmem2026}.
+Self-improvement can also change the agent itself: G\"odel Agent and the
+Darwin G\"odel Machine modify agent code, while RRSI regularizes changes to
+the agent harness \citep{godelagent2025,dgm2026,rrsi2026}. AlphaEvolve improves
+programs using executable evaluators, and MulVul evolves specialized prompts
+through separate generator and executor models
+\citep{alphaevolve2025,mulvul2026}. ContextGraph improves the experience
+available to the coding agent. After each completed task, it adds lessons
+from successful and failed attempts to the graph for subsequent retrieval.
+The agent consults this growing memory before planning and after errors,
+so new experience can guide later decisions without updating model parameters.

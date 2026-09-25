@@ -1,7 +1,7 @@
 \documentclass{article}
 \usepackage[T1]{fontenc}
 \usepackage{iclr2027_conference,times}
-\usepackage{amsmath,amssymb,booktabs,graphicx,hyperref,url,tikz}
+\usepackage{amsmath,amssymb,booktabs,graphicx,hyperref,url,tikz,algorithm}
 \usetikzlibrary{arrows.meta,positioning}
 \usepackage{xcolor}
 \hypersetup{hidelinks}
@@ -13,23 +13,23 @@
 
 \begin{abstract}
 Coding agents can repeat costly debugging mistakes even when useful lessons
-exist in other repositories. Reusing this experience requires extracting
-transferable guidance and retrieving it when it can influence the next
-decision. We propose ContextGraph, a memory graph that organizes past coding
-experience into reusable strategies and warnings. The graph connects these
-lessons to the problems, errors, and outcomes that explain when to use them.
-Before generating a repair plan, the agent retrieves guidance on what to
-investigate and which approaches to avoid. After an error, it queries memory
-again with the observed failure to revise its diagnosis and next action.
-This allows experience from one repository to guide problem solving in another.
-On SWE-bench Verified and DeepSWE113, ContextGraph achieves 69.2\% and 72.1\%
-resolution, exceeding the strongest evaluated memory baselines by 2.2 and
-5.9 percentage points, respectively.
-On Related-Lite99, its mean resolution rate is 36.3\%, up 14.9 percentage
-points over no memory. On 20 Python tasks from LoLBench, it reaches 15.0\%
-pass@1 versus 5.0\% for all baselines, and 25.0\% pass@3. Behavioral
-studies further examine how agents apply retrieved guidance and use failure
-observations to refine repairs.
+exist in other repositories. Reusing this experience requires preserving
+transferable decisions, connecting related lessons, and retrieving them
+when they can guide the next action. We propose ContextGraph, an experience
+graph for self-improving coding agents. It abstracts past trajectories into
+strategies and warnings linked to their source context, error patterns, and
+outcomes. The agent retrieves guidance before planning and queries again
+after errors to revise its diagnosis. After each task, successful and failed
+trajectories contribute new experience that subsequent tasks can immediately
+retrieve. ContextGraph achieves resolution rates of 69.2\%, 36.3\%, and
+72.1\% on SWE-bench Verified, SWE-ContextBench Related-Lite, and Datacurve
+DeepSWE, improving over no memory by 7.6, 14.9, and 11.3 percentage points,
+respectively. It leads the evaluated methods on Verified and DeepSWE and
+ranks second to Agent KB on Related-Lite. Additional experiments examine
+performance across models, memory-pool sizes, and retry budgets. Behavioral
+studies expose negative transfer from implementation reuse and show how
+composing historical conditions with current operations catches failures
+missed by separate checks.
 \end{abstract}
 
 \section{Introduction}
@@ -40,7 +40,8 @@ Each repair produces experience in locating faults, revising code, and
 checking behavior. Memory makes that experience useful on later tasks,
 offering a practical route toward recursive self-improvement (RSI): agents
 use past repairs to improve how they solve new problems
-\citep{godelagent2025,dgm2026}.
+\citep{godelagent2025,dgm2026}. Both successful and failed attempts can
+contribute to this growing body of experience.
 
 \begin{figure}[htbp]
 \centering
@@ -48,7 +49,7 @@ use past repairs to improve how they solve new problems
 \caption{ContextGraph improves repair success across the evaluated settings.
 (a) SWE-bench Verified500 with DeepSeek V4 Pro 0813 and mini-SWE-agent;
 (b) Related-Lite99 with four language models; (c) cumulative resolutions on
-Related-Lite99 with DeepSeek V4 Pro. Grey denotes no memory and orange
+Related-Lite99 with DeepSeek V4 Pro. Grey denotes no memory and red
 ContextGraph.}
 \label{fig:results-overview}
 \end{figure}
@@ -56,13 +57,11 @@ ContextGraph.}
 Recent agent-memory methods retain reflections and repair lessons
 \citep{reflexion2023,expel2024} and organize this experience for reuse
 \citep{reasoningbank2026,ace2026}. However, experience from another repository
-must guide decisions in unfamiliar code. In a Django debugging case, an agent
-without memory spent effort on setup and broad rewrites without completing
-the fix. Lessons from other projects suggested isolating the failure first,
-tracing the error path, and avoiding a full framework setup. The
-history-informed agent followed this direction and repaired the bug.
-The reusable lesson concerns how to investigate a problem; the agent still
-determines the local code change.
+must guide decisions in unfamiliar code. A useful lesson explains how to
+investigate a problem and which approaches to avoid, while the agent works
+out the change in the current repository. The Django example in
+Section~\ref{sec:motivation} illustrates this transfer from an earlier
+setup failure and a successful debugging attempt.
 
 These observations motivate organizing experience around the decisions it
 can inform. We ask: \emph{Can a memory graph turn experience from different
@@ -80,7 +79,8 @@ the connections between problems, failed approaches, and useful actions.
 Third, the guidance an agent needs changes during repair. Before planning,
 it needs direction for investigation and warnings about costly approaches.
 After an error, it has new evidence that can change the diagnosis. Memory
-must inform both decisions using the information available at each point.
+must inform both decisions using the information available at each point,
+then turn the completed attempt into guidance for later tasks.
 
 To address these challenges, we propose \textbf{ContextGraph}, a memory graph
 that turns experience across repositories into guidance for new repairs
@@ -96,13 +96,17 @@ points: before generating a plan and after encountering an error. The first
 query uses the task description to guide investigation and approach
 selection. The second adds the observed error and recent attempt to guide
 diagnosis and revision. The agent interprets these lessons in the current
-codebase and carries out the edits and tests.
+codebase and carries out the edits and tests. At the end of every task,
+ContextGraph distills the successful or failed trajectory and updates the
+graph, making the new experience immediately available to subsequent tasks.
 
 ContextGraph reaches 69.2\% resolution on SWE-bench Verified and 72.1\% on
 DeepSWE113, exceeding the strongest evaluated memory baselines by 2.2 and
 5.9 percentage points, respectively. On Related-Lite99,
 its mean resolution rate is 36.3\%, 14.9 points above no memory and second
-to Agent KB's 38.2\% (Figure~\ref{fig:benchmark-comparison}). On 20 Python tasks
+to Agent KB's 38.2\% (Figure~\ref{fig:benchmark-comparison}).
+Figure~\ref{fig:results-overview} previews the benchmark, model, and retry
+comparisons. On 20 Python tasks
 from LoLBench, ContextGraph reaches 15.0\% pass@1 versus 5.0\% for all
 baselines, and 25.0\% pass@3.
 
@@ -113,37 +117,82 @@ across repositories. It connects abstract strategies and warnings to the
 problems, errors, and outcomes that explain when the guidance is useful.
 \item We integrate memory retrieval into planning and error recovery.
 Task information guides the first query; observed failures guide subsequent
-retrieval, helping the agent select useful actions and avoid repeating
-unproductive approaches.
+retrieval. Successful and failed trajectories update the graph after each
+task, connecting current repair decisions to continuing experience accumulation.
 \item ContextGraph leads the evaluated methods on SWE-bench Verified,
 DeepSWE113, and the LoLBench Python subset, and improves Related-Lite99 by
-14.9 points over no memory. Case studies show how retrieved guidance changes
-debugging decisions and behavioral feedback helps recover omitted requirements.
+14.9 points over no memory. Behavioral studies identify negative transfer
+from implementation reuse and show the benefit of checking historical
+conditions within current operations.
 \end{itemize}
 \endgroup
+
+\input{related-work}
 
 \input{experience-memory}
 
 \section{Experiments}
 \label{sec:experiments}
 \label{sec:recorded-results}
-We measure task success across benchmarks, models, memory-pool sizes, and
-retries, then study how retrieved lessons and failure feedback guide repairs.
+We ask whether ContextGraph improves repair success, how its benefits vary
+across models and memory-pool sizes, whether memory reduces repeated repair
+effort, and how retrieved experience changes an agent's actions.
 
 \subsection{Setup and evaluation}
 \label{sec:setup}
-We evaluate repository-level coding tasks from SWE-bench Verified,
-SWE-ContextBench \citep{swebench2024,swecontext2026}, DeepSWE113, and
-a 20-task Python subset of LoLBench \citep{lolbench2026}.
-A task is resolved when its patch passes the benchmark's official tests.
-Each comparison fixes its model, memory pool, and attempt budget.
+\paragraph{Tasks and metrics.}
+We evaluate all 500 SWE-bench Verified tasks, the 99-task Related-Lite subset
+of SWE-ContextBench, and the 113-task Datacurve DeepSWE benchmark
+\citep{swebench2024,swecontext2026,deepswe2026}. We additionally evaluate
+20 Python tasks from LoLBench \citep{lolbench2026}. A task is resolved when
+its patch passes the benchmark's official evaluation. Resolution is the
+percentage of tasks resolved; pass@$k$ reports success within $k$ attempts.
+Related-Lite99 and DeepSWE113 in the main comparison report means over five
+runs, each reset to the same initial memory pool. Tasks are evaluated in
+randomly shuffled order. Table~\ref{tab:evaluation-settings} summarizes the main settings.
 
-The behavioral studies examine how an agent applies retrieved guidance.
-They use DeepSeek V4 Pro at temperature zero and matched budgets, with
-researcher-prepared examples and two adapters for constructing combined
-checks. Their evaluation checks are separate from those supplied to guide
-repair. Appendix~\ref{sec:development-details} gives the cases and inputs;
-Appendix~\ref{sec:method-contract} gives the implementation.
+\begin{table}[!htbp]
+\centering
+\caption{Main benchmark comparisons. The first three use DeepSeek V4 Pro 0813
+with mini-SWE-agent; LoLBench uses GPT-5.5 with Codex. ContextGraph updates
+its memory after every task; baseline updates follow each implementation's
+default behavior.}
+\label{tab:evaluation-settings}
+\small
+\begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}rll@{}}
+\toprule
+Benchmark & Tasks & Initial experience source & Reported result \\
+\midrule
+Verified500 & 500 & Nebius Verified trajectories & Resolution \\
+Related-Lite99 & 99 & Coding-agent trajectories & Five-run mean \\
+DeepSWE113 & 113 & LoLBench repository trajectories & Five-run mean \\
+LoLBench Python & 20 & Other LoLBench Python tasks & pass@1, pass@3 \\
+\bottomrule
+\end{tabular*}
+\end{table}
+
+\paragraph{Agents and memory.}
+The three-benchmark comparison uses DeepSeek V4 Pro 0813 with
+mini-SWE-agent \citep{minisweagent2025,sweagent2024}. The initial Verified500
+memory comes from Nebius SWE-bench Verified trajectories; DeepSWE113 draws
+on trajectories from LoLBench repositories. For the LoLBench Python subset,
+the initial graph uses other Python tasks outside the selected 20.
+In these main comparisons, ContextGraph distills successful and failed
+trajectories after every task and makes the added experience immediately
+retrievable by subsequent tasks. Other memory methods follow the default
+update behavior of their open-source implementations. These comparisons
+therefore evaluate each method's memory construction, retrieval, and updating
+as a complete system.
+
+\paragraph{Baselines.}
+We compare no memory, FAISS Flat, ExpeL, Agent KB, ExpeRepair, ReasoningBank,
+ACE, and Supermemory \citep{expel2024,agentkb2025,experepair2026,
+reasoningbank2026,ace2026,supermemoryreport2026}. FAISS Flat uses vector
+similarity to retrieve memory without graph traversal. We adapt ExpeRepair
+and ACE to mini-SWE-agent, retaining their memory procedures. Supplementary
+model, pool-size, and retry comparisons state their own inputs and budgets
+alongside the results. Appendix Table~\ref{tab:main-results-overview} lists all
+main comparison values.
 
 \subsection{Repair effectiveness}
 \label{sec:benchmark}
@@ -171,8 +220,8 @@ With Codex and GPT-5.5, we build the graph from other Python tasks and evaluate
 20 LoLBench tasks. All seven memory baselines match no memory at
 5.0\% pass@1; ContextGraph reaches 15.0\% pass@1 and 25.0\% pass@3
 (Appendix Table~\ref{tab:new-codex55}).
-\textbf{Finding:} ContextGraph leads the evaluated methods on these
-long-horizon development tasks.
+\textbf{Finding:} ContextGraph achieves the highest pass@1 among the evaluated
+methods on this 20-task long-horizon subset.
 
 \subsection{Performance across models and memory-pool sizes}
 \label{sec:generalization}
@@ -181,10 +230,10 @@ long-horizon development tasks.
 In the Related-Lite99 single-attempt comparison, memory methods draw from the
 same 300-summary pool within each model (Figure~\ref{fig:swectx-crossmodel}),
 including Mem0 \citep{mem02025} and LangMem \citep{langmem2025}.
-With GPT-5.4, ContextGraph resolves 34/98 tasks, compared with 21/98
-without memory. The oracle is given one known related summary, bypassing
+With GPT-5.4, ContextGraph reaches 34.69\% resolution, compared with
+21.43\% without memory. The oracle is given one known related summary, bypassing
 retrieval; ContextGraph can retrieve several.
-\textbf{Finding:} the memory architecture benefits all four agents, with the
+\textbf{Finding:} memory reuse improves resolution with all four models, with the
 highest non-oracle resolution rate in each model comparison.
 
 \begin{figure}[t]
@@ -199,17 +248,19 @@ a known related summary.}
 \paragraph{Pool size and source coverage.}
 With the GPT-5.4 agent and retrieval procedure fixed, the 300-summary pool
 produces the highest resolution rate, 34.69\%
-(Table~\ref{tab:swectx-poolsize}). Source coverage rises from 41.3\% to 60.7\%
-as the pool grows from 50 to 300 summaries, while resolution does not improve
-at every intermediate step.
-\textbf{Finding:} larger pools broaden source coverage, and the largest tested
-pool yields the strongest repair result.
+(Table~\ref{tab:swectx-poolsize}). Source coverage measures the proportion
+of oracle-designated relevant sources recovered by retrieval. It rises from
+41.3\% to 60.7\% as the pool grows from 50 to 300 summaries, while resolution
+does not improve at every intermediate step.
+\textbf{Finding:} larger pools recover more oracle-designated sources, and
+the largest tested pool yields the strongest repair result.
 
 \begin{table}[!htbp]
 \centering
 \caption{Related-Lite99 with different memory-pool sizes, GPT-5.4, one attempt
-per task. Results including failure reruns appear separately in Appendix
-Table~\ref{tab:swectx-v2}.}
+per task. Source coverage is the percentage of oracle-designated relevant
+sources recovered by retrieval. Results including failure reruns appear
+separately in Appendix Table~\ref{tab:swectx-v2}.}
 \label{tab:swectx-poolsize}
 \begin{tabular}{lrrrr}
 \toprule
@@ -256,172 +307,76 @@ Retry budget & No memory & ContextGraph & Wins/losses & $p$ \\
 Additional system results appear in Appendices~\ref{sec:historical} and
 \ref{sec:new-results}.
 
-\subsection{How does retrieved guidance change repair behavior?}
-\label{sec:evidence}
-\label{sec:recorded-interventions}
-\label{sec:content}
-The Django example in Section~\ref{sec:motivation} illustrates strategy
-transfer. Here we examine how agents apply a retrieved behavioral requirement:
-what context they need, which interactions they miss, and how feedback
-changes the next edit. Figures~\ref{fig:concept} and~\ref{fig:behavior-workflow}
-show the checks and workflow used for these studies.
+\subsection{What should memory preserve and help the agent check?}
+\label{sec:behavior-analysis}
+The cross-repository example in Section~\ref{sec:motivation} shows how
+abstract experience guides investigation. We next study how an agent puts a
+remembered requirement into practice. A requirement describes the behavior
+to preserve; its applicability conditions explain when that behavior matters.
+Our behavioral studies pair requirements with executable checks and combine
+historical conditions with the current operation. Table~\ref{tab:condition-findings}
+summarizes two findings; Appendix~\ref{sec:evidence} gives the full studies.
 
-\paragraph{Retain the context that makes advice useful.}
-In four paired runs, memory helps preserve query strings, remove redundant
-uniqueness while retaining primary keys, honor destination timezones, and
-preserve named-tuple ranges (Table~\ref{tab:historicalrequirements}). Both
-repairs in the first three pairs pass official verification.
+\paragraph{Preserve the requirement without inheriting an unsuitable implementation.}
+In the timezone study, requirement-level memory passes all 72 combinations
+of database, application, and output zones. Reusing the historical
+implementation passes 40 and breaks 16 combinations that pass without memory.
+The requirement directs the agent toward the behavior it must preserve,
+while the concrete implementation carries assumptions that fail in the new
+setting. This is an observed case of negative transfer from implementation
+reuse.
 
-\begin{table}[!htbp]
-\centering
-\caption{Joint current/historical behavior in complete-agent comparisons.
-The columns report whether repairs with and without memory preserve both the current behavior and the historical requirement.}
-\label{tab:historicalrequirements}
-\begin{tabular}{llcc}
-\toprule
-Target & Historical addition & No memory & Memory \\
-\midrule
-Django14404 & Preserve query string & Fail & Pass \\
-Django12708 & Delete redundant uniqueness & Fail & Pass \\
-Django11138 & Honor destination timezone & Fail & Pass \\
-Django12663 & Preserve named-tuple range & Fail & Pass \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-We then vary the memory supplied for the constraint and timezone tasks:
-a written requirement, implementation details, both, or neither
-(Table~\ref{tab:memorycontent}). All eight repairs pass official verification.
-For constraints, the requirement alone leads the agent to test different
-columns and miss the same-column bug; the implementation retains that
-condition. For timezones, the requirement directs the agent to a suitable
-helper, whereas the old implementation leads to errors on named timezones.
+\paragraph{Check historical conditions together with the current operation.}
+For Django12663, three agents receive the same task, history, current program,
+tools, and repair budget. They receive current feedback alone, additional
+separate historical checks, or additional composed checks. All three repairs
+pass official verification. Both added-check conditions recover the two
+historical examples, but their joint behavior differs: separate checks pass
+only one of three withheld joint queries, while composed checks pass all three.
+The current-feedback repair passes two. The interaction becomes visible when
+the historical input condition is exercised inside the current operation.
+\textbf{Finding:} memory should preserve the conditions under which a lesson
+applies. Turning those conditions into checks in the current workflow can
+expose failures that separately passing examples miss.
 
 \begin{table}[!htbp]
 \centering
-\caption{Memory-content interventions: one fresh attempt per input and development task.
-All eight pass official verification. MySQL and named-zone checks were constructed
-after inspecting the timezone repairs and applied to all four submissions.}
-\label{tab:memorycontent}
+\caption{Behavioral studies of memory use. (a) Identical task, history, tools,
+and repair budget; only the added checks differ. (b) Timezone checks under
+different memory contents. Regressions count checks passed without memory
+but failed with it. Entries count checks, not independent tasks.}
+\label{tab:condition-findings}
 \small
-\begin{tabular}{lcccc}
-\toprule
-Memory input & Constraint joint & Timezone joint & MySQL cases & Named-zone cases \\
-\midrule
-None & Fail & Fail & Pass & Fail \\
-Requirement & Fail & Pass & Pass & Pass \\
-Implementation & Pass & Pass & Pass & Fail \\
-Both & Pass & Pass & Fail & Pass \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-On Django12663, both retrieved memory sets contain the relevant named-tuple
-source, yet both initial repairs miss its behavior. Preserving its constructor
-convention fixes named tuples while keeping ordinary subclasses working;
-passing every sequence's elements as separate arguments breaks the latter
-(Appendix Figure~\ref{fig:memory-content-scope}). An exact operation filter
-also discards this useful source, despite its first-place similarity rank.
-\textbf{Finding:} advice needs its applicability context: shared columns
-and constructor conventions determine how these lessons transfer.
-
-\paragraph{Check a historical requirement in the current workflow.}
-\label{sec:composition-results}
-A Django12663 repair passes the current lazy-User query and historical
-named-tuple example separately, but fails their combination. The range
-adapter inserts the historical type into the current query, retaining the
-lazy User and nested query (Figure~\ref{fig:concept}).
-
-Three agents start from the same unrepaired code, history, current program,
-tools, and instructions (Table~\ref{tab:composedconditions}). Separate
-historical checks recover both historical examples but only one of three
-withheld joint queries. Composed checks recover both historical examples
-and all three joint queries, while preserving ordinary subclasses.
-
-\begin{table}[!htbp]
-\centering
-\caption{Django12663 repairs from original code with identical history,
-current program and failure, tools, and instructions. Two arms add composed
-or separate historical checks. Rows count checks, not independent tasks.}
-\label{tab:composedconditions}
+\textbf{(a) Separate and composed checks on Django12663}\\[2pt]
 \begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}ccc@{}}
 \toprule
-Measured behavior & \shortstack{Current\\feedback} & \shortstack{+ Composed\\conditions}  & \shortstack{+ Separate\\history} \\
+Measured behavior & Current feedback & Separate history & Composed conditions \\
 \midrule
-Official target verification & Pass & Pass & Pass \\
-Historical named-tuple examples & 0/2 & 2/2 & 2/2 \\
-Withheld nonempty joint queries & 2/3 & 3/3 & 1/3 \\
-Withheld ordinary subclasses & 2/2 & 2/2 & 2/2 \\
-Mechanical scalar / named tuple / tuple & 2/3 & 3/3 & 2/3 \\
+Official verification & Pass & Pass & Pass \\
+Supplied historical examples & 0/2 & 2/2 & 2/2 \\
+Withheld joint queries & 2/3 & 1/3 & \textbf{3/3} \\
+\bottomrule
+\end{tabular*}
+\smallskip
+\textbf{(b) Requirement and implementation memory across 72 timezone combinations}\\[2pt]
+\begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}ccc@{}}
+\toprule
+Memory content & Passed & Failed & Regressions \\
+\midrule
+Requirement & \textbf{72/72} & 0 & 0 \\
+Implementation & 40/72 & 32 & 16 \\
+Both & \textbf{72/72} & 0 & 0 \\
 \bottomrule
 \end{tabular*}
 \end{table}
-
-Timezone composition varies the database, application, and output zones.
-Requirement and Both pass all 72 combinations; Implementation fails 32,
-including 16 passed without memory.
-\textbf{Finding:} combining a historical trigger with the current operation
-exposes interactions that separate checks miss.
-
-\paragraph{Use failure observations to guide the next edit.}
-\label{sec:feedback-results}
-Two fresh agents revisit the failed constraint repair with the same
-requirement. Textual review fixes the primary-key case but misses the ordinary
-unique-field case; adding the historical check and its failures helps the
-agent distinguish constraint names and fix both. On the timezone task,
-further issue-based review leaves the patch unchanged, while the historical
-failure leads to a revision honoring the destination timezone.
-
-Of four fresh refinements of the Django12663 candidate, history alone passes
-all seven measured conditions in one of two attempts; the joint program and
-failure do so in two of two. All four pass official verification. For the
-simpler redirect task, a requirement sentence already yields the same correct
-implementation as requirement-plus-feedback.
-\textbf{Finding:} targeted failure feedback helps agents act on a known
-requirement when textual review alone leaves the defect unresolved.
-
-\section{Discussion and related work}
-\paragraph{Recursive self-improvement.}
-G\"odel Agent and the Darwin G\"odel Machine modify agent code
-\citep{godelagent2025,dgm2026}; RRSI constrains changes to the code that
-coordinates an agent's tools and actions \citep{rrsi2026}.
-AlphaEvolve uses executable evaluators to guide program evolution
-\citep{alphaevolve2025}; MulVul evaluates prompt revisions across models
-\citep{mulvul2026}. ContextGraph contributes reusable strategies and warnings
-that let past repair experience guide planning and error recovery.
-
-\paragraph{Learning from repair experience.}
-Supermemory combines relational updates and hybrid retrieval
-\citep{supermemoryreport2026}.
-On SWE-ContextBench Lite99 with Claude Sonnet 4.5, no memory, Supermemory,
-and oracle summaries resolve 26.26\%, 30.30\%, and 34.34\%, respectively
-\citep{swecontext2026}; Appendix~\ref{sec:published-swectx} gives the settings.
-SWE-Exp and ExpeRepair distill repair experience \citep{sweexp2025,experepair2026};
-MemGovern and STAIR organize it as cards and plans \citep{memgovern2026,stair2026}.
-MemOp optimizes memory utility, ExpGraph learns retrieval, and AdaRepair-Mem
-selects experience for the repair stage
-\citep{memop2026,expgraph2026,adarepairmem2026}. ContextGraph connects lessons
-across repositories and retrieves them to inform planning and error recovery.
-
-\paragraph{Organizing and managing memory.}
-MemGPT manages storage, SWE-MeM compresses coding histories, and A-MEM links
-memory notes \citep{memgpt2023,swemem2026,amem2025}. Zep represents temporal
-facts, and HippoRAG supports associative retrieval \citep{zep2025,hipporag2024}.
-ContextGraph retrieves strategies with source context and error patterns.
-
-\paragraph{Turning experience into checks.}
-RETester adapts historical bug reports into tests for refactoring engines
-\citep{retester2025}. MIRA separates reusable requirements from SQL corrections,
-and TRACE compiles user corrections into runtime checks
-\citep{mira2026,trace2026}. Our development cases combine historical triggers
-with current workflows to expose failures missed by separate checks. The
-trigger and expected outcome give the agent a concrete repair objective.
 
 \section{Conclusion}
 We propose ContextGraph, an experience-graph architecture for self-improving
 coding agents. It turns past trajectories into transferable strategies and
 warnings linked to their source context. Graph retrieval supplies this guidance
 before planning and after errors to help agents choose and revise their approach.
+Every completed task, successful or failed, adds experience that is immediately
+available to subsequent tasks, closing the loop between repair and learning.
 ContextGraph
 achieves 69.2\% resolution on SWE-bench Verified and 72.1\% on DeepSWE113,
 exceeding the strongest evaluated memory baselines by 2.2 and 5.9 percentage
@@ -430,25 +385,44 @@ to 36.3\%. On the 20-task LoLBench Python subset, pass@1 is 15.0\% versus
 5.0\% for all baselines. These results establish ContextGraph as a strong starting point
 for coding-agent memory that learns from past repair experience.
 
+
+\paragraph{Limitations.}
+The main comparisons measure the full memory systems; their aggregate gains
+combine representation, retrieval, and updating. Behavioral cases explain
+specific repair decisions, while the 20-task LoLBench study covers one
+language and a small part of that benchmark. Broader task streams and
+controlled component comparisons would clarify when each design contributes
+most. Detailed settings and additional results accompany the appendices.
+
 \clearpage
 \bibliography{references}
 \bibliographystyle{iclr2027_conference}
 \clearpage
 \appendix
+\input{main-results-overview}
+\clearpage
 \input{historical-tables/supplement}
 \clearpage
 \input{new-results-20260916}
 \clearpage
+\input{behavioral-studies}
 \input{development-details}
-\clearpage
 \input{executable-analysis}
-\clearpage
 \input{method-contract}
 \clearpage
 \input{published-swectx-results}
+\section*{Reproducibility statement}
+The main text defines the memory workflow, benchmark settings, and reported
+metrics. The appendices provide numerical comparisons, behavioral-study
+inputs and checks, and supplementary implementation details. ContextGraph's
+main comparisons include online experience updates; baseline updating follows
+the corresponding open-source implementation.
+\section*{Ethics statement}
+The reported evaluation uses software-engineering benchmarks. No confidential
+enterprise scenarios or data are included. Retrieved strategies and warnings
+guide the agent's investigation; patches are evaluated through the benchmark
+harnesses.
 \section*{AI use statement}
 Generative AI assisted literature review, method development, implementation,
 experiments, analysis, and writing, including drafting and revising the abstract.
-\clearpage
-\input{main-results-overview}
 \end{document}

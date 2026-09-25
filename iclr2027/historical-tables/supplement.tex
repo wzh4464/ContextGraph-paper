@@ -1,56 +1,36 @@
 \section{Additional system comparisons}
 \label{sec:historical}
-These tables report earlier configurations of the experience-memory
-architecture in Section~\ref{sec:method}. The GPT-5.4 Verified500 run uses
-75 steps per task; Figure~\ref{fig:benchmark-comparison} reports the later
-DeepSeek V4 Pro 0813 comparison. The Related-Lite99 studies examine summary
-memory, episodic memory, and memory interfaces. Resolution rates are
-reported as percentages throughout.
-
-\begin{table}[htbp]
-\centering
-\caption{Historical SWE-bench Verified500, GPT-5.4, 75 steps and uncapped
-per-task cost. Rates use all 500 tasks, including unfinished attempts.
-Wins/losses and exact McNemar $p$ compare each method with no memory.}
-\label{tab:verified500-historical}
-\begin{tabular}{lrrrr}
-\toprule
-Method & Resolution (\%) & Gain (pp) & Wins/losses & $p$ \\
-\midrule
-No memory & 61.80 & --- & --- & --- \\
-ExpeL & 62.40 & +0.6 & 43/40 & .826 \\
-FAISS Flat & \textbf{65.40} & +3.6 & 49/31 & .057 \\
-ContextGraph & 63.60 & +1.8 & 50/41 & .402 \\
-\bottomrule
-\end{tabular}
-\end{table}
+These comparisons show how earlier memory configurations perform under
+different models and attempt budgets. The Related-Lite99 studies below
+examine summary memory and episodic memory.
+Resolution rates are percentages; gains marked pp are percentage-point
+differences from no memory.
 
 \paragraph{Memory configurations.}
-The earlier Verified500 system indexes trajectory fragments, rules, and communities
-with dense, lexical, and graph retrieval. The Related-Lite99 system indexes
-300 experience summaries with repository-filtered lookup and a memory tool.
-The Related-Lite99 episodic system serves reference fixes, verification hints,
-and pre-base history from 291 episodes, queried before planning and after errors.
+The historical Related-Lite99 summary system indexes 300 experience summaries with
+repository-filtered lookup and a memory tool. Its cross-model comparison
+examines the benefit of summary memory across backbones. The separate
+Related-Lite99 episodic system serves reference fixes, verification hints,
+and history preceding the target revision from 291 episodes, queried before
+planning and after errors.
 The executable-example bank used for behavioral studies is described in
 Appendix~\ref{sec:method-contract}.
 
 \paragraph{Evaluation sets and attempts.}
-Verified500 uses all 500 tasks as its denominator. In the historical
-Related-Lite99 summary experiments, resolution rates use completed
+In the historical Related-Lite99 summary experiments, resolution rates use completed
 evaluations in each condition. Figure~\ref{fig:swectx-crossmodel} allows
 one attempt; Table~\ref{tab:swectx-v2} includes failure reruns.
 The single-attempt pool-size results in Table~\ref{tab:swectx-poolsize}
 are 21.88\%, 27.55\%, 26.80\%, and 34.69\% for 50, 100, 200, and
 300 summaries, respectively.
-The MiniMax M2.7 campaign used a
-gateway-compatibility shim.
+The MiniMax M2.7 runs use an API compatibility layer.
 
 \paragraph{Related-Lite99 source content.}
-The episodic campaign served static source episodes: its original online deposit
-path omitted fields needed for retrieval. The historical overlap analysis
+The historical episodic runs use a static pool: newly completed trajectories
+were not available to subsequent retrieval. The source-overlap analysis
 identified ten targets with near-duplicate source fixes (token-Jaccard at least
-0.85); removing them gives an 89-task frame. DeepSeek V4 Pro retains a
-first-pass gain of 21.35\% versus 14.61\% ($p=.031$).
+0.85); removing them gives an 89-task subset. On this subset, DeepSeek V4 Pro
+resolves 21.35\% with memory versus 14.61\% without memory ($p=.031$).
 
 \begin{table}[htbp]
 \centering
@@ -75,9 +55,10 @@ Kimi K3 & 29.29 & 31.31 & 3/5 & .73 & 29.21/31.46 ($p=.73$) \\
 
 \begin{table}[htbp]
 \centering
-\caption{Historical Related-Lite99 GPT-5.4 aggregate including failure reruns.
-The original table does not report attempts per method;
-Figure~\ref{fig:swectx-crossmodel} gives the separate single-attempt comparison.}
+\caption{Historical Related-Lite99 GPT-5.4 results including reruns of failed
+tasks. Rates use completed evaluations; the aggregate does not specify
+attempts per method. Figure~\ref{fig:swectx-crossmodel} gives the separate
+single-attempt comparison.}
 \label{tab:swectx-v2}
 \begin{tabular}{lr}
 \toprule
@@ -96,9 +77,9 @@ Oracle summary & 35.71 \\
 
 \begin{table}[htbp]
 \centering
-\caption{Historical Verified development subset. Rates use completed
-evaluations. The preprint transcribed this table from an experiment screenshot;
-66.6\% retains the recorded display precision.}
+\caption{Historical 50-task SWE-bench Verified development subset.
+Completion uses all 50 tasks; resolution uses completed evaluations.
+The recorded 66.6\% retains its original display precision.}
 \label{tab:dev50}
 \begin{tabular}{lrr}
 \toprule
@@ -114,10 +95,10 @@ No memory & 100.0 & 58.0 \\
 
 \begin{table}[htbp]
 \centering
-\caption{Historical SWE-bench-Pro50, recovered from a disabled preprint
-section. Memory arms share a 3,183-strategy pool and a \$10 per-task cap;
-no memory is uncapped. Rates use completed evaluations; costs are recorded
-totals under these different budgets.}
+\caption{Historical SWE-bench-Pro50. Memory arms share a 3,183-strategy pool
+and a \$10 per-task cap; no memory is uncapped. Completion uses all 50 tasks;
+resolution uses completed evaluations. Costs are totals under these
+different budgets.}
 \label{tab:pro50}
 \begin{tabular}{lrrr}
 \toprule
@@ -156,34 +137,10 @@ Total edges & 73,975 & Seven typed relations \\
 \end{table}
 
 \clearpage
-\section{Earlier interfaces and development comparisons}
+\section{Additional development comparisons}
 \label{sec:additional}
 Fail-to-pass tests check the requested fix; pass-to-pass tests check behavior
-that worked before the repair. Table~\ref{tab:interfaces} compares six interfaces in a
-Related-Lite99 experiment: a separate DeepSeek V4 Pro campaign with 500 calls
-and the last five observations retained. Its frozen verdict requires
-fail-to-pass success and does not veto every pass-to-pass regression. The
-88-task frame belongs to this campaign's source-overlap analysis.
-
-\begin{table}[htbp]
-\centering
-\caption{Earlier Related-Lite99 memory interfaces. Resolution rates (\%)
-use the full 99-task set or its 88-task sensitivity subset.
-Gains and paired exact tests use the full set.}
-\label{tab:interfaces}
-\begin{tabular}{lrrrr}
-\toprule
-Memory & Full set (\%) & Subset (\%) & Gain (pp) & $p$ \\
-\midrule
-No memory & 17.17 & 18.18 & --- & --- \\
-Flat patches & 18.18 & 20.45 & +1.01 & 1.000 \\
-Patches + procedure card & 18.18 & 17.05 & +1.01 & 1.000 \\
-Graph & 12.12 & 13.64 & -5.05 & .227 \\
-Rules & 13.13 & 13.64 & -4.04 & .424 \\
-File list & 9.09 & 9.09 & -8.08 & .057 \\
-\bottomrule
-\end{tabular}
-\end{table}
+that worked before the repair.
 
 \begin{table}[htbp]
 \centering
@@ -220,16 +177,15 @@ remove/add pair loses a required change of indexed column. These observations
 motivate applying memory conditions along the current operation sequence.
 
 \paragraph{Additional development outcomes.}
-The closed DeepSWE Kea development
-baseline passes 9/12 fail-to-pass and 139/139 pass-to-pass tests (binary reward 0).
-The closed JDK5 LoLBench baseline originally submitted no artifact; a separate
-no-inference recovery of its recorded patch passes 0/5 fail-to-pass and 51/51
-pass-to-pass tests (binary reward 0). These are development outcomes. The
-historical Verified500 table is separate from these development studies.
+Two preliminary baseline runs remain unresolved. The DeepSWE Kea task
+passes 9/12 fail-to-pass and 139/139 pass-to-pass tests. The JDK5 LoLBench
+task initially submitted no patch; recovering its recorded patch without
+another model call gives 0/5 fail-to-pass and 51/51 pass-to-pass tests.
+Both receive a task-level reward of zero.
 
-\paragraph{Executable-witness bank coverage.}
-The archived 273-source bank provides at least one witnessed source from the
+\paragraph{Executable-example coverage.}
+The 273-source development bank provides at least one checked source from the
 same repository for 133/150 Verified targets, 91/99 Related-Lite targets,
 2/100 LoLBench targets, and 0/113 DeepSWE targets. These counts describe the
-executable-witness bank used during development, rather than the
-cross-repository strategy memory in the main benchmark comparison.
+executable-example bank used for the behavioral studies. Its records pair a
+historical requirement with an executable check.

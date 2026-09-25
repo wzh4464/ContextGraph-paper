@@ -1,9 +1,11 @@
 \section{Behavioral analysis with executable conditions}
 \label{sec:executable-analysis}
-The development studies augment retrieved guidance with task-specific
+The behavioral studies augment retrieved guidance with task-specific
 programs to examine whether a repair preserves the intended behavior.
-Figures~\ref{fig:concept} and~\ref{fig:behavior-workflow} show their comparison and workflow
-in the main text; this appendix gives the construction protocol.
+The programs make requirements testable in these cases; the main memory
+interface returns strategies, warnings, and source context.
+Figures~\ref{fig:concept} and~\ref{fig:behavior-workflow} illustrate the
+comparison and workflow; this appendix gives the construction protocol.
 \paragraph{Values alone do not describe a condition.}
 In Python, a named tuple is a tuple whose fields also have names. In our
 examples, constructing it takes two arguments; an ordinary tuple subclass
@@ -26,8 +28,8 @@ The executable-analysis extension connects example construction to a repair loop
 and which conditions make that lesson relevant. During repair, retrieval
 selects useful experience, composition brings its conditions into the
 current workflow, and execution turns them into feedback for the next edit.
-The graph preserves the links between these stages, so the agent can trace
-a retrieved requirement to both its supporting example and its expected behavior.
+Stored links connect a retrieved requirement to its supporting example and
+expected behavior.
 
 \subsection{Retain the context that makes advice useful}\label{sec:store}
 For these studies, an analysis record augments a retrieved requirement with
@@ -61,8 +63,9 @@ settings.
 \subsection{Check a historical requirement in the current workflow}
 \label{sec:compose}
 Composition turns retrieved experience into a check for the current task.
-It starts with $P_q$, a runnable program that reproduces the current issue,
-and a historical requirement applicable to the current code. An
+It starts with $P_q$, a runnable program prepared from the current issue,
+and a historical requirement applicable to the current code. For these
+studies, researchers prepare the setup and observation code. An
 \emph{adapter}, a small program-transformation routine, uses the stored input
 relations to insert the historical trigger into $P_q$. The check keeps the
 current workflow and tests the expected behavior under this added condition.

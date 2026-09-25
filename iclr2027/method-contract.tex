@@ -1,10 +1,8 @@
 \section{Behavioral-study implementation and evaluation details}
 \label{sec:method-contract}
-This appendix specifies the runnable-example and condition-composition
-extension used for behavioral analysis, introduced in
-Appendix~\ref{sec:executable-analysis}. Its programs are constructed for those
-studies; Section~\ref{sec:method} defines the abstract experience memory and
-its use in planning and error recovery.
+This appendix explains how the behavioral studies construct and use
+executable checks (Appendix~\ref{sec:executable-analysis}). Section~\ref{sec:method}
+describes the strategy memory used in planning and error recovery.
 \subsection{Constructing historical examples}
 A language-model writer reads the historical issue, patch, and relevant code
 to propose a requirement and runnable example. Execution on the historical
@@ -19,9 +17,9 @@ repository using Qwen3-Embedding-8B vectors and FAISS
 It returns complete records and input relations, including types and argument
 roles.
 
-The experiment configuration records source and target IDs, model and agent
-versions, index and adapter versions, prompts, budgets, and verifiers.
-This makes the retrieval, behavioral, and cost comparisons reproducible.
+Within each comparison, agents share the target code, backbone, tools,
+instructions, and repair budget. The comparison changes the supplied
+memory or feedback, as specified in Appendix~\ref{sec:development-details}.
 
 \subsection{Preparing the current executable program}
 \label{sec:public-program}

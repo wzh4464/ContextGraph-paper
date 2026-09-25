@@ -1,31 +1,49 @@
 # ContextGraph ICLR 2027 manuscript
 
 The current manuscript has **eight main-text pages**, references on pages 9–11,
-and **24 pages in total**. The title is **ContextGraph: Self-Improving Coding
+and **26 pages in total**. The title remains **ContextGraph: Self-Improving Coding
 Agents via Cross-Repository Experience Graphs**. `main.pdf` is the canonical PDF.
 
-## Current method and narrative
+## September 25 revision: complete the learning workflow
 
-The author's September 24 clarification defines core memory as abstract,
-transferable guidance: what to do, what to avoid, and when a lesson applies.
-The agent consults memory before generating a plan and after an error. It
-constructs local reproductions, edits, and tests itself. Executable-condition
-studies are behavioral analyses, not the core cross-repository memory format.
+The manuscript follows MulVul's problem–design–workflow–evaluation organization:
+Introduction, Related Work, Problem and Motivation, Method, Experiments, Conclusion.
+The introduction retains six prose paragraphs followed by three contribution bullets.
+The memory unit remains an abstract strategy or warning with applicability and source
+context. It is retrieved before planning and after errors. After every task, both
+successful and failed trajectories supply new lessons; the graph is updated and the
+new experience is immediately available to subsequent tasks.
 
-The introduction retains MulVul's six-paragraph structure followed by three
-contribution bullets. The Django Trac #33018 example comes from slides 1–3 of
-`context_graph_v9_no_movie.pptx`: investigation strategies and warnings from
-`python-statemachine` and `sievelib` guide a Django repair. Main-text sections
-cover introduction, background, method, experiments, related work, and conclusion.
+Figure 2 (previously Figure 3) preserves the supplied architecture artwork and adds a
+vector strip for the task-completion/update/retrieval cycle. Algorithm 1 describes
+the complete process. The results overview, benchmark comparison, and cross-model
+comparison are Figures 1, 3, and 4; ContextGraph uses the same red highlight in the
+result figures. No numerical figure data changed.
 
-The conclusion follows MulVul's single-paragraph progression: proposed
-architecture, the roles of its core designs, measured benchmark results, and
-the implication for coding-agent memory. It reports 69.2% on Verified500,
-72.1% on DeepSWE113, their 2.2/5.9-point leads over the strongest evaluated
-memory baselines, and the 21.4% to 36.3% Related-Lite99 gain. The repeated
-architecture-summary paragraph in the discussion is consolidated into this
-conclusion. Checks are in `outputs/paper-conclusion-mulvul-20260924/` in the
-main repository; no table, figure, or experimental result was changed.
+The main comparisons use online-updating ContextGraph and the default memory-update
+behavior of each baseline's open-source implementation. Related-Lite99 and DeepSWE113
+report five-run means; each repetition resets the initial memory, and tasks are
+evaluated in randomly shuffled order. Source coverage in
+the pool-size study means the proportion of oracle-designated relevant sources
+recovered by retrieval, not a resolution-rate ratio.
+
+Section 5.5 and main Table 4 now highlight the requirement/implementation
+comparison and the separate/composed-check comparison. The summary retains the
+72/72 vs 40/72 timezone outcomes (16 regressions) and the 1/3 vs 3/3 withheld
+joint-query outcomes. Detailed behavioral studies and their original figures
+remain in Appendix F.
+Two historical comparison tables were excluded on September 25 after the author
+confirmed implementation defects in their ContextGraph runs: GPT-5.4 Verified500
+and the six-interface Related-Lite99 comparison. Other result tables are retained. The main numerical
+comparison is now the first appendix. Historical static episodic experiments remain
+identified separately from the current main comparisons. Agent KB, Memory Transfer
+Learning, ExpGraph, mini-SWE-agent, and Datacurve DeepSWE are cited in their relevant
+roles. See `mulvul-online-revision-20260925.md` for changes and remaining author details.
+
+Build/render checks and the prior draft are under
+`/Users/zihanwu/Public/codes/ContextGraph/outputs/paper-mulvul-online-revision-20260925/`.
+The following dated entries describe earlier revisions; figure/table numbers and
+placement in those entries belong to their recorded dates.
 
 ## September 24 consistency revision
 

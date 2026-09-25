@@ -17,6 +17,7 @@ plt.rcParams.update({'font.family':'DejaVu Sans','font.size':9,
                      'pdf.fonttype':42,'svg.fonttype':'none','axes.spines.top':False,
                      'axes.spines.right':False,'axes.linewidth':.6})
 INK='#243849'; BLUE='#3971A6'; ORANGE='#B9742A'; GREEN='#3D7865'; GREY='#9AA3AC'
+CG_RED='#C73527'
 
 def save(fig,name):
     for ext in ('pdf','svg','png'):
@@ -39,7 +40,7 @@ data={'verified500':{'labels':['None','FAISS Flat','ExpeL','Agent KB','ExpeRepai
 fig,axs=plt.subplots(1,3,figsize=(7.6,2.25),gridspec_kw={'width_ratios':[1.65,1.05,1]})
 fig.subplots_adjust(left=.06,right=.99,bottom=.36,top=.80,wspace=.38)
 a=axs[0]; d=data['verified500']; vals=np.array(d['resolved'])/5
-a.bar(range(len(vals)),vals,color=[GREY]+[BLUE]*(len(vals)-2)+[ORANGE],width=.67)
+a.bar(range(len(vals)),vals,color=[GREY]+[BLUE]*(len(vals)-2)+[CG_RED],width=.67)
 for i,v in enumerate(vals):a.text(i,v+2.0,f'{v:.1f}',ha='center',fontsize=6.5)
 a.set(ylim=(0,82),xticks=range(len(vals)),xticklabels=d['labels'],ylabel='Resolved (%)')
 a.tick_params(axis='x',labelsize=6.5,rotation=50,length=0)
@@ -48,15 +49,15 @@ a.set_title('(a) Verified500',fontsize=9,fontweight='bold',pad=16)
 a.text(.5,1.04,'DeepSeek V4 Pro 0813 / mini-SWE-agent',transform=a.transAxes,ha='center',fontsize=6.5,color=INK)
 a=axs[1]; d=data['related99_crossmodel']; x=np.arange(4)
 c=[100*n/t for n,t in d['control']]; m=[100*n/t for n,t in d['memory']]
-a.bar(x-.17,c,width=.33,color=GREY,label='No memory');a.bar(x+.17,m,width=.33,color=ORANGE,label='ContextGraph')
+a.bar(x-.17,c,width=.33,color=GREY,label='No memory');a.bar(x+.17,m,width=.33,color=CG_RED,label='ContextGraph')
 a.set(ylim=(0,42),xticks=x,xticklabels=d['models'],ylabel='Resolved / completed (%)')
 a.tick_params(axis='x',labelsize=7,rotation=30,length=0)
 a.set_title('(b) Related-Lite99',fontsize=9,fontweight='bold',pad=16)
 a.text(.5,1.04,'Historical single attempt',transform=a.transAxes,ha='center',fontsize=7,color=INK)
 a=axs[2]; d=data['related99_retry']
 a.plot(d['passes'],d['control'],'o-',color=GREY,ms=4,lw=1.5,label='No memory')
-a.plot(d['passes'],d['memory'],'s-',color=ORANGE,ms=4,lw=1.5,label='Memory')
-for xx,yy in zip(d['passes'],d['memory']):a.text(xx,yy+1.0,str(yy),ha='center',fontsize=7,color=ORANGE)
+a.plot(d['passes'],d['memory'],'s-',color=CG_RED,ms=4,lw=1.5,label='Memory')
+for xx,yy in zip(d['passes'],d['memory']):a.text(xx,yy+1.0,str(yy),ha='center',fontsize=7,color=CG_RED)
 for xx,yy in zip(d['passes'],d['control']):a.text(xx,yy-2.7,str(yy),ha='center',fontsize=7,color='#66727C')
 a.axhline(25,color='#CBD3DB',ls=':',lw=.8,zorder=0)
 a.set(xlim=(.8,3.2),ylim=(0,32),xticks=[1,2,3],xlabel='Cumulative passes',ylabel='Resolved tasks / 99')

@@ -1,15 +1,16 @@
 \section{Development cases and input constructions}
 \label{sec:development-details}
 This appendix gives the inputs, source requirements, and repair observations
-for the behavioral studies in Section~\ref{sec:evidence}.
+for the behavioral studies in Appendix~\ref{sec:evidence}.
 \subsection{Retain the context that makes advice useful}
 \label{sec:details-evidence}
 \label{sec:details-content}
-The executable-analysis experiments use a Verified split of 280 source tasks,
-70 development tasks, and 150 held-out evaluation tasks. The cases below are
-controlled changes to the memory supplied to DeepSeek V4 Pro through OpenRouter,
-temperature zero and matched budgets within each comparison. They measure
-whether history adds a required behavior to the submitted repair.
+The behavioral studies draw their cases from the development portion of a
+SWE-bench Verified split with 280 source tasks, 70 development tasks, and
+150 held-out tasks. These cases vary the information supplied to DeepSeek
+V4 Pro, at temperature zero and matched budgets within each comparison.
+They measure whether historical guidance helps preserve a required
+behavior in the submitted repair.
 Table~\ref{tab:historicalrequirements} presents four such additions.
 Django14404 uses the first-ranked source issue and patch; Django12708 and
 Django11138 come from a fixed six-task group receiving three retrieved rules
@@ -74,7 +75,8 @@ The repair given Both still generates an unnecessary MySQL conversion between id
 The repair given Requirement passes both additional diagnostics.
 These concrete omissions distinguish carrying a requirement, applying its triggering condition, and implementing the resulting behavior correctly.
 Two subsequent agents start from the original unrepaired code and receive the same constraint requirement, with or without an example validated on the historical repair; both pass official and joint checks.
-The same requirement succeeds when its trigger is reconstructed correctly; preserving that input construction is a useful role for the graph.
+The same requirement succeeds when its trigger is reconstructed correctly.
+Preserving this input context helps explain when the advice is useful.
 
 \paragraph{Preserve the input relation.}
 On Django12663, both a set of three code-connected sources and the ten
@@ -100,9 +102,9 @@ In this same case, demanding an operation match from the initial public-code
 localization excludes source13590, which FAISS ranks first. Keeping the
 similarity candidate lets the graph return its input relation and construct
 the joint program described next. This motivates the division in Figure~\ref{fig:behavior-workflow}:
-FAISS proposes sources; graph relations support their adaptation to the current
-operation. The usefulness of a candidate is established by what its condition
-adds to the repair.
+FAISS proposes sources, and the stored input relations let an adapter
+construct a check for the current operation. This case illustrates why
+retrieval should retain potentially useful conditions from related operations.
 
 \subsection{Check a historical requirement in the current workflow}
 \label{sec:details-composition-results}
@@ -128,9 +130,10 @@ receives this shared input. The composed arm additionally receives the two
 composed programs and their failures; the separate-history arm receives
 standalone historical checks. All three repairs pass official verification
 (Table~\ref{tab:composedconditions}).
-The repair given only current feedback fails both historical examples and the withheld
-named-tuple/lazy-User query; the repair given joint checks passes those behaviors and
-preserves the ordinary subclasses.
+The repair given only current feedback fails both historical examples and
+one of three withheld joint queries. The repair given composed checks
+passes both historical examples and all three joint queries, while preserving
+the ordinary subclasses.
 The agent given joint checks runs the joint input before editing and again after
 removing a global conversion that broke an existing test. Its remaining
 range-endpoint failure directs the final correction.

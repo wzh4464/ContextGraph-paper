@@ -1,6 +1,6 @@
 \section{Additional benchmark and agent results}
 \label{sec:new-results}
-This appendix gives the GPT-5.4 results plotted in
+This appendix gives the historical GPT-5.4 summary-memory results plotted in
 Figure~\ref{fig:swectx-crossmodel}, the LoLBench comparison from
 Section~\ref{sec:benchmark}, and additional Gemini and token measurements.
 The three-benchmark comparison is tabulated in
@@ -9,8 +9,8 @@ Appendix~\ref{sec:historical}.
 
 \begin{table}[htbp]
 \centering
-\caption{Related-Lite99 with GPT-5.4, one attempt per task and a
-300-summary pool, matching Figure~\ref{fig:swectx-crossmodel}.
+\caption{Historical Related-Lite99 summary memory with GPT-5.4, one attempt
+per task and a 300-summary pool, matching Figure~\ref{fig:swectx-crossmodel}.
 Resolution rates use completed evaluations. Bold marks the best automatic
 memory result; the oracle receives a known related summary.}
 \label{tab:new-swectx}
@@ -35,7 +35,8 @@ Oracle summary & 35.71 \\
 \begin{table}[htbp]
 \centering
 \caption{SWE-bench Verified500 with Gemini 3.1 Pro and live-SWE-agent.
-The gain column reports relative improvements in success rate.}
+The gain column reports relative improvement,
+$(\text{ContextGraph}-\text{No memory})/\text{No memory}$, in percent.}
 \label{tab:new-gemini}
 \begin{tabular}{lrrr}
 \toprule
@@ -58,8 +59,11 @@ without memory and 201K with ContextGraph, a 14.8\% reduction
 \paragraph{LoLBench Python subset.}
 We select 20 Python tasks from LoLBench \citep{lolbench2026}, which evaluates
 long-horizon development from enhancement proposals in large software
-systems. The agent is Codex with GPT-5.5. We construct the experience graph
-from other Python tasks, separate from the 20 evaluation tasks.
+systems. The agent is Codex with GPT-5.5. The initial experience graph is
+built from other Python tasks, separate from the 20 evaluation tasks.
+During evaluation, ContextGraph adds lessons from completed attempts,
+including successes and failures, for subsequent retrieval. Baseline
+memory updates follow each method's open-source defaults.
 
 \begin{table}[htbp]
 \centering
@@ -87,7 +91,7 @@ ContextGraph & pass@3 & \textbf{25.0} \\
 \end{table}
 
 \clearpage
-\section{Full-context code-agent retrieval}
+\section{Extension: full-context code-agent retrieval}
 \label{sec:agentic-retrieval}
 This proposed extension lets a selector explore the experience graph using
 the coding agent's complete current-task context. Beyond the issue, that
@@ -107,7 +111,7 @@ the experience pool through search and record reading. The returned advice
 uses the same memory interface as Section~\ref{sec:method}, and the coding
 agent applies it through its own investigation, edits, and tests.
 
-\paragraph{Current implementation.}
+\paragraph{Prototype implementation.}
 The repository provides context-aware candidate reranking and a selector
 over all 300 compact experience cards. These prototypes cap task or
 working-state text at 4,000 characters and limit candidate content. They

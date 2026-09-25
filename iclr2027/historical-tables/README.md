@@ -1,25 +1,32 @@
 # Restored historical tables
 
-The current manuscript restores eleven historical tables alongside its three
-existing requirement/content/composition tables. All nine preprint table
+The original restoration included eleven historical tables alongside three
+requirement/content/composition tables. All nine preprint table
 blocks are preserved verbatim in `preprint-tables-original.tex`; that archive
 is not compiled. Their original captions include interpretations superseded
 by the current text. `iclr-previous-tables-original.tex` preserves the earlier
 six-interface table, and `redirect-table-original.tex` preserves the redirect
 refinement comparison.
 
-| Current table | Historical source | Placement |
+On September 25, the author confirmed implementation defects in the historical
+GPT-5.4 Verified500 and six-interface Related-Lite99 comparisons. Both complete
+comparison tables and their associated discussion were removed from the compiled
+manuscript. Their uncompiled originals remain solely as archival records and are
+not used as evidence. Other experiments are unchanged. Table numbers below record
+the earlier restoration and may differ from the current PDF.
+
+| Table | Historical source | Historical placement or exclusion |
 |---|---|---|
 | Related-Lite99 cross-model V1 | `3e51135:main.tex`, `tab:swectx-crossmodel` | Main Figure 5 (`fig:swectx-crossmodel`) |
 | Related-Lite99 cumulative pass@k | `3e51135:main.tex`, `tab:swectx-stream` | Main Table 4 (`tab:swectx-stream`) |
 | Memory pool size | `3e51135:main.tex`, `tab:swectx-poolsize` | Main Table 5 (`tab:swectx-poolsize`); V2 in Table 8 |
-| Verified500 | `3e51135:main.tex`, `tab:verified500` | Appendix Table 6 (`tab:verified500-historical`) |
+| Verified500 | `3e51135:main.tex`, `tab:verified500` | Excluded September 25: author-confirmed ContextGraph implementation defect |
 | Episodic cross-model replication | `3e51135:main.tex`, `tab:swectx-xmodel` | Appendix Table 7 |
 | Related-Lite99 V2 aggregate | `3e51135:main.tex`, `tab:swectx` | Appendix Table 8 |
 | Verified dev50 | `3e51135:main.tex`, `tab:dev50` | Appendix Table 9 |
 | Pro50 (originally disabled) | `3e51135:main.tex`, `tab:pro50` | Appendix Table 10 |
 | Historical graph schema | `3e51135:main.tex`, `tab:schema` | Appendix Table 11 |
-| Related-Lite99 six interfaces | `7917b0a:iclr2027/main.tex`, `tab:audit` | Appendix Table 12 |
+| Related-Lite99 six interfaces | `7917b0a:iclr2027/main.tex`, `tab:audit` | Excluded September 25: author-confirmed Graph implementation defect |
 | Django14404 refinement | `6fc8be3:iclr2027/main.tex`, `tab:residual` | Appendix Table 13 |
 
 Values retain their historical denominators. The V1 pool-size comparison no
