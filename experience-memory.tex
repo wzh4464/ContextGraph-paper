@@ -88,17 +88,14 @@ and tests (Appendix~\ref{sec:agentic-retrieval}).
 
 \subsection{Memory access and updates: connect repair to learning}
 \label{sec:experience-access}
-\paragraph{Before planning.}
-The full task context guides a search for investigation, reproduction, and
-testing strategies, together with warnings about costly approaches to avoid.
-
-\paragraph{After an error.}
-The failed action, observed error, relevant code, and current hypothesis
-update the context. The agent searches again to revise its diagnosis and
-uses repository tools to try the next step.
-
-\paragraph{After each task.}
-ContextGraph distills successful and failed trajectories and links new
+Memory enters the repair loop at three points.
+\textbf{Before planning,} the agent searches with the full task context for
+investigation, reproduction, and testing strategies, and for warnings about
+costly approaches to avoid.
+\textbf{After an error,} it adds the failed action, observed error, relevant
+code, and current hypothesis to that context, searches again to revise its
+diagnosis, and uses repository tools to try the next step.
+\textbf{After each task,} ContextGraph distills successful and failed trajectories and links new
 lessons to existing experience. Updates use agent-visible observations and
 become immediately available to later tasks (Appendix Algorithm~\ref{alg:contextgraph}).
 Because memory grows during evaluation, a task late in the stream selects

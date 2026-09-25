@@ -142,8 +142,8 @@ alone account for about half of the gain on two of the three benchmarks.
 \label{sec:recorded-results}
 We ask whether ContextGraph improves repair success, which components
 contribute, how the online loop changes later tasks, how much selected
-experience crosses repositories, and how the benefits vary across models and
-memory-pool sizes.
+experience crosses repositories, and how benefits vary across models and pool
+sizes.
 
 \subsection{Setup and evaluation}
 \label{sec:setup}
@@ -205,9 +205,7 @@ We compare no memory, FAISS Flat, ExpeL, ExpeRepair, ReasoningBank,
 ACE, and Supermemory \citep{expel2024,experepair2026,
 reasoningbank2026,ace2026,supermemoryreport2026}. FAISS Flat uses vector
 similarity to retrieve memory without graph traversal. We adapt ExpeRepair
-and ACE to mini-SWE-agent, retaining their memory procedures. Supplementary
-model, pool-size, and retry comparisons state their own inputs and budgets
-alongside the results. We compare complete memory systems, including their
+and ACE to mini-SWE-agent, retaining their memory procedures. We compare complete memory systems, including their
 construction, selection, and updates. Appendix Table~\ref{tab:main-results-overview}
 lists all main comparison values.
 
@@ -236,10 +234,9 @@ $\dagger$ marks our adaptations to mini-SWE-agent.}
 \paragraph{Benefits with Gemini and live-SWE-agent.}
 With Gemini 3.1 Pro and live-SWE-agent, ContextGraph raises Verified500
 pass@1 from 82.3\% to 88.9\%, an 8.0\% relative gain; pass@5 reaches 91.7\%
-(Table~\ref{tab:new-gemini}). Memory also benefits this stronger backbone
-and a different coding-agent implementation. Without memory, additional
-attempts add less than one point; with memory, which is updated after every
-attempt, the curve keeps rising, 2.8 points from pass@1 to pass@5, consistent
+(Table~\ref{tab:new-gemini}). Without memory, additional
+attempts add less than one point; with memory updated after every attempt,
+pass@$k$ keeps rising, 2.8 points from pass@1 to pass@5, consistent
 with later attempts drawing on lessons distilled from earlier ones.
 On Verified500 with DeepSeek V4 Pro, ContextGraph also uses fewer tokens per
 task, 201K versus 236K without memory, a 14.8\% reduction.
@@ -267,9 +264,9 @@ pass@5 & 82.8\% & \textbf{91.7\%} & +10.7\% \\
 With Codex and GPT-5.5, we build the graph from other Python tasks and evaluate
 20 LoLBench tasks. All six memory baselines match no memory at
 5.0\% pass@1; ContextGraph reaches 15.0\% pass@1 and 25.0\% pass@3
-(Appendix Table~\ref{tab:new-codex55}). With 20 tasks, a difference of two
-resolved tasks is not statistically significant, so we report this subset as
-a long-horizon sanity check rather than a headline result.
+(Appendix Table~\ref{tab:new-codex55}). With 20 tasks, a two-task difference
+is not statistically significant, so we treat this subset as a sanity check
+rather than a headline result.
 
 \subsection{Which components contribute?}
 \label{sec:ablation}
@@ -285,7 +282,7 @@ places the most frequently selected lessons in the system prompt of every
 task without memory access, testing whether the gain comes from generic
 advice. Each variant keeps the remaining components unchanged.
 
-Every component contributes, but not equally. Replacing agent-directed
+Replacing agent-directed
 selection with fixed top-$k$ retrieval costs 10.8 points, the largest drop.
 Raw trajectories and the static playbook fall below no memory (20.5 and 20.8
 versus 21.4): unabstracted traces and generic advice do not help and can
@@ -320,11 +317,9 @@ No memory & 21.4 & $-13.7$ \\
 \subsection{Self-evolution along the task stream}
 \label{sec:stream}
 \label{sec:retries}
-Memory changes during evaluation. Every completed task is distilled and
-becomes available to the next task, so the pool at the end of a run holds
-lessons from all earlier tasks in that run, and a retry of an unresolved task
-can select the lessons distilled from its own earlier failure. Two views
-expose this loop.
+Because every completed task is distilled into memory
+(Section~\ref{sec:experience-access}), later tasks and retries can draw on
+lessons from earlier attempts in the same run. Two views expose this loop.
 
 \paragraph{Retry passes.}
 A separate Related-Lite99 experiment uses DeepSeek V4 Pro with 500 calls and
@@ -340,15 +335,13 @@ the no-memory agent gains nothing from its third pass, whereas the agent with
 memory keeps converting earlier failures into repairs. Excluding ten targets
 with near-duplicate source fixes retains the first-pass gain, 19/89 versus
 13/89 ($p=.031$). Absolute rates differ from the main comparison because this
-experiment uses a different budget and a curated initial pool
-(Table~\ref{tab:swectx-stream} reports one run,
-Table~\ref{tab:stream-position} five-run means); the paired comparison within
-each row is the quantity of interest. Its curated records include
+experiment uses a different budget and a curated initial pool; the paired
+comparison within each row is the quantity of interest. Its curated records include
 reference fixes, so it tests the update loop rather than the abstraction; the
 static-pool ablation (Table~\ref{tab:ablation}) shows the same effect under
 the main protocol.
-\textbf{Finding:} the gap between the two agents widens with each pass, by
-7, 9, and 11 tasks; the static-pool control in
+\textbf{Finding:} the gap between the two agents widens with each pass; the
+static-pool control in
 Table~\ref{tab:stream-position} attributes the widening to the lessons
 added between passes.
 
@@ -413,11 +406,7 @@ ContextGraph, online updates & 5.4 & 7.2 & \textbf{8.6} & \textbf{21.2} & \textb
 \label{sec:cross-repo}
 The Django example in Section~\ref{sec:motivation} drew on two other
 repositories. To measure how often this happens, we log the source repository
-of every lesson the agent selects during the main comparison.
-Table~\ref{tab:cross-repo} reports the share of selected lessons whose source
-repository differs from the target repository, and the resolution rate when
-lessons from the target repository are excluded at selection time, including
-lessons added online. Most selected lessons come from other repositories:
+of every lesson selected in the main comparison (Table~\ref{tab:cross-repo}). Most selected lessons come from other repositories:
 78.4\% on Verified500, 86.2\% on Related-Lite99, and 64.1\% on DeepSWE113.
 The DeepSWE113 initial pool contains only LoLBench repositories, none of
 which is a DeepSWE113 repository (Appendix~\ref{sec:overlap-audit}), so its
@@ -461,8 +450,8 @@ holds 300 experience summaries distilled from the audited SWE-bench
 cold-start pool of Table~\ref{tab:evaluation-settings} unless stated otherwise.
 The DeepSeek V4 Pro ContextGraph and no-memory entries with 300 summaries
 are therefore the main-comparison values, and the other DeepSeek V4 Pro
-entries follow the same protocol; Appendix~\ref{sec:historical} gives the
-remaining settings.
+entries follow the same protocol; Appendices~\ref{sec:historical} and
+\ref{sec:new-results} give the remaining settings and further results.
 % AUTHOR: confirm that the DeepSeek V4 Pro entries of Figure 5 and the
 % 300-summary column of the pool-size table are the main-comparison runs, and
 % that the Kimi K3 and MiniMax M2.7 runs are single attempts over completed
@@ -496,10 +485,8 @@ summary.}
 \paragraph{Pool size.}
 With the DeepSeek V4 Pro agent and memory-selection procedure held fixed,
 resolution rises from 20.2\% to 35.1\% as the initial pool grows from 50 to
-300 summaries (Table~\ref{tab:swectx-poolsize}); the 300-summary column is
-the main-comparison configuration.
-\textbf{Finding:} resolution rises with pool size, and the largest tested
-pool yields the strongest repair result.
+300 summaries (Table~\ref{tab:swectx-poolsize}).
+\textbf{Finding:} larger initial pools yield stronger repair.
 
 \begin{table}[!htbp]
 \centering
@@ -517,20 +504,17 @@ Resolution rate & 20.2\% & 26.3\% & 28.3\% & \textbf{35.1\%} \\
 \end{tabular}
 \end{table}
 
-Additional system results appear in Appendices~\ref{sec:historical} and
-\ref{sec:new-results}.
-
 \section{Conclusion}
 ContextGraph remembers when a lesson applies and what behavior it should
 preserve, linking transferable strategies and warnings to their source
-experience. Agents use their full context to select guidance before planning
-and after errors, then contribute new experience after each task. With
+experience. Agents select guidance before planning and after errors and
+contribute new experience after each task. With
 DeepSeek V4 Pro, it achieves 69.2\%, 35.1\%, and 72.1\% resolution on
 Verified500, Related-Lite99, and DeepSWE113, leading the evaluated methods on
 each, and Gemini 3.1 Pro reaches 88.9\% pass@1 on Verified500. Ablations
-attribute the gain to abstraction and agent-directed selection, the benefit
-of online updates grows along the task stream, and most selected lessons
-come from repositories other than the target.
+attribute the gain to abstraction and agent-directed selection, online updates
+help more along the task stream, and most selected lessons come from other
+repositories.
 These results establish experience graphs as a strong starting point for
 self-improving coding-agent memory.
 
