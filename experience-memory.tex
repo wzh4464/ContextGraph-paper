@@ -40,7 +40,7 @@ tasks (Figure~\ref{fig:experience-memory}).
 
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=\linewidth]{figures/figure3-design-v1/fig3-contextgraph.pdf}
+\includegraphics[width=\linewidth]{figures/experience-architecture/fig3-contextgraph.pdf}
 \par\smallskip
 \begin{tikzpicture}[>=Stealth, node distance=0.18cm,
   cgstep/.style={draw=blue!55!black, rounded corners=2pt, fill=blue!4,
@@ -55,7 +55,7 @@ tasks (Figure~\ref{fig:experience-memory}).
 \end{tikzpicture}
 \caption{ContextGraph's experience-memory architecture. Past trajectories
 supply strategies and warnings linked to source context. The agent retrieves
-guidance before planning and after errors. After every task, successful and
+guidance using its full context before planning and after errors. After every task, successful and
 failed trajectories update the graph; the added experience is immediately
 available to subsequent tasks. Graph links illustrate the organization.}
 \label{fig:experience-memory}
@@ -74,29 +74,30 @@ experiences link to the errors they address or encounter. These connections
 preserve the common lesson and its supporting observations, including warnings
 from failures and strategies from successful repairs.
 
-\subsection{Graph retrieval: find relevant strategies and warnings}
+\subsection{Agent-directed selection: find useful experience}
 \label{sec:experience-retrieval}
-A query describes the task and current situation. Semantic search finds
-related lessons; keyword search matches diagnostic terms. A graph walk follows
-error patterns through shared rules and strategies to source trajectories.
-Different errors can therefore lead to a common strategy. The retriever merges
-these candidates and selects a small, diverse set of lessons.
+The agent uses its full current context---the issue, inspected code, previous
+actions, and observed failures---to decide which memories can help. It can
+search the entire experience pool, open source records, follow links between
+errors and strategies, and refine its search as its diagnosis changes.
+Semantic and keyword search provide entry points; the agent selects the
+useful lessons rather than receiving a fixed top-$k$ list.
 
-Returned lessons include actions, warnings, applicability context, and source
-experience. The agent uses them to construct a local reproduction, patch, and
-tests. Figure~\ref{fig:experience-memory} shows how different errors lead to
-related guidance. Appendix~\ref{sec:agentic-retrieval} describes a full-context
-agent-search extension.
+The graph keeps each strategy connected to its applicability context and
+supporting experience. The agent uses these connections to judge relevance,
+then applies selected strategies and warnings through local reproductions,
+edits, and tests. Appendix~\ref{sec:agentic-retrieval} details the selection
+workflow.
 
 \subsection{Memory access and updates: connect repair to learning}
 \label{sec:experience-access}
 \paragraph{Before planning.}
-The agent queries the graph with the issue and available code context.
+The agent searches memory using the issue and its full available code context.
 Strategies guide where to investigate, how to reproduce the failure, and
 which checks to prioritize; warnings identify costly approaches to avoid.
 
 \paragraph{After an error.}
-A failed command, reproduction, or test supplies a more specific query:
+A failed command, reproduction, or test adds to the agent's current context:
 the observed error, recent action, relevant files, and current hypothesis.
 Retrieval now supports diagnosis and revision. The agent applies the guidance
 through its repository tools and uses the next observation to decide how to proceed.
@@ -104,6 +105,7 @@ through its repository tools and uses the next observation to decide how to proc
 \paragraph{After each task.}
 ContextGraph abstracts both successful and failed trajectories, links the
 new lessons to existing experience, and updates their retrieval entries.
+Outcomes here come from agent-visible observations, not official test feedback.
 The added experience is immediately available to subsequent tasks, closing
 the learning loop in Algorithm~\ref{alg:contextgraph}.
 
@@ -115,12 +117,12 @@ the learning loop in Algorithm~\ref{alg:contextgraph}.
 \textbf{Input:} initial trajectories $H$, coding tasks $q_1,\ldots,q_T$.\\
 \textbf{Output:} candidate patches and an updated experience graph $G$.\\
 1. Extract strategies and warnings from $H$; build $G$ and its retrieval entries.\\
-2. \textbf{For each} task $q_t$:\\
-\quad a. Query $G$ with the issue and code context; use the guidance to form a plan.\\
+2. \textbf{For each} task $q_t$ in issue creation-time order:\\
+\quad a. Use the full task context to search $G$ and select guidance for planning.\\
 \quad b. Execute investigation, editing, and testing actions; record the trajectory.\\
-\quad c. After an error, query $G$ with the failure and recent action; revise the plan.\\
+\quad c. After an error, search again with the updated full context; revise the plan.\\
 \quad d. Continue the repair loop until the task ends or its budget is exhausted.\\
-\quad e. Distill the successful or failed trajectory into new experience.\\
+\quad e. Distill experience from the trajectory and agent-visible outcomes.\\
 \quad f. Update $G$ and retrieval entries; expose the new experience to later tasks.\\
 \end{tabular}
 \end{algorithm}

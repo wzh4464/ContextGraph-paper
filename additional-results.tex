@@ -1,0 +1,88 @@
+\section{Additional benchmark and agent results}
+\label{sec:new-results}
+This appendix gives the DeepSeek V4 Pro summary-memory results plotted in
+Figure~\ref{fig:swectx-crossmodel}, the LoLBench comparison from
+Section~\ref{sec:benchmark}, and token measurements. Gemini results appear in Table~\ref{tab:new-gemini}.
+The three-benchmark comparison is tabulated in
+Table~\ref{tab:main-results-overview}; additional comparisons appear in
+Appendix~\ref{sec:historical}.
+
+\begin{table}[htbp]
+\centering
+\caption{Related-Lite99 summary memory with DeepSeek V4 Pro, one attempt
+per task and a 300-summary pool, matching Figure~\ref{fig:swectx-crossmodel}.
+Bold marks the best automatic
+memory result; the oracle receives a known related summary.}
+\label{tab:new-swectx}
+\begin{tabular}{lr}
+\toprule
+Method & Resolution rate (\%) \\
+\midrule
+No memory & 30.6 \\
+Random summaries & 27.1 \\
+Mem0 & 26.8 \\
+LangMem & 34.0 \\
+ContextGraph & \textbf{35.1} \\
+\midrule
+Oracle summary & 27.8 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+
+\paragraph{Token efficiency.}
+On SWE-bench Verified500, the recorded comparison uses 236K tokens per task
+without memory and 201K with ContextGraph, a 14.8\% reduction
+(approximately 15\%).
+
+\paragraph{LoLBench Python subset.}
+We select 20 Python tasks from LoLBench \citep{lolbench2026}, which evaluates
+long-horizon development from enhancement proposals in large software
+systems. The agent is Codex with GPT-5.5. The initial experience graph is
+built from other Python tasks, separate from the 20 evaluation tasks.
+During evaluation, ContextGraph adds lessons from completed attempts,
+including successes and failures, for subsequent retrieval. Baseline
+memory updates follow each method's open-source defaults.
+
+\begin{table}[htbp]
+\centering
+\caption{Success rates on 20 LoLBench Python tasks with Codex and GPT-5.5,
+as reported in Section~\ref{sec:benchmark}.
+pass@$k$ reports the fraction of tasks solved within $k$ attempts.}
+\label{tab:new-codex55}
+\begin{tabular}{llr}
+\toprule
+Method & Metric & Success rate (\%) \\
+\midrule
+No memory & pass@1 & 5.0 \\
+FAISS Flat & pass@1 & 5.0 \\
+ExpeL & pass@1 & 5.0 \\
+Agent KB & pass@1 & 5.0 \\
+ExpeRepair & pass@1 & 5.0 \\
+ReasoningBank & pass@1 & 5.0 \\
+ACE & pass@1 & 5.0 \\
+Supermemory & pass@1 & 5.0 \\
+ContextGraph & pass@1 & \textbf{15.0} \\
+\midrule
+ContextGraph & pass@3 & \textbf{25.0} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\clearpage
+\section{Full-context agent-directed memory selection}
+\label{sec:agentic-retrieval}
+At step $t$, the agent uses the complete context $C_t$: the issue and
+conversation, inspected code, edits, actions, and observed failures. It can
+search the whole experience pool, read source records, follow links between
+strategies and errors, and compare lessons across repositories. Its selection
+is not restricted to a fixed number of nearest neighbours.
+
+The selected memory contains strategies and warnings, their source context,
+and the conditions under which they are useful. Before planning, selection
+helps choose an investigation strategy. After an error, the updated context
+helps revise the diagnosis and find additional guidance. After each completed
+task, the graph incorporates new experience for subsequent tasks.
+The pool therefore evolves along the issue-ordered task stream; official
+benchmark test results are never part of the agent's context or stored memory.

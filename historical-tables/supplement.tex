@@ -1,40 +1,28 @@
 \section{Additional system comparisons}
 \label{sec:historical}
-These comparisons show how earlier memory configurations perform under
-different models and attempt budgets. The Related-Lite99 studies below
-examine summary memory and episodic memory.
-Resolution rates are percentages; gains marked pp are percentage-point
-differences from no memory.
+These comparisons examine summary and episodic memory across models and
+attempt budgets. Resolution rates are percentages; gains marked pp are
+percentage-point differences from no memory.
 
-\paragraph{Memory configurations.}
-The historical Related-Lite99 summary system indexes 300 experience summaries with
-repository-filtered lookup and a memory tool. Its cross-model comparison
-examines the benefit of summary memory across backbones. The separate
-Related-Lite99 episodic system serves reference fixes, verification hints,
-and history preceding the target revision from 291 episodes, queried before
-planning and after errors.
-The executable-example bank used for behavioral studies is described in
-Appendix~\ref{sec:method-contract}.
+\paragraph{Memory access and evaluation.}
+The agent uses its full current context to search the experience pool,
+read records, and follow links to relevant strategies. The Related-Lite99
+summary comparison uses 300 summaries and one attempt per task. The pool-size
+study varies this initial pool from 50 to 300 summaries
+(Table~\ref{tab:swectx-poolsize}). MiniMax M2.7 uses an API compatibility layer.
+The curated-episode comparison uses 291 repair records with prior code history,
+reference fixes, and verification hints. Official test results are withheld
+from the agent throughout, including between attempts.
 
-\paragraph{Evaluation sets and attempts.}
-In the historical Related-Lite99 summary experiments, resolution rates use completed
-evaluations in each condition. Figure~\ref{fig:swectx-crossmodel} allows
-one attempt; Table~\ref{tab:swectx-v2} includes failure reruns.
-The single-attempt pool-size results in Table~\ref{tab:swectx-poolsize}
-are 21.88\%, 27.55\%, 26.80\%, and 34.69\% for 50, 100, 200, and
-300 summaries, respectively.
-The MiniMax M2.7 runs use an API compatibility layer.
-
-\paragraph{Related-Lite99 source content.}
-The historical episodic runs use a static pool: newly completed trajectories
-were not available to subsequent retrieval. The source-overlap analysis
-identified ten targets with near-duplicate source fixes (token-Jaccard at least
-0.85); removing them gives an 89-task subset. On this subset, DeepSeek V4 Pro
-resolves 21.35\% with memory versus 14.61\% without memory ($p=.031$).
+\paragraph{Source-similarity sensitivity.}
+A separate analysis removes ten targets whose source fixes have token-Jaccard
+similarity of at least 0.85. These are distinct tasks, not target trajectories
+in the memory pool. On the remaining 89 tasks, DeepSeek V4 Pro resolves
+21.35\% with memory versus 14.61\% without memory ($p=.031$).
 
 \begin{table}[htbp]
 \centering
-\caption{Historical curated-episode Related-Lite99 replication, one pass per
+\caption{Curated-episode Related-Lite99 replication, one pass per
 backbone. Resolution rates are percentages. The last column gives
 no-memory/ContextGraph rates on the fixed 89-task subset after removing ten
 near-duplicate targets, followed by the paired $p$ value.
@@ -53,31 +41,11 @@ Kimi K3 & 29.29 & 31.31 & 3/5 & .73 & 29.21/31.46 ($p=.73$) \\
 \end{tabular}
 \end{table}
 
-\begin{table}[htbp]
-\centering
-\caption{Historical Related-Lite99 GPT-5.4 results including reruns of failed
-tasks. Rates use completed evaluations; the aggregate does not specify
-attempts per method. Figure~\ref{fig:swectx-crossmodel} gives the separate
-single-attempt comparison.}
-\label{tab:swectx-v2}
-\begin{tabular}{lr}
-\toprule
-Memory & Resolution rate (\%) \\
-\midrule
-No memory & 25.51 \\
-Random summaries & 19.59 \\
-Mem0 & 19.39 \\
-LangMem & 24.49 \\
-ContextGraph & \textbf{41.84} \\
-\midrule
-Oracle summary & 35.71 \\
-\bottomrule
-\end{tabular}
-\end{table}
+
 
 \begin{table}[htbp]
 \centering
-\caption{Historical 50-task SWE-bench Verified development subset.
+\caption{Separate 50-task development comparison; tasks are disjoint from the test sets.
 Completion uses all 50 tasks; resolution uses completed evaluations.
 The recorded 66.6\% retains its original display precision.}
 \label{tab:dev50}
@@ -95,10 +63,9 @@ No memory & 100.0 & 58.0 \\
 
 \begin{table}[htbp]
 \centering
-\caption{Historical SWE-bench-Pro50. Memory arms share a 3,183-strategy pool
-and a \$10 per-task cap; no memory is uncapped. Completion uses all 50 tasks;
-resolution uses completed evaluations. Costs are totals under these
-different budgets.}
+\caption{SWE-bench-Pro50. Memory arms share a 3,183-strategy pool. All
+methods, including no memory, have a \$200 per-task budget. Completion uses
+all 50 tasks; resolution uses completed evaluations. Costs are total spend.}
 \label{tab:pro50}
 \begin{tabular}{lrrr}
 \toprule
@@ -113,7 +80,7 @@ No memory & 92.0 & 4.35 & 1,686 \\
 
 \begin{table}[htbp]
 \centering
-\caption{Historical experience-graph snapshot, using text-embedding-3-large
+\caption{Experience-graph snapshot, using text-embedding-3-large
 vectors with 3,072 dimensions. The executable-example bank for behavioral
 studies uses Qwen embeddings (Appendix~\ref{sec:method-contract}).}
 \label{tab:schema}

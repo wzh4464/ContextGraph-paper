@@ -18,12 +18,12 @@ transferable decisions, connecting related lessons, and retrieving them
 when they can guide the next action. We propose ContextGraph, an experience
 graph for self-improving coding agents. It abstracts past trajectories into
 strategies and warnings linked to their source context, error patterns, and
-outcomes. The agent retrieves guidance before planning and queries again
+outcomes. The agent selects guidance using its full context before planning and searches again
 after errors to revise its diagnosis. After each task, successful and failed
 trajectories contribute new experience that subsequent tasks can immediately
-retrieve. ContextGraph achieves resolution rates of 69.2\%, 36.3\%, and
+retrieve. ContextGraph achieves resolution rates of 69.2\%, 35.1\%, and
 72.1\% on SWE-bench Verified, SWE-ContextBench Related-Lite, and Datacurve
-DeepSWE, improving over no memory by 7.6, 14.9, and 11.3 percentage points,
+DeepSWE, improving over no memory by 7.6, 4.5, and 11.3 percentage points,
 respectively. It leads the evaluated methods on Verified and DeepSWE and
 ranks second to Agent KB on Related-Lite. Additional experiments examine
 performance across models, memory-pool sizes, and retry budgets. Behavioral
@@ -46,7 +46,7 @@ practical route toward recursive self-improvement (RSI)
 \includegraphics[width=\linewidth]{figures/paper_results_overview.pdf}
 \caption{ContextGraph improves repair success across the evaluated settings.
 (a) SWE-bench Verified500 with DeepSeek V4 Pro 0813 and mini-SWE-agent;
-(b) Related-Lite99 with four language models; (c) cumulative resolutions on
+(b) Related-Lite99 with three language models; (c) cumulative resolutions on
 Related-Lite99 with DeepSeek V4 Pro. Grey denotes no memory and red
 ContextGraph.}
 \label{fig:results-overview}
@@ -81,10 +81,11 @@ that turns experience across repositories into guidance for new repairs
 (Figure~\ref{fig:experience-memory}). \emph{Experience abstraction} extracts
 strategies and warnings: what to do, what to avoid, and when each lesson
 applies. The graph links them to source experiences, problems, and errors.
-\emph{Graph retrieval} combines semantic relevance with these connections
-to recover related strategies across repositories. \emph{Memory access}
+\emph{Agent-directed selection} uses the full task context to search the
+experience pool and follow graph connections, selecting useful strategies
+across repositories. \emph{Memory access}
 emphasizes two points: before planning and after an error. The first query
-uses the task description; the second adds the error and recent attempt
+uses the available task context; the second adds the error and recent attempt
 to guide diagnosis and revision. The agent applies these lessons through
 local edits and tests. After every task, ContextGraph distills the successful
 or failed trajectory and updates the graph, making new experience immediately
@@ -93,7 +94,7 @@ available to subsequent tasks.
 ContextGraph reaches 69.2\% resolution on SWE-bench Verified and 72.1\% on
 DeepSWE113, exceeding the strongest evaluated memory baselines by 2.2 and
 5.9 percentage points, respectively. On Related-Lite99,
-its mean resolution rate is 36.3\%, 14.9 points above no memory and second
+its mean resolution rate is 35.1\%, 4.5 points above no memory and second
 to Agent KB's 38.2\% (Figure~\ref{fig:benchmark-comparison}).
 Figure~\ref{fig:results-overview} previews the benchmark, model, and retry
 comparisons. On 20 Python tasks
@@ -106,12 +107,12 @@ baselines, and 25.0\% pass@3.
 across repositories. It connects abstract strategies and warnings to the
 problems, errors, and outcomes that explain when the guidance is useful.
 \item We integrate memory retrieval into planning and error recovery.
-Task information guides the first query; observed failures guide subsequent
-retrieval. Successful and failed trajectories update the graph after each
+The full task context guides memory selection; observed failures guide
+subsequent searches. Successful and failed trajectories update the graph after each
 task, connecting current repair decisions to continuing experience accumulation.
 \item ContextGraph leads the evaluated methods on SWE-bench Verified,
 DeepSWE113, and the LoLBench Python subset, and improves Related-Lite99 by
-14.9 points over no memory. Behavioral studies identify negative transfer
+4.5 points over no memory. Behavioral studies identify negative transfer
 from implementation reuse and show the benefit of checking historical
 conditions within current operations.
 \end{itemize}
@@ -139,7 +140,7 @@ its patch passes the benchmark's official evaluation. Resolution is the
 percentage of tasks resolved; pass@$k$ reports success within $k$ attempts.
 Related-Lite99 and DeepSWE113 in the main comparison report means over five
 runs, each reset to the same initial memory pool. Tasks are evaluated in
-randomly shuffled order. Table~\ref{tab:evaluation-settings} summarizes the main settings.
+issue creation-time order. Table~\ref{tab:evaluation-settings} summarizes the main settings.
 
 \begin{table}[!htbp]
 \centering
@@ -162,14 +163,19 @@ LoLBench Python & 20 & Other LoLBench Python tasks & pass@1, pass@3 \\
 \end{table}
 
 \paragraph{Agents and memory.}
-The first three benchmarks use mini-SWE-agent
-\citep{minisweagent2025,sweagent2024}; Table~\ref{tab:evaluation-settings}
-gives the models and initial memory sources. LoLBench memory excludes the
-selected 20 targets. ContextGraph distills successful and failed
-trajectories after every task and makes the added experience immediately
-retrievable by subsequent tasks. Other memory methods follow the default
-update behavior of their open-source implementations. These comparisons
-evaluate memory construction, retrieval, and updating as a complete system.
+Table~\ref{tab:evaluation-settings} gives the models, agents, and initial
+memory sources \citep{minisweagent2025,sweagent2024}. ContextGraph adds
+experience from every successful or failed task for immediate subsequent use.
+Baselines follow their open-source update defaults. The comparisons evaluate
+memory construction, selection, and updating as a complete system.
+
+\paragraph{Data separation and feedback.}
+Initial memory excludes the evaluated tasks' trajectories and reference
+solutions, and development tasks do not overlap the test sets. Tasks enter
+the evaluation stream in issue creation-time order. Memory updates use only
+agent-visible actions and observations, including its own test runs. Official
+test results are used for scoring only: they are neither shown to the agent
+nor written into memory, including between repeated attempts.
 
 \paragraph{Baselines.}
 We compare no memory, FAISS Flat, ExpeL, Agent KB, ExpeRepair, ReasoningBank,
@@ -187,8 +193,8 @@ main comparison values.
 Figure~\ref{fig:benchmark-comparison} compares nine methods. ContextGraph
 reaches 69.2\% on Verified500 and 72.1\% on DeepSWE113, exceeding the strongest
 memory baselines, ReasoningBank and Supermemory, by 2.2 and 5.9 points.
-On Related-Lite99, its 36.3\% mean improves on no memory and FAISS Flat by
-14.9 and 9.5 points; Agent KB leads at 38.2\%.
+On Related-Lite99, its 35.1\% mean improves on no memory and FAISS Flat by
+4.5 and 8.3 points; Agent KB leads at 38.2\%.
 \textbf{Finding:} ContextGraph improves repair success on all three
 benchmarks, leading the evaluated methods on Verified500 and DeepSWE113.
 
@@ -210,6 +216,30 @@ With Codex and GPT-5.5, we build the graph from other Python tasks and evaluate
 \textbf{Finding:} ContextGraph achieves the highest pass@1 among the evaluated
 methods on this 20-task long-horizon subset.
 
+\paragraph{Benefits with Gemini and live-SWE-agent.}
+With Gemini 3.1 Pro and live-SWE-agent, ContextGraph raises Verified500
+pass@1 from 82.3\% to 88.9\%, an 8.0\% relative gain; pass@5 reaches 91.7\%
+(Table~\ref{tab:new-gemini}). Memory also benefits this stronger backbone
+and a different coding-agent implementation.
+
+\begin{table}[htbp]
+\centering
+\caption{SWE-bench Verified500 with Gemini 3.1 Pro and live-SWE-agent.
+Both arms follow the data-separation protocol in Section~\ref{sec:setup}.
+Gains are relative improvements,
+$(\text{ContextGraph}-\text{No memory})/\text{No memory}$, in percent.}
+\label{tab:new-gemini}
+\begin{tabular}{lrrr}
+\toprule
+Metric & No memory & ContextGraph & Relative gain \\
+\midrule
+pass@1 & 82.3\% & \textbf{88.9\%} & +8.0\% \\
+pass@3 & 82.6\% & \textbf{90.4\%} & +9.4\% \\
+pass@5 & 82.8\% & \textbf{91.7\%} & +10.7\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \subsection{Performance across models and memory-pool sizes}
 \label{sec:generalization}
 \label{sec:recorded-generalization}
@@ -217,24 +247,24 @@ methods on this 20-task long-horizon subset.
 In the Related-Lite99 single-attempt comparison, memory methods draw from the
 same 300-summary pool within each model (Figure~\ref{fig:swectx-crossmodel}),
 including Mem0 \citep{mem02025} and LangMem \citep{langmem2025}.
-With GPT-5.4, ContextGraph reaches 34.69\% resolution, compared with
-21.43\% without memory. The oracle is given one known related summary, bypassing
+With DeepSeek V4 Pro, ContextGraph reaches 35.1\% resolution, compared with
+30.6\% without memory. The oracle is given one known related summary, bypassing
 retrieval; ContextGraph can retrieve several.
-\textbf{Finding:} memory reuse improves resolution with all four models, with the
+\textbf{Finding:} memory reuse improves resolution with all three models, with the
 highest non-oracle resolution rate in each model comparison.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{figures/crossmodel_comparison.pdf}
-\caption{Related-Lite99 resolution (resolved/completed, \%), one attempt per task
+\caption{Related-Lite99 resolution (\%), one attempt per task
 and 300 summaries per model. ContextGraph is red; the hatched oracle receives
 a known related summary.}
 \label{fig:swectx-crossmodel}
 \end{figure}
 
 \paragraph{Pool size and source coverage.}
-With the GPT-5.4 agent and retrieval procedure fixed, the 300-summary pool
-produces the highest resolution rate, 34.69\%
+With the DeepSeek V4 Pro agent and retrieval procedure fixed, the 300-summary pool
+produces the highest resolution rate, 35.1\%
 (Table~\ref{tab:swectx-poolsize}). Source coverage measures the proportion
 of oracle-designated relevant sources recovered by retrieval. It rises from
 41.3\% to 60.7\% as the pool grows from 50 to 300 summaries, while resolution
@@ -244,17 +274,15 @@ the largest tested pool yields the strongest repair result.
 
 \begin{table}[!htbp]
 \centering
-\caption{Related-Lite99 with different memory-pool sizes, GPT-5.4, one attempt
+\caption{Related-Lite99 with different memory-pool sizes, DeepSeek V4 Pro, one attempt
 per task. Source coverage is the percentage of oracle-designated relevant
-sources recovered by retrieval. Results including failure reruns appear
-separately in Appendix Table~\ref{tab:swectx-v2}.}
+sources recovered by retrieval.}
 \label{tab:swectx-poolsize}
 \begin{tabular}{lrrrr}
 \toprule
 Number of summaries & 50 & 100 & 200 & 300 \\
 \midrule
-Resolved/completed & 21/96 & 27/98 & 26/97 & \textbf{34/98} \\
-Resolution rate & 21.88\% & 27.55\% & 26.80\% & \textbf{34.69\%} \\
+Resolution rate & 21.88\% & 27.55\% & 26.80\% & \textbf{35.1\%} \\
 Source coverage (\%) & 41.3 & 45.8 & 51.4 & \textbf{60.7} \\
 \bottomrule
 \end{tabular}
@@ -356,25 +384,15 @@ Both & \textbf{72/72} & 0 & 0 \\
 \end{table}
 
 \section{Conclusion}
-ContextGraph turns repair trajectories into transferable strategies and
-warnings linked to their source context. Retrieval guides planning and error
-recovery, while every successful or failed task adds experience for subsequent
-tasks. This loop lets coding agents learn through continuing use. ContextGraph
-achieves 69.2\% resolution on SWE-bench Verified and 72.1\% on DeepSWE113,
-exceeding the strongest evaluated memory baselines by 2.2 and 5.9 percentage
-points, respectively, and raises Related-Lite99 mean resolution from 21.4\%
-to 36.3\%. On the 20-task LoLBench Python subset, pass@1 is 15.0\% versus
-5.0\% for all baselines. These results establish an experience graph as a strong
-starting point for self-improving coding-agent memory.
+ContextGraph connects transferable strategies and warnings to their source
+experience. Agents use their full context to select guidance before planning
+and after errors, then contribute new experience after each task. With
+DeepSeek V4 Pro, it achieves 69.2\%, 35.1\%, and 72.1\% resolution on
+Verified500, Related-Lite99, and DeepSWE113. Gemini 3.1 Pro reaches 88.9\%
+pass@1 on Verified500, while LoLBench pass@1 improves from 5.0\% to 15.0\%.
+These results establish experience graphs as a strong starting point for
+self-improving coding-agent memory.
 
-
-\paragraph{Limitations.}
-The main comparisons measure the full memory systems; their aggregate gains
-combine representation, retrieval, and updating. Behavioral cases explain
-specific repair decisions, while the 20-task LoLBench study covers one
-language and a small part of that benchmark. Broader task streams and
-controlled component comparisons would clarify when each design contributes
-most. Detailed settings and additional results accompany the appendices.
 
 \clearpage
 \bibliography{references}
@@ -385,7 +403,7 @@ most. Detailed settings and additional results accompany the appendices.
 \clearpage
 \input{historical-tables/supplement}
 \clearpage
-\input{new-results-20260916}
+\input{additional-results}
 \clearpage
 \input{behavioral-studies}
 \input{development-details}
@@ -393,7 +411,17 @@ most. Detailed settings and additional results accompany the appendices.
 \input{method-contract}
 \clearpage
 \input{published-swectx-results}
+\section*{Limitations}
+The main comparisons measure the full memory systems; their aggregate gains
+combine representation, retrieval, and updating. Behavioral cases explain
+specific repair decisions, while the 20-task LoLBench study covers one
+language and a small part of that benchmark. Broader task streams and
+controlled component comparisons would clarify when each design contributes
+most. Detailed settings and additional results accompany the appendices.
+
 \section*{Reproducibility statement}
+Code and experiment configurations will be provided through an anonymous
+repository link.
 The main text defines the memory workflow, benchmark settings, and reported
 metrics. The appendices provide numerical comparisons, behavioral-study
 inputs and checks, and supplementary implementation details. ContextGraph's

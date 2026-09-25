@@ -11,11 +11,10 @@ behavior. Accepted examples are stored with their requirement, input roles,
 program, and before/after execution results.
 
 \subsection{Retrieval and repair settings}
-The behavioral-study retrieval path selects three historical repairs from the same
-repository using Qwen3-Embedding-8B vectors and FAISS
-\citep{qwen3embedding2025}. Each has a validated example.
-It returns complete records and input relations, including types and argument
-roles.
+The agent uses its full current context to select applicable source records
+from the experience pool. Search and graph links help locate requirements
+and their validated examples; complete records preserve input types and
+argument roles for the subsequent checks.
 
 Within each comparison, agents share the target code, backbone, tools,
 instructions, and repair budget. The comparison changes the supplied

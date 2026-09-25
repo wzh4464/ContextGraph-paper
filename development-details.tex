@@ -5,15 +5,14 @@ for the behavioral studies in Appendix~\ref{sec:evidence}.
 \subsection{Retain the context that makes advice useful}
 \label{sec:details-evidence}
 \label{sec:details-content}
-The behavioral studies draw their cases from the development portion of a
-SWE-bench Verified split with 280 source tasks, 70 development tasks, and
-150 held-out tasks. These cases vary the information supplied to DeepSeek
-V4 Pro, at temperature zero and matched budgets within each comparison.
+The behavioral studies use development tasks disjoint from the benchmark
+test sets. They vary the information supplied to DeepSeek V4 Pro, at
+temperature zero and matched budgets within each comparison.
 They measure whether historical guidance helps preserve a required
 behavior in the submitted repair.
 Table~\ref{tab:historicalrequirements} presents four such additions.
 Django14404 uses the first-ranked source issue and patch; Django12708 and
-Django11138 come from a fixed six-task group receiving three retrieved rules
+Django11138 come from a fixed six-task group receiving selected rules
 as plain text per task. Both conditions pass official verification on all six tasks.
 The historical requirements distinguish the completeness of those repairs.
 
