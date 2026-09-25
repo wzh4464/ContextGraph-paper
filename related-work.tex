@@ -38,7 +38,7 @@ in the default configuration used in our comparison; $\times$: absent.}
 \label{tab:positioning}
 \scriptsize
 \setlength{\tabcolsep}{3.5pt}
-\begin{tabular}{@{}lllccc@{}}
+\begin{tabular}{@{}lp{4cm}lccc@{}}
 \toprule
 Method & Memory unit / organization & Selection & \shortstack{After\\errors} & \shortstack{Keeps\\failures} & \shortstack{Online\\updates} \\
 \midrule
@@ -48,7 +48,7 @@ ACE & Playbook entries / sectioned playbook & Whole playbook in context & $\time
 ExpeRepair & Episodes and rules / stage-indexed & Top-$k$ per stage & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
 ExpGraph & Experience nodes / graph & PageRank + learned controller & $\times$ & $\checkmark$ & $\circ$ \\
 Supermemory & Facts and relations / relational store & Hybrid search & $\times$ & $\circ$ & $\checkmark$ \\
-\textbf{ContextGraph} & Strategies and warnings with context / typed graph & Agent-directed search over links & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
+\textbf{ContextGraph} & Strategies, warnings, context / typed graph & Agent-directed search & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
 \bottomrule
 \end{tabular}
 \end{table}
