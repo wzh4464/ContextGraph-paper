@@ -1,11 +1,10 @@
 *.aux
+*.log
 *.bbl
 *.blg
-*.log
 *.out
-*.toc
+*.synctex.gz
 *.fls
 *.fdb_latexmk
-*.synctex.gz
-*.zip
-figures/*-crop.pdf
+*.xdv
+.DS_Store
