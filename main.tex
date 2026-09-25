@@ -151,7 +151,7 @@ default behavior.}
 \toprule
 Benchmark & Tasks & Initial experience source & Reported result \\
 \midrule
-Verified500 & 500 & Nebius Verified trajectories & Resolution \\
+Verified500 & 500 & Nebius SWE-bench-extra trajectories & Resolution \\
 Related-Lite99 & 99 & Coding-agent trajectories & Five-run mean \\
 DeepSWE113 & 113 & LoLBench repository trajectories & Five-run mean \\
 LoLBench Python & 20 & Other LoLBench Python tasks & pass@1, pass@3 \\
@@ -161,7 +161,7 @@ LoLBench Python & 20 & Other LoLBench Python tasks & pass@1, pass@3 \\
 
 \paragraph{Data separation and feedback.}
 Initial memory excludes the evaluated tasks' trajectories and reference
-solutions, and development tasks do not overlap the test sets. Tasks enter
+solutions. Tasks enter
 the evaluation stream in issue creation-time order. Memory updates use only
 agent-visible actions and observations, including its own test runs. Official
 test results are used for scoring only: they are neither shown to the agent
@@ -255,26 +255,26 @@ a known related summary.}
 \end{figure}
 
 \paragraph{Pool size and source coverage.}
-With the DeepSeek V4 Pro agent and retrieval procedure fixed, the 300-summary pool
-produces the highest resolution rate, 35.1\%
+With the DeepSeek V4 Pro agent and memory-selection procedure held fixed, the
+300-summary pool produces the highest resolution rate, 35.1\%
 (Table~\ref{tab:swectx-poolsize}). Source coverage measures the proportion
-of oracle-designated relevant sources recovered by retrieval. It rises from
-41.3\% to 60.7\% as the pool grows from 50 to 300 summaries, while resolution
-does not improve at every intermediate step.
-\textbf{Finding:} larger pools recover more oracle-designated sources, and
-the largest tested pool yields the strongest repair result.
+of oracle-designated relevant sources that the agent selects. As the pool
+grows from 50 to 300 summaries, resolution rises from 20.2\% to 35.1\% and
+source coverage from 41.3\% to 60.7\%.
+\textbf{Finding:} larger pools let the agent select more oracle-designated
+sources, and resolution rises with pool size.
 
 \begin{table}[!htbp]
 \centering
 \caption{Related-Lite99 with different memory-pool sizes, DeepSeek V4 Pro, one attempt
 per task. Source coverage is the percentage of oracle-designated relevant
-sources recovered by retrieval.}
+sources selected by the agent.}
 \label{tab:swectx-poolsize}
 \begin{tabular}{lrrrr}
 \toprule
 Number of summaries & 50 & 100 & 200 & 300 \\
 \midrule
-Resolution rate & 21.88\% & 27.55\% & 26.80\% & \textbf{35.1\%} \\
+Resolution rate & 20.2\% & 26.3\% & 28.3\% & \textbf{35.1\%} \\
 Source coverage (\%) & 41.3 & 45.8 & 51.4 & \textbf{60.7} \\
 \bottomrule
 \end{tabular}
