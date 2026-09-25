@@ -3,7 +3,7 @@
 This appendix tabulates the DeepSeek V4 Pro column of
 Figure~\ref{fig:swectx-crossmodel} (Table~\ref{tab:new-swectx}) and the Gemini
 results (Table~\ref{tab:new-gemini}), and gives the LoLBench comparison from
-Section~\ref{sec:benchmark}.
+Section~\ref{sec:backbones}.
 The three-benchmark comparison is tabulated in
 Table~\ref{tab:main-results-overview}; additional comparisons appear in
 Appendix~\ref{sec:historical}.
@@ -34,7 +34,7 @@ Oracle summary & 27.8 \\
 \begin{table}[htbp]
 \centering
 \caption{SWE-bench Verified500 with Gemini 3.1 Pro and live-SWE-agent
-(Section~\ref{sec:benchmark}). Both arms follow the data-separation protocol
+(Section~\ref{sec:backbones}). Both arms follow the data-separation protocol
 in Section~\ref{sec:setup}. Gains are relative improvements,
 $(\text{ContextGraph}-\text{No memory})/\text{No memory}$, in percent.}
 \label{tab:new-gemini}
@@ -62,7 +62,7 @@ memory updates follow each method's open-source defaults.
 \begin{table}[htbp]
 \centering
 \caption{Success rates on 20 LoLBench Python tasks with Codex and GPT-5.5,
-as reported in Section~\ref{sec:benchmark}.
+as reported in Section~\ref{sec:backbones}.
 pass@$k$ reports the fraction of tasks solved within $k$ attempts.}
 \label{tab:new-codex55}
 \begin{tabular}{llr}
@@ -86,14 +86,15 @@ ContextGraph & pass@3 & \textbf{25.0} \\
 \clearpage
 \section{Full-context agent-directed memory selection}
 \label{sec:agentic-retrieval}
-At step $t$, the agent uses the complete context $C_t$: the issue and
+At step $i$ of task $q_t$, the agent uses the complete context $C_{t,i}$: the issue and
 conversation, inspected code, edits, actions, and observed failures. It can
 search the whole experience pool, read source records, follow links between
 strategies and errors, and compare lessons across repositories. Its selection
 follows Equation~\ref{eq:agent-selection}: searches return ranked
 candidates, and the agent decides which records to inspect and retain, so the
-number of selected lessons varies by task. Each search or read adds its results to $H_j$ before the next
-memory action; the selected lessons form $\mathcal M_t$.
+number of selected lessons varies by task. Each memory action $m_j$ and its
+result extend the history to $h_{j+1}$ for the next action; at
+\textsc{stop}, the kept lessons form $\mathcal M_{t,i}$.
 
 The selected memory contains strategies and warnings, their source context,
 and the conditions under which they are useful. Before planning, selection
@@ -108,15 +109,15 @@ benchmark test results are never part of the agent's context or stored memory.
 \label{alg:contextgraph}
 \small
 \begin{tabular}{@{}p{0.96\linewidth}@{}}
-\textbf{Input:} initial trajectories $H$, coding tasks $q_1,\ldots,q_T$.\\
-\textbf{Output:} candidate patches and an updated experience graph $G$.\\
-1. Extract strategies and warnings from $H$; build $G$ and its retrieval entries.\\
+\textbf{Input:} initial trajectories $\mathcal D_0$, coding tasks $q_1,\ldots,q_T$.\\
+\textbf{Output:} candidate patches and the updated experience graph $G_T$.\\
+1. Extract strategies and warnings from $\mathcal D_0$; build $G_0$ and its retrieval entries.\\
 2. \textbf{For each} task $q_t$ in issue creation-time order:\\
-\quad a. Use the full task context to search $G$ and select guidance for planning.\\
-\quad b. Execute investigation, editing, and testing actions; record the trajectory.\\
+\quad a. Use the full task context $C_{t,i}$ to search $G_{t-1}$ and select lessons $\mathcal M_{t,i}$ for planning.\\
+\quad b. Execute investigation, editing, and testing actions; record the trajectory $\tau_t$.\\
 \quad c. After an error, search again with the updated full context; revise the plan.\\
 \quad d. Continue the repair loop until the task ends or its budget is exhausted.\\
 \quad e. Distill experience from the trajectory and agent-visible outcomes.\\
-\quad f. Update $G$ and retrieval entries; expose the new experience to later tasks.\\
+\quad f. Set $G_t=\operatorname{Update}(G_{t-1},\tau_t)$ and refresh retrieval entries; expose the new experience to later tasks.\\
 \end{tabular}
 \end{algorithm}

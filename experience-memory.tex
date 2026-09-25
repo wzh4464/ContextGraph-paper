@@ -1,111 +1,105 @@
-\section{Problem and motivation}
-\label{sec:motivation}
-A coding agent receives an issue and a repository and produces a patch.
-Its trajectory records actions, observations, and the outcome. ContextGraph
-builds an experience graph $G$ from completed trajectories, retrieves guidance
-for each new task, and updates $G$ afterward. The goal is to accumulate useful
-repair experience across tasks and repositories.
-
-\paragraph{A debugging decision that transfers.}
-In Django Trac \#33018, empty query results are mishandled under negation.
-A failed \texttt{python-statemachine} attempt had spent its effort setting
-up a full Django application; its lesson was to isolate the failure before
-investing in framework setup. A successful \texttt{sievelib} trajectory also
-supported reproducing the failure before editing. Guided by these experiences,
-the agent traced the fault to \texttt{Exists.as\_sql()}, corrected its
-handling, and added a regression test. The no-memory attempt made broad
-formatting changes without fixing the bug. The transferable content was the
-investigation strategy and warning; the agent derived the local implementation.
-Neither source repository is Django: the lesson crossed repositories, and
-Section~\ref{sec:cross-repo} measures how often selected lessons do so.
-
-\paragraph{From advice to applicable guidance.}
-Figure~\ref{fig:concept} contrasts two memories for this case: a flat
-summary store returns one requirement sentence, whereas the agent selects
-from ContextGraph a strategy, a warning, and the condition under which they
-apply, each linked to its source attempt. The condition tells the agent when
-the lesson holds; the source lets it check how the lesson was applied before
-adapting it to the current code.
-
-\begin{figure}[!htbp]
-\centering
-\includegraphics[width=\linewidth]{figures/contextgraph-design/fig1-concept.pdf}
-\caption{Retrieved advice versus ContextGraph on the Django example above
-(illustration). (a) Flat summaries return one requirement sentence without
-context or source. (b) The agent selects a strategy, a warning, and their
-applicability condition, linked to the failed \texttt{python-statemachine}
-and the successful \texttt{sievelib} attempts, before planning and again
-after an error.}
-\label{fig:concept}
-\end{figure}
-
 \section{ContextGraph: memory for planning, recovery, and learning}
 \label{sec:method}
-ContextGraph connects experience abstraction, agent-directed selection, and memory
-access. The same process builds the initial graph and incorporates completed
-tasks (Figure~\ref{fig:experience-memory}).
+\label{sec:motivation}
+\paragraph{Setting.} Tasks $q_1,\ldots,q_T$ arrive as a stream in issue
+creation-time order; each gives the agent an issue and a repository, and the
+agent produces a patch. Its trajectory $\tau_t$ records actions,
+observations, and the outcome. Memory starts from a graph $G_0$ built from
+trajectories $\mathcal D_0$ of other tasks. While solving $q_t$, the agent
+selects lessons from $G_{t-1}$; afterward, ContextGraph distills $\tau_t$
+into $G_t=\operatorname{Update}(G_{t-1},\tau_t)$
+(Figure~\ref{fig:experience-memory}). $\mathcal D_0$ excludes the evaluated
+tasks, updates use only agent-visible observations, and lessons may come from
+any repository.
 
-\subsection{Experience abstraction: retain the useful decision}
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/experience-architecture/fig3-contextgraph.pdf}
+\par\smallskip
+\begin{tikzpicture}[>=Stealth, node distance=0.16cm,
+  cgstep/.style={draw=teal!60!black, rounded corners=3pt, fill=teal!6,
+    align=center, font=\sffamily\scriptsize, minimum height=0.55cm, inner sep=3pt}]
+\node[font=\sffamily\scriptsize\bfseries, text=teal!50!black, align=left] (lab) {(c) After\\every task};
+\node[cgstep, right=0.2cm of lab] (task) {Task ends\\success or failure};
+\node[cgstep, right=of task] (learn) {Distill strategies\\and warnings};
+\node[cgstep, right=of learn] (update) {Link them into the graph,\\update retrieval entries};
+\node[cgstep, right=of update] (next) {Next task\\can select them};
+\draw[->,thick,teal!60!black] (task) -- (learn);
+\draw[->,thick,teal!60!black] (learn) -- (update);
+\draw[->,thick,teal!60!black] (update) -- (next);
+\end{tikzpicture}
+\caption{ContextGraph. (a) Past trajectories, including those from other
+repositories, are abstracted into strategies and warnings with their
+conditions and linked to their sources and error patterns. (b) The agent
+selects lessons with its full
+context before planning and again after an error. (c) Every completed task,
+successful or failed, is distilled into the graph for the tasks that follow.}
+\label{fig:experience-memory}
+\end{figure}
+
+\subsection{Abstract experience into conditioned lessons}
 \label{sec:experience-abstraction}
-A language model extracts lessons from the task, actions, errors, and outcome.
-Each lesson records a strategy or warning, its applicability conditions, the
-outcome it is meant to achieve or preserve, and source context. For the
-initial graph, abstraction removes repository-specific names while retaining
-the decision and its reason: the failed framework setup becomes advice to
-isolate the bug first. Lessons distilled online take the form ``when you see a
-symptom, do an action so that a result follows'' and keep the files and
-commands the agent used, so later tasks in the same repository can reuse
-them.
-
-We represent memory as a typed graph
+A language model extracts lessons from the task, actions, errors, and
+outcome. Each lesson is a record
 \begin{equation}
- G=(V,E),\qquad E\subseteq V\times\mathcal R\times V,
+ \ell=(\kappa,\,c,\,a,\,o,\,s),\qquad \kappa\in\{\text{strategy},\text{warning}\},
+ \label{eq:lesson}
+\end{equation}
+read as ``when $c$ holds, do $a$ (for a warning, avoid $a$) to achieve or
+preserve $o$,'' where $s$ links the lesson to its source trajectory. For the
+initial graph, abstraction removes repository-specific names while retaining
+the decision and its condition: the failed framework setup of
+Figure~\ref{fig:concept} becomes the warning not to set up the full framework
+first when the failure appears without the full application. Lessons
+distilled online keep the files and commands the agent used, so later tasks
+in the same repository can reuse them.
+
+Lessons live in a typed graph
+\begin{equation}
+ G=(V,E),\qquad E\subseteq V\times\mathcal R\times V.
  \label{eq:experience-graph}
 \end{equation}
-where each edge has a relation type in $\mathcal R$. Nodes represent
-trajectories, fragments (action--observation segments), strategies (extracted
-lessons, including warnings), canonical rules (merged lessons), error patterns, problem summaries, playbook entries
-(retrieval-ready lessons), and communities of related fragments. The seven
-edge types connect a trajectory to its fragments, a strategy to its source
-trajectory, a fragment to an encountered error, a strategy to its canonical
-rule, a rule to an error it addresses, a summary to its trajectory, and a
-fragment to its community. These links retain both a reusable lesson and the
-observations that explain when it applies. Appendix~\ref{sec:historical}
-lists the node and edge counts of a graph snapshot, and the anonymous repository
-(Section~\ref{sec:setup}) releases the extraction prompts, schema, and
-selection code.
+Besides lessons (strategies and warnings), $V$ holds trajectories, fragments
+(action--observation segments), canonical rules (merged lessons), error
+patterns, problem summaries, playbook entries (retrieval-ready lessons), and
+communities of related fragments. Seven relation types in $\mathcal R$ link
+lessons to their source trajectories and canonical rules, rules to the
+errors they address, trajectories to their fragments and problem summaries,
+and fragments to the errors they caused and to their communities. These links
+keep both a reusable lesson and the observations that explain when it
+applies. A snapshot built from 1,795 trajectories holds 45,115 nodes and
+73,975 typed edges (Appendix Table~\ref{tab:schema}). The anonymous
+repository (Section~\ref{sec:setup}) releases the extraction prompts, graph
+schema, and selection code.
 
-\subsection{Agent-directed selection: find useful experience}
+\subsection{Let the agent select lessons for each task}
 \label{sec:experience-retrieval}
-At repair step $t$, the agent uses its full context $C_t$: the issue, inspected
-code, actions, and failures. Memory selection is an agent decision process:
+At step $i$ of task $q_t$, the agent holds its full context $C_{t,i}$: the
+issue, inspected code, actions, and failures. Selection is a short decision
+process run by the coding agent's own policy $\pi_\theta$:
 \begin{equation}
- a_j\sim\pi_\theta(\,\cdot\mid C_t,H_j),\qquad
- \mathcal M_t=\operatorname{Select}_{\pi_\theta}(C_t,G_t),
+ m_j\sim\pi_\theta(\,\cdot\mid C_{t,i},h_j),\qquad
+ m_j\in\{\textsc{search}(x),\ \textsc{read}(v),\ \textsc{follow}(v,r),\ \textsc{keep}(\ell),\ \textsc{stop}\},
  \label{eq:agent-selection}
 \end{equation}
-where $\pi_\theta$ is the coding agent's model policy, $H_j$ records its
-preceding memory actions and their results, and $\mathcal M_t$ contains the
-selected lessons. Actions search the entire pool, read source records, follow
-graph links, select lessons, or stop. Searches return ranked candidates; the
-agent matches each candidate's applicability conditions against its current
-task and error and decides which lessons to keep, so the number of selected
-lessons varies by task. It applies the selected guidance through local reproductions, edits,
-and tests (Appendix~\ref{sec:agentic-retrieval}).
+where $h_j$ records the preceding memory actions and their results. Searches
+with a query $x$ return ranked candidates from all of $G_{t-1}$; the agent reads source
+records, follows links of type $r\in\mathcal R$, and keeps a lesson $\ell$
+when its condition $c$ matches the current task and error. At
+\textsc{stop}, the kept lessons form $\mathcal M_{t,i}$, so the number of
+selected lessons varies by task. The agent applies them through local
+reproductions, edits, and tests (Appendix~\ref{sec:agentic-retrieval}).
 
-\subsection{Memory access and updates: connect repair to learning}
+\subsection{Query before planning and after errors; update after every task}
 \label{sec:experience-access}
-Memory enters the repair loop at three points.
 \textbf{Before planning,} the agent searches with the full task context for
 investigation, reproduction, and testing strategies, and for warnings about
 costly approaches to avoid.
 \textbf{After an error,} it adds the failed action, observed error, relevant
 code, and current hypothesis to that context, searches again to revise its
 diagnosis, and uses repository tools to try the next step.
-\textbf{After each task,} ContextGraph distills successful and failed trajectories and links new
-lessons to existing experience. Updates use agent-visible observations and
-become immediately available to later tasks (Appendix Algorithm~\ref{alg:contextgraph}).
-Because memory grows during evaluation, a task late in the stream selects
-from a larger graph than an early one, and a retry of an unresolved task can
-select the lessons distilled from its own earlier failure
-(Section~\ref{sec:stream}).
+\textbf{After each task,} ContextGraph distills the successful or failed
+trajectory and links new lessons to existing experience, and later tasks can
+select them immediately (Appendix Algorithm~\ref{alg:contextgraph}). A task late in the stream
+therefore selects from a larger graph than an early one, and a retry of an
+unresolved task can select the lessons distilled from its own earlier failure.

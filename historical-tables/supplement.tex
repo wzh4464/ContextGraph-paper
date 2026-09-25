@@ -12,10 +12,12 @@ Figure~\ref{fig:swectx-crossmodel} and the pool-size study of
 Section~\ref{sec:generalization} use it to examine other backbones and initial pool sizes. The
 \emph{episodic-memory configuration} serves 291 curated repair records with
 prior code history, reference fixes, and verification hints;
-Table~\ref{tab:swectx-stream} and Table~\ref{tab:swectx-xmodel} use it.
+Tables~\ref{tab:swectx-xmodel} and~\ref{tab:swectx-stream} use it.
 Table~\ref{tab:dev50} gives an early 50-task
 development comparison on SWE-bench Verified. Resolution rates are
-percentages; gains marked pp are percentage-point differences from no memory.
+percentages.
+Each comparison runs its own no-memory control under its configuration, so
+rates are compared within a table.
 
 \paragraph{Memory access and evaluation.}
 The agent uses its full current context to search the experience pool,
@@ -99,7 +101,8 @@ No memory & 100.0 & 58.0 \\
 \centering
 \caption{Experience-graph snapshot illustrating the schema, built from 1,795
 Nebius SWE-agent trajectories (the audited Verified500 pool of
-Table~\ref{tab:overlap-audit} keeps 1,744), using text-embedding-3-large
+Table~\ref{tab:overlap-audit} keeps 1,744 of its 1,762 source trajectories),
+using text-embedding-3-large
 vectors with 3,072 dimensions for every node. Playbook entries are indexed for
 retrieval and carry no edges.}
 \label{tab:schema}
@@ -110,7 +113,7 @@ Node label & Count & Role \\
 Trajectory & 1,795 & Source episode \\
 Fragment & 13,813 & Action and observation slice \\
 ErrorPattern & 586 & Error type and keywords \\
-Strategy & 9,600 & Extracted rule \\
+Strategy & 9,600 & Extracted lesson (strategy or warning) \\
 CanonicalRule & 7,835 & Consolidated rule \\
 PlaybookEntry & 8,910 & Retrieval-ready entry \\
 Community & 781 & Linked-fragment summary \\

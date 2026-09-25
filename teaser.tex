@@ -1,0 +1,32 @@
+% Figure 1 (teaser). Every value is a row of Table~\ref{tab:ablation}
+% (Related-Lite99, DeepSeek V4 Pro 0813, mini-SWE-agent, five-run means).
+\begin{figure}[b]
+\centering
+\begin{tikzpicture}[x=0.113cm, y=0.36cm, font=\footnotesize]
+  \def\bs{0.9}% bar scale: 1 point of resolution = 0.9 x-units
+  \node[anchor=west, font=\footnotesize\bfseries] at (-67,0.95) {What memory stores};
+  \node[anchor=west, font=\footnotesize\bfseries] at (-38,0.95) {How it reaches the task};
+  \node[anchor=west, font=\footnotesize\bfseries] at (0,0.95) {Resolution, Related-Lite99 (\%)};
+  \foreach \y/\s/\m/\v/\c in {
+      0/{raw trajectory excerpts}/{agent selects for each task}/20.5/cgblue,
+     -1/{abstract lessons}/{fixed lessons for every task}/20.8/cgblue,
+     -2/{abstract lessons}/{top-$k$ by embedding similarity}/24.3/cgblue,
+     -3/{abstract lessons}/{agent selects for each task}/35.1/cgred} {
+    \node[anchor=base west] at (-67,\y-0.22) {\s};
+    \node[anchor=base west] at (-38,\y-0.22) {\m};
+    \fill[\c] (0,\y-0.32) rectangle (\bs*\v,\y+0.32);
+    \node[anchor=base west] at ({max(\bs*\v,\bs*21.4)},\y-0.22) {\v};
+  }
+  \node[anchor=base west, font=\footnotesize\bfseries, cgred] at (37.2,-3.22) {ContextGraph};
+  \draw[gray!60] (0,0.45) -- (0,-3.45);
+  \draw[densely dashed, thick, black!70] (\bs*21.4,0.5) -- (\bs*21.4,-3.5);
+  \node[anchor=north, font=\scriptsize, black!75] at (\bs*21.4,-3.45) {no memory 21.4};
+\end{tikzpicture}
+\caption{Experience memory helps a coding agent most when it stores
+\emph{abstract lessons} and the \emph{agent selects them for each task}.
+Removing either from ContextGraph leaves at most 2.9 of its 13.7 points.
+Related-Lite99, DeepSeek V4 Pro 0813 with mini-SWE-agent, five-run means;
+all other components unchanged, except that the fixed-lessons row has no
+memory access at all (Table~\ref{tab:ablation}).}
+\label{fig:teaser}
+\end{figure}

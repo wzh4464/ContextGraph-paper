@@ -12,42 +12,44 @@ feedback from a cross-framework experience base \citep{agentkb2025}.
 Memory Transfer Learning finds that abstraction determines how well coding
 memories transfer across domains and that transfer grows with the memory pool
 \citep{transfer2026}; we observe both effects in repository-level repair
-(Sections~\ref{sec:ablation} and~\ref{sec:generalization}).
-ContextGraph also builds on condition-structured lessons: CLIN stores causal
-abstractions of the form ``X may be necessary for Y'' \citep{clin2023},
-AutoGuide pairs guidelines with the context in which they apply
-\citep{autoguide2024}, and Agent Workflow Memory induces reusable workflows
-from past trajectories \citep{awm2025}, all for web navigation and simulated
-environments. ContextGraph brings these ideas to repository-level repair,
-links each lesson to its source trajectory and the errors it addresses, and
-lets the agent search this graph before planning and after errors.
-RETester generates tests from bug reports, MIRA verifies each repair memory
-against evidence before activating it, and TRACE turns corrections into
-runtime checks
-\citep{retester2025,mira2026,trace2026}; ContextGraph returns textual
-guidance and leaves verification to the agent's own tests.
+(Sections~\ref{sec:ablation} and~\ref{sec:cross-repo}).
+CLIN stores causal abstractions of the form ``X may be necessary for Y''
+\citep{clin2023}, AutoGuide pairs guidelines with the context in which they
+apply \citep{autoguide2024}, and Agent Workflow Memory induces reusable
+workflows \citep{awm2025}, all for web navigation and simulated environments.
+ContextGraph brings condition-structured lessons to repository-level repair
+and links lessons to their source trajectories and the errors they address.
+RETester generates tests from bug reports, MIRA verifies repair memories
+against evidence, and TRACE turns corrections into runtime checks
+\citep{retester2025,mira2026,trace2026}; in ContextGraph, the agent applies
+lessons through its own reproductions and tests.
 
 \paragraph{Retrieving related experience.}
 A-MEM links notes, Zep organizes temporal facts, and HippoRAG retrieves through
-graph traversal \citep{amem2025,zep2025,hipporag2024}.
-ExpGraph combines experience graphs, personalized PageRank, utility ranking,
-and a trained retrieval controller
-\citep{expgraph2026}. ContextGraph connects repair strategies to recurring
-errors, shared rules, and source trajectories. The agent uses its full context
-to search these records and select useful guidance. Supermemory combines relational updates and
-hybrid retrieval \citep{supermemoryreport2026}; SWE-ContextBench evaluates
-memory-assisted repair \citep{swecontext2026}.
-Table~\ref{tab:positioning} positions ContextGraph against related memory
-methods.
+graph traversal \citep{amem2025,zep2025,hipporag2024}. ExpGraph combines
+experience graphs, personalized PageRank, utility ranking, and a trained
+retrieval controller \citep{expgraph2026}, and Supermemory combines relational
+updates and hybrid retrieval \citep{supermemoryreport2026}. SWE-ContextBench
+evaluates memory-assisted repair and finds that a supplied summary of the
+related history helps more than the supplied history itself
+\citep{swecontext2026}.
+ContextGraph lets the agent search its graph with its full context and select
+lessons; MemGovern also pairs abstracted experience with agent search, and our
+ablations measure how much such a pairing matters. Table~\ref{tab:positioning}
+places these methods in the design space that Section~\ref{sec:experiments}
+measures.
 
 \begin{table}[t]
 \centering
-\caption{Positioning against related memory methods; all except ExpGraph are
-baselines in Section~\ref{sec:experiments}.
-Organization describes how stored experience is connected; selection describes
-how lessons are chosen for a task. $\checkmark$: supported by the method's
-description and open-source implementation; $\circ$: partial or not enabled
-in the default configuration used in our comparison; $\times$: absent.}
+\caption{Design space of coding-agent memory; every method except ExpGraph is
+compared in Section~\ref{sec:experiments}. Organization describes how stored
+experience is connected; selection describes how lessons are chosen for a
+task. $\checkmark$: supported by the method's description and open-source
+implementation; $\circ$: partial or not enabled in the default configuration
+used in our comparison; $\times$: absent. The last row gives the change in
+ContextGraph's Related-Lite99 resolution when it gives up each choice
+(Table~\ref{tab:ablation}); the static playbook also has no memory access at
+all.}
 \label{tab:positioning}
 \scriptsize
 \setlength{\tabcolsep}{3.5pt}
@@ -62,20 +64,19 @@ ExpeRepair & Episodes and rules / stage-indexed & Top-$k$ per stage & $\checkmar
 ExpGraph & Experience nodes / graph & PageRank + learned controller & $\times$ & $\checkmark$ & $\checkmark$ \\
 Supermemory & Facts and relations / relational store & Hybrid search & $\times$ & $\circ$ & $\checkmark$ \\
 \textbf{ContextGraph} & Strategies and warnings / typed graph & Agent-directed search & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
+\midrule
+\emph{Giving it up (pp)} & $-14.6$ raw trajectories; $-4.0$ flat pool & $-10.8$ top-$k$; $-14.3$ static playbook & $-1.9$ & --- & $-6.4$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \paragraph{Updating memory and improving agents.}
 MemGPT and SWE-MeM manage memory access and coding histories
-\citep{memgpt2023,swemem2026}. ACE evolves context, MemOp optimizes memory
+\citep{memgpt2023,swemem2026}; ACE evolves context, MemOp optimizes memory
 utility, and AdaRepair-Mem selects experience by repair stage
-\citep{ace2026,memop2026,adarepairmem2026}.
-G\"odel Agent and the Darwin G\"odel Machine modify agent code; RRSI
-regularizes harness changes \citep{godelagent2025,dgm2026,rrsi2026}.
+\citep{ace2026,memop2026,adarepairmem2026}. G\"odel Agent and the Darwin
+G\"odel Machine modify agent code, RRSI regularizes harness changes, and
 AlphaEvolve evolves programs through executable evaluation
-\citep{alphaevolve2025}.
-ContextGraph adds lessons from successes and failures after each task and
-makes them immediately available for retrieval.
-Subsequent tasks retrieve this growing experience before planning and after
-errors, without updating model parameters.
+\citep{godelagent2025,dgm2026,rrsi2026,alphaevolve2025}. ContextGraph improves
+the agent without changing its parameters or code: it adds lessons from
+successes and failures after each task and makes them immediately available.

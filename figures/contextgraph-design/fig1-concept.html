@@ -37,7 +37,7 @@ const C = {
 const KIND = {
   S: { name: "strategy",      fill: "#DEE7F4", stroke: "#3B5B86", ink: "#2E4B74" },
   W: { name: "warning",       fill: "#F7DFDB", stroke: "#B0463B", ink: "#9C3227" },
-  C: { name: "context",       fill: "#DBEFE6", stroke: "#2A7058", ink: "#23604B" },
+  C: { name: "condition",     fill: "#DBEFE6", stroke: "#2A7058", ink: "#23604B" },
   E: { name: "error pattern", fill: "#E9E3F6", stroke: "#6B50B6", ink: "#52389A" },
 };
 
@@ -320,11 +320,11 @@ async function draw() {
   text(bq, X2 + W2 / 2, FA + 20, "results under negation.”", { size: F.bubble, anchor: "middle" });
 
   // Faded: no context, no links
-  const note = ga.append("g").attr("data-name", "no-context-note");
+  const note = ga.append("g").attr("data-name", "no-condition-note");
   const noteY = bb.y + bb.h + 32, noteX = tail.b + 40;
   badge(note, noteX, noteY - 6.5, "C", { faded: true });
   badge(note, noteX + 32, noteY - 6.5, "E", { faded: true });
-  text(note, noteX + 32 + 22, noteY, "no context · no links", { fill: C.gray });
+  text(note, noteX + 32 + 22, noteY, "no condition · no links", { fill: C.gray });
 
   arrow(ga, [[ARR3.x0, FA], [ARR3.x1, FA]], { color: C.orange, name: "in-context" });
   edgeLabel(ga, (ARR3.x0 + ARR3.x1) / 2, FA - 10, "in context", C.orange);
