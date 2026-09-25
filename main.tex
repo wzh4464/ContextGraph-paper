@@ -340,8 +340,10 @@ the no-memory agent gains nothing from its third pass, whereas the agent with
 memory keeps converting earlier failures into repairs. Excluding ten targets
 with near-duplicate source fixes retains the first-pass gain, 19/89 versus
 13/89 ($p=.031$). Absolute rates differ from the main comparison because this
-experiment uses a different budget and a single run; the paired comparison
-within each row is the quantity of interest. Its curated records include
+experiment uses a different budget and a curated initial pool
+(Table~\ref{tab:swectx-stream} reports one run,
+Table~\ref{tab:stream-position} five-run means); the paired comparison within
+each row is the quantity of interest. Its curated records include
 reference fixes, so it tests the update loop rather than the abstraction; the
 static-pool ablation (Table~\ref{tab:ablation}) shows the same effect under
 the main protocol.
@@ -457,9 +459,10 @@ The experiments in this section keep the Related-Lite99 protocol of the main
 comparison and vary the backbone and the size of the initial pool, which
 holds 300 experience summaries distilled from the audited SWE-bench
 cold-start pool of Table~\ref{tab:evaluation-settings} unless stated otherwise.
-The DeepSeek V4 Pro entries with 300 summaries are therefore the
-main-comparison values; Appendix~\ref{sec:historical} gives the remaining
-settings.
+The DeepSeek V4 Pro ContextGraph and no-memory entries with 300 summaries
+are therefore the main-comparison values, and the other DeepSeek V4 Pro
+entries follow the same protocol; Appendix~\ref{sec:historical} gives the
+remaining settings.
 % AUTHOR: confirm that the DeepSeek V4 Pro entries of Figure 5 and the
 % 300-summary column of the pool-size table are the main-comparison runs, and
 % that the Kimi K3 and MiniMax M2.7 runs are single attempts over completed
@@ -482,9 +485,11 @@ M2.7).
 \centering
 \includegraphics[width=\linewidth]{figures/crossmodel_comparison.pdf}
 \caption{Related-Lite99 resolution (\%) with the same 300-summary initial pool
-per backbone. DeepSeek V4 Pro values are those of the main comparison; Kimi K3
-and MiniMax M2.7 are single runs over completed evaluations. ContextGraph is
-red; the hatched oracle receives a known related summary.}
+per backbone. The DeepSeek V4 Pro ContextGraph and no-memory bars are the
+main-comparison values and the other DeepSeek V4 Pro bars follow the same
+protocol; Kimi K3 and MiniMax M2.7 are single runs over completed
+evaluations. ContextGraph is red; the hatched oracle receives a known related
+summary.}
 \label{fig:swectx-crossmodel}
 \end{figure}
 
