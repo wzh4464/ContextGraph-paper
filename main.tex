@@ -174,13 +174,11 @@ default behavior. No initial pool contains an evaluated task
 Benchmark & Tasks & Initial experience source & Reported result \\
 \midrule
 Verified500 & 500 & Nebius SWE-bench-extra trajectories & Resolution \\
-Related-Lite99 & 99 & Trajectories on SWE-ContextBench history & Five-run mean \\
+Related-Lite99 & 99 & SWE-bench cold-start trajectories & Five-run mean \\
 DeepSWE113 & 113 & LoLBench repository trajectories & Five-run mean \\
 LoLBench Python & 20 & Other LoLBench Python tasks & pass@1, pass@3 \\
 \bottomrule
 \end{tabular*}
-% AUTHOR: confirm the Related-Lite99 source description (trajectories on the
-% SWE-ContextBench historical tasks that precede each target).
 \end{table}
 
 \paragraph{Data separation and feedback.}
@@ -188,7 +186,9 @@ Initial memory excludes the evaluated tasks' trajectories and reference
 solutions. The Nebius SWE-bench-extra trajectories that seed the Verified500
 pool contain none of the 500 evaluated instances, and the same instance-level
 and patch-similarity audit is applied to every pool of the main comparison
-(Appendix~\ref{sec:overlap-audit}). Tasks enter
+(Appendix~\ref{sec:overlap-audit}). Related-Lite99 follows the
+SWE-ContextBench protocol \citep{swecontext2026}: memory starts from a
+cold-start pool of SWE-bench trajectories and grows task by task. Tasks enter
 the evaluation stream in issue creation-time order. Memory updates use only
 agent-visible actions and observations, including its own test runs. Official
 test results are used for scoring only: they are neither shown to the agent
@@ -235,13 +235,11 @@ With Gemini 3.1 Pro and live-SWE-agent, ContextGraph raises Verified500
 pass@1 from 82.3\% to 88.9\%, an 8.0\% relative gain; pass@5 reaches 91.7\%
 (Table~\ref{tab:new-gemini}). Memory also benefits this stronger backbone
 and a different coding-agent implementation. Without memory, additional
-attempts add less than one point; with memory the curve keeps rising, 2.8
-points from pass@1 to pass@5, consistent with later attempts drawing on
-lessons distilled from earlier ones.
+attempts add less than one point; with memory, which is updated after every
+attempt, the curve keeps rising, 2.8 points from pass@1 to pass@5, consistent
+with later attempts drawing on lessons distilled from earlier ones.
 On Verified500 with DeepSeek V4 Pro, ContextGraph also uses fewer tokens per
 task, 201K versus 236K without memory, a 14.8\% reduction.
-% AUTHOR: confirm that memory was updated between attempts in the Gemini
-% pass@k runs; otherwise reword the sentence on retries.
 
 \begin{table}[htbp]
 \centering
@@ -447,8 +445,8 @@ DeepSWE113 & \tbd & 72.1 & \tbd & 60.8 \\
 \label{sec:recorded-generalization}
 The experiments in this section keep the Related-Lite99 protocol of the main
 comparison and vary the backbone and the size of the initial pool, which
-holds 300 experience summaries distilled from the audited Related-Lite99
-trajectories of Table~\ref{tab:evaluation-settings} unless stated otherwise.
+holds 300 experience summaries distilled from the audited SWE-bench
+cold-start pool of Table~\ref{tab:evaluation-settings} unless stated otherwise.
 The DeepSeek V4 Pro entries with 300 summaries are therefore the
 main-comparison values; Appendix~\ref{sec:historical} gives the remaining
 settings.

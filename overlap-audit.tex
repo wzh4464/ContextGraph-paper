@@ -15,8 +15,9 @@ The Nebius SWE-bench-extra trajectories that seed the Verified500 pool come
 from a different task collection, and none of the 500 SWE-bench Verified
 evaluation instances appears among them, so the evaluated issues, their
 reference patches, and their hidden tests are absent from memory. The
-Related-Lite99 pool is built from trajectories on SWE-ContextBench historical
-tasks and contains none of the 99 targets. The DeepSWE113 pool contains only
+Related-Lite99 pool is the SWE-bench cold-start pool of the SWE-ContextBench
+protocol, which grows task by task during evaluation; its initial trajectories
+contain none of the 99 targets. The DeepSWE113 pool contains only
 LoLBench repository trajectories; no DeepSWE task or repository snapshot appears
 in it, and the LoLBench and DeepSWE113 repository sets are disjoint. The
 LoLBench pool excludes the 20 evaluated Python tasks.

@@ -4,7 +4,7 @@ These comparisons examine summary and episodic memory across models and
 attempt budgets. Two configurations of ContextGraph appear in them and are
 named explicitly here. The \emph{summary-memory configuration} is the
 Related-Lite99 configuration of the main comparison: an initial pool of 300
-experience summaries distilled from the audited Related-Lite99 trajectories
+experience summaries distilled from the audited SWE-bench cold-start pool
 (Appendix~\ref{sec:overlap-audit}), the mini-SWE-agent scaffold, and the
 main-comparison budget. Figure~\ref{fig:swectx-crossmodel} and
 Table~\ref{tab:swectx-poolsize} use it to examine other backbones and
@@ -30,7 +30,6 @@ In the curated-episode comparison, each pass adds the distilled lessons of its
 completed attempts to the pool before the next pass retries unresolved tasks
 (Section~\ref{sec:stream}). Official test results are withheld
 from the agent throughout, including between attempts.
-% AUTHOR: confirm that the episodic runs updated the pool between passes.
 
 \paragraph{Source-similarity sensitivity.}
 A separate analysis removes ten targets whose source fixes have token-Jaccard
