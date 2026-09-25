@@ -1,4 +1,4 @@
-"""Cross-model comparison from the original resolved/completed counts.
+"""Cross-model comparison from the per-model rates in crossmodel_data.json.
 
 Uses the MulVul-inspired serif typography and red/blue/green/purple palette
 shared by the benchmark figure. Oracle access has a distinct hatched bar.
@@ -9,8 +9,7 @@ from matplotlib.patches import Patch
 from draw_benchmark_pool import OUT, RED, BLUE, GRAY, plt, save
 
 data = json.loads((OUT / "crossmodel_data.json").read_text())
-counts = np.array(data["resolved_completed"])
-rates = counts[:, :, 0] / counts[:, :, 1] * 100
+rates = np.array(data["rates"], dtype=float)  # methods x models, percent
 colors = [GRAY, "#8E44AD", "#27AE60", BLUE, "#FFFFFF", RED]
 labels = ["No memory", "Random summaries", "Mem0", "LangMem", "Oracle summary", "ContextGraph"]
 

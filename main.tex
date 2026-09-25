@@ -8,8 +8,6 @@
 \title{ContextGraph: Remember the Condition,\\Not the Code}
 \author{Anonymous authors}
 \newcommand{\cg}{ContextGraph}
-% \tbd marks a value still to be filled in (see the AUTHOR comments).
-\newcommand{\tbd}{\textcolor{red}{TBD}}
 \begin{document}
 \maketitle
 
@@ -155,7 +153,12 @@ of SWE-ContextBench, and the 113-task Datacurve DeepSWE benchmark
 \citep{swebench2024,swecontext2026,deepswe2026}. We additionally evaluate
 20 Python tasks from LoLBench \citep{lolbench2026}. A task is resolved when
 its patch passes the benchmark's official evaluation. Resolution is the
-percentage of tasks resolved; pass@$k$ reports success within $k$ attempts.
+percentage of tasks resolved; when an evaluation run does not complete for a
+task, that task is excluded from the run's denominator. pass@$k$ reports
+success within $k$ attempts.
+% AUTHOR: confirm that per-run rates use completed evaluations as the
+% denominator (the five-run means such as 35.1 and 26.8 are not multiples of
+% 1/495, which implies incomplete runs).
 Related-Lite99 and DeepSWE113 in the main comparison report means over five
 runs, each reset to the same initial memory pool.
 Table~\ref{tab:evaluation-settings} gives the agents, models, and initial
@@ -359,11 +362,9 @@ Retry budget & No memory & ContextGraph & Wins/losses \\
 \midrule
 1 pass & 14/99 & \textbf{21/99} & 7/0 \\
 2 passes & 16/99 & \textbf{25/99} & 9/0 \\
-3 passes & 16/99 & \textbf{27/99} & \tbd \\
+3 passes & 16/99 & \textbf{27/99} & 12/1 \\
 \bottomrule
 \end{tabular}
-% AUTHOR: the no-memory three-pass count was re-measured as 16/99; fill in
-% the wins/losses split after three passes from the new paired outcomes.
 \end{table}
 
 \paragraph{Position in the stream.}
@@ -499,6 +500,8 @@ pool yields the strongest repair result.
 \centering
 \caption{Related-Lite99 with different initial memory-pool sizes, DeepSeek V4
 Pro. The 300-summary column is the main comparison.}
+% AUTHOR: state whether the 50-, 100-, and 200-summary columns are single
+% runs or five-run means.
 \label{tab:swectx-poolsize}
 \begin{tabular}{lrrrr}
 \toprule

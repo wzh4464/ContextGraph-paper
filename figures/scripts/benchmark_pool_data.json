@@ -66,7 +66,6 @@
   "pool_size": {
     "benchmark": "Related-Lite99",
     "model": "DeepSeek V4 Pro",
-    "attempts_per_task": 1,
     "summaries": [
       50,
       100,
@@ -79,6 +78,6 @@
       28.3,
       35.1
     ],
-    "note": "Values from the main-text pool-size table (DeepSeek V4 Pro, one attempt per task)."
+    "note": "Values from the main-text pool-size table (DeepSeek V4 Pro). The 300-summary value is the main-comparison five-run mean; the aggregation of the 50-, 100-, and 200-summary values is stated by the author in the table caption."
   }
 }

@@ -32,7 +32,9 @@ Supermemory & 63.6 & 26.5 & 66.2 \\
 \begin{minipage}{\linewidth}\footnotesize
 Verified500, Related-Lite99, and DeepSWE113 use DeepSeek V4 Pro 0813 and mini-SWE-agent.
 Related-Lite99 and DeepSWE113 rates are means across five runs, each
-reset to the same initial memory pool, with tasks evaluated in issue creation-time order.
+reset to the same initial memory pool, with tasks evaluated in issue
+creation-time order; per-run rates use completed evaluations as the
+denominator.
 ContextGraph adds lessons from completed successful and failed attempts
 to memory for subsequent retrieval; baselines use their open-source
 defaults for memory updates. The initial Verified500 memory draws on
