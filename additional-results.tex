@@ -1,9 +1,9 @@
 \section{Additional benchmark and agent results}
 \label{sec:new-results}
 This appendix tabulates the DeepSeek V4 Pro column of
-Figure~\ref{fig:swectx-crossmodel} (Table~\ref{tab:new-swectx}) and gives
-the LoLBench comparison from
-Section~\ref{sec:benchmark}. Gemini results appear in Table~\ref{tab:new-gemini}.
+Figure~\ref{fig:swectx-crossmodel} (Table~\ref{tab:new-swectx}) and the Gemini
+results (Table~\ref{tab:new-gemini}), and gives the LoLBench comparison from
+Section~\ref{sec:benchmark}.
 The three-benchmark comparison is tabulated in
 Table~\ref{tab:main-results-overview}; additional comparisons appear in
 Appendix~\ref{sec:historical}.
@@ -29,6 +29,25 @@ Oracle summary & 27.8 \\
 \bottomrule
 \end{tabular}
 % Source: figures/scripts/crossmodel_data.json, DeepSeek V4 Pro column.
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{SWE-bench Verified500 with Gemini 3.1 Pro and live-SWE-agent
+(Section~\ref{sec:benchmark}). Both arms follow the data-separation protocol
+in Section~\ref{sec:setup}. Gains are relative improvements,
+$(\text{ContextGraph}-\text{No memory})/\text{No memory}$, in percent.}
+\label{tab:new-gemini}
+\small
+\begin{tabular}{lrrr}
+\toprule
+Metric & No memory & ContextGraph & Relative gain \\
+\midrule
+pass@1 & 82.3\% & \textbf{88.9\%} & +8.0\% \\
+pass@3 & 82.6\% & \textbf{90.4\%} & +9.4\% \\
+pass@5 & 82.8\% & \textbf{91.7\%} & +10.7\% \\
+\bottomrule
+\end{tabular}
 \end{table}
 
 \paragraph{LoLBench Python subset.}
@@ -71,9 +90,9 @@ At step $t$, the agent uses the complete context $C_t$: the issue and
 conversation, inspected code, edits, actions, and observed failures. It can
 search the whole experience pool, read source records, follow links between
 strategies and errors, and compare lessons across repositories. Its selection
-follows Equation~\ref{eq:agent-selection}: the agent decides which records
-to inspect and retain, without a fixed relevance score or number of nearest
-neighbours. Each search or read adds its results to $H_j$ before the next
+follows Equation~\ref{eq:agent-selection}: searches return ranked
+candidates, and the agent decides which records to inspect and retain, so the
+number of selected lessons varies by task. Each search or read adds its results to $H_j$ before the next
 memory action; the selected lessons form $\mathcal M_t$.
 
 The selected memory contains strategies and warnings, their source context,

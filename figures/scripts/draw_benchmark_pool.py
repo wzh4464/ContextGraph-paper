@@ -2,8 +2,8 @@
 
 Run: python figures/scripts/draw_benchmark_pool.py -> figures/benchmark_comparison.pdf
 
-Style reference: MulVul fig/longtail_f1.png: serif type, white background,
-light gray grid, red circles and blue squares. No inferred error bars.
+Style: serif type, white background, light gray grid, red circles and blue
+squares. No inferred error bars.
 Run with a Python environment containing matplotlib.
 """
 from pathlib import Path

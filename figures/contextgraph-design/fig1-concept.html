@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Fig 2 — Retrieved advice vs. ContextGraph (Django #33018)</title>
+<!-- Fonts: IBM Plex Sans (labels), IBM Plex Mono (repository names),
+     STIX Two Text italic (S/W/C/E letters and do/avoid/when/from tags). -->
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600;700&family=STIX+Two+Text:ital,wght@1,600&display=block" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #fff; }
+</style>
+</head>
+<body>
+<div id="chart"></div>
+<script>
+/*
+ * Figure 2 (fig:concept). Printed at \linewidth = 5.5 in = 396 pt.
+ * Canvas is W = 1100 px wide, so 1 px = 0.36 pt at print size.
+ * Every font size is >= MIN_FONT = 19 px  (19 * 396 / 1100 = 6.84 pt).
+ */
+
+// ── Palette (sampled from the previous version of the figure) ──────────
+const C = {
+  ink: "#1F2430", gray: "#6D7585", faint: "#8C93A0",
+  orange: "#B5651D", dark: "#4A5263", purple: "#6249AA", navy: "#3B5B86",
+  panelA: "#F4F5F7", panelAStroke: "#D9DCE3",
+  panelB: "#EEF2F8", panelBStroke: "#CDD5E2",
+  well: "#FAFBFC", wellStroke: "#C3C9D2",
+  bar: "#FFFFFF", barStroke: "#D5D9E0", barLine: "#CDD2DA",
+  hiLine: "#D9B08A",
+  robot: "#2D3340", robotFill: "#EFF1F5",
+  green: "#2E7D62", red: "#AA4135", docLine: "#BEC2C7",
+  sat: "#C5CAD3", satFill: "#E8EBF0",
+};
+const KIND = {
+  S: { name: "strategy",      fill: "#DEE7F4", stroke: "#3B5B86", ink: "#2E4B74" },
+  W: { name: "warning",       fill: "#F7DFDB", stroke: "#B0463B", ink: "#9C3227" },
+  C: { name: "context",       fill: "#DBEFE6", stroke: "#2A7058", ink: "#23604B" },
+  E: { name: "error pattern", fill: "#E9E3F6", stroke: "#6B50B6", ink: "#52389A" },
+};
+
+// ── Type scale (px on the 1100-px canvas) ──────────────────────────────
+const MIN_FONT = 19;
+const F = {
+  title: 22,      // panel titles
+  label: 20,      // node labels (Past repair, Agent, …)
+  small: MIN_FONT,// sublabels, edge labels, legend, notes, tags
+  row: MIN_FONT,  // guidance rows
+  boxTitle: 21,   // "Selected guidance"
+  bubble: 21,     // quoted advice
+  nodeLetter: 23, // S/W/C/E inside graph nodes
+  badgeLetter: MIN_FONT,
+};
+const SERIF = '"STIX Two Text", serif';
+const MONO = '"IBM Plex Mono", monospace';
+
+// ── Grid ───────────────────────────────────────────────────────────────
+const W = 1100;
+const PX = 2, PW = W - 2 * PX;           // panel x and width
+const PAD = 16;
+const CL = PX + PAD, CR = PX + PW - PAD;   // content left/right
+
+// Columns (left → right)
+const XA = CL + 71;                        // source-icon column centre
+const ARR1 = { x0: XA + 34, x1: XA + 143 };// source → well arrows
+const X1 = ARR1.x1 + 6, W1 = 166;          // well: summaries / graph
+const X2 = X1 + W1 + 82, W2 = 444;         // bubble / guidance box
+const XR = CR - 28;                        // agent / patch column centre
+const ARR2 = { x0: X1 + W1 + 4, x1: X2 - 4 };
+const ARR3 = { x0: X2 + W2 + 4, x1: XR - 28 };
+
+// Rows
+const GAP = 8;
+const YA = PX, HA = 204;                   // panel (a)
+const YB = YA + HA + GAP, HB = 250;        // panel (b)
+const H = YB + HB + PX;
+
+const TITLE_BASE = 31;                     // title baseline within a panel
+const FA = YA + 78;                        // main flow line, panel (a)
+const FB = YB + 96;                        // main flow line, panel (b)
+
+// Guidance box rows (relative to its top)
+const GT = YB + 12;
+const G = { title: 30, rows: [62, 89, 116], rule: 131, src: [157, 185], h: 198 };
+
+// ── SVG root ───────────────────────────────────────────────────────────
+const svg = d3.select("#chart").append("svg")
+  .attr("xmlns", "http://www.w3.org/2000/svg")
+  .attr("width", W).attr("height", H)
+  .attr("viewBox", `0 0 ${W} ${H}`)
+  .attr("font-family", '"IBM Plex Sans", sans-serif')
+  .attr("data-figure", "fig2-concept");
+
+// ── Helpers ────────────────────────────────────────────────────────────
+function text(g, x, y, str, o = {}) {
+  const t = g.append("text").attr("x", x).attr("y", y).text(str)
+    .attr("font-size", o.size || F.small)
+    .attr("font-weight", o.weight || 400)
+    .attr("fill", o.fill || C.ink)
+    .attr("text-anchor", o.anchor || "start");
+  if (o.family) t.attr("font-family", o.family);
+  if (o.style) t.attr("font-style", o.style);
+  if (o.name) t.attr("data-name", o.name);
+  return t;
+}
+
+// Arrow along a polyline/path; head is a filled triangle aligned with the last segment.
+function arrow(g, pts, o = {}) {
+  const color = o.color || C.dark, w = o.width || 2.2;
+  const hl = o.head || 11, hw = o.headW || 5.5;
+  const [px, py] = pts[pts.length - 2], [ex, ey] = pts[pts.length - 1];
+  const ang = Math.atan2(ey - py, ex - px);
+  const bx = ex - hl * Math.cos(ang), by = ey - hl * Math.sin(ang);
+  const line = pts.slice(0, -1).concat([[bx, by]]);
+  const grp = g.append("g").attr("data-edge", o.name || "arrow");
+  grp.append("path").attr("d", d3.line()(line))
+    .attr("fill", "none").attr("stroke", color).attr("stroke-width", w)
+    .attr("stroke-dasharray", o.dash || null).attr("stroke-linecap", "butt");
+  const nx = -Math.sin(ang), ny = Math.cos(ang);
+  grp.append("path")
+    .attr("d", `M${ex},${ey} L${bx + nx * hw},${by + ny * hw} L${bx - nx * hw},${by - ny * hw} Z`)
+    .attr("fill", color);
+  return grp;
+}
+
+function badge(g, cx, cy, k, o = {}) {
+  const r = o.r || 12, s = KIND[k];
+  const b = g.append("g").attr("data-badge", k);
+  b.append("circle").attr("cx", cx).attr("cy", cy).attr("r", r)
+    .attr("fill", o.faded ? "none" : s.fill)
+    .attr("stroke", o.faded ? C.faint : s.stroke)
+    .attr("stroke-width", o.faded ? 1.3 : 1.5)
+    .attr("stroke-dasharray", o.faded ? "3 2.5" : null);
+  text(b, cx, cy + (o.size || F.badgeLetter) * 0.33, k, {
+    size: o.size || F.badgeLetter, weight: 600, family: SERIF, style: "italic",
+    fill: o.faded ? C.faint : s.ink, anchor: "middle",
+  });
+  return b;
+}
+
+function numBadge(g, cx, cy, n, fill) {
+  const b = g.append("g").attr("data-badge", `step-${n}`);
+  b.append("circle").attr("cx", cx).attr("cy", cy).attr("r", 12.5).attr("fill", fill);
+  text(b, cx, cy + 6.6, String(n), { size: MIN_FONT, weight: 700, fill: "#fff", anchor: "middle" });
+  return b;
+}
+
+// Document icon; `lines` is a list of [colour, relative length].
+function page(g, x, y, w, h, lines, o = {}) {
+  const f = o.fold || 0;
+  const d = f
+    ? `M${x + 3},${y} H${x + w - f} L${x + w},${y + f} V${y + h - 3} Q${x + w},${y + h} ${x + w - 3},${y + h} H${x + 3} Q${x},${y + h} ${x},${y + h - 3} V${y + 3} Q${x},${y} ${x + 3},${y} Z`
+    : null;
+  if (d) {
+    g.append("path").attr("d", d).attr("fill", "#fff").attr("stroke", C.robot).attr("stroke-width", 1.8).attr("stroke-linejoin", "round");
+    g.append("path").attr("d", `M${x + w - f},${y} V${y + f} H${x + w}`).attr("fill", "none").attr("stroke", C.robot).attr("stroke-width", 1.5).attr("stroke-linejoin", "round");
+  } else {
+    g.append("rect").attr("x", x).attr("y", y).attr("width", w).attr("height", h).attr("rx", 3)
+      .attr("fill", "#fff").attr("stroke", C.robot).attr("stroke-width", 1.8);
+  }
+  const lx = x + w * 0.2, lw = w * 0.6, top = y + (o.lineTop || h * 0.3), step = o.step || h * 0.15;
+  lines.forEach(([col, frac], i) => {
+    g.append("line").attr("x1", lx).attr("x2", lx + lw * frac)
+      .attr("y1", top + i * step).attr("y2", top + i * step)
+      .attr("stroke", col).attr("stroke-width", o.lineW || 2.4).attr("stroke-linecap", "round");
+  });
+}
+
+function pastRepairIcon(g, cx, cy) {
+  const w = 30, h = 38, x = cx - w / 2 - 3, y = cy - h / 2 + 3;
+  const grp = g.append("g").attr("data-icon", "past-repair");
+  grp.append("rect").attr("x", x + 6).attr("y", y - 6).attr("width", w).attr("height", h).attr("rx", 3)
+    .attr("fill", "#fff").attr("stroke", C.robot).attr("stroke-width", 1.8);
+  page(grp, x, y, w, h, [[C.green, 1], [C.red, 0.8], [C.docLine, 0.9], [C.docLine, 0.6]]);
+}
+
+function issueIcon(g, cx, cy) {
+  const w = 30, h = 38, x = cx - w / 2, y = cy - h / 2;
+  const grp = g.append("g").attr("data-icon", "current-issue");
+  page(grp, x, y, w, h, [[C.docLine, 0.7], [C.docLine, 1], [C.docLine, 0.8], [C.docLine, 0.5]], { fold: 9, lineTop: h * 0.36, step: h * 0.14 });
+  grp.append("circle").attr("cx", x + w).attr("cy", y + h - 2).attr("r", 7).attr("fill", "#fff").attr("stroke", C.robot).attr("stroke-width", 1.8);
+  grp.append("circle").attr("cx", x + w).attr("cy", y + h - 2).attr("r", 2.6).attr("fill", C.robot);
+}
+
+function patchIcon(g, cx, cy) {
+  const w = 28, h = 34;
+  const grp = g.append("g").attr("data-icon", "patch");
+  page(grp, cx - w / 2, cy - h / 2, w, h, [[C.green, 1], [C.red, 0.8], [C.green, 1], [C.docLine, 0.5]], { lineTop: h * 0.26, step: h * 0.17, lineW: 2.3 });
+}
+
+function smallDocIcon(g, cx, cy) {
+  const w = 17, h = 21, x = cx - w / 2, y = cy - h / 2;
+  const grp = g.append("g").attr("data-icon", "source");
+  page(grp, x, y, w, h, [[C.docLine, 1], [C.docLine, 0.7], [C.docLine, 0.9]], { lineTop: h * 0.3, step: h * 0.2, lineW: 1.8 });
+  grp.selectAll("rect").attr("stroke", C.gray).attr("stroke-width", 1.5);
+}
+
+// Robot head centred on (cx, cy); returns its extent.
+function agentIcon(g, cx, cy) {
+  const hw = 40, hh = 32;
+  const grp = g.append("g").attr("data-icon", "agent");
+  grp.append("line").attr("x1", cx).attr("x2", cx).attr("y1", cy - hh / 2).attr("y2", cy - hh / 2 - 8)
+    .attr("stroke", C.robot).attr("stroke-width", 2);
+  grp.append("circle").attr("cx", cx).attr("cy", cy - hh / 2 - 10).attr("r", 3.4).attr("fill", C.robot);
+  [-1, 1].forEach(s => grp.append("rect").attr("x", cx + s * (hw / 2 + 1.5) - 3.5).attr("y", cy - 7)
+    .attr("width", 7).attr("height", 14).attr("rx", 2).attr("fill", C.robot));
+  grp.append("rect").attr("x", cx - hw / 2).attr("y", cy - hh / 2).attr("width", hw).attr("height", hh).attr("rx", 8)
+    .attr("fill", C.robotFill).attr("stroke", C.robot).attr("stroke-width", 2.4);
+  grp.append("rect").attr("x", cx - 13).attr("y", cy - 7).attr("width", 26).attr("height", 14).attr("rx", 7).attr("fill", C.robot);
+  [-1, 1].forEach(s => grp.append("circle").attr("cx", cx + s * 5.5).attr("cy", cy).attr("r", 3.2).attr("fill", "#fff"));
+  return { top: cy - hh / 2 - 13.4, bottom: cy + hh / 2, left: cx - hw / 2 - 5, right: cx + hw / 2 + 5, headLeft: cx - hw / 2 };
+}
+
+function checkMark(g, x, y, s = 1) {
+  g.append("path").attr("d", `M${x},${y} l${5 * s},${5.5 * s} l${10 * s},${-12 * s}`)
+    .attr("fill", "none").attr("stroke", C.green).attr("stroke-width", 2.8)
+    .attr("stroke-linecap", "round").attr("stroke-linejoin", "round").attr("data-mark", "solved");
+}
+function crossMark(g, x, y, s = 1) {
+  g.append("path").attr("d", `M${x},${y - 5.5 * s} l${11 * s},${11 * s} M${x + 11 * s},${y - 5.5 * s} l${-11 * s},${11 * s}`)
+    .attr("fill", "none").attr("stroke", C.red).attr("stroke-width", 2.8)
+    .attr("stroke-linecap", "round").attr("data-mark", "failed");
+}
+
+function panel(y, h, fill, stroke, name) {
+  return svg.append("rect").attr("x", PX).attr("y", y).attr("width", PW).attr("height", h).attr("rx", 12)
+    .attr("fill", fill).attr("stroke", stroke).attr("stroke-width", 1.3).attr("data-panel", name);
+}
+
+// Source column: icon, label, optional sublabel.
+function source(g, kind, cy, label, sub) {
+  if (kind === "past") pastRepairIcon(g, XA, cy); else issueIcon(g, XA, cy);
+  text(g, XA, cy + 43, label, { size: F.label, weight: 500, anchor: "middle", name: label });
+  if (sub) text(g, XA, cy + 64, sub, { size: F.small, fill: C.gray, anchor: "middle", name: sub });
+}
+
+function edgeLabel(g, x, y, str, color, name) {
+  return text(g, x, y, str, { fill: color, anchor: "middle", name: name || str });
+}
+
+// Agent → Patch column; returns the agent's extent.
+function agentColumn(g, fy) {
+  const a = agentIcon(g, XR, fy);
+  text(g, XR, a.bottom + 23, "Agent", { size: F.label, weight: 500, anchor: "middle" });
+  arrow(g, [[XR, a.bottom + 28], [XR, a.bottom + 42]], { color: C.dark, head: 9, headW: 5, name: "agent-to-patch" });
+  const pc = a.bottom + 44 + 17;
+  patchIcon(g, XR, pc);
+  text(g, XR, pc + 17 + 22, "Patch", { size: F.label, weight: 500, anchor: "middle" });
+  return a;
+}
+
+async function draw() {
+  await Promise.all([
+    '400 19px "IBM Plex Sans"', '500 20px "IBM Plex Sans"', '600 21px "IBM Plex Sans"',
+    '700 24px "IBM Plex Sans"', '500 19px "IBM Plex Mono"', 'italic 600 19px "STIX Two Text"',
+  ].map(f => document.fonts.load(f)));
+
+  // ════════════════════ Panel (a): Retrieved advice ════════════════════
+  panel(YA, HA, C.panelA, C.panelAStroke, "a");
+  const ga = svg.append("g").attr("data-panel-content", "a");
+  text(ga, CL + 2, YA + TITLE_BASE, "(a) Retrieved advice", { size: F.title, weight: 700, name: "title-a" });
+
+  // Legend (right-aligned in the title row)
+  const lg = ga.append("g").attr("data-layer", "legend");
+  let lx = CR;
+  ["E", "C", "W", "S"].forEach(k => {
+    const t = text(lg, lx, YA + TITLE_BASE, KIND[k].name, { fill: C.ink, anchor: "end" });
+    t.attr("data-legend-item", KIND[k].name);
+    const tw = t.node().getComputedTextLength();
+    badge(lg, lx - tw - 7 - 12, YA + TITLE_BASE - 6.5, k);
+    lx = lx - tw - 7 - 24 - 22;
+  });
+
+  // Sources
+  const pastA = YA + 70, curA = YA + 150;
+  source(ga, "past", pastA, "Past repair");
+  source(ga, "issue", curA, "Current issue");
+
+  // Text-summary well
+  const wellA = { x: X1, y: YA + 32, w: W1, h: 150 };
+  ga.append("rect").attr("x", wellA.x).attr("y", wellA.y).attr("width", wellA.w).attr("height", wellA.h).attr("rx", 10)
+    .attr("fill", C.well).attr("stroke", C.wellStroke).attr("stroke-width", 1.4).attr("stroke-dasharray", "6 4")
+    .attr("data-node", "text-summaries");
+  const barH = 22, barPitch = 28, bar0 = FA - barH / 2 - barPitch;  // 2nd bar centred on the flow line
+  for (let i = 0; i < 4; i++) {
+    const hi = i === 1, by = bar0 + i * barPitch;
+    const b = ga.append("g").attr("data-summary", i).attr("data-highlight", hi ? "retrieved" : null);
+    b.append("rect").attr("x", X1 + 12).attr("y", by).attr("width", W1 - 24).attr("height", barH).attr("rx", 5)
+      .attr("fill", C.bar).attr("stroke", hi ? C.orange : C.barStroke).attr("stroke-width", hi ? 2 : 1.3);
+    [[0.78, 7.5], [0.55, 14.5]].forEach(([f, dy]) => b.append("line")
+      .attr("x1", X1 + 22).attr("x2", X1 + 22 + (W1 - 44) * f).attr("y1", by + dy).attr("y2", by + dy)
+      .attr("stroke", hi ? C.hiLine : C.barLine).attr("stroke-width", 2).attr("stroke-linecap", "round"));
+  }
+  text(ga, X1 + W1 / 2, wellA.y + wellA.h - 12, "text summaries", { fill: C.gray, anchor: "middle" });
+
+  arrow(ga, [[ARR1.x0, pastA], [ARR1.x1, pastA]], { color: C.orange, name: "summarize" });
+  edgeLabel(ga, (ARR1.x0 + ARR1.x1) / 2, pastA - 10, "summarize", C.orange);
+  arrow(ga, [[ARR1.x0, curA], [ARR1.x1, curA]], { color: C.dark, name: "query-a" });
+  edgeLabel(ga, (ARR1.x0 + ARR1.x1) / 2, curA - 10, "query", C.dark);
+
+  // Retrieve → speech bubble
+  arrow(ga, [[ARR2.x0, FA], [ARR2.x1, FA]], { color: C.orange, name: "retrieve" });
+  edgeLabel(ga, (ARR2.x0 + ARR2.x1) / 2, FA - 10, "retrieve", C.orange);
+
+  const bb = { x: X2, y: FA - 34, w: W2, h: 68, r: 16 };
+  const tail = { a: bb.x + 38, b: bb.x + 64, tipX: bb.x + 26, tipY: bb.y + bb.h + 20 };
+  const bubblePath = [
+    `M${bb.x + bb.r},${bb.y}`, `H${bb.x + bb.w - bb.r}`, `Q${bb.x + bb.w},${bb.y} ${bb.x + bb.w},${bb.y + bb.r}`,
+    `V${bb.y + bb.h - bb.r}`, `Q${bb.x + bb.w},${bb.y + bb.h} ${bb.x + bb.w - bb.r},${bb.y + bb.h}`,
+    `H${tail.b}`, `L${tail.tipX},${tail.tipY}`, `L${tail.a},${bb.y + bb.h}`,
+    `H${bb.x + bb.r}`, `Q${bb.x},${bb.y + bb.h} ${bb.x},${bb.y + bb.h - bb.r}`,
+    `V${bb.y + bb.r}`, `Q${bb.x},${bb.y} ${bb.x + bb.r},${bb.y}`, "Z",
+  ].join(" ");
+  ga.append("path").attr("d", bubblePath).attr("fill", "#fff").attr("stroke", "#A9AFBA").attr("stroke-width", 2)
+    .attr("stroke-linejoin", "round").attr("data-node", "advice-bubble");
+  const bq = ga.append("g").attr("data-name", "advice-text");
+  text(bq, X2 + W2 / 2, FA - 5.5, "“Querysets must handle empty", { size: F.bubble, anchor: "middle" });
+  text(bq, X2 + W2 / 2, FA + 20, "results under negation.”", { size: F.bubble, anchor: "middle" });
+
+  // Faded: no context, no links
+  const note = ga.append("g").attr("data-name", "no-context-note");
+  const noteY = bb.y + bb.h + 32, noteX = tail.b + 40;
+  badge(note, noteX, noteY - 6.5, "C", { faded: true });
+  badge(note, noteX + 32, noteY - 6.5, "E", { faded: true });
+  text(note, noteX + 32 + 22, noteY, "no context · no links", { fill: C.gray });
+
+  arrow(ga, [[ARR3.x0, FA], [ARR3.x1, FA]], { color: C.orange, name: "in-context" });
+  edgeLabel(ga, (ARR3.x0 + ARR3.x1) / 2, FA - 10, "in context", C.orange);
+  agentColumn(ga, FA);
+
+  // ════════════════════ Panel (b): ContextGraph ════════════════════
+  panel(YB, HB, C.panelB, C.panelBStroke, "b");
+  const gb = svg.append("g").attr("data-panel-content", "b");
+  text(gb, CL + 2, YB + TITLE_BASE, "(b) ContextGraph", { size: F.title, weight: 700, name: "title-b" });
+
+  const pastB = YB + 68, curB = YB + 166;
+  source(gb, "past", pastB, "Past repairs", "other repositories");
+  source(gb, "issue", curB, "Current issue", "task + code");
+
+  // Linked-experience graph
+  const wellB = { x: X1, y: YB + 38, w: W1, h: 170 };
+  gb.append("rect").attr("x", wellB.x).attr("y", wellB.y).attr("width", wellB.w).attr("height", wellB.h).attr("rx", 10)
+    .attr("fill", C.well).attr("stroke", C.wellStroke).attr("stroke-width", 1.4).attr("stroke-dasharray", "6 4")
+    .attr("data-node", "linked-experience");
+  const gx = X1 + W1 / 2;
+  const N = {
+    S: [gx, wellB.y + 30], E: [X1 + 36, wellB.y + 76], C: [X1 + W1 - 36, wellB.y + 76], W: [gx, wellB.y + 120],
+  };
+  const sats = [
+    [[X1 + 15, wellB.y + 12], "E"], [[X1 + 15, wellB.y + 108], "E"],
+    [[X1 + W1 - 16, wellB.y + 128], "C"], [[X1 + W1 - 20, wellB.y + 16], "S"],
+  ];
+  const gg = gb.append("g").attr("data-layer", "graph");
+  sats.forEach(([p, k]) => gg.append("line").attr("x1", p[0]).attr("y1", p[1]).attr("x2", N[k][0]).attr("y2", N[k][1])
+    .attr("stroke", C.sat).attr("stroke-width", 1.4));
+  [["S", "E"], ["S", "C"], ["E", "W"], ["W", "C"]].forEach(([a, b]) => gg.append("line")
+    .attr("x1", N[a][0]).attr("y1", N[a][1]).attr("x2", N[b][0]).attr("y2", N[b][1])
+    .attr("stroke", C.orange).attr("stroke-width", 2.4).attr("data-edge", `${a}-${b}`));
+  sats.forEach(([p]) => gg.append("circle").attr("cx", p[0]).attr("cy", p[1]).attr("r", 6)
+    .attr("fill", C.satFill).attr("stroke", "#B3BAC5").attr("stroke-width", 1.3));
+  Object.entries(N).forEach(([k, p]) => badge(gg, p[0], p[1], k, { r: 18, size: F.nodeLetter }));
+  text(gb, gx, wellB.y + wellB.h - 12, "linked experience", { fill: C.gray, anchor: "middle" });
+
+  arrow(gb, [[ARR1.x0, pastB], [ARR1.x1, pastB]], { color: C.orange, name: "abstract" });
+  edgeLabel(gb, (ARR1.x0 + ARR1.x1) / 2, pastB - 10, "abstract", C.orange);
+  arrow(gb, [[ARR1.x0, curB], [ARR1.x1, curB]], { color: C.dark, name: "query-b" });
+  const q1 = gb.append("g").attr("data-name", "step-1-query");
+  const qMid = (ARR1.x0 + ARR1.x1) / 2;
+  numBadge(q1, qMid - 30, curB - 17, 1, C.navy);
+  text(q1, qMid - 13, curB - 10, "query", { fill: C.dark });
+
+  // agent selects → guidance box
+  arrow(gb, [[ARR2.x0, FB], [ARR2.x1, FB]], { color: C.orange, name: "agent-selects" });
+  edgeLabel(gb, (ARR2.x0 + ARR2.x1) / 2, FB - 32, "agent", C.orange, "agent-selects-1");
+  edgeLabel(gb, (ARR2.x0 + ARR2.x1) / 2, FB - 10, "selects", C.orange, "agent-selects-2");
+
+  const gbox = gb.append("g").attr("data-node", "selected-guidance");
+  gbox.append("rect").attr("x", X2).attr("y", GT).attr("width", W2).attr("height", G.h).attr("rx", 12)
+    .attr("fill", "#fff").attr("stroke", "#3A404C").attr("stroke-width", 1.8);
+  const gl = X2 + 15, gr = X2 + W2 - 14, gtext = gl + 24 + 8;
+  text(gbox, gl, GT + G.title, "Selected guidance", { size: F.boxTitle, weight: 600 });
+  const rows = [
+    ["S", "Reproduce the failure in a minimal script", "do"],
+    ["W", "Don’t set up the full framework first", "avoid"],
+    ["C", "Failure appears without the full app", "when"],
+  ];
+  rows.forEach(([k, s, tag], i) => {
+    const y = GT + G.rows[i];
+    const r = gbox.append("g").attr("data-guidance", KIND[k].name);
+    badge(r, gl + 12, y - 6.5, k);
+    text(r, gtext, y, s, { size: F.row });
+    text(r, gr, y, tag, { family: SERIF, style: "italic", weight: 600, fill: C.orange, anchor: "end" });
+  });
+  gbox.append("line").attr("x1", gl).attr("x2", gr).attr("y1", GT + G.rule).attr("y2", GT + G.rule)
+    .attr("stroke", "#D5D9E0").attr("stroke-width", 1.3);
+  const srcs = [["python-statemachine", "failed", crossMark], ["sievelib", "solved", checkMark]];
+  srcs.forEach(([repo, status, mark], i) => {
+    const y = GT + G.src[i];
+    const r = gbox.append("g").attr("data-source", repo);
+    smallDocIcon(r, gl + 11, y - 6.5);
+    const t1 = text(r, gtext, y, repo, { family: MONO, weight: 500 });
+    const x2 = gtext + t1.node().getComputedTextLength();
+    const t2 = text(r, x2, y, ` · ${status}`, { fill: C.gray });
+    t2.attr("xml:space", "preserve").style("white-space", "pre");
+    const x3 = x2 + t2.node().getComputedTextLength() + 9;
+    mark(r, x3, y - 6.5);
+    text(r, gr, y, "from", { family: SERIF, style: "italic", weight: 600, fill: C.orange, anchor: "end" });
+  });
+
+  // guidance → agent
+  arrow(gb, [[ARR3.x0, FB], [ARR3.x1, FB]], { color: C.orange, name: "guidance" });
+  edgeLabel(gb, (ARR3.x0 + ARR3.x1) / 2, FB - 10, "guidance", C.orange);
+  const ag = agentColumn(gb, FB);
+
+  // ② re-query after an error: agent → graph (dashed purple)
+  const rqY = GT + G.h + 19;             // horizontal run below the guidance box
+  const rqX = ARR3.x0 + 22;              // vertical run between box and agent
+  const rr = 12;
+  const rq = gb.append("g").attr("data-edge", "re-query");
+  const pathD = [
+    `M${ag.headLeft + 2},${ag.bottom - 1}`,
+    `C${ag.headLeft - 22},${ag.bottom - 1} ${rqX},${ag.bottom + 2} ${rqX},${ag.bottom + 30}`,
+    `V${rqY - rr}`, `Q${rqX},${rqY} ${rqX - rr},${rqY}`,
+    `H${gx + rr}`, `Q${gx},${rqY} ${gx},${rqY - rr}`,
+    `V${wellB.y + wellB.h + 12}`,
+  ].join(" ");
+  rq.append("circle").attr("cx", ag.headLeft + 2).attr("cy", ag.bottom - 1).attr("r", 3.6).attr("fill", C.purple);
+  rq.append("path").attr("d", pathD).attr("fill", "none").attr("stroke", C.purple).attr("stroke-width", 2)
+    .attr("stroke-dasharray", "6 4.5");
+  const tipY = wellB.y + wellB.h + 1;
+  rq.append("path").attr("d", `M${gx},${tipY} L${gx - 6},${tipY + 12} L${gx + 6},${tipY + 12} Z`).attr("fill", C.purple);
+
+  // Label sits on the horizontal run, masking the dashes behind it.
+  const lab = gb.append("g").attr("data-name", "step-2-requery");
+  const t2a = text(lab, 0, rqY + 6.5, "re-query after an error", { fill: C.purple, weight: 500 });
+  const t2b = text(lab, 0, rqY + 6.5, "· failure + last action", { fill: C.gray });
+  const wA = t2a.node().getComputedTextLength(), wB = t2b.node().getComputedTextLength();
+  const totalW = 25 + 7 + wA + 6 + wB;
+  const lx0 = X2 + W2 / 2 - totalW / 2;
+  lab.insert("rect", ":first-child").attr("x", lx0 - 8).attr("y", rqY - 13).attr("width", totalW + 16).attr("height", 26)
+    .attr("fill", C.panelB);
+  numBadge(lab, lx0 + 12.5, rqY, 2, C.purple);
+  t2a.attr("x", lx0 + 25 + 7);
+  t2b.attr("x", lx0 + 25 + 7 + wA + 6);
+}
+
+draw();
+</script>
+</body>
+</html>

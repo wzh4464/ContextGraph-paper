@@ -12,7 +12,7 @@ A failed \texttt{python-statemachine} attempt had spent its effort setting
 up a full Django application; its lesson was to isolate the failure before
 investing in framework setup. A successful \texttt{sievelib} trajectory also
 supported reproducing the failure before editing. Guided by these experiences,
-the agent traced the exception to \texttt{Exists.as\_sql()}, corrected its
+the agent traced the fault to \texttt{Exists.as\_sql()}, corrected its
 handling, and added a regression test. The no-memory attempt made broad
 formatting changes without fixing the bug. The transferable content was the
 investigation strategy and warning; the agent derived the local implementation.
@@ -20,20 +20,22 @@ Neither source repository is Django: the lesson crossed repositories, and
 Section~\ref{sec:cross-repo} measures how often selected lessons do so.
 
 \paragraph{From advice to applicable guidance.}
-Figure~\ref{fig:concept} contrasts two memories for another Django case: a
-flat summary store returns one requirement sentence, whereas the agent selects
+Figure~\ref{fig:concept} contrasts two memories for this case: a flat
+summary store returns one requirement sentence, whereas the agent selects
 from ContextGraph a strategy, a warning, and the condition under which they
-apply, each linked to its source repair. The condition tells the agent when
+apply, each linked to its source attempt. The condition tells the agent when
 the lesson holds; the source lets it check how the lesson was applied before
 adapting it to the current code.
 
 \begin{figure}[!htbp]
 \centering
 \includegraphics[width=\linewidth]{figures/contextgraph-design/fig1-concept.pdf}
-\caption{Retrieved advice versus ContextGraph on Django12663. (a) Flat
-summaries return one requirement sentence without context or source. (b) The
-agent selects a strategy, a warning, and their applicability context with the
-source experience, before planning and again after an error.}
+\caption{Retrieved advice versus ContextGraph on the Django example above
+(illustration). (a) Flat summaries return one requirement sentence without
+context or source. (b) The agent selects a strategy, a warning, and their
+applicability condition, linked to the failed \texttt{python-statemachine}
+and the successful \texttt{sievelib} attempts, before planning and again
+after an error.}
 \label{fig:concept}
 \end{figure}
 
@@ -46,10 +48,14 @@ tasks (Figure~\ref{fig:experience-memory}).
 \subsection{Experience abstraction: retain the useful decision}
 \label{sec:experience-abstraction}
 A language model extracts lessons from the task, actions, errors, and outcome.
-Each lesson records an action or warning, its applicability conditions, the
-outcome it is meant to achieve or preserve, and source context. Abstraction removes repository-specific names while retaining
+Each lesson records a strategy or warning, its applicability conditions, the
+outcome it is meant to achieve or preserve, and source context. For the
+initial graph, abstraction removes repository-specific names while retaining
 the decision and its reason: the failed framework setup becomes advice to
-isolate the bug first.
+isolate the bug first. Lessons distilled online take the form ``when you see a
+symptom, do an action so that a result follows'' and keep the files and
+commands the agent used, so later tasks in the same repository can reuse
+them.
 
 We represent memory as a typed graph
 \begin{equation}
@@ -57,15 +63,15 @@ We represent memory as a typed graph
  \label{eq:experience-graph}
 \end{equation}
 where each edge has a relation type in $\mathcal R$. Nodes represent
-trajectories, fragments (action--observation segments), strategies, canonical
-rules (merged lessons), error patterns, problem summaries, playbook entries
+trajectories, fragments (action--observation segments), strategies (extracted
+lessons, including warnings), canonical rules (merged lessons), error patterns, problem summaries, playbook entries
 (retrieval-ready lessons), and communities of related fragments. The seven
 edge types connect a trajectory to its fragments, a strategy to its source
 trajectory, a fragment to an encountered error, a strategy to its canonical
 rule, a rule to an error it addresses, a summary to its trajectory, and a
 fragment to its community. These links retain both a reusable lesson and the
 observations that explain when it applies. Appendix~\ref{sec:historical}
-lists the node counts of a graph snapshot, and the anonymous repository
+lists the node and edge counts of a graph snapshot, and the anonymous repository
 (Section~\ref{sec:setup}) releases the extraction prompts, schema, and
 selection code.
 
@@ -81,9 +87,10 @@ code, actions, and failures. Memory selection is an agent decision process:
 where $\pi_\theta$ is the coding agent's model policy, $H_j$ records its
 preceding memory actions and their results, and $\mathcal M_t$ contains the
 selected lessons. Actions search the entire pool, read source records, follow
-graph links, select lessons, or stop. The agent judges relevance from the
-returned context; there is no fixed numerical relevance score or top-$k$
-cutoff. It applies the selected guidance through local reproductions, edits,
+graph links, select lessons, or stop. Searches return ranked candidates; the
+agent matches each candidate's applicability conditions against its current
+task and error and decides which lessons to keep, so the number of selected
+lessons varies by task. It applies the selected guidance through local reproductions, edits,
 and tests (Appendix~\ref{sec:agentic-retrieval}).
 
 \subsection{Memory access and updates: connect repair to learning}
