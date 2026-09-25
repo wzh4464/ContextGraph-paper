@@ -25,7 +25,7 @@ ContextGraph & 318 & 63.60\% & +1.8 & 50/41 & .402 \\
 
 \paragraph{Memory configurations.}
 The Verified500 system indexes trajectory fragments, rules, and communities
-with dense, lexical, and graph retrieval. The Related-Lite98 system indexes
+with dense, lexical, and graph retrieval. The Related-Lite99 system indexes
 300 Experience summaries with repository-filtered lookup and a memory tool;
 its production repository-filtered route differs from generic channel fusion.
 The Related-Lite99 episodic system serves reference fixes, verification hints,
@@ -35,11 +35,11 @@ These configurations precede the Qwen executable-witness graph.
 \paragraph{Task counts and attempts.}
 Verified500 uses a fixed 500-task denominator; completed counts were 486 for
 no memory, 488 for ExpeL, 490 for FAISS, and 484 for ContextGraph.
-Related-Lite98 excludes one shared image-build failure from the original
-99-task manifest and reports resolved/completed in each arm. Its $V_1$ regime
-uses one attempt; the historical $V_2$ aggregate includes failure reruns.
-The main-text pool-size table uses $V_1$ only: the old delta column used the
-$V_2$ control rate and is omitted. The MiniMax M2.7 campaign used a
+Related-Lite99 reports resolved/completed in each condition. The main-text
+comparison allows one attempt; a separate historical aggregate includes
+failure reruns. The pool-size table uses only the single-attempt results: 21/96, 27/98,
+26/97, and 34/98 for 50, 100, 200, and 300 summaries, respectively.
+The MiniMax M2.7 campaign used a
 gateway-compatibility shim.
 
 \paragraph{Related-Lite99 source content.}
@@ -72,21 +72,20 @@ Kimi K3 & 29/99 & 31/99 & 3/5 & .73 & 26/28 ($p=.73$) \\
 
 \begin{table}[htbp]
 \centering
-\caption{Historical Related-Lite98 GPT-5.4 aggregate with failure reruns
-($V_2$ reporting regime). The historical table alone does not supply uniform
-per-arm retry accounting; Table~\ref{tab:swectx-crossmodel} gives the separate
-single-shot $V_1$ comparison. \tableadd{Green additions: Appendix~\ref{sec:table-additions}.}}
+\caption{Historical Related-Lite99 GPT-5.4 aggregate including failure reruns.
+The original table does not report attempts per method;
+Figure~\ref{fig:swectx-crossmodel} gives the separate single-attempt comparison.}
 \label{tab:swectx-v2}
-\begin{tabular}{lrrr}
+\begin{tabular}{lrr}
 \toprule
-Memory & Resolved/completed & Rate  & \tableadd{Attempts/task} \\
+Memory & Resolved/completed & Rate \\
 \midrule
-Random summaries & 19/97 & 19.59\%  & \addpending \\
-Mem0 & 19/98 & 19.39\%  & \addpending \\
-LangMem & 24/98 & 24.49\%  & \addpending \\
-No memory & 25/98 & 25.51\%  & \addpending \\
-Oracle summary & 35/98 & 35.71\%  & \addpending \\
-ContextGraph & 41/98 & 41.84\%  & \addpending \\
+Random summaries & 19/97 & 19.59\% \\
+Mem0 & 19/98 & 19.39\% \\
+LangMem & 24/98 & 24.49\% \\
+No memory & 25/98 & 25.51\% \\
+Oracle summary & 35/98 & 35.71\% \\
+ContextGraph & 41/98 & 41.84\% \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -114,7 +113,7 @@ No memory & 50/50 & 29 & 58.0\% \\
 \caption{Historical SWE-bench-Pro50, recovered from a disabled preprint
 section. Memory arms share a 3,183-strategy pool and a \$10 per-task cap;
 no memory is uncapped. Rates use completed evaluations; costs are recorded
-totals under these different budgets. \tableadd{Green additions: Appendix~\ref{sec:table-additions}.}}
+totals under these different budgets.}
 \label{tab:pro50}
 \begin{tabular}{lrrrr}
 \toprule
@@ -123,7 +122,6 @@ Method & Completed/planned & Resolved & Rate & Cost (\$) \\
 ContextGraph & 47/50 & 11 & 23.40\% & 41 \\
 FAISS & 47/50 & 5 & 10.64\% & 68 \\
 No memory & 46/50 & 2 & 4.35\% & 1,686 \\
-\tableadd{Random strategies} & \addpending & \addpending & \addpending & \addpending \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -132,23 +130,23 @@ No memory & 46/50 & 2 & 4.35\% & 1,686 \\
 \centering
 \caption{Historical trajectory-graph snapshot, using text-embedding-3-large
 vectors with 3,072 dimensions. The new executable-witness graph
-uses a separate Qwen embedding space. \tableadd{Green additions: Appendix~\ref{sec:table-additions}.}}
+uses a separate Qwen embedding space.}
 \label{tab:schema}
-\begin{tabular}{lrlr}
+\begin{tabular}{lrl}
 \toprule
-Node label & Count & Role  & \tableadd{With vector} \\
+Node label & Count & Role \\
 \midrule
-Trajectory & 1,795 & Source episode  & \addpending \\
-Fragment & 13,813 & Action and observation slice  & \addpending \\
-ErrorPattern & 586 & Error type and keywords  & \addpending \\
-Strategy & 9,600 & Extracted rule  & \addpending \\
-CanonicalRule & 7,835 & Consolidated rule  & \addpending \\
-PlaybookEntry & 8,910 & Retrieval-ready entry  & \addpending \\
-Community & 781 & Linked-fragment summary  & \addpending \\
-ProblemSummary & 1,795 & Episode problem abstraction  & \addpending \\
+Trajectory & 1,795 & Source episode \\
+Fragment & 13,813 & Action and observation slice \\
+ErrorPattern & 586 & Error type and keywords \\
+Strategy & 9,600 & Extracted rule \\
+CanonicalRule & 7,835 & Consolidated rule \\
+PlaybookEntry & 8,910 & Retrieval-ready entry \\
+Community & 781 & Linked-fragment summary \\
+ProblemSummary & 1,795 & Episode problem abstraction \\
 \midrule
-Total nodes & 45,115 &  & \addpending \\
-Total edges & 73,975 & Seven typed relations  & \tableadd{n/a} \\
+Total nodes & 45,115 & \\
+Total edges & 73,975 & Seven typed relations \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -156,7 +154,8 @@ Total edges & 73,975 & Seven typed relations  & \tableadd{n/a} \\
 \clearpage
 \section{Earlier interfaces and development comparisons}
 \label{sec:additional}
-Table~\ref{tab:interfaces} compares six interfaces in a
+Fail-to-pass tests check the requested fix; pass-to-pass tests check behavior
+that worked before the repair. Table~\ref{tab:interfaces} compares six interfaces in a
 Related-Lite99 experiment: a separate DeepSeek V4 Pro campaign with 500 calls
 and the last five observations retained. Its frozen verdict requires
 fail-to-pass success and does not veto every pass-to-pass regression. The
@@ -213,12 +212,17 @@ the state after that workflow. In Django16819, canceling a same-name index
 remove/add pair loses a required change of indexed column. These observations
 motivate applying memory conditions along the current operation sequence.
 
-\paragraph{Four-benchmark extension.}
-The new matched no-memory, FAISS, and Graph evaluation targets Verified150,
-Related-Lite99, LoLBench/CAPBench100, and Datacurve DeepSWE113. These four
-new-method result sets are incomplete. The closed DeepSWE Kea development
+\paragraph{Additional development outcomes.}
+The closed DeepSWE Kea development
 baseline passes 9/12 fail-to-pass and 139/139 pass-to-pass tests (binary reward 0).
 The closed JDK5 LoLBench baseline originally submitted no artifact; a separate
 no-inference recovery of its recorded patch passes 0/5 fail-to-pass and 51/51
 pass-to-pass tests (binary reward 0). These are development outcomes. The
 historical Verified500 table is a different evaluation from Verified150.
+
+\paragraph{Executable-witness bank coverage.}
+The archived 273-source bank provides at least one witnessed source from the
+same repository for 133/150 Verified targets, 91/99 Related-Lite targets,
+2/100 LoLBench targets, and 0/113 DeepSWE targets. These counts describe the
+executable-witness bank used during development, rather than the
+cross-repository strategy memory in the main benchmark comparison.

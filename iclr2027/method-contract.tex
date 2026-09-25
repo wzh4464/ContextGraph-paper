@@ -1,13 +1,23 @@
-\section{Implementation and evaluation details}
+\section{Executable-analysis implementation and evaluation details}
 \label{sec:method-contract}
+This appendix specifies the runnable-example and condition-composition
+extension used for behavioral analysis, introduced in
+Appendix~\ref{sec:executable-analysis}. Its programs are constructed for those
+studies; Section~\ref{sec:method} defines the abstract experience memory and
+its use in planning and error recovery.
+\subsection{Constructing historical examples}
+A language-model writer reads the historical issue, patch, and relevant code
+to propose a requirement and runnable example. Execution on the historical
+versions and researcher review check that the example exercises the intended
+behavior. Accepted examples are stored with their requirement, input roles,
+program, and before/after execution results.
+
 \subsection{Retrieval and repair settings}
-The implemented witness-retrieval path selects the top three same-repository
-sources using Qwen3-Embedding-8B and FAISS. It returns complete records and
-typed input relations. The broader comparison uses the existing 273-source
-bank plus validated pre-base additions, with the bank and adapters fixed
-before evaluation. Iterative search changes the selection procedure;
-sequential updating changes when new experience enters memory. Both use the
-same requirement representation and composition interface.
+The implemented retrieval path selects three historical repairs from the same
+repository using Qwen3-Embedding-8B vectors and FAISS
+\citep{qwen3embedding2025}. Each has a validated example.
+It returns complete records and input relations, including types and argument
+roles.
 
 The experiment configuration records source and target IDs, model and agent
 versions, index and adapter versions, prompts, budgets, and verifiers.
@@ -17,49 +27,17 @@ This makes the retrieval, behavioral, and cost comparisons reproducible.
 \label{sec:public-program}
 The development range example extracts model and test snippets from the
 public issue and adds researcher-written setup and observation code. The
-range and timezone adapters are also researcher-written. \expmark{The
-following automatic preparation and applicability workflow is specified for
-the additional evaluation and still requires implementation and validation.}
-
-Given an issue and the original repository, the coding agent first inspects
-public code, tests, and documentation. It extracts or constructs a reproducer,
-prepares dependencies and objects, and identifies the operation to combine.
-The output contains setup, exercise, and observation functions; the execution
-command and environment; input roles; and the public evidence for the expected
-outcome. An initial execution checks that the program reaches the intended
-operation. A failure of the reported behavior is useful; a setup failure
-means preparation is incomplete.
-
-This preparation runs before memory is supplied. All methods receive the
-same program, execution record, or failure status for each task and repetition.
-Its full resource use counts against every method's total budget. When the
-artifact is physically reused, the campaign ledger records its actual charge
-once while the per-method estimate includes the full preparation cost.
-Preparation has fixed tool, token, and time limits. It uses public information
-and leaves the candidate implementation unchanged. If it fails, the agent
-continues ordinary repair work, with any applicable requirement supplied as
-text. Researchers do not prepare individual fixtures in this automatic setting.
-
-\subsection{Deciding whether history still applies}
-The assessor compares the retrieved requirement with the current issue,
-version-matched documentation and tests, and reachable pre-base history.
-Acceptance requires compatible input and operation semantics and current
-evidence for the expected behavior. An explicit behavior change rejects the
-old requirement; missing or conflicting evidence produces an uncertain
-decision. Only accepted requirements become executable checks. An accepted
-requirement without a supported adapter is delivered as cited text.
-
-Each decision records the supporting source and current evidence, the input
-mapping, and the reason. The automatic assessor uses the same backbone as
-the solver. Independent annotators evaluate these decisions and the resulting
-repairs; their labels and checks remain private. Appendix
-\ref{sec:applicability-audit} describes this evaluation.
+range and timezone adapters are also researcher-written. The case inputs,
+expected behaviors, and control conditions are given in
+Appendix~\ref{sec:development-details}.
 
 \subsection{Composition interface}
-The composer takes the current program $P_q$, memory $m$, typed bindings,
-and an adapter registry. Bindings describe constructors, input values and
-types, operation arguments, current objects, and their source locations.
-It returns a check, its observer, the mapping used, and a construction status.
+The composer is the procedure that builds a combined check. It takes the
+current program $P_q$, memory $m$, input bindings, and available adapters.
+A binding identifies which object plays each role, together with its type,
+constructor, argument position, and code location. The composer returns the
+check, code that inspects its outcome (the observer), the mapping used, and
+whether construction succeeded.
 The steps are:
 \begin{enumerate}
 \item Match an adapter to the current operation and its type requirements.
@@ -72,27 +50,19 @@ Record setup or observation errors separately so they can be distinguished
 from failures of the requirement.
 \end{enumerate}
 
-The range adapter transforms the public query's syntax tree. It preserves
-the lazy User and nested query while changing the terminal lookup to a
-point range. Equality and range must select the same normalized non-null
-value. The timezone adapter instead constructs combinations of database,
-ambient, and destination roles. Source extractors recover the bindings these
-adapters support. Adding an operation family requires another adapter and
-its development tests.
-
-\subsection{Coverage and mechanism comparisons}
-\label{sec:support-strata}
-Before any run, classify each target from its public issue and repository
-as supported by the adapters, outside their scope, or uncertain. Retain the
-same groups when reporting preparation, delivery, repair success, and cost.
-Failures and text fallback stay in their assigned groups.
-
-The relation ablation gives the same composer either stored bindings or
-bindings reconstructed from text. Both use the same record schema, source
-IDs, applicability decisions, validator, and budget. Withheld relations are
-also omitted from tool explanations. Another contrast supplies the same
-bindings to an adapter or a free-form composer. A third supplies execution
-observations before editing; ordinary execution tools remain available to
-all arms. The separate-versus-joint comparison holds two check slots and
-feedback rounds fixed. These comparisons measure the role of each choice
-on the development tasks (Table~\ref{tab:planned-graph}).
+The current adapters cover two Django operation families. The range adapter
+transforms the public query's syntax tree, changing an equality lookup for
+$x$ into a range with both endpoints equal to $x$, using the historical
+named-tuple type $R$:
+\begin{equation}
+ P_q(x)\longmapsto P_q^{\mathrm{range}}(R(x,x)).
+ \label{eq:composition}
+\end{equation}
+When equality and this one-point range select the same normalized, non-null
+value, the expected rows stay unchanged. The adapter preserves the lazy User
+and nested query; replacing that object with a lazy integer would lose the
+interaction. An ordinary-tuple range checks preservation of existing behavior.
+The timezone adapter constructs combinations of database, active application,
+and destination roles. Extraction code recovers the bindings these adapters
+support. Adding an operation family requires another adapter and its
+development tests.

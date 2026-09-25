@@ -1,6 +1,14 @@
 # ContextGraph figures: design revision (2026-09-21)
 
-This folder redraws the two figures from `../contextgraph-author-style/`, the concept comparison and the method overview. `main.tex` now uses them as `fig:concept`, a new figure in the introduction, and `fig:method` in Section 2, where the overview replaces `memory_method.pdf`. The old figure files stay in the repository. Adding the concept figure lengthens the main text from 8 to 9 full pages. `../contextgraph-design.zip` is a snapshot of this folder.
+This folder contains the author's concept comparison and executable-study
+overview, redrawn from `../contextgraph-author-style/`. Both original PDFs
+remain unchanged in the main text. At the author's request on September 24,
+they appear before the experiments: Figure 2 follows the motivation case on
+page 3, and Figure 4 concludes the method on page 4. Their labels are
+`fig:concept` and `fig:behavior-workflow` in `experience-memory.tex`.
+The core abstract-experience architecture is Figure 3, drawn from
+`../experience-memory-overview.tex`. The body remains eight pages.
+`../contextgraph-design.zip` is the original package snapshot.
 
 | Figure | SVG | PDF | PNG (3×) |
 |---|---|---|---|
@@ -18,12 +26,12 @@ This folder redraws the two figures from `../contextgraph-author-style/`, the co
 
 - **Roles.** Each role keeps one colour in both figures: *r* is blue, *I* amber, *A* teal and *O* violet. Role letters are set in STIX Two italic to match the paper's math.
 - **Lines.** Amber lines carry memory traffic (store, link, top-3 IDs, recover). Violet dashed lines carry execution feedback (observations, rerun). Slate lines show task flow. ✓/✗ appear only on the source checks and illustrate witness acceptance, not results.
-- **Figure 1.** The two rows share the same past repair, current issue, agent and patch columns. Only the memory interface in the middle differs. Row (a) keeps the requirement sentence and shows the witness slots as empty. Row (b) composes `R(lo, hi)` with `filter(field=x)` into `filter(field__range=R(x,x))`, which is the range adapter from Section 2.3.
+- **Figure 1.** The two rows share the same past repair, current issue, agent and patch columns. Only the memory interface in the middle differs. Row (a) keeps the requirement sentence and shows the witness slots as empty. Row (b) composes `R(lo, hi)` with `filter(field=x)` into `filter(field__range=R(x,x))`, which is the range adapter defined in the executable-analysis appendix.
 - **Figure 2.** Memory, meaning the FAISS index and the context graph, sits in a strip between Build (A) and Apply (B). Build writes into it from above and Apply reads from it below, so no line crosses a stage. The relation network is illustrative and is not a schema export.
 - **Icons.** All icons are drawn vectors, and no MemCo bitmap crops are used.
 - **Type.** Labels use IBM Plex Sans and code uses IBM Plex Mono. At \linewidth, labels are 6.4 pt and the smallest text is 5.2 pt.
 
-## Captions
+## Original design captions (the manuscript uses behavioral-study captions)
 
 **Figure 1:** From retrieved advice to executable requirements. (a) A retrieval-as-text interface returns the historical requirement $r$ as a sentence; its input, operation, and observer are not retained. (b) ContextGraph links $r$ to its witness $(I, A, O)$, recovers the historical input and observer, and composes them with the current operation: `filter(field=x)` becomes `filter(field__range=R(x,x))`. Observations return to the agent, and the condition reruns after each edit. The comparison concerns the memory interface; agents in both settings may run task tests.
 

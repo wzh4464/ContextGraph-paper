@@ -2,21 +2,35 @@
   "verified500": {
     "labels": [
       "None",
+      "FAISS Flat",
       "ExpeL",
       "Agent KB",
-      "FAISS",
+      "ExpeRepair",
+      "ReasoningBank",
+      "ACE",
+      "Supermemory",
       "CG"
     ],
     "resolved": [
-      309,
+      308,
+      326,
       312,
       320,
-      327,
+      318,
+      335,
+      311,
+      318,
       346
     ],
-    "n": 500
+    "n": 500,
+    "model": "DeepSeek V4 Pro 0813",
+    "agent": "mini-SWE-agent",
+    "author_adaptations": [
+      "ExpeRepair",
+      "ACE"
+    ]
   },
-  "related98": {
+  "related99_crossmodel": {
     "models": [
       "GPT-5.4",
       "DeepSeek",

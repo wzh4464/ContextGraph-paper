@@ -1,93 +1,194 @@
 # ContextGraph ICLR 2027 manuscript
 
-The current manuscript has **eight main-text pages**, references on pages 9–10,
-and 30 pages in total. It explains the problem, method, and observed results
-using concrete repair examples. The paper calls the method **ContextGraph**;
-retrieval and update choices are described directly instead of using internal
-release names.
+The current manuscript has **eight main-text pages**, references on pages 9–11,
+and **24 pages in total**. The title is **ContextGraph: Self-Improving Coding
+Agents via Cross-Repository Experience Graphs**. `main.pdf` is the canonical PDF.
 
-## Main text
+## Current method and narrative
 
-1. Introduction: three challenges and three explicit contributions; each
-   contribution points to its method, experiment, and observed result.
-2. Background and motivation: concrete input roles and interactions that
-   explain the design.
-3. Method: requirement memory, condition composition, and execution feedback.
-   These names also identify the three contributions and mechanism studies.
-4. Experiments: repair success, three mechanism studies in that same order,
-   then models, retries, and pool size. Each group ends with an explicit finding.
-5. Discussion and related work: reusable design ideas and the current operation coverage.
-6. Conclusion.
+The author's September 24 clarification defines core memory as abstract,
+transferable guidance: what to do, what to avoid, and when a lesson applies.
+The agent consults memory before generating a plan and after an error. It
+constructs local reproductions, edits, and tests itself. Executable-condition
+studies are behavioral analyses, not the core cross-repository memory format.
 
-The original three-panel results overview is restored as Figure 1.
-Seven completed result tables are restored to the main text, including
-Verified500 (346/500 versus 309/500), the three behavioral tables, cross-model
-Related-Lite98, cumulative Related-Lite99 results, and the pool-size comparison.
-All original cells in the **18 recorded tables** are preserved. Twelve tables
-now have green additions so every numbered table, and each comparison panel,
-has at least four data rows and four columns. Headers are excluded from the
-row count; the method/metric column is included. Each experiment retains its
-own model, memory pool, task counts, and attempt setting.
+The introduction retains MulVul's six-paragraph structure followed by three
+contribution bullets. The Django Trac #33018 example comes from slides 1–3 of
+`context_graph_v9_no_movie.pptx`: investigation strategies and warnings from
+`python-statemachine` and `sievelib` guide a Django repair. Main-text sections
+cover introduction, background, method, experiments, related work, and conclusion.
 
-## Figures
+The conclusion follows MulVul's single-paragraph progression: proposed
+architecture, the roles of its core designs, measured benchmark results, and
+the implication for coding-agent memory. It reports 69.2% on Verified500,
+72.1% on DeepSWE113, their 2.2/5.9-point leads over the strongest evaluated
+memory baselines, and the 21.4% to 36.3% Related-Lite99 gain. The repeated
+architecture-summary paragraph in the discussion is consolidated into this
+conclusion. Checks are in `outputs/paper-conclusion-mulvul-20260924/` in the
+main repository; no table, figure, or experimental result was changed.
 
-- `figures/paper_results_overview.pdf`: original three-panel numerical overview.
-- `figures/contextgraph-design/fig1-concept.pdf`: executable requirements,
-  main Figure 2.
-- `figures/contextgraph-design/fig2-overview.pdf`: memory construction and use,
-  main Figure 3.
-- `figures/memory_content_scope.pdf`: the detailed behavior comparison in the appendix.
+## September 24 consistency revision
 
-All four PDFs are byte-identical to the files before the writing revision.
-The two design PDFs also match paper commit `91aa76a`. The unused
-`paper_final_overview.*` placeholder files remain available but are not
-included in the manuscript.
+The abstract, introduction, method, and conclusion now share one architecture:
+experience abstraction, graph retrieval, and memory access before planning and
+after errors. Figure 3 shows that architecture. Its concrete retrieval path
+(error pattern, shared rule, source strategy, past trajectory) follows the
+repository's graph relations; it is not presented as an observed case trace.
 
-## Experiments and author material
+Experiments proceed through overall repair effectiveness, model/pool-size
+comparisons, retry success, and behavioral analysis. The three behavioral
+analyses now form one subsection, with a finding about applicability context,
+condition interactions, or failure-guided revision. Their original diagrams
+and all results remain in the main text. They are not labeled as component
+ablations of abstraction, graph retrieval, or memory timing.
 
-The **16 pending tables** remain in the appendices, with unmeasured cells
-marked red TBD. New rows and columns are green, with green TBD for results to
-collect. Existing coverage counts remain black. No new experimental result
-was added by this revision.
+The full-context retrieval proposal now returns strategies, warnings, and
+source context through the core memory interface. Executable examples and
+composition remain in the behavioral-study protocol. Cross-references in
+both appendices have been updated. Checks and the pre-edit snapshot are in
+`outputs/paper-unified-story-20260924/` in the main repository.
 
-- `additional-evaluation.tex`: four-benchmark, held-out behavior, mechanism,
-  and coverage/cost result panels formerly occupying the main text.
-- `planned-experiments.tex`: sampling, comparisons, outcomes, and remaining tables.
-- `method-contract.tex`: concise implementation and evaluation details.
-- `historical-tables/supplement.tex`: eight additional recorded tables.
-- `new-results-20260916.tex`: three supplied result tables and the full-context
-  search design.
-- `development-details.tex`: case inputs and observed repair behavior.
-- `table-additions.tex`: green definitions of the new conditions, measurements,
-  denominators, and matched-run settings, linked from each expanded table.
-- `绿色表格补充清单.md`: Chinese checklist distinguishing new runs from log recovery.
-- `recorded-results.tex`: archive of the former appendix organization of the
-  seven tables now restored to the main text; not compiled.
-- `author-experiment-protocol.md`: preserved detailed execution instructions;
-  not compiled into the paper.
-- `实验补齐与结论判读.md`: experiment priorities and practical-effect examples
-  for author use. Those examples are not measurements or expected scores.
-- `method-evaluation-contract.json`: internal run specification; unchanged by
-  this writing revision.
+## September 24 cleanup and figures
 
-Red experiment marking and green table additions are controlled by `experiment-review.tex`.
-`\expcriterion` notes and `experiment-decision-guide.tex` are no longer
-rendered in the manuscript; the source text and Chinese author guide retain
-the planning information. `\experimentreviewfalse` removes the red styling,
-without filling any missing result.
+Figure 3 now embeds the supplied Claude Design v1 vector PDF, retrieved from
+the Figure 3 email's download page. It remains on page 3 and shows experience
+abstraction, the experience graph and retrieval interface, and memory access
+before planning and after errors. The original PDF and editable SVG are in
+`figures/figure3-design-v1/`; the old TikZ source is retained but no longer
+compiled. The caption identifies the graph links as illustrative. Shortened
+duplicate figure/table captions and retrieval prose keep the main text at
+eight pages without changing table values or the other figures. Checks and
+the pre-edit snapshot are in `outputs/paper-figure3-gmail-20260924/` in the
+main repository.
 
-The automatic reproducer preparation, applicability assessor, and shared
-validator remain planned work. The paper describes the implemented retrieval
-and researcher-written adapters, and states this implementation status where
-it explains the input to composition.
+At the author's request, the compiled manuscript no longer contains red or
+green experiment-planning annotations, TBD cells, unmeasured table extensions,
+or their corresponding appendix protocols. Existing measured results are
+preserved. The planning source files remain available as author records but
+are not included by `main.tex`:
+
+- `additional-evaluation.tex`
+- `planned-experiments.tex`
+- `table-additions.tex`
+- `experiment-review.tex`
+
+The automatic preparation/applicability proposal and unmeasured mechanism
+comparisons are removed from `method-contract.tex`; implemented study details
+remain. Full-context retrieval retains its design description, without the
+unmeasured comparison table. Recorded source-bank coverage from the removed
+planning table is preserved in `historical-tables/supplement.tex`.
+
+The three-benchmark comparison is **Figure 5 (page 5)**: all nine methods on
+Verified500, Related-Lite99, and DeepSWE113, displaying 27 resolution rates.
+The pool-size study is **Table 1 (page 6)**, and the cross-model comparison
+is **Figure 6 (page 6)**. The new figure
+shows six memory conditions across four language models, with percentages
+computed from all 24 original resolved/completed fractions. The style follows MulVul's
+`fig/longtail_f1.png`: Times-style serif labels, white background, light gray
+grid, and a red highlight for ContextGraph. The cross-model figure uses bars,
+with hatching to distinguish oracle access. Both result figures are vector PDFs.
+
+- `figures/benchmark_comparison.pdf`: three-benchmark comparison.
+- `figures/crossmodel_comparison.pdf`: four-model memory comparison.
+- `figures/crossmodel_data.json`: original counts and settings for all 24 conditions.
+- `figures/draw_crossmodel.py`: cross-model figure renderer.
+- `figures/pool_size_coverage.pdf`: superseded pool-size figure; no longer compiled.
+- `figures/benchmark_pool_data.json`: measured values and reporting settings.
+- `figures/draw_benchmark_pool.py`: reproducible rendering script; requires matplotlib.
+
+The original results overview, comparison diagram, architecture diagram, and
+behavior figure PDFs are unchanged. All their hashes were checked against the
+pre-edit snapshot. At the author's request, the two original design diagrams
+now appear before the experiments: Figure 2 (page 3) follows the motivation
+case, and Figure 4 (page 4) concludes the method. Their captions retain the
+behavioral-study context. The core experience-memory diagram is Figure 3
+(page 3). Checks are in `outputs/paper-front-design-figures-20260924/`.
+
+The manuscript now contains five main-text tables and six main-text figures.
+Appendices retain historical comparisons, supplied results, development cases,
+executable-study implementation, and published reference scores. The numerical
+companion to Figure 5 is Table 18 (page 24). Its standalone version is
+`main-table-preview.pdf` (one page); empty LoLBench columns and the incomplete
+slide-derived rate panel have been removed. The slide's recorded counts remain
+in `new-results-20260916.tex`. Detailed run metadata was not supplied for the
+additional Related-Lite99 and Gemini summaries. The Codex/GPT-5.5 result is
+now identified as the LoLBench Python experiment described below.
+
+## Measured results and author decisions
+
+The main comparison uses DeepSeek V4 Pro 0813 and mini-SWE-agent. ExpeRepair
+and ACE are author adaptations to that agent. Related-Lite99 and DeepSWE113
+report means across five runs, without standard deviations. Verified500
+retains its recorded rate; a five-run mean is not inferred for it.
+ContextGraph reports 69.2%, 36.3%, and 72.1%, respectively. Agent KB leads
+Related-Lite99 at 38.2%; ContextGraph leads the other two benchmarks.
+
+The author confirmed the fourth benchmark on September 24: 20 Python tasks
+selected from LoLBench, with a graph built from other Python tasks and Codex
+using GPT-5.5. No memory resolves 1/20 at pass@1 (5.0%); ContextGraph resolves
+3/20 at pass@1 (15.0%) and 5/20 at pass@3 (25.0%). The author subsequently
+confirmed that the other memory methods also resolve 1/20. Table 16 now
+reports 5.0% pass@1 for FAISS Flat, ExpeL, Agent KB, ExpeRepair, ReasoningBank,
+ACE, and Supermemory, following the method roster of the main comparison.
+The abstract, contribution, results, and conclusion state that ContextGraph
+leads these evaluated methods on the LoLBench Python subset. The old 5/30
+entry is corrected to 5/20; the latest
+update does not establish a no-memory pass@3 result, so that cell is omitted.
+This configuration is described separately from the matched three-benchmark
+comparison in Figure 5. The abstract, introduction, experiments, and
+conclusion incorporate the LoLBench result, citing the public dataset at
+https://huggingface.co/datasets/lolbench26/LoLBench.
+The source count and task IDs are not inferred from the dataset's language
+totals. These are author-supplied results, not a new solver or verification run.
+The initial snapshot and checks are in `outputs/paper-lolbench-python20-20260924/`;
+the baseline update is checked in `outputs/paper-lolbench-baselines-20260924/`
+in the main repository. No baseline pass@3 values or repeated-run means are
+inferred from the new aggregate counts.
+
+The four Django behavioral pairs retain Fail/Pass for no memory/memory.
+The separate-history control retains Pass, 2/2, 1/3, 2/2, and 2/3.
+The retry study retains its three completed rounds; no fourth round is planned
+in the manuscript. All historical configurations retain their recorded counts,
+denominators, and paired statistics.
+
+Table 1 uses GPT-5.4 and one attempt per task. The 50/100/200/300-summary
+resolution rates are 21.88%, 27.55%, 26.80%, and 34.69%; source coverage is
+41.3%, 45.8%, 51.4%, and 60.7%. The original resolved/completed counts remain
+in the table, Appendix A, and the source data. The author canceled USD/resolution for
+this study. The source-coverage definition still awaits author clarification;
+these measurements have not been relabeled as Recall@3 or same-repository coverage.
+
+The benchmark name remains Related-Lite99 throughout the compiled manuscript.
+`main-table-preview.csv` remains the earlier experiment-entry worksheet;
+this cleanup changes the paper and PDF preview, not that planning worksheet.
+The open `main-table-preview.xlsx` is not overwritten.
+
+## Verification and history
+
+The cleanup snapshot and checks are in the main repository at
+`outputs/paper-clean-figures-20260924/`. The later cross-model-figure and
+pool-table revision is checked in `outputs/paper-crossmodel-figure-20260924/`.
+It preserves all 24 cross-model fractions and both pool-size metrics. The
+existing figure PDFs are unchanged. The build has no undefined references,
+overfull boxes, or TBD text. No solver experiment or new measurement was run.
+
+Earlier changes and source mappings are retained in:
+
+- `outputs/paper-cross-repository-memory-20260924/`
+- `outputs/paper-verified500-update-20260924/`
+- `outputs/paper-related99-update-20260924/`
+- `outputs/paper-deepswe-percentages-20260924/`
+- `outputs/paper-restore-design-figures-20260924/`
+- `outputs/paper-table2-result-20260924/`
+- `outputs/paper-separate-history-result-20260924/`
+- `outputs/paper-pool-coverage-20260924/`
+
+Older architecture notes, experiment guides, and original-table archives are
+author records, not compiled manuscript sections. Current author instructions
+and the definitions above take precedence over earlier planned configurations.
 
 ## Build
 
 ```bash
 latexmk -xelatex -interaction=nonstopmode -halt-on-error main.tex
 ```
-
-The challenge-to-contribution-to-evidence mapping is in
-`contribution-alignment-20260922.md`.
-Verification of this revision is under the main repository's
-`outputs/01a0af7d-50b6-7233-ba4f-cc18f3bdf1c4/green-table-extension/support/`.

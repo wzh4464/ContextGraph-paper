@@ -5,6 +5,7 @@ Artwork, labels, and data are specific to ContextGraph. No projected results.
 """
 from pathlib import Path
 import json
+import sys
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -19,32 +20,38 @@ INK='#243849'; BLUE='#3971A6'; ORANGE='#B9742A'; GREEN='#3D7865'; GREY='#9AA3AC'
 
 def save(fig,name):
     for ext in ('pdf','svg','png'):
-        fig.savefig(OUT/f'{name}.{ext}',dpi=220,bbox_inches='tight',pad_inches=.025)
+        output = OUT/f'{name}.{ext}'
+        fig.savefig(output,dpi=220,bbox_inches='tight',pad_inches=.025)
+        if ext == 'svg':
+            output.write_text('\n'.join(line.rstrip() for line in output.read_text().splitlines())+'\n')
     plt.close(fig)
 
 # Each panel has its own population and protocol. Source: existing main tables.
-data={'verified500':{'labels':['None','ExpeL','Agent KB','FAISS','CG'],
-                    'resolved':[309,312,320,327,346],'n':500},
-      'related98':{'models':['GPT-5.4','DeepSeek','Kimi','MiniMax'],
+data={'verified500':{'labels':['None','FAISS Flat','ExpeL','Agent KB','ExpeRepair','ReasoningBank','ACE','Supermemory','CG'],
+                    'resolved':[308,326,312,320,318,335,311,318,346],'n':500,
+                    'model':'DeepSeek V4 Pro 0813','agent':'mini-SWE-agent',
+                    'author_adaptations':['ExpeRepair','ACE']},
+      'related99_crossmodel':{'models':['GPT-5.4','DeepSeek','Kimi','MiniMax'],
                    'control':[[21,98],[30,98],[18,97],[19,98]],
                    'memory':[[34,98],[34,97],[28,98],[27,98]]},
       'related99_retry':{'passes':[1,2,3],'control':[14,16,25],'memory':[21,25,27],'n':99}}
 (OUT/'paper_overview_data.json').write_text(json.dumps(data,indent=2)+'\n')
-fig,axs=plt.subplots(1,3,figsize=(7.6,2.0),gridspec_kw={'width_ratios':[1.05,1.05,1]})
-fig.subplots_adjust(left=.06,right=.99,bottom=.26,top=.80,wspace=.40)
+fig,axs=plt.subplots(1,3,figsize=(7.6,2.25),gridspec_kw={'width_ratios':[1.65,1.05,1]})
+fig.subplots_adjust(left=.06,right=.99,bottom=.36,top=.80,wspace=.38)
 a=axs[0]; d=data['verified500']; vals=np.array(d['resolved'])/5
-a.bar(range(5),vals,color=[GREY,BLUE,BLUE,BLUE,ORANGE],width=.67)
-for i,v in enumerate(vals):a.text(i,v+2.0,f'{v:.1f}',ha='center',fontsize=7)
-a.set(ylim=(0,82),xticks=range(5),xticklabels=d['labels'],ylabel='Resolved (%)')
-a.tick_params(axis='x',labelsize=7,rotation=30,length=0)
+a.bar(range(len(vals)),vals,color=[GREY]+[BLUE]*(len(vals)-2)+[ORANGE],width=.67)
+for i,v in enumerate(vals):a.text(i,v+2.0,f'{v:.1f}',ha='center',fontsize=6.5)
+a.set(ylim=(0,82),xticks=range(len(vals)),xticklabels=d['labels'],ylabel='Resolved (%)')
+a.tick_params(axis='x',labelsize=6.5,rotation=50,length=0)
+plt.setp(a.get_xticklabels(),ha='right',rotation_mode='anchor')
 a.set_title('(a) Verified500',fontsize=9,fontweight='bold',pad=16)
-a.text(.5,1.04,'GPT-5.4 / mini-SWE-agent',transform=a.transAxes,ha='center',fontsize=7,color=INK)
-a=axs[1]; d=data['related98']; x=np.arange(4)
+a.text(.5,1.04,'DeepSeek V4 Pro 0813 / mini-SWE-agent',transform=a.transAxes,ha='center',fontsize=6.5,color=INK)
+a=axs[1]; d=data['related99_crossmodel']; x=np.arange(4)
 c=[100*n/t for n,t in d['control']]; m=[100*n/t for n,t in d['memory']]
 a.bar(x-.17,c,width=.33,color=GREY,label='No memory');a.bar(x+.17,m,width=.33,color=ORANGE,label='ContextGraph')
 a.set(ylim=(0,42),xticks=x,xticklabels=d['models'],ylabel='Resolved / completed (%)')
 a.tick_params(axis='x',labelsize=7,rotation=30,length=0)
-a.set_title('(b) Related-Lite98',fontsize=9,fontweight='bold',pad=16)
+a.set_title('(b) Related-Lite99',fontsize=9,fontweight='bold',pad=16)
 a.text(.5,1.04,'Historical single attempt',transform=a.transAxes,ha='center',fontsize=7,color=INK)
 a=axs[2]; d=data['related99_retry']
 a.plot(d['passes'],d['control'],'o-',color=GREY,ms=4,lw=1.5,label='No memory')
@@ -60,6 +67,8 @@ for a in axs:
     a.tick_params(axis='y',labelsize=7,width=.6,length=2)
     a.set_axisbelow(True);a.grid(axis='y',color='#E7ECF0',lw=.5)
 save(fig,'paper_results_overview')
+if '--overview-only' in sys.argv:
+    raise SystemExit(0)
 
 def canvas(h):
     f,a=plt.subplots(figsize=(7.6,h));f.subplots_adjust(left=0,right=1,bottom=0,top=1)

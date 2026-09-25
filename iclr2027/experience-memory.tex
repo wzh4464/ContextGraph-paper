@@ -1,0 +1,102 @@
+\section{Background and motivation}
+\label{sec:motivation}
+\paragraph{Transfer a debugging decision across repositories.}
+The Django case (Trac \#33018) mishandles empty query results under negation.
+A failed \texttt{python-statemachine} attempt had spent its effort setting
+up a full Django application. Its lesson was to isolate the bug with a
+minimal reproduction before investing in framework setup. A successful
+\texttt{sievelib} trajectory also supported reproducing the failure before
+editing. Together, these experiences suggest an investigation strategy and
+warn against an expensive detour.
+
+\paragraph{Apply the lesson to the current code.}
+The history-informed agent followed the exception through query compilation
+to \texttt{Exists.as\_sql()}, corrected its handling, and added a regression
+test. The no-memory attempt ended with broad formatting changes and no core
+fix. Memory supplied the strategy; the agent worked out the local implementation.
+
+Figure~\ref{fig:concept} illustrates how retrieved requirements guide repair
+checks in our behavioral studies.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/contextgraph-design/fig1-concept.pdf}
+\caption{Behavioral study of a retrieved requirement in a Django repair. (a) The agent receives
+a requirement as text. (b) Linked context supports a check that combines the
+historical range type $R$ with the current query. Execution feedback guides
+the next edit.}
+\label{fig:concept}
+\end{figure}
+
+\section{ContextGraph: memory for planning and error recovery}
+\label{sec:method}
+ContextGraph connects three designs: experience abstraction makes past
+decisions transferable, graph retrieval finds related lessons, and memory
+access brings them into planning and error recovery
+(Figure~\ref{fig:experience-memory}).
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/figure3-design-v1/fig3-contextgraph.pdf}
+\caption{ContextGraph's experience-memory architecture. (a) Past trajectories
+supply transferable strategies and warnings linked to source context.
+(b) The agent retrieves guidance before planning and after errors, then applies
+it through investigation, edits, and tests. The graph shows illustrative links.}
+\label{fig:experience-memory}
+\end{figure}
+
+\subsection{Experience abstraction: retain the useful decision}
+\label{sec:experience-abstraction}
+From task descriptions, actions, errors, and outcomes, a language model
+extracts lessons about debugging, testing, navigation, and failed approaches.
+Abstraction removes source-specific names while retaining why the action
+helps: the failed framework setup becomes advice to isolate the bug first.
+
+The graph links strategies to source experiences and recurring error patterns.
+Similar strategies share a rule, bringing together observations across
+repositories. Strategies describe productive actions; warnings identify
+unproductive approaches. Links to source outcomes help the agent interpret both.
+
+\subsection{Graph retrieval: find relevant strategies and warnings}
+\label{sec:experience-retrieval}
+A query describes the task and the agent's situation. Semantic search finds
+related lessons; keyword search matches error terms. A graph walk follows
+error patterns through shared rules and source strategies to past trajectories
+(Figure~\ref{fig:experience-memory}). Different errors can reach the same rule.
+The retriever merges semantic, keyword, and graph candidates, selecting a
+small, diverse set of lessons.
+
+Returned memory contains actions, warnings, and source context. The agent
+interprets this guidance against the current code and develops the local
+reproduction and patch. Appendix~\ref{sec:agentic-retrieval} describes
+iterative agent search over the experience pool.
+
+\subsection{Memory access: before planning and after errors}
+\label{sec:experience-access}
+\paragraph{Before generating a plan.}
+The agent queries memory with the issue and available code context.
+Strategies suggest where to investigate, how to reproduce the problem, and
+what to check first; warnings identify costly approaches to avoid.
+
+\paragraph{After encountering an error.}
+A failed command, reproduction, or test supplies a more specific query:
+the error, recent action, relevant files, and current hypothesis. The same
+graph now retrieves guidance on alternative causes and next actions.
+
+\paragraph{From guidance to action.}
+The agent applies advice through repository tools: narrowing a search,
+tracing an exception, or adding a test. New observations guide further
+retrieval. Completed trajectories can enter the same abstraction pipeline,
+extending the experience available to later tasks. Figure~\ref{fig:behavior-workflow}
+shows how the behavioral studies add task-specific checks to examine the
+application of retrieved requirements (Section~\ref{sec:evidence}).
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/contextgraph-design/fig2-overview.pdf}
+\caption{Workflow for the behavioral studies. (A) Historical
+repairs supply requirements and checked examples linked in memory.
+(B) Retrieval selects relevant sources; graph relations support composition
+with the current operation. Execution feedback guides edits before verification.}
+\label{fig:behavior-workflow}
+\end{figure}

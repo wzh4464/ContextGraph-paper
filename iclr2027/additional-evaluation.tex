@@ -3,6 +3,8 @@
 \expmark{The tables in this appendix contain experiments still to complete.
 They extend the existing results with a common four-benchmark comparison,
 independent behavioral evaluation, and controlled mechanism tests.}
+The protocols below retain the planned condition-composition extension
+described in Appendix~\ref{sec:executable-analysis}.
 
 \subsection{Repair success and behavioral completeness}
 \label{sec:heldout-main}
@@ -72,18 +74,18 @@ CG $-$ Flat (pp, CI) & \pending & \pending & \pending & \pending \\
 \end{tabular}
 \end{table}
 \subsection{Separate checks, joint checks, and relation information}
-The development study follows the three design questions in
+The development study follows the three behavioral questions in
 Sections~\ref{sec:content}--\ref{sec:feedback-results}, using 24 tasks and three
 repetitions. Content interventions compare how text and executable examples
 retain a trigger (Table~\ref{tab:planned-content}). H runs the current
 and historical checks separately; I replaces the historical check with a joint
 check. Both receive the same history and current program, with two check slots,
 the same starting state, and matched execution and feedback budgets.
-C--B tests supplying relations instead of reconstructing them, with the
-composer held fixed. C--G changes the composer while retaining the bindings;
-F--C adds supplied execution observations to test how feedback changes the
-repair. These contrasts examine triggers, composition, and feedback on the
-development panel.
+C versus B tests stored input relations against relations reconstructed
+from text, using the same composer. C versus G tests a fixed adapter against
+free-form check generation, using the same bindings. F versus C tests the
+effect of supplying check results before editing. Table~\ref{tab:planned-graph}
+defines each condition; together they test triggers, composition, and feedback.
 \begin{table}[!htbp]
 \expcolor
 \centering

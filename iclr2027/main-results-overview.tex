@@ -1,0 +1,66 @@
+% Numerical companion to the main comparison figure, with published reference settings.
+\begin{table}[p]
+\centering
+\caption{Recorded repair resolution rates (\%). Panel A gives our
+three-benchmark comparison. Panel B groups published reference results by
+their reported configuration. Bold marks the best result per benchmark in
+Panel A. An em dash indicates that the cited source does not report the
+corresponding benchmark.}
+\label{tab:main-results-overview}
+\small
+\setlength{\tabcolsep}{5pt}
+
+\textbf{A. Three-benchmark comparison}\\[3pt]
+\begin{tabular}{lccc}
+\toprule
+Method & Verified500 & Related-Lite99 & DeepSWE113 \\
+\midrule
+No memory & 61.6 & 21.4 & 60.8 \\
+FAISS Flat & 65.2 & 26.8 & 64.6 \\
+ExpeL & 62.4 & 20.7 & 58.7 \\
+Agent KB & 64.0 & \textbf{38.2} & 61.5 \\
+ExpeRepair$^\dagger$ & 63.6 & 31.3 & 64.4 \\
+ReasoningBank & 67.0 & 24.9 & 61.7 \\
+ACE$^\dagger$ & 62.2 & 28.1 & 62.8 \\
+Supermemory & 63.6 & 26.5 & 66.2 \\
+\textbf{ContextGraph} & \textbf{69.2} & 36.3 & \textbf{72.1} \\
+\bottomrule
+\end{tabular}
+
+\smallskip
+\begin{minipage}{\linewidth}\footnotesize
+Verified500, Related-Lite99, and DeepSWE113 use DeepSeek V4 Pro 0813 and mini-SWE-agent.
+Related-Lite99 and DeepSWE113 rates are means across five runs.
+$\dagger$ ExpeRepair and ACE are our adaptations to mini-SWE-agent.
+Method sources: ExpeL~\citep{expel2024}, Agent KB~\citep{agentkb2025},
+ExpeRepair~\citep{experepair2026}, ReasoningBank~\citep{reasoningbank2026},
+ACE~\citep{ace2026}, and Supermemory~\citep{supermemoryreport2026}.
+\end{minipage}
+
+\medskip
+\textbf{B. Published reference results, grouped by their reported configuration}\\[3pt]
+\begin{tabular}{llrrl}
+\toprule
+Method & Backbone & \shortstack{Verified500\\(\%)} & \shortstack{Related-Lite99\\(\%)} & Source \\
+\midrule
+ExpeRepair & Claude 3.5 Sonnet & 57.2 & --- & ER \\
+ExpeRepair & Claude 4 Sonnet & 74.6 & --- & ER \\
+ReasoningBank & Gemini 2.5 Flash & 38.8 & --- & RB \\
+ReasoningBank & Gemini 2.5 Pro & 57.4 & --- & RB \\
+No memory & Claude Sonnet 4.5 & --- & 26.26 & SC \\
+Supermemory & Claude Sonnet 4.5 & --- & 30.30 & SC \\
+Oracle summary & Claude Sonnet 4.5 & --- & 34.34 & SC \\
+\bottomrule
+\end{tabular}
+
+\smallskip
+\begin{minipage}{\linewidth}\footnotesize
+ER: \href{https://arxiv.org/html/2506.10484v2}{ExpeRepair, Table 1};
+RB: \href{https://arxiv.org/html/2509.25140}{ReasoningBank, Table 2};
+SC: \href{https://arxiv.org/html/2602.08316v3\#S3.T4}{SWE-ContextBench v3, Table 4}.
+ER uses its own repair pipeline with occasional o4-mini fallback;
+RB uses mini-SWE-agent; SC uses Claude Code.
+Oracle summaries supply the known related history. Published scores use
+their original budgets and memory settings.
+\end{minipage}
+\end{table}

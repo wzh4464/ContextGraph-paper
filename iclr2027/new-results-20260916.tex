@@ -1,24 +1,25 @@
-\section{Additional new experiment results}
+\section{Additional recorded experiment results}
 \label{sec:new-results}
-These experiments extend the Verified500 comparison in
-Table~\ref{tab:verified500} across agent backbones and measure both task
-resolution and token use. Earlier campaigns appear in
-Appendix~\ref{sec:historical}.
+These results complement the three-benchmark comparison in
+Figure~\ref{fig:benchmark-comparison}. The Related-Lite99 and Gemini summaries
+below retain their supplied aggregates; detailed run settings were not
+included. The LoLBench experiment uses the Python subset described below.
+Earlier campaigns appear in Appendix~\ref{sec:historical}.
 
 \begin{table}[htbp]
 \centering
-\caption{New SWE-Context comparison. Entries reproduce the reported
-resolved/total counts. \expmark{The run configuration and benchmark manifest are TBD.} \tableadd{Green additions: Appendix~\ref{sec:table-additions}.}}
+\caption{Additional Related-Lite99 comparison. Entries report
+resolved/completed counts.}
 \label{tab:new-swectx}
-\begin{tabular}{lrrr}
+\begin{tabular}{lr}
 \toprule
-Method & Resolved/total  & \tableadd{Tokens/task}  & \tableadd{USD/resolution} \\
+Method & Resolved/completed \\
 \midrule
-No memory & 21/98  & \addpending  & \addpending \\
-Free summaries & 19/98  & \addpending  & \addpending \\
-Mem0 & 19/98  & \addpending  & \addpending \\
-LangMem & 24/98  & \addpending  & \addpending \\
-ContextGraph & \textbf{35/98}  & \addpending  & \addpending \\
+No memory & 21/98 \\
+Free summaries & 19/98 \\
+Mem0 & 19/98 \\
+LangMem & 24/98 \\
+ContextGraph & \textbf{35/98} \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -28,9 +29,8 @@ ContextGraph & \textbf{35/98}  & \addpending  & \addpending \\
 
 \begin{table}[htbp]
 \centering
-\caption{New Gemini 3.1 Pro/live-SWE-agent comparison. \expmark{Benchmark identity
-and sample count are TBD.} The gain column reports relative improvements
-from the supplied rates. \tableadd{Green additions: Appendix~\ref{sec:table-additions}.}}
+\caption{New Gemini 3.1 Pro/live-SWE-agent comparison. The gain column reports relative improvements
+from the supplied rates.}
 \label{tab:new-gemini}
 \begin{tabular}{lrrr}
 \toprule
@@ -39,29 +39,40 @@ Metric & No memory & ContextGraph & Relative gain \\
 pass@1 & 82.3\% & \textbf{88.9\%} & +8.0\% \\
 pass@3 & 82.6\% & \textbf{90.4\%} & +9.4\% \\
 pass@5 & 82.8\% & \textbf{91.7\%} & +10.7\% \\
-\tableadd{Tokens/task} & \addpending & \addpending & \addpending \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \paragraph{Token efficiency.}
 The new summary reports 236K tokens per task without memory and 201K with
-ContextGraph, a 14.8\% reduction (approximately 15\%). \expmark{The benchmark, sample
-count, and token accounting scope remain TBD.}
+ContextGraph, a 14.8\% reduction (approximately 15\%).
+
+\paragraph{LoLBench Python subset.}
+We select 20 Python tasks from LoLBench \citep{lolbench2026}, which evaluates
+long-horizon development from enhancement proposals in large software
+systems. The agent is Codex with GPT-5.5. We construct the experience graph
+from other Python tasks, separate from the 20 evaluation tasks.
 
 \begin{table}[htbp]
 \centering
-\caption{New Codex/GPT-5.5 comparison, preserving the supplied counts and
-denominators. \expmark{Benchmark identity and the pass@3 sampling unit are TBD.} \tableadd{Green additions: Appendix~\ref{sec:table-additions}.}}
+\caption{Success rates on 20 LoLBench Python tasks with Codex and GPT-5.5.
+pass@$k$ reports the fraction of tasks solved within $k$ attempts.}
 \label{tab:new-codex55}
-\begin{tabular}{lrrr}
+\begin{tabular}{llr}
 \toprule
-Reported metric & Codex + GPT-5.5 & With ContextGraph  & \tableadd{FAISS Flat} \\
+Method & Metric & Success rate (\%) \\
 \midrule
-pass@1 & 1/20 & 3/20  & \addpending \\
-pass@3 & 1/20 & 5/30  & \addpending \\
-\tableadd{Tokens/task} & \addpending & \addpending & \addpending \\
-\tableadd{USD/resolution} & \addpending & \addpending & \addpending \\
+No memory & pass@1 & 5.0 \\
+FAISS Flat & pass@1 & 5.0 \\
+ExpeL & pass@1 & 5.0 \\
+Agent KB & pass@1 & 5.0 \\
+ExpeRepair & pass@1 & 5.0 \\
+ReasoningBank & pass@1 & 5.0 \\
+ACE & pass@1 & 5.0 \\
+Supermemory & pass@1 & 5.0 \\
+ContextGraph & pass@1 & \textbf{15.0} \\
+\midrule
+ContextGraph & pass@3 & \textbf{25.0} \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -69,61 +80,26 @@ pass@3 & 1/20 & 5/30  & \addpending \\
 \clearpage
 \section{Full-context code-agent retrieval}
 \label{sec:agentic-retrieval}
-This extension uses the same experience records, applicability checks,
-composer, and budget as fixed-candidate retrieval.
-The retrieval problem is to find experience that advances the current repair.
-A short issue embedding can omit the information that makes a memory useful:
-the code already inspected, a failed approach, an observed exception, or a
-condition that a partial repair has broken. We therefore propose giving the
-selector the coding agent's complete current-task context and tools for
-exploring the experience pool.
+This proposed extension lets a selector explore the experience graph using
+the coding agent's complete current-task context. Beyond the issue, that
+context includes inspected code, earlier actions, and observed failures,
+which can change the guidance needed for the next decision.
 
 Let $C_t$ contain the task and conversation, inspected code, edits, actions,
 and observations available at step $t$. The selector operates on $C_t$ and
-a frozen experience pool $\mathcal{M}$. It can search with FAISS or lexical
-queries, open complete source records, follow operation and input relations,
-and compare the requirements supplied by different experiences. Its output
-is a set of source IDs, their expected contribution to the repair, and the
-records or executable conditions supporting that choice. Selection can recur
-when new execution feedback changes what the repair needs.
+a frozen experience pool $\mathcal{M}$. It can issue semantic or keyword
+queries, open source records, follow links between strategies and errors,
+and compare lessons from different experiences. It returns strategies and
+warnings together with their source IDs and an explanation of how they can
+help the current repair. Search can recur before a new plan or after an error.
 
-Full context describes the selector's access to the current task; it does
-not require placing every experience into one prompt. Search and record
-reading make the whole admitted pool accessible. The returned material
-retains the source identity and can use the same condition-composition and
-execution interface as fixed-candidate retrieval.
+Full context describes access to the current task; the selector explores
+the experience pool through search and record reading. The returned advice
+uses the same memory interface as Section~\ref{sec:method}, and the coding
+agent applies it through its own investigation, edits, and tests.
 
 \paragraph{Current implementation.}
-The repository already provides context-aware candidate reranking and a
-selector over all 300 compact experience cards. These prototypes cap task
-or working-state text at 4,000 characters and limit candidate content.
-They provide starting points for the proposed full-context, iterative
-code-agent search; the implemented source-witness path currently uses
-the FAISS candidate policy described in Section~\ref{sec:method}.
-
-\begin{table}[htbp]
-\centering
-\expcolor
-\caption{Does full-context search find more useful experience?
-Use 24 development tasks and three repetitions with the same starting
-solver context, model, bank, output format, maximum three sources, composer,
-and total selection-plus-repair budget. B, D, and E share the search controller.
-B/D can read the same ten FAISS candidates; E can search the full pool.
-D--B tests task context and E--D tests pool access. C uses the existing
-all-card selector. Utility and Combined follow the shared development suite;
-search cost includes every selector call.}
-\label{tab:planned-agentic}
-\small
-\begin{tabular}{p{0.49\linewidth}ccc}
-\toprule
-Selection policy & Utility@3 & Combined & Search cost (\$) \\
-\midrule
-A. FAISS top-three & TBD & TBD & TBD \\
-B. Task-only agent; fixed candidates & TBD & TBD & TBD \\
-C. Task-only selector; all experience cards & TBD & TBD & TBD \\
-D. Full-context agent; fixed candidates & TBD & TBD & TBD \\
-E. Full-context agent; iterative pool search & TBD & TBD & TBD \\
-\bottomrule
-\end{tabular}
-\expcriterion{E10 (P2, required for an empirical agentic-search claim): illustrative Combined gains are D--B and E--D +4--12 pp each, or E--A +8--17 pp overall. Keep the controller and total budget matched; without this test retain the extension as a proposal.}
-\end{table}
+The repository provides context-aware candidate reranking and a selector
+over all 300 compact experience cards. These prototypes cap task or
+working-state text at 4,000 characters and limit candidate content. They
+provide starting points for the proposed full-context, iterative search.

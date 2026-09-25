@@ -1,19 +1,19 @@
 \section{Development cases and input constructions}
 \label{sec:development-details}
 This appendix gives the inputs, source requirements, and repair observations
-for the three design studies in Sections~\ref{sec:evidence}--\ref{sec:feedback-results}.
+for the behavioral studies in Section~\ref{sec:evidence}.
 \subsection{Requirement memory: preserving triggering conditions}
 \label{sec:details-evidence}
 \label{sec:details-content}
-The executable-memory experiments use a Verified split of 280 source tasks,
+The executable-analysis experiments use a Verified split of 280 source tasks,
 70 development tasks, and 150 held-out evaluation tasks. The cases below are
-development interventions with DeepSeek V4 Pro through OpenRouter,
+controlled changes to the memory supplied to DeepSeek V4 Pro through OpenRouter,
 temperature zero and matched budgets within each comparison. They measure
 whether history adds a required behavior to the submitted repair.
-Table~\ref{tab:historicalrequirements} presents three such additions.
+Table~\ref{tab:historicalrequirements} presents four such additions.
 Django14404 uses the first-ranked source issue and patch; Django12708 and
-Django11138 come from a fixed six-task cohort receiving three unchanged Flat
-rules per task. Both arms pass official verification on all six cohort tasks.
+Django11138 come from a fixed six-task group receiving three retrieved rules
+as plain text per task. Both conditions pass official verification on all six tasks.
 The historical requirements distinguish the completeness of those repairs.
 
 \paragraph{An omitted behavior of the same API.}
@@ -39,8 +39,17 @@ A source-generated check distinguishes the historical versions and runs unchange
 On an independent SQLite input combining a UTC+1 database with an explicit New York destination, only the memory-informed repair returns the correct date and time.
 The issue and history constrain different ends of the conversion.
 
+\paragraph{A historical input type in the current query.}
+A fourth pair repairs Django12663 from its original code, comparing no memory
+with ContextGraph using source13590. Both agents receive the same public
+current program, tools, backbone, and repair budget; only the memory arm
+receives the historical requirement and its checks. Each arm completes one
+repair. The joint checks combine the current lazy User with a named-tuple
+range in nonempty queries. The no-memory repair fails these checks, while
+the memory-informed repair passes.
+
 \paragraph{A requirement can suffice without the source implementation.}
-On the redirect task, Flat memory and its original issue/patch replacement
+On the redirect task, retrieved text memory and its original issue/patch replacement
 produce identical repairs preserving the joint behavior. Two new agents then
 revise the ordinary patch with a source-generated requirement: the redirect
 must include the original query string. One also receives the check and its
@@ -50,7 +59,7 @@ repository: memory supplies the behavior, and the agent locates its implementati
 
 \paragraph{Which information makes the requirement usable?}
 We select the constraint and timezone benefit cases and run four fresh complete agents per task, fixing the single historical source and its delivery before editing.
-Two source-only constructions produce a behavioral requirement and an implementation reference; the combined input concatenates them unchanged.
+Using only the historical task, we construct a written requirement and an implementation reference; the combined input concatenates them unchanged.
 All eight repairs pass official verification (Table~\ref{tab:memorycontent}).
 On Django12708, only Implementation and Both also remove redundant uniqueness while preserving the primary key.
 The Requirement agent tests a field with \texttt{unique=True}, but places \texttt{unique\_together} on a different, two-column set.
@@ -61,23 +70,23 @@ The Requirement agent finds \texttt{self.get\_tzname()} in the target implementa
 
 
 The timezone repairs also differ on further conditions.
-Both still generates an unnecessary MySQL conversion between identical zones; Implementation instead misinterprets a named Paris source timezone, producing New York time \texttt{19:21} instead of \texttt{17:30} on a summer input.
-Requirement passes both additional diagnostics.
+The repair given Both still generates an unnecessary MySQL conversion between identical zones. The repair given Implementation instead misinterprets a named Paris source timezone, producing New York time \texttt{19:21} instead of \texttt{17:30} on a summer input.
+The repair given Requirement passes both additional diagnostics.
 These concrete omissions distinguish carrying a requirement, applying its triggering condition, and implementing the resulting behavior correctly.
-Two subsequent original-base agents receive the unchanged constraint Requirement, with or without a source-validated example; both pass official and joint checks.
+Two subsequent agents start from the original unrepaired code and receive the same constraint requirement, with or without an example validated on the historical repair; both pass official and joint checks.
 The same requirement succeeds when its trigger is reconstructed correctly; preserving that input construction is a useful role for the graph.
 
 \paragraph{Preserve the input relation.}
-On Django12663, both a three-source code-connected packet and a ten-source
-similarity packet contain the historical named-tuple repair, source13590,
+On Django12663, both a set of three code-connected sources and the ten
+most similar sources contain the historical named-tuple repair, source13590,
 yet neither initial repair recovers its behavior. Three fresh revisions start
 from the same candidate and source (Figure~\ref{fig:memory-content-scope}).
 Original history and execution feedback recover named tuples; the requirement
 sentence alone does not. The feedback repair expands every non-builtin
 sequence into positional arguments, which also breaks ordinary tuple and list
 subclasses. Original history retains the constructor distinction and passes
-all displayed behaviors. This is precisely the relation the graph should carry:
-the argument convention of the input's type, alongside its endpoint values.
+all displayed behaviors. The graph therefore needs to store how the input type is constructed,
+alongside its endpoint values.
 
 \begin{figure}[t]
 \centering
@@ -90,7 +99,7 @@ the argument convention of the input's type, alongside its endpoint values.
 In this same case, demanding an operation match from the initial public-code
 localization excludes source13590, which FAISS ranks first. Keeping the
 similarity candidate lets the graph return its input relation and construct
-the joint program described next. This motivates the division in Figure~\ref{fig:method}:
+the joint program described next. This motivates the division in Figure~\ref{fig:behavior-workflow}:
 FAISS proposes sources; graph relations support their adaptation to the current
 operation. The usefulness of a candidate is established by what its condition
 adds to the repair.
@@ -102,31 +111,40 @@ adds to the repair.
 The current issue involves a lazy User in a nested query; history contributes
 a named-tuple range. On a separate history-informed repair, the current scalar query and
 the historical range query each pass, while a query combining them fails.
-The composed condition reveals an omission in the second container
-reconstruction.
+The combined check reveals that the patch handles one reconstruction of
+the input container but misses another later in the query-processing code.
 
 The deterministic adapter in Equation~\ref{eq:composition} reaches the same
 omission while retaining the public program's lazy User and nested annotation.
 It produces a named-tuple point range and an ordinary-tuple neighbor.
-Graph delivery subsequently reconstructs this same program from the retrieved
-input relation. It operationalizes the condition tested in the repair comparison.
+Retrieving the input relation from the graph lets the adapter reconstruct
+the same check used in this repair comparison.
 
 \paragraph{A matched comparison tests the added condition and feedback.}
-A new original-base pair receives identical history, public scalar program,
+Two new agents start from the original unrepaired code with identical history, current scalar program,
 its observed failure, a callable execution tool, and instructions to run the
-supplied conditions before editing and submission. The augmented arm also
+supplied conditions before editing and submission. The second agent also
 receives the two composed programs and their failures.
 Both repairs pass official verification (Table~\ref{tab:composedconditions}).
-The current-feedback repair fails both historical examples and the withheld
-named-tuple/lazy-User query; the augmented repair passes those behaviors and
+The repair given only current feedback fails both historical examples and the withheld
+named-tuple/lazy-User query; the repair given joint checks passes those behaviors and
 preserves the ordinary subclasses.
-The augmented agent runs the joint input before editing and again after
+The agent given joint checks runs the joint input before editing and again after
 removing a global conversion that broke an existing test. Its remaining
 range-endpoint failure directs the final correction.
 
+\paragraph{Separate checks recover history but miss the interaction.}
+A third agent receives the same history and current-program feedback, plus
+standalone named-tuple and ordinary-tuple checks using their original objects.
+Check count, feedback rounds, execution instructions, and repair budget match
+the composed arm. This repair passes official verification, both historical
+examples, and both ordinary-subclass checks, but only 1/3 joint queries and
+2/3 mechanical checks; composed conditions yield 3/3 in each group
+(Table~\ref{tab:composedconditions}).
+
 \paragraph{Compose roles to expose a broader requirement.}
 The timezone relation provides another example. A fixed adapter varies the
-historical witness's three zones across database, ambient, and destination
+historical example's three zones across database, active application, and destination
 roles and shifts the input by 182 days. Of 72 combinations, the source patch
 changes 20 from fail to pass; 20 pass on both versions and 32 fail on both.
 Applying the family to the four timezone content interventions shows that Requirement and
@@ -158,5 +176,5 @@ The Django12663 example also provides a refinement comparison.
 Four fresh refinements of its history-informed candidate illustrate the use of feedback:
 history alone yields one of two repairs passing all seven measured conditions;
 adding the constructed joint program and its failed observation yields two of
-two. All four pass official verification. Both augmented agents execute the
-joint input and repair the second reconstruction.
+two. All four pass official verification. Both agents given joint feedback execute the
+joint input and repair the later container reconstruction.

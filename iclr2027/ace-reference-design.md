@@ -17,7 +17,7 @@
 
 | 图 | 内容 | 读者应看懂什么 |
 |---|---|---|
-| Figure 1 | `paper_results_overview.pdf`：Verified500、跨模型 Related-Lite98、Related-Lite99 累计成功 | 各实验设置下已有的系统效果 |
+| Figure 1 | `paper_results_overview.pdf`：Verified500、跨模型 Related-Lite99、Related-Lite99 累计成功 | 各实验设置下已有的系统效果 |
 | Figure 2 | `contextgraph-design/fig1-concept.pdf` | 历史输入怎样进入当前操作，检查怎样指导修复 |
 | Figure 3 | `contextgraph-design/fig2-overview.pdf` | 经验构建、保存、检索和使用的流程 |
 | 附录行为图 | `memory_content_scope.pdf` | 不同记忆内容保留了哪些具体行为 |

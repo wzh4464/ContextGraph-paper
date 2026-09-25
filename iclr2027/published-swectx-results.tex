@@ -1,0 +1,40 @@
+\section{Published SWE-ContextBench reference results}
+\label{sec:published-swectx}
+
+Table~\ref{tab:published-swectx-lite} reproduces the resolved rates from
+Table 4 of \citet{swecontext2026}, version 3. Supermemory leads the automatic
+memory settings reported there; oracle summaries use known task relationships
+to supply the relevant history. These published results provide context for
+our Related-Lite experiments. Direct comparisons require matching task IDs,
+backbone, agent, and attempt budget.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Published SWE-ContextBench Lite results: 99 related tasks,
+Claude Sonnet 4.5. Rates are copied as reported, including OpenViking's
+29.20\%. $\Delta$ is the percentage-point change from no context.
+Oracle rows are separated from automatic retrieval.}
+\label{tab:published-swectx-lite}
+\begin{tabular}{llrr}
+\toprule
+Setting & History access & Resolved (\%) & $\Delta$ (pp) \\
+\midrule
+No context & None & 26.26 & 0.00 \\
+Free context & Agent-selected trajectories & 26.26 & 0.00 \\
+Free summary & Agent-selected summaries & 22.22 & $-4.04$ \\
+Mem0 & Automatic retrieval & 24.24 & $-2.02$ \\
+OpenViking & Automatic retrieval & 29.20 & $+2.94$ \\
+Supermemory & Automatic retrieval & \textbf{30.30} & $+4.04$ \\
+\midrule
+Oracle context & Supplied related trajectory & 27.27 & $+1.01$ \\
+Oracle summary & Supplied related summary & \textbf{34.34} & $+8.08$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+On the separate 376-task set, Table 3 reports its best resolution rate of
+23.94\% for GPT-5.3 Codex with oracle summaries. Supermemory's 55.95\%
+in Table 4 is a test-level FAIL\_TO\_PASS rate, not task resolution.
+LangMem has retrieval-quality results in Table 5 but no resolved rate
+in Table 4.

@@ -1,0 +1,29 @@
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[
+  >=Stealth, font=\small,
+  box/.style={draw=black!50, rounded corners=3pt, align=center,
+              minimum height=1.05cm, inner sep=6pt},
+  flow/.style={->, thick, draw=black!65},
+  access/.style={->, thick, draw=blue!65!black}
+]
+\node[box, fill=orange!7, text width=3.0cm] (past) at (0,2.2)
+  {\textbf{Past trajectories}\\tasks, actions, errors,\\and outcomes};
+\node[box, fill=orange!7, text width=3.4cm] (extract) at (4.8,2.2)
+  {\textbf{Experience abstraction}\\what to do / avoid\\and when it applies};
+\node[box, fill=blue!5, text width=3.8cm] (memory) at (10.1,2.2)
+  {\textbf{Experience graph}\\strategies and warnings\\linked to errors and sources};
+\draw[flow] (past) -- (extract);
+\draw[flow] (extract) -- (memory);
+\node[box, fill=green!5, text width=3.0cm] (agent) at (0,0)
+  {\textbf{Current repository}\\investigate and plan\\edit and test};
+\node[box, fill=blue!5, text width=3.4cm] (access) at (4.8,0)
+  {\textbf{Memory access}\\before planning: task\\after errors: failure};
+\node[box, fill=blue!5, text width=3.8cm] (retrieve) at (10.1,0)
+  {\textbf{Graph retrieval}\\semantic + keyword search\\+ connections in the graph};
+\draw[flow] (memory) -- (retrieve);
+\draw[access,<->] (agent) -- node[above,font=\footnotesize] {context}
+  node[below,font=\footnotesize] {guidance} (access);
+\draw[access,<->] (access) -- node[above,font=\footnotesize] {query}
+  node[below,font=\footnotesize] {lessons} (retrieve);
+\end{tikzpicture}%
+}
