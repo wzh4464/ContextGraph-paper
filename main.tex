@@ -156,10 +156,9 @@ success within $k$ attempts. Appendix~\ref{sec:uncertainty} gives
 confidence intervals.
 Related-Lite99 and DeepSWE113 in the main comparison report means over five
 runs, each reset to the same initial memory pool. All methods share the
-agent, backbone, and a per-task budget of \authorfill{steps} steps and
-\authorfill{\$ cost}; ContextGraph distills lessons with Claude 4 Sonnet.
-% AUTHOR: fill in the main-protocol step and cost limits; the repository
-% configs are not consistent enough to infer them.
+agent, backbone, and a per-task budget of 500 steps and \$20 on Verified500
+and Related-Lite99, \$50 on DeepSWE113, and \$100 on LoLBench; ContextGraph
+distills lessons with Claude 4 Sonnet.
 Table~\ref{tab:evaluation-settings} gives the agents, models, and initial
 memory sources \citep{minisweagent2025,sweagent2024}.
 
