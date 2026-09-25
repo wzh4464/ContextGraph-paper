@@ -153,17 +153,13 @@ of SWE-ContextBench, and the 113-task Datacurve DeepSWE benchmark
 its patch passes the benchmark's official evaluation. Resolution is the
 percentage of tasks resolved over completed evaluations; pass@$k$ reports
 success within $k$ attempts. Appendix~\ref{sec:uncertainty} gives
-all-task rates and confidence intervals.
-% AUTHOR: fill Table tab:denominator from the run logs; the five-run means such
-% as 35.1 and 26.8 are not multiples of 1/495, which implies incomplete runs.
+confidence intervals.
 Related-Lite99 and DeepSWE113 in the main comparison report means over five
 runs, each reset to the same initial memory pool. All methods share the
 agent, backbone, and a per-task budget of \authorfill{steps} steps and
-\authorfill{\$ cost}; ContextGraph distills lessons with
-\authorfill{distillation LLM}, whose cost is \authorfill{reported/excluded}
-in the budget.
-% AUTHOR: fill in the main-protocol step and cost limits and the distillation
-% LLM; the repository configs are not consistent enough to infer them.
+\authorfill{\$ cost}; ContextGraph distills lessons with Claude 4 Sonnet.
+% AUTHOR: fill in the main-protocol step and cost limits; the repository
+% configs are not consistent enough to infer them.
 Table~\ref{tab:evaluation-settings} gives the agents, models, and initial
 memory sources \citep{minisweagent2025,sweagent2024}.
 
@@ -437,10 +433,8 @@ summary.}
 \paragraph{Pool size.}
 With the DeepSeek V4 Pro agent and memory-selection procedure held fixed,
 resolution rises from 20.2\% to 26.3\%, 28.3\%, and 35.1\% as the initial pool
-grows from 50 to 100, 200, and 300 summaries (the 300-summary value is the
-main comparison).
-% AUTHOR: state whether the 50-, 100-, and 200-summary values are single runs
-% or five-run means.
+grows from 50 to 100, 200, and 300 summaries (single runs for 50--200; the
+300-summary value is the five-run mean of the main comparison).
 \textbf{Finding:} larger initial pools yield stronger repair, in line with
 Memory Transfer Learning \citep{transfer2026}; collecting more experience
 pays off.

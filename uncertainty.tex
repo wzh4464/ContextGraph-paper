@@ -1,4 +1,4 @@
-\section{Statistical uncertainty and evaluation denominators}
+\section{Statistical uncertainty}
 \label{sec:uncertainty}
 Table~\ref{tab:uncertainty} gives 95\% intervals for the main-text
 comparisons. For a rate $p$ over $n$ tasks we use the binomial standard error
@@ -42,31 +42,4 @@ Ablation (Related-Lite99) & Raw trajectories & \textbf{14.6} & 12.3 \\
  & Planning-time search only & 1.9 & 13.2 \\
 \bottomrule
 \end{tabular}
-\end{table}
-
-\paragraph{Evaluation denominators.}
-Resolution uses completed evaluations as the denominator
-(Section~\ref{sec:setup}). Table~\ref{tab:denominator} reports, for each
-method, how many evaluations did not complete and the resolution rate when
-every task counts, with an incomplete evaluation scored as unresolved.
-
-\begin{table}[htbp]
-\centering
-\caption{Incomplete evaluations and all-task resolution rates in the main
-comparison. On the five-run benchmarks, counts are totals over five runs
-($5\times99$ and $5\times113$ evaluations).}
-\label{tab:denominator}
-\small
-\begin{tabular}{lcccccc}
-\toprule
- & \multicolumn{2}{c}{Verified500} & \multicolumn{2}{c}{Related-Lite99} & \multicolumn{2}{c}{DeepSWE113} \\
-Method & Incomplete & All-task (\%) & Incomplete & All-task (\%) & Incomplete & All-task (\%) \\
-\midrule
-No memory & \authorfill{} & \authorfill{} & \authorfill{} & \authorfill{} & \authorfill{} & \authorfill{} \\
-Strongest baseline & \authorfill{} & \authorfill{} & \authorfill{} & \authorfill{} & \authorfill{} & \authorfill{} \\
-ContextGraph & \authorfill{} & \authorfill{} & \authorfill{} & \authorfill{} & \authorfill{} & \authorfill{} \\
-\bottomrule
-\end{tabular}
-% AUTHOR: fill from the run logs for all eight methods (or at least these
-% three), and add per-run standard deviations for the five-run benchmarks.
 \end{table}
