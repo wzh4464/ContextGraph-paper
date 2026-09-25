@@ -1,8 +1,8 @@
 \section{Additional benchmark and agent results}
 \label{sec:new-results}
 This appendix gives the DeepSeek V4 Pro summary-memory results plotted in
-Figure~\ref{fig:swectx-crossmodel}, the LoLBench comparison from
-Section~\ref{sec:benchmark}, and token measurements. Gemini results appear in Table~\ref{tab:new-gemini}.
+Figure~\ref{fig:swectx-crossmodel} and the LoLBench comparison from
+Section~\ref{sec:benchmark}. Gemini results appear in Table~\ref{tab:new-gemini}.
 The three-benchmark comparison is tabulated in
 Table~\ref{tab:main-results-overview}; additional comparisons appear in
 Appendix~\ref{sec:historical}.
@@ -18,7 +18,7 @@ memory result; the oracle receives a known related summary.}
 \toprule
 Method & Resolution rate (\%) \\
 \midrule
-No memory & 30.6 \\
+No memory & 21.4 \\
 Random summaries & 27.1 \\
 Mem0 & 26.8 \\
 LangMem & 34.0 \\
@@ -27,14 +27,8 @@ ContextGraph & \textbf{35.1} \\
 Oracle summary & 27.8 \\
 \bottomrule
 \end{tabular}
+% Source: figures/scripts/crossmodel_data.json, DeepSeek V4 Pro column.
 \end{table}
-
-
-
-\paragraph{Token efficiency.}
-On SWE-bench Verified500, the recorded comparison uses 236K tokens per task
-without memory and 201K with ContextGraph, a 14.8\% reduction
-(approximately 15\%).
 
 \paragraph{LoLBench Python subset.}
 We select 20 Python tasks from LoLBench \citep{lolbench2026}, which evaluates

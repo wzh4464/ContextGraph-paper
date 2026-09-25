@@ -1,8 +1,17 @@
 \section{Additional system comparisons}
 \label{sec:historical}
 These comparisons examine summary and episodic memory across models and
-attempt budgets. Resolution rates are percentages; gains marked pp are
-percentage-point differences from no memory.
+attempt budgets. Two configurations of ContextGraph appear in them and are
+named explicitly here. The \emph{summary-memory configuration} indexes 300
+experience summaries; Figure~\ref{fig:swectx-crossmodel} and
+Table~\ref{tab:swectx-poolsize} use it to examine the benefit of summary
+memory across backbones and pool sizes. The \emph{episodic-memory
+configuration} serves 291 curated repair records with prior code history,
+reference fixes, and verification hints; Table~\ref{tab:swectx-stream} and
+Table~\ref{tab:swectx-xmodel} use it. The main comparison
+(Section~\ref{sec:benchmark}) uses the experience-graph configuration of
+Section~\ref{sec:method}. Resolution rates are percentages; gains marked pp
+are percentage-point differences from no memory.
 
 \paragraph{Memory access and evaluation.}
 The agent uses its full current context to search the experience pool,
@@ -10,15 +19,19 @@ read records, and follow links to relevant strategies. The Related-Lite99
 summary comparison uses 300 summaries and one attempt per task. The pool-size
 study varies this initial pool from 50 to 300 summaries
 (Table~\ref{tab:swectx-poolsize}). MiniMax M2.7 uses an API compatibility layer.
-The curated-episode comparison uses 291 repair records with prior code history,
-reference fixes, and verification hints. Official test results are withheld
+In the curated-episode comparison, each pass adds the distilled lessons of its
+completed attempts to the pool before the next pass retries unresolved tasks
+(Section~\ref{sec:stream}). Official test results are withheld
 from the agent throughout, including between attempts.
+% AUTHOR: confirm that the episodic runs updated the pool between passes.
 
 \paragraph{Source-similarity sensitivity.}
 A separate analysis removes ten targets whose source fixes have token-Jaccard
 similarity of at least 0.85. These are distinct tasks, not target trajectories
 in the memory pool. On the remaining 89 tasks, DeepSeek V4 Pro resolves
 21.35\% with memory versus 14.61\% without memory ($p=.031$).
+Appendix~\ref{sec:overlap-audit} applies the same criterion to every initial
+pool of the main comparison.
 
 \begin{table}[htbp]
 \centering
@@ -41,8 +54,6 @@ Kimi K3 & 29.29 & 31.31 & 3/5 & .73 & 29.21/31.46 ($p=.73$) \\
 \end{tabular}
 \end{table}
 
-
-
 \begin{table}[htbp]
 \centering
 \caption{Separate 50-task development comparison.
@@ -64,8 +75,8 @@ No memory & 100.0 & 58.0 \\
 \begin{table}[htbp]
 \centering
 \caption{Experience-graph snapshot, using text-embedding-3-large
-vectors with 3,072 dimensions. The executable-example bank for behavioral
-studies uses Qwen embeddings.}
+vectors with 3,072 dimensions. The seven typed relations are listed in
+Section~\ref{sec:experience-abstraction}.}
 \label{tab:schema}
 \begin{tabular}{lrl}
 \toprule
@@ -85,57 +96,3 @@ Total edges & 73,975 & Seven typed relations \\
 \bottomrule
 \end{tabular}
 \end{table}
-
-\clearpage
-\section{Additional development comparisons}
-\label{sec:additional}
-Fail-to-pass tests check the requested fix; pass-to-pass tests check behavior
-that worked before the repair.
-
-\begin{table}[htbp]
-\centering
-\caption{Django14404 development comparison. All candidates pass
-the official 2 fail-to-pass and 323 pass-to-pass tests.}
-\label{tab:residual}
-\begin{tabular}{lccc}
-\toprule
-Candidate & Prefix & Query & Prefix + query \\
-\midrule
-Initial repair & Pass & Fail & Fail \\
-Issue-based revision & Pass & Fail & Fail \\
-Historical patch revision & Pass & Pass & Pass \\
-Executed relation revision & Pass & Pass & Pass \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\paragraph{Intervention scope.}
-Content comparisons start fresh agents from the original development target;
-refinement comparisons start from a common completed candidate. Additional
-MySQL, named-zone, and ordinary-subclass checks were constructed after
-inspecting the corresponding repairs, then applied across their comparison
-group. The three-arm composition comparison holds history, the current
-example and failure, tools, and instructions fixed. Two arms additionally
-receive either composed checks or separate historical checks, as shown in
-Table~\ref{tab:composedconditions}.
-
-\paragraph{Operation-dependent preservation.}
-In Matplotlib20826, clearing and replotting twin axes restores finite data
-bounds, so failure of an isolated historical plotting example does not describe
-the state after that workflow. In Django16819, canceling a same-name index
-remove/add pair loses a required change of indexed column. These observations
-motivate applying memory conditions along the current operation sequence.
-
-\paragraph{Additional development outcomes.}
-Two preliminary baseline runs remain unresolved. The DeepSWE Kea task
-passes 9/12 fail-to-pass and 139/139 pass-to-pass tests. The JDK5 LoLBench
-task initially submitted no patch; recovering its recorded patch without
-another model call gives 0/5 fail-to-pass and 51/51 pass-to-pass tests.
-Both receive a task-level reward of zero.
-
-\paragraph{Executable-example coverage.}
-The 273-source development bank provides at least one checked source from the
-same repository for 91/99 Related-Lite targets, 2/100 LoLBench targets,
-and 0/113 DeepSWE targets. These counts describe the
-executable-example bank used for the behavioral studies. Its records pair a
-historical requirement with an executable check.

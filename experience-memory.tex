@@ -16,13 +16,16 @@ the agent traced the exception to \texttt{Exists.as\_sql()}, corrected its
 handling, and added a regression test. The no-memory attempt made broad
 formatting changes without fixing the bug. The transferable content was the
 investigation strategy and warning; the agent derived the local implementation.
+Neither source repository is Django: the lesson crossed repositories, and
+Section~\ref{sec:cross-repo} measures how often selected lessons do so.
 
 \paragraph{From advice to applicable guidance.}
 Figure~\ref{fig:concept} contrasts two memories for another Django case: a
 flat summary store returns one requirement sentence, whereas the agent selects
 from ContextGraph a strategy, a warning, and the condition under which they
-apply, each linked to its source repair.
-Section~\ref{sec:behavior-analysis} studies how agents apply such conditions.
+apply, each linked to its source repair. The condition tells the agent when
+the lesson holds; the source lets it check how the lesson was applied before
+adapting it to the current code.
 
 \begin{figure}[!htbp]
 \centering
@@ -39,29 +42,6 @@ source experience, before planning and again after an error.}
 ContextGraph connects experience abstraction, agent-directed selection, and memory
 access. The same process builds the initial graph and incorporates completed
 tasks (Figure~\ref{fig:experience-memory}).
-
-\begin{figure}[!htbp]
-\centering
-\includegraphics[width=\linewidth]{figures/experience-architecture/fig3-contextgraph.pdf}
-\par\smallskip
-\begin{tikzpicture}[>=Stealth, node distance=0.18cm,
-  cgstep/.style={draw=blue!55!black, rounded corners=2pt, fill=blue!4,
-    align=center, font=\scriptsize, minimum height=0.63cm, inner sep=4pt}]
-\node[cgstep,text width=2.6cm] (task) {Complete a task\\success or failure};
-\node[cgstep,text width=2.7cm,right=of task] (learn) {Distill experience\\strategies and warnings};
-\node[cgstep,text width=2.45cm,right=of learn] (update) {Update the graph\\and retrieval entries};
-\node[cgstep,text width=2.75cm,right=of update] (next) {Next task\\retrieves new experience};
-\draw[->,thick,blue!65!black] (task) -- (learn);
-\draw[->,thick,blue!65!black] (learn) -- (update);
-\draw[->,thick,blue!65!black] (update) -- (next);
-\end{tikzpicture}
-\caption{ContextGraph's experience-memory architecture. Past trajectories
-supply strategies and warnings linked to source context. The agent retrieves
-guidance using its full context before planning and after errors. After every task, successful and
-failed trajectories update the graph; the added experience is immediately
-available to subsequent tasks. Graph links illustrate the organization.}
-\label{fig:experience-memory}
-\end{figure}
 
 \subsection{Experience abstraction: retain the useful decision}
 \label{sec:experience-abstraction}
@@ -84,7 +64,10 @@ edge types connect a trajectory to its fragments, a strategy to its source
 trajectory, a fragment to an encountered error, a strategy to its canonical
 rule, a rule to an error it addresses, a summary to its trajectory, and a
 fragment to its community. These links retain both a reusable lesson and the
-observations that explain when it applies.
+observations that explain when it applies. Appendix~\ref{sec:historical}
+lists the node counts of a graph snapshot, and the anonymous repository
+(Section~\ref{sec:setup}) releases the extraction prompts, schema, and
+selection code.
 
 \subsection{Agent-directed selection: find useful experience}
 \label{sec:experience-retrieval}
@@ -118,3 +101,7 @@ uses repository tools to try the next step.
 ContextGraph distills successful and failed trajectories and links new
 lessons to existing experience. Updates use agent-visible observations and
 become immediately available to later tasks (Appendix Algorithm~\ref{alg:contextgraph}).
+Because memory grows during evaluation, a task late in the stream selects
+from a larger graph than an early one, and a retry of an unresolved task can
+select the lessons distilled from its own earlier failure
+(Section~\ref{sec:stream}).

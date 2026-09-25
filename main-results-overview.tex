@@ -17,7 +17,7 @@ corresponding benchmark.}
 \toprule
 Method & Verified500 & Related-Lite99 & DeepSWE113 \\
 \midrule
-No memory & 61.6 & 30.6 & 60.8 \\
+No memory & 61.6 & 21.4 & 60.8 \\
 FAISS Flat & 65.2 & 26.8 & 64.6 \\
 ExpeL & 62.4 & 20.7 & 58.7 \\
 ExpeRepair$^\dagger$ & 63.6 & 31.3 & 64.4 \\
@@ -36,8 +36,9 @@ reset to the same initial memory pool, with tasks evaluated in issue creation-ti
 ContextGraph adds lessons from completed successful and failed attempts
 to memory for subsequent retrieval; baselines use their open-source
 defaults for memory updates. The initial Verified500 memory draws on
-Nebius SWE-bench-extra trajectories; the DeepSWE113 memory draws on
-trajectories from LoLBench repositories.
+Nebius SWE-bench-extra trajectories, which contain none of the evaluated
+instances; the DeepSWE113 memory draws on trajectories from LoLBench
+repositories (Appendix~\ref{sec:overlap-audit}).
 $\dagger$ ExpeRepair and ACE are our adaptations to mini-SWE-agent.
 Method sources: ExpeL~\citep{expel2024},
 ExpeRepair~\citep{experepair2026}, ReasoningBank~\citep{reasoningbank2026},

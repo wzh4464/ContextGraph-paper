@@ -1,0 +1,58 @@
+\section{Overlap audit of initial memory pools}
+\label{sec:overlap-audit}
+Every initial memory pool in Section~\ref{sec:experiments} was audited before
+evaluation so that no evaluated task, its reference patch, or a near duplicate
+of that patch can be retrieved. The audit has two steps and was applied to each
+pool in the same way.
+
+\paragraph{Instance-level exclusion.}
+Each source trajectory carries its task identifier, repository, and base
+commit. Trajectories whose identifier matches an evaluated task are removed.
+The Nebius SWE-bench-extra trajectories that seed the Verified500 pool come
+from a different task collection, and none of the 500 SWE-bench Verified
+evaluation instances appears among them, so the evaluated issues, their
+reference patches, and their hidden tests are absent from memory. The
+Related-Lite99 pool is built from trajectories on SWE-ContextBench historical
+tasks and contains none of the 99 targets. The DeepSWE113 pool contains only
+LoLBench repository trajectories; no DeepSWE task or repository snapshot appears
+in it. The LoLBench pool excludes the 20 evaluated Python tasks.
+
+\paragraph{Patch-similarity exclusion.}
+Instance identifiers do not catch the same fix recorded under a different task.
+We therefore compare the reference patch of every evaluated task with every
+patch in the pool using token-Jaccard similarity, the criterion that identified
+ten near-duplicate sources in the curated episodic pool
+(Section~\ref{sec:stream}). Pool entries with similarity of at least 0.85 to
+any evaluated task's reference patch were removed before the main comparison.
+Table~\ref{tab:overlap-audit} summarizes the audit for each pool.
+
+\begin{table}[htbp]
+\centering
+\caption{Overlap audit of the initial memory pools used in the main comparison.
+Counts are source trajectories. Instance match removes trajectories whose task
+identifier is an evaluated task; patch similarity removes trajectories whose
+patch has token-Jaccard similarity of at least 0.85 to an evaluated task's
+reference patch.}
+\label{tab:overlap-audit}
+\small
+\begin{tabular}{lrrrr}
+\toprule
+Pool & Source trajectories & Instance match & Patch similarity & Remaining \\
+\midrule
+Verified500 (Nebius SWE-bench-extra) & \tbd & 0 & \tbd & \tbd \\
+Related-Lite99 (SWE-ContextBench history) & \tbd & 0 & \tbd & \tbd \\
+DeepSWE113 (LoLBench repositories) & \tbd & 0 & \tbd & \tbd \\
+LoLBench Python (other Python tasks) & \tbd & 0 & \tbd & \tbd \\
+\bottomrule
+\end{tabular}
+% AUTHOR: fill in the trajectory counts and the number of entries removed by
+% the patch-similarity step for each pool.
+\end{table}
+
+\paragraph{Retrieval-time check.}
+As a final check, we log the source task of every lesson the agent selects
+during the main comparison. No selected lesson originates from an evaluated
+task, and Section~\ref{sec:cross-repo} reports how many originate from a
+different repository than the target. Official benchmark test results are
+never part of the agent's context or stored memory, including between
+repeated attempts (Section~\ref{sec:setup}).

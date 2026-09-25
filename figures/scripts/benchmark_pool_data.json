@@ -1,0 +1,84 @@
+{
+  "provenance": "Author-supplied measurements, September 24, 2026; transcribed from the former main-text Tables 1 and 7.",
+  "benchmarks": {
+    "model": "DeepSeek V4 Pro 0813",
+    "agent": "mini-SWE-agent",
+    "methods": [
+      "No memory",
+      "FAISS Flat",
+      "ExpeL",
+      "ExpeRepair",
+      "ReasoningBank",
+      "ACE",
+      "Supermemory",
+      "ContextGraph"
+    ],
+    "author_adaptations": [
+      "ExpeRepair",
+      "ACE"
+    ],
+    "results": [
+      {
+        "name": "Verified500",
+        "aggregation": "Recorded resolution rate",
+        "rates": [
+          61.6,
+          65.2,
+          62.4,
+          63.6,
+          67.0,
+          62.2,
+          63.6,
+          69.2
+        ]
+      },
+      {
+        "name": "Related-Lite99",
+        "aggregation": "Mean of five runs",
+        "rates": [
+          21.4,
+          26.8,
+          20.7,
+          31.3,
+          24.9,
+          28.1,
+          26.5,
+          35.1
+        ]
+      },
+      {
+        "name": "DeepSWE113",
+        "aggregation": "Mean of five runs",
+        "rates": [
+          60.8,
+          64.6,
+          58.7,
+          64.4,
+          61.7,
+          62.8,
+          66.2,
+          72.1
+        ]
+      }
+    ],
+    "provenance": "Author-supplied measurements (September 24-25, 2026). Agent KB removed from the comparison; Related-Lite99 no memory 21.4 (five-run mean) and ContextGraph 35.1 unified at the author's direction on September 25, 2026."
+  },
+  "pool_size": {
+    "benchmark": "Related-Lite99",
+    "model": "DeepSeek V4 Pro",
+    "attempts_per_task": 1,
+    "summaries": [
+      50,
+      100,
+      200,
+      300
+    ],
+    "resolution_rate": [
+      20.2,
+      26.3,
+      28.3,
+      35.1
+    ],
+    "note": "Values from the main-text pool-size table; the pool-size figure is not used in the paper."
+  }
+}
