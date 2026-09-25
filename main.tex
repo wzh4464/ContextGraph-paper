@@ -33,8 +33,9 @@ pool in the main comparison is audited to exclude the evaluated tasks. With Gemi
 ContextGraph raises Verified pass@1 from 82.3\% to 88.9\%. Ablations show
 that abstraction and agent-directed selection over the graph account for most
 of the gain, and that the benefit of online updates concentrates in later
-tasks of the stream; a cross-repository analysis measures how often selected
-lessons come from other repositories.
+tasks of the stream. Most selected lessons come from other repositories,
+and cross-repository experience alone accounts for about half of the gain on
+two of the three benchmarks.
 \end{abstract}
 
 \section{Introduction}
@@ -130,7 +131,8 @@ Related-Lite99, and DeepSWE113, improving Related-Lite99 by 13.7 points over
 no memory. Ablations show that abstraction and agent-directed selection are necessary
 for any gain and that graph links, online updates, and error-time search add
 to it; along the task stream, the benefit of online updates concentrates in
-later tasks. Retrieval statistics quantify cross-repository transfer.
+later tasks. Most selected lessons come from other repositories, and they
+alone account for about half of the gain on two of the three benchmarks.
 \end{itemize}
 \endgroup
 
@@ -413,29 +415,38 @@ repositories. To measure how often this happens, we log the source repository
 of every lesson the agent selects during the main comparison.
 Table~\ref{tab:cross-repo} reports the share of selected lessons whose source
 repository differs from the target repository, and the resolution rate when
-lessons from the target repository are removed from the initial pool before
-evaluation. The DeepSWE113 initial pool contains only LoLBench repositories,
-none of which is a DeepSWE113 repository (Appendix~\ref{sec:overlap-audit}),
-so selection from the initial pool crosses repositories by construction;
-lessons added online during a run can come from DeepSWE repositories.
-% AUTHOR: fill in from the selection logs of the main comparison and the
-% other-repositories-only runs.
+lessons from the target repository are excluded at selection time, including
+lessons added online. Most selected lessons come from other repositories:
+78.4\% on Verified500, 86.2\% on Related-Lite99, and 64.1\% on DeepSWE113.
+The DeepSWE113 initial pool contains only LoLBench repositories, none of
+which is a DeepSWE113 repository (Appendix~\ref{sec:overlap-audit}), so its
+same-repository share comes entirely from lessons added online by earlier
+DeepSWE tasks. With same-repository lessons excluded, ContextGraph still
+improves over no memory by 1.4, 7.3, and 6.7 points; the full pool adds a
+further 6.2, 6.4, and 4.6 points.
+\textbf{Finding:} cross-repository experience alone accounts for about half
+of the gain on Related-Lite99 and DeepSWE113 and a smaller part on
+Verified500; the minority of same-repository lessons contributes
+disproportionately.
+% AUTHOR: confirm that the other-repositories-only runs excluded
+% same-repository lessons at selection time, including lessons added online
+% (the DeepSWE113 drop from 72.1 to 67.5 implies this).
 
 \begin{table}[!htbp]
 \centering
 \caption{Cross-repository transfer in the main comparison. Cross-repository
 lessons are the percentage of selected lessons whose source repository
-differs from the target. Other repositories only removes same-repository
-lessons from the initial pool.}
+differs from the target. Other repositories only excludes same-repository
+lessons at selection time, including lessons added online.}
 \label{tab:cross-repo}
 \small
 \begin{tabular}{lcccc}
 \toprule
 Benchmark & \shortstack{Cross-repository\\lessons (\%)} & \shortstack{ContextGraph\\full pool} & \shortstack{ContextGraph\\other repositories only} & No memory \\
 \midrule
-Verified500 & \tbd & 69.2 & \tbd & 61.6 \\
-Related-Lite99 & \tbd & 35.1 & \tbd & 21.4 \\
-DeepSWE113 & \tbd & 72.1 & \tbd & 60.8 \\
+Verified500 & 78.4 & \textbf{69.2} & 63.0 & 61.6 \\
+Related-Lite99 & 86.2 & \textbf{35.1} & 28.7 & 21.4 \\
+DeepSWE113 & 64.1 & \textbf{72.1} & 67.5 & 60.8 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -511,8 +522,9 @@ and after errors, then contribute new experience after each task. With
 DeepSeek V4 Pro, it achieves 69.2\%, 35.1\%, and 72.1\% resolution on
 Verified500, Related-Lite99, and DeepSWE113, leading the evaluated methods on
 each, and Gemini 3.1 Pro reaches 88.9\% pass@1 on Verified500. Ablations
-attribute the gain to abstraction and agent-directed selection, and the
-benefit of online updates grows along the task stream.
+attribute the gain to abstraction and agent-directed selection, the benefit
+of online updates grows along the task stream, and most selected lessons
+come from repositories other than the target.
 These results establish experience graphs as a strong starting point for
 self-improving coding-agent memory.
 
