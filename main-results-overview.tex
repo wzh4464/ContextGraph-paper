@@ -2,27 +2,6 @@
 \label{sec:main-results-overview}
 \begin{table}[!htbp]
 \centering
-\caption{Evaluation settings of the main comparisons. The first three use DeepSeek V4 Pro 0813
-with mini-SWE-agent; LoLBench uses GPT-5.5 with Codex. ContextGraph updates
-its memory after every task; baseline updates follow each implementation's
-default behavior. No initial pool contains an evaluated task
-(Appendix~\ref{sec:overlap-audit}).}
-\label{tab:evaluation-settings}
-\small
-\begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}rll@{}}
-\toprule
-Benchmark & Tasks & Initial experience source & Reported result \\
-\midrule
-Verified500 & 500 & Nebius SWE-bench-extra trajectories & Resolution \\
-Related-Lite99 & 99 & SWE-bench cold-start trajectories & Five-run mean \\
-DeepSWE113 & 113 & LoLBench repository trajectories & Five-run mean \\
-LoLBench Python & 20 & Other LoLBench Python tasks & pass@1, pass@3 \\
-\bottomrule
-\end{tabular*}
-\end{table}
-
-\begin{table}[!htbp]
-\centering
 \caption{Repair resolution rates (\%). Panel A tabulates
 Figure~\ref{fig:benchmark-comparison}; the LoLBench comparison is in
 Table~\ref{tab:new-codex55}. Panel B groups published reference results by

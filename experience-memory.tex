@@ -15,19 +15,6 @@ any repository.
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{figures/experience-architecture/fig3-contextgraph.pdf}
-\par\smallskip
-\begin{tikzpicture}[>=Stealth, node distance=0.16cm,
-  cgstep/.style={draw=teal!60!black, rounded corners=3pt, fill=teal!6,
-    align=center, font=\sffamily\scriptsize, minimum height=0.55cm, inner sep=3pt}]
-\node[font=\sffamily\scriptsize\bfseries, text=teal!50!black, align=left] (lab) {(c) After\\every task};
-\node[cgstep, right=0.2cm of lab] (task) {Task ends\\success or failure};
-\node[cgstep, right=of task] (learn) {Distill strategies\\and warnings};
-\node[cgstep, right=of learn] (update) {Link them into the graph,\\update retrieval entries};
-\node[cgstep, right=of update] (next) {Next task\\can select them};
-\draw[->,thick,teal!60!black] (task) -- (learn);
-\draw[->,thick,teal!60!black] (learn) -- (update);
-\draw[->,thick,teal!60!black] (update) -- (next);
-\end{tikzpicture}
 \caption{ContextGraph. (a) Past trajectories, including those from other
 repositories, are abstracted into strategies and warnings with their
 conditions and linked to their sources and error patterns. (b) The agent
@@ -67,8 +54,8 @@ lessons to their source trajectories and canonical rules, rules to the
 errors they address, trajectories to their fragments and problem summaries,
 and fragments to the errors they caused and to their communities. These links
 keep both a reusable lesson and the observations that explain when it
-applies. A snapshot built from 1,795 trajectories holds 45,115 nodes and
-73,975 typed edges (Appendix Table~\ref{tab:schema}). The anonymous
+applies. Appendix Table~\ref{tab:schema} lists the node and edge counts of
+an illustrative graph built from Nebius SWE-agent trajectories. The anonymous
 repository (Section~\ref{sec:setup}) releases the extraction prompts, graph
 schema, and selection code.
 
@@ -100,6 +87,24 @@ code, and current hypothesis to that context, searches again to revise its
 diagnosis, and uses repository tools to try the next step.
 \textbf{After each task,} ContextGraph distills the successful or failed
 trajectory and links new lessons to existing experience, and later tasks can
-select them immediately (Appendix Algorithm~\ref{alg:contextgraph}). A task late in the stream
+select them immediately (Algorithm~\ref{alg:contextgraph}). A task late in the stream
 therefore selects from a larger graph than an early one, and a retry of an
 unresolved task can select the lessons distilled from its own earlier failure.
+
+\begin{algorithm}[t]
+\caption{ContextGraph across a stream of coding tasks}
+\label{alg:contextgraph}
+\small
+\begin{tabular}{@{}p{0.96\linewidth}@{}}
+\textbf{Input:} initial trajectories $\mathcal D_0$, coding tasks $q_1,\ldots,q_T$.\\
+\textbf{Output:} candidate patches and the updated experience graph $G_T$.\\
+1. Extract strategies and warnings from $\mathcal D_0$; build $G_0$ and its retrieval entries.\\
+2. \textbf{For each} task $q_t$ in issue creation-time order:\\
+\quad a. Use the full task context $C_{t,i}$ to search $G_{t-1}$ and select lessons $\mathcal M_{t,i}$ for planning.\\
+\quad b. Execute investigation, editing, and testing actions; record the trajectory $\tau_t$.\\
+\quad c. After an error, search again with the updated full context; revise the plan.\\
+\quad d. Continue the repair loop until the task ends or its budget is exhausted.\\
+\quad e. Distill experience from the trajectory and agent-visible outcomes.\\
+\quad f. Set $G_t=\operatorname{Update}(G_{t-1},\tau_t)$ and refresh retrieval entries; expose the new experience to later tasks.\\
+\end{tabular}
+\end{algorithm}

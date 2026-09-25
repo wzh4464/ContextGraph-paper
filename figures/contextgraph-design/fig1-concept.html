@@ -324,7 +324,7 @@ async function draw() {
   const noteY = bb.y + bb.h + 32, noteX = tail.b + 40;
   badge(note, noteX, noteY - 6.5, "C", { faded: true });
   badge(note, noteX + 32, noteY - 6.5, "E", { faded: true });
-  text(note, noteX + 32 + 22, noteY, "no condition · no links", { fill: C.gray });
+  text(note, noteX + 32 + 22, noteY, "no condition, no links", { fill: C.gray });
 
   arrow(ga, [[ARR3.x0, FA], [ARR3.x1, FA]], { color: C.orange, name: "in-context" });
   edgeLabel(ga, (ARR3.x0 + ARR3.x1) / 2, FA - 10, "in context", C.orange);
@@ -402,7 +402,7 @@ async function draw() {
     smallDocIcon(r, gl + 11, y - 6.5);
     const t1 = text(r, gtext, y, repo, { family: MONO, weight: 500 });
     const x2 = gtext + t1.node().getComputedTextLength();
-    const t2 = text(r, x2, y, ` · ${status}`, { fill: C.gray });
+    const t2 = text(r, x2, y, `, ${status}`, { fill: C.gray });
     t2.attr("xml:space", "preserve").style("white-space", "pre");
     const x3 = x2 + t2.node().getComputedTextLength() + 9;
     mark(r, x3, y - 6.5);
@@ -435,7 +435,7 @@ async function draw() {
   // Label sits on the horizontal run, masking the dashes behind it.
   const lab = gb.append("g").attr("data-name", "step-2-requery");
   const t2a = text(lab, 0, rqY + 6.5, "re-query after an error", { fill: C.purple, weight: 500 });
-  const t2b = text(lab, 0, rqY + 6.5, "· failure + last action", { fill: C.gray });
+  const t2b = text(lab, 0, rqY + 6.5, "(failure + last action)", { fill: C.gray });
   const wA = t2a.node().getComputedTextLength(), wB = t2b.node().getComputedTextLength();
   const totalW = 25 + 7 + wA + 6 + wB;
   const lx0 = X2 + W2 / 2 - totalW / 2;

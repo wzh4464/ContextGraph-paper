@@ -23,16 +23,17 @@ and adds every completed task back to memory. ContextGraph improves over no
 memory by 7.6, 13.7, and 11.3 points on SWE-bench Verified, SWE-ContextBench
 Related-Lite, and Datacurve DeepSWE, reaching 69.2\%, 35.1\%, and 72.1\%, the
 highest rate among the evaluated memory methods on each. Its ablations show
-that two choices are prerequisites for the gain: memory should store abstract
-lessons and let the agent select them for each task. On Related-Lite, raw
+that two choices carry the gain: memory should store abstract lessons and let
+the agent select them for each task. On Related-Lite, raw
 trajectory excerpts selected by the agent and a fixed set of abstract lessons
 given to every task both stay at the no-memory level (20.5\% and 20.8\%
 versus 21.4\%), and abstract lessons retrieved by embedding similarity leave
 ContextGraph only 2.9 of its 13.7 points. Updating memory after every task
 adds further gains, and lessons from other repositories alone carry more than
 half of the gain on Related-Lite and DeepSWE. The gains hold for
-strong agents: with Gemini 3.1 Pro, one attempt with memory resolves 88.9\%
-of SWE-bench Verified, above the 82.8\% that five attempts reach without it.
+strong agents: with Gemini 3.1 Pro, ContextGraph raises SWE-bench Verified
+pass@1 from 82.3\% to 88.9\%, above the 82.8\% that five attempts reach
+without memory.
 We release the code and prompts so that others can build on these findings.
 \end{abstract}
 
@@ -80,16 +81,16 @@ scaffolds, ContextGraph improves repair. With DeepSeek V4 Pro it improves over
 no memory by 7.6, 13.7, and 11.3 points on SWE-bench Verified,
 SWE-ContextBench Related-Lite, and Datacurve DeepSWE, the largest gain among
 the evaluated memory methods on each; with Gemini 3.1 Pro it raises Verified
-pass@1 from 82.3\% to 88.9\%; and with GPT-5.5 in Codex it solves 15.0\% of
-20 long-horizon LoLBench Python tasks at pass@1, where no memory and six
-memory baselines solve 5.0\%. Its ablations and analyses yield five takeaways for
+pass@1 from 82.3\% to 88.9\%; and with GPT-5.5 in Codex it solves 3 of 20
+long-horizon LoLBench Python tasks at pass@1, where no memory and six memory
+baselines solve 1. Its ablations and analyses yield five takeaways for
 building coding-agent memory:
 
 \smallskip
 \noindent\fbox{\begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}\small
-\textbf{What works for coding-agent memory.} Takeaways 1 and 2 are
-prerequisites: removing either leaves ContextGraph at most 2.9 of its 13.7
-points (Figure~\ref{fig:teaser}). Takeaways 3--5 show what else the gain
+\textbf{What works for coding-agent memory.} Takeaways 1 and 2 carry
+the gain: without either, ContextGraph keeps at most 2.9 of its 13.7 points
+(Figure~\ref{fig:teaser}). Takeaways 3--5 show what else the gain
 draws on and where it holds.
 \begin{enumerate}\setlength{\itemsep}{1pt}\setlength{\topsep}{2pt}\setlength{\parsep}{0pt}
 \item \textbf{Abstract experience into lessons; do not replay trajectories.}
@@ -106,10 +107,10 @@ retries (Section~\ref{sec:stream}).
 it.} Lessons from other repositories alone carry more than half of the gain
 on two benchmarks; 50 initial summaries give no gain, 300 give the full 13.7
 points (Section~\ref{sec:cross-repo}).
-\item \textbf{Use memory with strong agents too.} With Gemini 3.1 Pro, one
-attempt with memory resolves more Verified tasks than five without, and
-with GPT-5.5 in Codex ContextGraph solves 15.0\% of 20 LoLBench Python tasks
-at pass@1, where every other method solves 5.0\% (Section~\ref{sec:backbones}).
+\item \textbf{Strong agents benefit too.} With Gemini 3.1 Pro, memory raises
+Verified pass@1 from 82.3\% to 88.9\%, removing 37\% of the remaining
+failures; with GPT-5.5 in Codex, ContextGraph solves 3 of 20 LoLBench Python
+tasks at pass@1, where every other method solves 1 (Section~\ref{sec:backbones}).
 \end{enumerate}
 \end{minipage}}
 \smallskip
@@ -154,7 +155,7 @@ and mini-SWE-agent \citep{minisweagent2025,sweagent2024}, and 20 Python tasks
 from LoLBench \citep{lolbench2026} with GPT-5.5 and Codex. Their initial
 memory comes from Nebius SWE-bench-extra trajectories, SWE-bench cold-start
 trajectories, LoLBench repository trajectories, and other LoLBench Python
-tasks, respectively (Appendix Table~\ref{tab:evaluation-settings}). A task is resolved when
+tasks, respectively (Table~\ref{tab:evaluation-settings}). A task is resolved when
 its patch passes the benchmark's official evaluation. Resolution is the
 percentage of tasks resolved over completed evaluations; pass@$k$ reports
 success within $k$ attempts; Appendix~\ref{sec:uncertainty} gives confidence
@@ -164,10 +165,34 @@ the agent, backbone, and a per-task budget of 500 steps and \$20 on
 Verified500 and Related-Lite99, \$50 on DeepSWE113, and \$100 on LoLBench;
 ContextGraph distills lessons with Claude 4 Sonnet.
 
+\begin{table}[!htbp]
+\centering
+\caption{Benchmarks and initial memory. The first three use DeepSeek V4 Pro 0813
+with mini-SWE-agent; LoLBench uses GPT-5.5 with Codex. ContextGraph updates
+its memory after every task; baseline updates follow each implementation's
+default behavior. No initial pool contains an evaluated task
+(Appendix~\ref{sec:overlap-audit}).}
+\label{tab:evaluation-settings}
+\small
+\begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}rll@{}}
+\toprule
+Benchmark & Tasks & Initial experience source & Reported result \\
+\midrule
+Verified500 & 500 & Nebius SWE-bench-extra trajectories & Resolution \\
+Related-Lite99 & 99 & SWE-bench cold-start trajectories & Five-run mean \\
+DeepSWE113 & 113 & LoLBench repository trajectories & Five-run mean \\
+LoLBench Python & 20 & Other LoLBench Python tasks & pass@1, pass@3 \\
+\bottomrule
+\end{tabular*}
+\end{table}
+
 \paragraph{Data separation and feedback.}
 Initial memory excludes the evaluated tasks' trajectories and reference
 solutions; one instance-level and patch-similarity audit is applied to
-every pool of the main comparison (Appendix~\ref{sec:overlap-audit}). Tasks
+every pool of the main comparison (Appendix~\ref{sec:overlap-audit}). No pool
+contains an evaluated task, and removing entries whose patch has token-Jaccard
+similarity of at least 0.85 to an evaluated task's reference patch takes out
+between 3 and 18 entries per pool, at most 1.3\%. Tasks
 enter the evaluation stream in issue creation-time order, and ContextGraph's
 memory grows task by task on every benchmark, including Related-Lite99, whose original
 protocol keeps its pool fixed \citep{swecontext2026}. Memory updates use only
@@ -196,7 +221,10 @@ memory. ContextGraph improves by 7.6, 13.7, and 11.3 points on Verified500,
 Related-Lite99, and DeepSWE113, reaching 69.2\%, 35.1\%, and 72.1\%, the
 highest rate on each. Averaged over the three benchmarks, its gain of 10.9
 points is more than twice that of the strongest baseline, ExpeRepair (5.2),
-while ExpeL falls below no memory on two of the three. The following
+while ExpeL falls below no memory on two of the three. On Verified500 and
+Related-Lite99 the gain exceeds its conservative 95\% binomial half-width
+(7.6 against 5.9, and 13.7 against 12.4; Appendix~\ref{sec:uncertainty}).
+The following
 subsections give one takeaway each.
 
 \begin{figure}[t]
@@ -268,10 +296,9 @@ prompt of every task, with no memory access at all, and stays at the
 no-memory level (20.8\%): even these lessons do not help when every task
 receives the same fixed set. ACE, which also gives every task its whole
 playbook but updates it online, reaches 28.1\%. With the same abstract
-lessons in memory, resolution rises as the agent takes over the choice of
-lessons: \emph{fixed top-$k$}, which retrieves the $k$ lessons most similar
-by embedding, reaches 24.3\%; agent-directed search over a flat pool without
-graph links, 31.1\%; and search that also follows graph links, 35.1\%.
+lessons in memory, \emph{fixed top-$k$}, which retrieves the $k$ lessons most
+similar by embedding, reaches 24.3\%, while agent-directed selection reaches
+35.1\%; over a flat pool without graph links it still reaches 31.1\%.
 ReasoningBank, which also retrieves abstract strategies by top-$k$
 similarity, reaches a similar 24.9\%, and FAISS Flat, which retrieves by
 vector similarity, 26.8\%. With DeepSeek V4 Pro, ContextGraph exceeds random
@@ -282,11 +309,11 @@ it exceeds an oracle that is handed one known related summary (35.1\%,
 
 \paragraph{The choices work together.} Removing abstraction, agent-directed
 selection, online updates, graph links, or search after errors one at a time
-costs 14.6, 10.8, 6.4, 4.0, and 1.9 points: 37.7 in total, 2.75 times the
-13.7-point gain. Abstraction and agent-directed selection are prerequisites:
-removing either leaves ContextGraph at most 2.9 of its 13.7 points. Without
-abstraction, the other four choices together add nothing (20.5\%); without
-agent-directed selection, they add 2.9 points (24.3\%).
+costs 14.6, 10.8, 6.4, 4.0, and 1.9 points, more in total than the
+13.7-point gain, so the choices build on each other rather than adding up.
+Abstraction and agent-directed selection carry the gain: without abstraction,
+the other four choices together add nothing (20.5\%); without agent-directed
+selection, they add 2.9 points (24.3\%).
 
 \subsection{Update memory after every task}
 \label{sec:stream}
@@ -311,7 +338,9 @@ retry passes add 5.4 tasks with online updates, 2.8 with the static pool, and
 resolves more than three passes with the static pool (20.2). Sequential
 attempts behave the same way with Gemini 3.1 Pro on Verified500: with memory
 updated after each attempt, pass@5 adds 2.8 points over pass@1, against 0.5
-without memory (Appendix Table~\ref{tab:new-gemini}).
+without memory (Table~\ref{tab:new-gemini}). One pass with the same pool
+also improves over no memory with DeepSeek V3.2, GLM 5.2, and Kimi K3 (Appendix
+Table~\ref{tab:swectx-xmodel}).
 
 \begin{table}[!htbp]
 \centering
@@ -391,11 +420,29 @@ DeepSWE113 & 64.1 & \textbf{72.1} & 67.5 & 60.8 \\
 \end{tabular}
 \end{table}
 
-\subsection{Use memory with strong agents too}
+\subsection{Strong agents benefit too}
 \label{sec:backbones}
+\begin{table}[!htbp]
+\centering
+\caption{SWE-bench Verified500 with Gemini 3.1 Pro and live-SWE-agent.
+Both arms follow the data-separation protocol
+in Section~\ref{sec:setup}. Gains are relative improvements,
+$(\text{ContextGraph}-\text{No memory})/\text{No memory}$, in percent.}
+\label{tab:new-gemini}
+\small
+\begin{tabular}{lrrr}
+\toprule
+Metric & No memory & ContextGraph & Relative gain \\
+\midrule
+pass@1 & 82.3\% & \textbf{88.9\%} & +8.0\% \\
+pass@3 & 82.6\% & \textbf{90.4\%} & +9.4\% \\
+pass@5 & 82.8\% & \textbf{91.7\%} & +10.7\% \\
+\bottomrule
+\end{tabular}
+\end{table}
 With Gemini 3.1 Pro and live-SWE-agent on Verified500, ContextGraph raises
-pass@1 from 82.3\% to 88.9\% and pass@5 from 82.8\% to 91.7\% (Appendix
-Table~\ref{tab:new-gemini}): one attempt with memory resolves more tasks than
+pass@1 from 82.3\% to 88.9\% and pass@5 from 82.8\% to 91.7\%
+(Table~\ref{tab:new-gemini}): one attempt with memory resolves more tasks than
 five without, and memory removes 37\% of the failures that remain without it
 at pass@1 and 52\% at pass@5. On 20 long-horizon LoLBench tasks with Codex
 and GPT-5.5, and a graph built from other Python tasks, ContextGraph solves 3
@@ -413,16 +460,13 @@ against 236K without memory, 14.8\% fewer.
 
 \FloatBarrier
 \section{Conclusion}
-We asked what makes experience memory work for coding agents. ContextGraph's
-ablations and its results on four benchmarks with five backbones give a
-clear answer. Memory helps most when it stores abstract lessons rather than
+We asked what makes experience memory work for coding agents. Memory helps most when it stores abstract lessons rather than
 trajectories and lets the agent select them for each task; removing either
 from ContextGraph leaves at most 2.9 of its 13.7 points on Related-Lite99. On
 that foundation, updating memory after every task adds further gains. Lessons
 from other repositories alone carry more than half of the gain on
 Related-Lite99 and DeepSWE113, and the gain grows with the amount of
-experience. The gains hold for strong agents: with Gemini 3.1 Pro, one
-attempt with memory resolves more tasks than five without. We release the
+experience, and strong agents benefit as well. We release the
 code, prompts, and graph schema so that others can build on these findings.
 
 \clearpage
@@ -445,8 +489,10 @@ code, prompts, and graph schema so that others can build on these findings.
 Our ablations do not isolate a lesson's applicability condition: the
 raw-trajectory variant removes abstraction together with the rest of the
 lesson format, so we identify abstraction and agent-directed selection, not
-condition matching itself, as the prerequisites for the gain. A variant that
+condition matching itself, as the choices that carry the gain. A variant that
 keeps both but strips only the condition would measure the condition's share.
+All ablations use Related-Lite99 with one backbone; repeating them on other
+benchmarks and backbones would show how far each takeaway generalizes.
 A retry control in which a no-memory agent reflects on its own failures
 \citep{reflexion2023}, longer task streams, and more languages and agent
 scaffolds are natural next steps.
