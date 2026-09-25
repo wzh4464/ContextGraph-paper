@@ -10,8 +10,9 @@ configuration} serves 291 curated repair records with prior code history,
 reference fixes, and verification hints; Table~\ref{tab:swectx-stream} and
 Table~\ref{tab:swectx-xmodel} use it. The main comparison
 (Section~\ref{sec:benchmark}) uses the experience-graph configuration of
-Section~\ref{sec:method}. Resolution rates are percentages; gains marked pp
-are percentage-point differences from no memory.
+Section~\ref{sec:method}. Table~\ref{tab:dev50} gives an early 50-task
+development comparison on SWE-bench Verified. Resolution rates are
+percentages; gains marked pp are percentage-point differences from no memory.
 
 \paragraph{Memory access and evaluation.}
 The agent uses its full current context to search the experience pool,
@@ -36,7 +37,7 @@ pool of the main comparison.
 \begin{table}[htbp]
 \centering
 \caption{Curated-episode Related-Lite99 replication, one pass per
-backbone. Resolution rates are percentages. The last column gives
+backbone. Resolution rates are percentages over completed evaluations. The last column gives
 no-memory/ContextGraph rates on the fixed 89-task subset after removing ten
 near-duplicate targets, followed by the paired $p$ value.
 N/C only counts tasks resolved exclusively by no memory/ContextGraph.}
@@ -52,6 +53,8 @@ GLM 5.2 & 17.17 & 24.24 & 1/8 & .039 & 16.85/23.60 ($p=.070$) \\
 Kimi K3 & 29.29 & 31.31 & 3/5 & .73 & 29.21/31.46 ($p=.73$) \\
 \bottomrule
 \end{tabular}
+% AUTHOR: the DeepSeek V3.2 no-memory rate 16.33 corresponds to 16/98 while
+% the other rates are k/99; confirm the denominator or restate as 16.16.
 \end{table}
 
 \begin{table}[htbp]

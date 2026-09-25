@@ -1,9 +1,12 @@
 \section{Overlap audit of initial memory pools}
 \label{sec:overlap-audit}
-Every initial memory pool in Section~\ref{sec:experiments} was audited before
-evaluation so that no evaluated task, its reference patch, or a near duplicate
-of that patch can be retrieved. The audit has two steps and was applied to each
-pool in the same way.
+Every initial memory pool of the main comparison
+(Table~\ref{tab:evaluation-settings}) was audited before evaluation so that no
+evaluated task, its reference patch, or a near duplicate of that patch can be
+retrieved. The audit has two steps and was applied to each of these pools in
+the same way. The curated episodic pool of the retry experiment
+(Section~\ref{sec:stream}) predates this audit; that experiment therefore
+also reports its result with the ten near-duplicate targets removed.
 
 \paragraph{Instance-level exclusion.}
 Each source trajectory carries its task identifier, repository, and base
@@ -28,8 +31,8 @@ Table~\ref{tab:overlap-audit} summarizes the audit for each pool.
 
 \begin{table}[htbp]
 \centering
-\caption{Overlap audit of the initial memory pools used in the main comparison.
-Counts are source trajectories. Instance match removes trajectories whose task
+\caption{Overlap audit of the initial memory pools used in the main comparison
+(sources as in Table~\ref{tab:evaluation-settings}). Counts are source trajectories. Instance match removes trajectories whose task
 identifier is an evaluated task; patch similarity removes trajectories whose
 patch has token-Jaccard similarity of at least 0.85 to an evaluated task's
 reference patch.}
@@ -39,10 +42,10 @@ reference patch.}
 \toprule
 Pool & Source trajectories & Instance match & Patch similarity & Remaining \\
 \midrule
-Verified500 (Nebius SWE-bench-extra) & \tbd & 0 & \tbd & \tbd \\
-Related-Lite99 (SWE-ContextBench history) & \tbd & 0 & \tbd & \tbd \\
-DeepSWE113 (LoLBench repositories) & \tbd & 0 & \tbd & \tbd \\
-LoLBench Python (other Python tasks) & \tbd & 0 & \tbd & \tbd \\
+Verified500 & \tbd & 0 & \tbd & \tbd \\
+Related-Lite99 & \tbd & 0 & \tbd & \tbd \\
+DeepSWE113 & \tbd & 0 & \tbd & \tbd \\
+LoLBench Python & \tbd & 0 & \tbd & \tbd \\
 \bottomrule
 \end{tabular}
 % AUTHOR: fill in the trajectory counts and the number of entries removed by

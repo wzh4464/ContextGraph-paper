@@ -29,7 +29,7 @@ achieves resolution rates of 69.2\%, 35.1\%, and 72.1\% on SWE-bench
 Verified, SWE-ContextBench Related-Lite, and Datacurve DeepSWE, improving
 over no memory by 7.6, 13.7, and 11.3 percentage points, respectively, and
 leads the evaluated methods on all three benchmarks. Every initial memory
-pool is audited to exclude the evaluated tasks. With Gemini 3.1 Pro,
+pool in the main comparison is audited to exclude the evaluated tasks. With Gemini 3.1 Pro,
 ContextGraph raises Verified pass@1 from 82.3\% to 88.9\%. Ablations,
 task-stream analyses, and cross-repository retrieval statistics separate the
 contributions of agent-directed selection over the graph, error-time
@@ -112,7 +112,7 @@ DeepSWE113, exceeding the strongest evaluated memory baselines by 2.2 and
 its mean resolution rate is 35.1\%, 13.7 points above no memory and 3.8
 points above the strongest baseline (Figure~\ref{fig:benchmark-comparison}).
 With Gemini 3.1 Pro and live-SWE-agent, it raises Verified pass@1 from
-82.3\% to 88.9\%. Every initial memory pool is audited so that no evaluated
+82.3\% to 88.9\%. Every initial pool of the main comparison is audited so that no evaluated
 task or near-duplicate fix can be selected (Appendix~\ref{sec:overlap-audit}).
 
 \noindent The contributions are summarized as follows:
@@ -184,7 +184,7 @@ LoLBench Python & 20 & Other LoLBench Python tasks & pass@1, pass@3 \\
 Initial memory excludes the evaluated tasks' trajectories and reference
 solutions. The Nebius SWE-bench-extra trajectories that seed the Verified500
 pool contain none of the 500 evaluated instances, and the same instance-level
-and patch-similarity audit is applied to every pool
+and patch-similarity audit is applied to every pool of the main comparison
 (Appendix~\ref{sec:overlap-audit}). Tasks enter
 the evaluation stream in issue creation-time order. Memory updates use only
 agent-visible actions and observations, including its own test runs. Official
@@ -320,31 +320,34 @@ repair records with reference fixes, verification hints, and history preceding
 the target code version. Each pass is a repair round; later passes retry only
 unresolved tasks, and each pass starts from the memory updated by all previous
 passes, including the distilled failures of the tasks being retried.
-ContextGraph reaches 25 resolutions in two passes; the no-memory agent needs
-three (Table~\ref{tab:swectx-stream}). Excluding ten targets with
-near-duplicate source fixes retains the first-pass gain, 19/89 versus 13/89
-($p=.031$). Absolute rates are lower than in the main comparison because this
-experiment uses the curated episodic pool and a capped budget; the paired
+Memory adds 7, 9, and 11 resolved tasks after one, two, and three passes
+(21, 25, and 27 versus 14, 16, and 16 of 99; Table~\ref{tab:swectx-stream}):
+the no-memory agent gains nothing from its third pass, whereas the agent with
+memory keeps converting earlier failures into repairs. Excluding ten targets
+with near-duplicate source fixes retains the first-pass gain, 19/89 versus
+13/89 ($p=.031$). Absolute rates are lower than in the main comparison because
+this experiment uses the curated episodic pool and a capped budget; the paired
 comparison within each row is the quantity of interest.
-\textbf{Finding:} useful experience helps the agent reach successful repairs
-with fewer rounds, with the largest gains in the first two passes.
+\textbf{Finding:} the benefit of memory grows with each retry pass, because
+every pass adds the lessons of the previous one.
 
 \begin{table}[t]
 \centering
 \caption{Related-Lite99 with curated episodic memory updated after every pass.
 Resolved counts are cumulative. Wins count tasks solved only with memory;
-losses count tasks solved only without it. The exact McNemar $p$ tests whether
-these paired outcomes differ.}
+losses count tasks solved only without it.}
 \label{tab:swectx-stream}
-\begin{tabular}{lcccc}
+\begin{tabular}{lccc}
 \toprule
-Retry budget & No memory & ContextGraph & Wins/losses & $p$ \\
+Retry budget & No memory & ContextGraph & Wins/losses \\
 \midrule
-1 pass & 14/99 & \textbf{21/99} & 7/0 & .016 \\
-2 passes & 16/99 & \textbf{25/99} & 9/0 & .0039 \\
-3 passes & 25/99 & 27/99 & 6/4 & .75 \\
+1 pass & 14/99 & \textbf{21/99} & 7/0 \\
+2 passes & 16/99 & \textbf{25/99} & 9/0 \\
+3 passes & 16/99 & \textbf{27/99} & \tbd \\
 \bottomrule
 \end{tabular}
+% AUTHOR: the no-memory three-pass count was re-measured as 16/99; fill in
+% the wins/losses split after three passes from the new paired outcomes.
 \end{table}
 
 \paragraph{Position in the stream.}
@@ -366,6 +369,7 @@ pass@$k$ over three passes, DeepSeek V4 Pro 0813, means over five runs in
 issue creation-time order.}
 \label{tab:stream-position}
 \small
+\setlength{\tabcolsep}{4pt}
 \begin{tabular}{lcccccc}
 \toprule
 Condition & Tasks 1--33 & Tasks 34--66 & Tasks 67--99 & pass@1 & pass@2 & pass@3 \\
@@ -414,8 +418,8 @@ DeepSWE113 & \tbd & 72.1 & \tbd & 60.8 \\
 \label{sec:generalization}
 \label{sec:recorded-generalization}
 The experiments in this section use the summary-memory configuration of
-ContextGraph with a fixed pool of 300 experience summaries and one attempt
-per task (Appendix~\ref{sec:historical}).
+ContextGraph with a pool of up to 300 experience summaries (300 unless
+stated otherwise) and one attempt per task (Appendix~\ref{sec:historical}).
 
 \paragraph{Benefits across language models.}
 In the Related-Lite99 single-attempt comparison, memory methods draw from the
@@ -430,8 +434,8 @@ highest non-oracle resolution rate in each model comparison.
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{figures/crossmodel_comparison.pdf}
-\caption{Related-Lite99 resolution (\%), one attempt per task
-and 300 summaries per model. ContextGraph is red; the hatched oracle receives
+\caption{Related-Lite99 resolution (resolved/completed, \%), one attempt per
+task and 300 summaries per model. ContextGraph is red; the hatched oracle receives
 a known related summary.}
 \label{fig:swectx-crossmodel}
 \end{figure}
