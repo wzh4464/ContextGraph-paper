@@ -4,8 +4,8 @@ The behavioral studies augment retrieved guidance with task-specific
 programs to examine whether a repair preserves the intended behavior.
 The programs make requirements testable in these cases; the main memory
 interface returns strategies, warnings, and source context.
-Figures~\ref{fig:concept} and~\ref{fig:behavior-workflow} illustrate the
-comparison and workflow; this appendix gives the construction protocol.
+Figure~\ref{fig:behavior-workflow} illustrates the workflow; this appendix
+gives the construction protocol.
 \paragraph{Values alone do not describe a condition.}
 In Python, a named tuple is a tuple whose fields also have names. In our
 examples, constructing it takes two arguments; an ordinary tuple subclass
@@ -19,7 +19,7 @@ needed. A query using this object passes, as does an older range query using
 a named tuple to hold its endpoints. Putting the lazy object inside the
 named-tuple range in the current query fails. This motivates
 \emph{condition composition}: inserting a historical trigger into the current operation
-(Figure~\ref{fig:concept}).
+(Figure~\ref{fig:behavior-workflow}).
 
 \subsection{Executable-condition study protocol}
 \label{sec:executable-protocol}
@@ -71,7 +71,7 @@ current workflow and tests the expected behavior under this added condition.
 
 For example, a historical range type can be introduced into the current
 query while preserving its input objects and query structure
-(Figure~\ref{fig:concept}). Running this combination exposes interactions
+(Figure~\ref{fig:behavior-workflow}). Running this combination exposes interactions
 that neither the original query nor the historical example exercises alone.
 The same design applies to timezone conversion: the historical destination
 requirement is checked together with the current source-timezone behavior.

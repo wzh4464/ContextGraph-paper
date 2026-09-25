@@ -24,7 +24,7 @@ trajectories contribute new experience that subsequent tasks can immediately
 retrieve. ContextGraph achieves resolution rates of 69.2\%, 35.1\%, and
 72.1\% on SWE-bench Verified, SWE-ContextBench Related-Lite, and Datacurve
 DeepSWE, improving over no memory by 7.6, 4.5, and 11.3 percentage points,
-respectively. It leads the evaluated methods on Verified and DeepSWE. Behavioral
+respectively. It leads the evaluated methods on all three benchmarks. Behavioral
 studies expose negative transfer from implementation reuse and show how
 composing historical conditions with current operations catches failures
 missed by separate checks.
@@ -107,8 +107,8 @@ The full task context guides memory selection; observed failures guide
 subsequent searches. Successful and failed trajectories update the graph after each
 task, connecting current repair decisions to continuing experience accumulation.
 \item ContextGraph leads the evaluated methods on SWE-bench Verified,
-DeepSWE113, and the LoLBench Python subset, and improves Related-Lite99 by
-4.5 points over no memory. Behavioral studies identify negative transfer
+Related-Lite99, DeepSWE113, and the LoLBench Python subset, improving
+Related-Lite99 by 4.5 points over no memory. Behavioral studies identify negative transfer
 from implementation reuse and show the benefit of checking historical
 conditions within current operations.
 \end{itemize}
@@ -184,10 +184,11 @@ lists all main comparison values.
 Figure~\ref{fig:benchmark-comparison} compares eight methods. ContextGraph
 reaches 69.2\% on Verified500 and 72.1\% on DeepSWE113, exceeding the strongest
 memory baselines, ReasoningBank and Supermemory, by 2.2 and 5.9 points.
-On Related-Lite99, its 35.1\% mean improves on no memory and FAISS Flat by
-4.5 and 8.3 points, respectively.
+On Related-Lite99, its 35.1\% mean improves on no memory, FAISS Flat, and
+the strongest memory baseline, ExpeRepair, by 4.5, 8.3, and 3.8 points,
+respectively.
 \textbf{Finding:} ContextGraph improves repair success on all three
-benchmarks, leading the evaluated methods on Verified500 and DeepSWE113.
+benchmarks and leads the evaluated methods on each.
 
 \begin{figure}[t]
 \centering
@@ -317,7 +318,7 @@ Additional system results appear in Appendices~\ref{sec:historical} and
 \label{sec:behavior-analysis}
 In the behavioral studies, we make this principle executable by combining
 a remembered input condition with the current operation and checking the
-intended behavior (Figure~\ref{fig:concept}).
+intended behavior (Appendix Figure~\ref{fig:behavior-workflow}).
 
 \paragraph{Condition composition.}
 Let $P_q$ be the current program with input condition $c_q$, and memory $m$
