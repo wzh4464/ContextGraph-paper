@@ -400,12 +400,10 @@ tasks at pass@1 (15.0\%), while no memory and each of the six memory
 baselines solve 1 (5.0\%); with three attempts, it solves 5 (25.0\%; Appendix
 Table~\ref{tab:new-codex55}). The gain also holds across backbones on
 Related-Lite99, where the memory methods of
-Figure~\ref{fig:swectx-crossmodel}, including Mem0 \citep{mem02025} and
-LangMem \citep{langmem2025}, draw from the same 300-summary pool within each
-backbone: ContextGraph improves over no memory by 13.7, 10.0, and 8.2 points
-with DeepSeek V4 Pro, Kimi K3, and MiniMax M2.7 and has the highest rate with
-each; with DeepSeek V4 Pro, LangMem
-comes closest, 1.1 points behind. Memory also saves tokens: on
+Figure~\ref{fig:swectx-crossmodel}, including Mem0 \citep{mem02025}, draw
+from the same 300-summary pool within each backbone: ContextGraph improves
+over no memory by 13.7, 10.0, and 8.2 points with DeepSeek V4 Pro, Kimi K3,
+and MiniMax M2.7 and has the highest rate with each. Memory also saves tokens: on
 Verified500 with DeepSeek V4 Pro, ContextGraph uses 201K tokens per task
 against 236K without memory, 14.8\% fewer.
 
